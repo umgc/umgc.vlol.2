@@ -1,7 +1,5 @@
 # Application Development Notes
 
-20200610
-
 Using Visual Studio:
 
 - Cloned repo into local repo storage (C:\Users\Rob\source\repos)
@@ -34,7 +32,7 @@ When asked to pick a publish target, select "IIS, FTP, etc" and click on create 
 
     Connection:
     Publish Method: FTP
-    Server: ftp://coretest.rgcoding.com
+    Server: ftp://vlol.rgcoding.com
     Site path: [Leave blank. We're not placing code in a sub-folder]
     User name: vlol
     Password: [Sent via separate email]
