@@ -1,0 +1,4 @@
+INSERT INTO user (role_id, first_name, last_name, dob, ssn, streat_address, city, state, zip_code, phone, email, ins_company, adv_directive, adv_dir_type, doctor_name, doctor_phone, user_comments, username, password, security_question, security_answer, date_created, last_login_date, admin_comments, is_active, is_locked) VALUES (4, 'Admin', 'Admin', );
+
+
+

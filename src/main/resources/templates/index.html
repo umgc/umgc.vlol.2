@@ -1,0 +1,17 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Virtual Letter of Life</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    </head>
+    <body>
+        <h1>Hello !</h1>
+        <p>Welcome to <span th:text="${appName}">Our App</span></p>
+        <br />
+        <a href="/console">H2 Console Portal</a>
+        <br />
+        <a href="/list-allergies">Allergy Management</a>
+    </body>
+</html>
