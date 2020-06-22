@@ -22,6 +22,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "vlol_role")
@@ -32,13 +33,13 @@ public class Role implements Serializable {
     @Column(name = "role_id")
     private Long roleID;
 
-    @Column(name = "access_level")
-    @NotBlank(message = "Access level is required.")
-    private int accessLevel;
-
     @Column(name = "title", unique = true)
     @NotBlank(message = "Role title is required.")
     private String title;
+
+    @Column(name = "access_level")
+    @NotNull(message = "Access level is required.")
+    private int accessLevel;
 
     @Column(name = "description")
     private String description;
@@ -54,20 +55,20 @@ public class Role implements Serializable {
         this.roleID = roleID;
     }
 
-    public int getAccessLevel() {
-        return accessLevel;
-    }
-
-    public void setAccessLevel(int accessLevel) {
-        this.accessLevel = accessLevel;
-    }
-
     public String getTitle() {
         return title;
     }
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getAccessLevel() {
+        return accessLevel;
+    }
+
+    public void setAccessLevel(int accessLevel) {
+        this.accessLevel = accessLevel;
     }
 
     public String getDescription() {

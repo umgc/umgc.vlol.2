@@ -25,6 +25,30 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>Generic Name:</td>
+                        <td>
+                            <input type="text" th:field="*{genericName}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Drug Action:</td>
+                        <td>
+                            <input type="text" th:field="*{drugAction}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Controlled?</td>
+                        <td>
+                            <input type="checkbox" th:field="*{controlled}" th:value="${medication}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Blood Thinner?</td>
+                        <td>
+                            <input type="checkbox" th:field="*{bloodThinner}" th:value="${medication}" />
+                        </td>
+                    </tr>
+                    <tr>
                         <td colspan="2">
                             <button type="submit">Save</button>
                         </td>

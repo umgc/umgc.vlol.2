@@ -45,10 +45,10 @@ public class Medication implements Serializable {
     private String drugAction;
 
     @Column(name = "controlled")
-    private Boolean controlled;
+    private Boolean controlled = false;
 
     @Column(name = "blood_thinner")
-    private Boolean bloodThinner;
+    private Boolean bloodThinner = false;
 
     @ManyToMany(mappedBy = "medications", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<User> users;

@@ -28,6 +28,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface MedicationRepository extends JpaRepository<Medication, Long> {
 
-    @Query(value = "SELECT m FROM Medication m WHERE lower(m.brandName) LIKE lower(concat('%', :keyword, '%'))")
+    @Query(value = "SELECT m FROM Medication m WHERE lower(m.brandName) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(m.genericName) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(m.drugAction) LIKE lower(concat('%', :keyword, '%'))")
     public List<Medication> search(@Param("keyword") String keyword);
 }

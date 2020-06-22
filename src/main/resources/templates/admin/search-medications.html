@@ -15,6 +15,10 @@
                     <tr>
                         <th>Medication ID</th>
                         <th>Brand Name</th>
+                        <th>Generic Name</th>
+                        <th>Drug Action</th>
+                        <th>Controlled?</th>
+                        <th>Blood Thinner?</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -22,6 +26,10 @@
                     <tr th:each="medication : ${result}">
                         <td th:text="${medication.medicationID}">Medication ID</td>
                         <td th:text="${medication.brandName}">Brand Name</td>
+                        <td th:text="${medication.genericName}">Generic Name</td>
+                        <td th:text="${medication.drugAction}">Drug Action</td>
+                        <td th:text="${medication.controlled}">Controlled?</td>
+                        <td th:text="${medication.bloodThinner}">Blood Thinner?</td>
                         <td>
                             <a th:href="@{/edit-medication/{id}(id=${medication.medicationID})}">Edit</a>
                             &nbsp;&nbsp;&nbsp;

@@ -15,17 +15,21 @@
                     <tr>
                         <th>Role ID</th>
                         <th>Role Title</th>
+                        <th>Role Access Level</th>
+                        <th>Role Description</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr th:each="roles : ${result}">
-                        <td th:text="${roles.roleID}">Role ID</td>
-                        <td th:text="${roles.title}">Role Title</td>
+                    <tr th:each="role : ${result}">
+                        <td th:text="${role.roleID}">Role ID</td>
+                        <td th:text="${role.title}">Role Title</td>
+                        <td th:text="${role.accessLevel}">Role Access Level</td>
+                        <td th:text="${role.description}">Role Description</td>
                         <td>
-                            <a th:href="@{/edit-roles/{id}(id=${roles.roleID})}">Edit</a>
+                            <a th:href="@{/edit-roles/{id}(id=${role.roleID})}">Edit</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a th:href="@{/delete-roles/{id}(id=${roles.roleID})}">Delete</a>
+                            <a th:href="@{/delete-roles/{id}(id=${role.roleID})}">Delete</a>
                         </td>
                     </tr>
                 </tbody>
