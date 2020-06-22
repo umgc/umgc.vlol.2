@@ -53,7 +53,7 @@ public class VlolController {
 
     @GetMapping("/admin-menu")
     public String viewMainMenu(Model model) {
-        return "/admin/admin-menu";
+        return "admin/admin-menu";
     }
 
     @GetMapping("/about")

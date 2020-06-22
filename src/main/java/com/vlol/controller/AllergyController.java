@@ -46,14 +46,14 @@ public class AllergyController {
     public String viewAllergyList(Model model) {
         List<Allergy> allergyList = allergyService.listAllAllergies();
         model.addAttribute("allergyList", allergyList);
-        return "/admin/list-allergies";
+        return "admin/list-allergies";
     }
 
     @RequestMapping("/add-allergy")
     public String viewAddAllergyPage(Model model) {
         Allergy allergy = new Allergy();
         model.addAttribute("allergy", allergy);
-        return "/admin/add-allergy";
+        return "admin/add-allergy";
     }
 
     @RequestMapping(value = "/save-allergy", method = RequestMethod.POST)
