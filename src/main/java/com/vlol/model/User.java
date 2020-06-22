@@ -95,7 +95,7 @@ public class User implements Serializable {
     @JoinTable(name = "user_condition",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "condition_id"))
-    private Set<MedCondition> conditions;
+    private Set<Condition> conditions;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_medication",
@@ -293,11 +293,11 @@ public class User implements Serializable {
         this.allergies = allergies;
     }
 
-    public Set<MedCondition> getConditions() {
+    public Set<Condition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(Set<MedCondition> conditions) {
+    public void setConditions(Set<Condition> conditions) {
         this.conditions = conditions;
     }
 

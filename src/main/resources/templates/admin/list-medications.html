@@ -1,16 +1,43 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Medication Manager</title>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div align="center">
+            <h1>Medication Manager</h1>
+            <form method="get" action="search-medications">
+                <input type="text" name="keyword" />&nbsp;&nbsp;
+                <input type="submit" value="Search" />
+            </form>
+            <br />
+            <a href="/add-medication">Add a Medication</a>
+            <br/><br/>
+            <table border="1" cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>Medication ID</th>
+                        <th>Brand Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="medication : ${medicationList}">
+                        <td th:text="${medication.medicationID}">Medication ID</td>
+                        <td th:text="${medication.brandName}">Brand Name</td>
+                        <td>
+                            <a th:href="@{/edit-medication/{id}(id=${medication.medicationID})}">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="@{/delete-medication/{id}(id=${medication.medicationID})}">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a href="/admin-menu">Return to Administration Menu</a>
+        </div>   
     </body>
 </html>

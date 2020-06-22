@@ -4,18 +4,18 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Create a New Allergy</title>
+        <title>Create a New User</title>
     </head>
     <body>
         <div align="center">
-            <h1>Create a New Allergy</h1>
+            <h1>Create a New User</h1>
             <br />
-            <form action="#" th:action="@{/save-allergy}" th:object="${allergy}" method="post">
+            <form action="#" th:action="@{/save-user}" th:object="${user}" method="post">
                 <table border="0" cellpadding="10">
                     <tr>
-                        <td>Allergy Name:</td>
+                        <td>User Email:</td>
                         <td>
-                            <input type="text" th:field="*{allergyName}" />
+                            <input type="text" th:field="*{email}" />
                         </td>
                     </tr>
                     <tr>
@@ -26,7 +26,7 @@
                 </table>
             </form>
             <br />
-            <a href="/list-allergies">Return to Allergy Manager</a>
+            <a href="/list-users">Return to User Manager</a>
         </div>
     </body>
 </html>

@@ -25,7 +25,7 @@ import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "med_condition")
-public class MedCondition implements Serializable {
+public class Condition implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

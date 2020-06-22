@@ -1,16 +1,43 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>TODO supply a title</title>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>User Manager</title>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div align="center">
+            <h1>User Manager</h1>
+            <form method="get" action="search-users">
+                <input type="text" name="keyword" />&nbsp;&nbsp;
+                <input type="submit" value="Search" />
+            </form>
+            <br />
+            <a href="/add-user">Add a User</a>
+            <br/><br/>
+            <table border="1" cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>User Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="user : ${userList}">
+                        <td th:text="${user.userID}">User ID</td>
+                        <td th:text="${user.email}">User Email</td>
+                        <td>
+                            <a th:href="@{/edit-user/{id}(id=${user.userID})}">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="@{/delete-user/{id}(id=${user.userID})}">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a href="/admin-menu">Return to Administration Menu</a>
+        </div>   
     </body>
 </html>

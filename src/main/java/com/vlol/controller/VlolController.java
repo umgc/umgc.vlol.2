@@ -50,4 +50,29 @@ public class VlolController {
         model.addAttribute("appName", appName);
         return "index";
     }
+
+    @GetMapping("/admin-menu")
+    public String viewMainMenu(Model model) {
+        return "/admin/admin-menu";
+    }
+
+    @GetMapping("/about")
+    public String viewAboutPage(Model model) {
+        return "about";
+    }
+
+    @GetMapping("/contact")
+    public String viewContactPage(Model model) {
+        return "contact";
+    }
+
+    @GetMapping("/login")
+    public String viewLoginPage(Model model) {
+        return "login";
+    }
+
+    @GetMapping("/registration")
+    public String viewRegistrationPage(Model model) {
+        return "registration";
+    }
 }

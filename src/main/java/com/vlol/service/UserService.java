@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vlol.repository.RoleRepository;
 import com.vlol.repository.UserRepository;
+import java.util.List;
 
 @Service
 @Transactional
@@ -56,5 +57,21 @@ public class UserService {
         // user.setRoles(new HashSet<VLOLRole>(Arrays.asList(userRole)));
         user.setRole(userRole);
         return userRepository.save(user);
+    }
+    
+        public List<User> listAllUsers() {
+        return userRepository.findAll();
+    }
+
+    public User getUser(long userID) {
+        return userRepository.findById(userID).get();
+    }
+
+    public void deleteUser(long userID) {
+        userRepository.deleteById(userID);
+    }
+
+    public List<User> searchForUser(String keyword) {
+        return userRepository.search(keyword);
     }
 }

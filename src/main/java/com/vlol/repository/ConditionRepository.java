@@ -18,12 +18,16 @@
  */
 package com.vlol.repository;
 
-import com.vlol.model.MedCondition;
+import com.vlol.model.Condition;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MedConditionRepository extends JpaRepository<MedCondition, Long> {
+public interface ConditionRepository extends JpaRepository<Condition, Long> {
 
-    // public MedCondition findByConditionName(String conditionName);
+    @Query(value = "SELECT c FROM Condition c WHERE lower(c.conditionName) LIKE lower(concat('%', :keyword, '%'))")
+    public List<Condition> search(@Param("keyword") String keyword);
 }

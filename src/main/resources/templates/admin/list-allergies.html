@@ -8,26 +8,26 @@
     </head>
     <body>
         <div align="center">
-            <h1>Allergy List</h1>
+            <h1>Allergy Manager</h1>
             <form method="get" action="search-allergies">
-                <input type="text" name="keyword" /> &nbsp;
+                <input type="text" name="keyword" />&nbsp;&nbsp;
                 <input type="submit" value="Search" />
             </form>
             <br />
             <a href="/add-allergy">Add an Allergy</a>
-            <br/><br/>
+            <br /><br />
             <table border="1" cellpadding="10">
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
+                        <th>Allergy ID</th>
+                        <th>Allergy Name</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="allergy : ${allergyList}">
-                        <td th:text="${allergy.allergyID}">ID</td>
-                        <td th:text="${allergy.allergyName}">Name</td>
+                        <td th:text="${allergy.allergyID}">Allergy ID</td>
+                        <td th:text="${allergy.allergyName}">Allergy Name</td>
                         <td>
                             <a th:href="@{/edit-allergy/{id}(id=${allergy.allergyID})}">Edit</a>
                             &nbsp;&nbsp;&nbsp;
@@ -36,6 +36,8 @@
                     </tr>
                 </tbody>
             </table>
+            <br />
+            <a href="/admin-menu">Return to Administration Menu</a>
         </div>   
     </body>
 </html>
