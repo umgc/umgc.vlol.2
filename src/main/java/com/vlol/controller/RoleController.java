@@ -46,14 +46,14 @@ public class RoleController {
     public String viewRoleList(Model model) {
         List<Role> roleList = roleService.listAllRoles();
         model.addAttribute("roleList", roleList);
-        return "/admin/list-roles";
+        return "admin/list-roles";
     }
 
     @RequestMapping("/add-role")
     public String viewAddRolePage(Model model) {
         Role role = new Role();
         model.addAttribute("role", role);
-        return "/admin/add-role";
+        return "admin/add-role";
     }
 
     @RequestMapping(value = "/save-role", method = RequestMethod.POST)

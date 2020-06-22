@@ -46,14 +46,14 @@ public class ConditionController {
     public String viewConditionList(Model model) {
         List<Condition> conditionList = conditionService.listAllConditions();
         model.addAttribute("conditionList", conditionList);
-        return "/admin/list-conditions";
+        return "admin/list-conditions";
     }
 
     @RequestMapping("/add-condition")
     public String viewAddConditionPage(Model model) {
         Condition condition = new Condition();
         model.addAttribute("condition", condition);
-        return "/admin/add-condition";
+        return "admin/add-condition";
     }
 
     @RequestMapping(value = "/save-condition", method = RequestMethod.POST)

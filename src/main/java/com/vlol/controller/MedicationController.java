@@ -46,14 +46,14 @@ public class MedicationController {
     public String viewMedicationList(Model model) {
         List<Medication> medicationList = medicationService.listAllMedications();
         model.addAttribute("medicationList", medicationList);
-        return "/admin/list-medications";
+        return "admin/list-medications";
     }
 
     @RequestMapping("/add-medication")
     public String viewAddMedicationPage(Model model) {
         Medication medication = new Medication();
         model.addAttribute("medication", medication);
-        return "/admin/add-medication";
+        return "admin/add-medication";
     }
 
     @RequestMapping(value = "/save-medication", method = RequestMethod.POST)

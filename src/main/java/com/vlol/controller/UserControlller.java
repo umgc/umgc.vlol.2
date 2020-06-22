@@ -46,14 +46,14 @@ public class UserControlller {
     public String viewUserList(Model model) {
         List<User> userList = userService.listAllUsers();
         model.addAttribute("userList", userList);
-        return "/admin/list-users";
+        return "admin/list-users";
     }
 
     @RequestMapping("/add-user")
     public String viewAddUserPage(Model model) {
         User user = new User();
         model.addAttribute("user", user);
-        return "/admin/add-user";
+        return "admin/add-user";
     }
 
     @RequestMapping(value = "/save-user", method = RequestMethod.POST)
