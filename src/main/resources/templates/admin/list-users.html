@@ -20,14 +20,24 @@
                 <thead>
                     <tr>
                         <th>User ID</th>
+                        <th>User Last Name</th>
+                        <th>User First Name</th>
+                        <th>User Role</th>
                         <th>User Email</th>
+                        <th>Last Login</th>
+                        <th>Active?</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="user : ${userList}">
                         <td th:text="${user.userID}">User ID</td>
+                        <td th:text="${user.lastName}">User Last Name</td>
+                        <td th:text="${user.firstName}">User First Name</td>
+                        <td th:text="${user.role.title}">User Role</td>
                         <td th:text="${user.email}">User Email</td>
+                        <td th:text="${user.lastLoginDate}">Last Login</td>
+                        <td th:text="${user.isActive}">Active?</td>
                         <td>
                             <a th:href="@{/edit-user/{id}(id=${user.userID})}">Edit</a>
                             &nbsp;&nbsp;&nbsp;

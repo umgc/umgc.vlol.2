@@ -53,13 +53,13 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setIsActive(Boolean.TRUE);
         user.setIsLocked(Boolean.FALSE);
-        Role userRole = roleRepository.findByTitle("user");
+        Role userRole = roleRepository.findByTitle("participant");
         // user.setRoles(new HashSet<VLOLRole>(Arrays.asList(userRole)));
         user.setRole(userRole);
         return userRepository.save(user);
     }
-    
-        public List<User> listAllUsers() {
+
+    public List<User> listAllUsers() {
         return userRepository.findAll();
     }
 

@@ -18,8 +18,6 @@
  */
 package com.vlol.controller;
 
-import com.vlol.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,9 +30,6 @@ import org.springframework.web.bind.annotation.GetMapping;
  */
 @Controller
 public class VlolController {
-
-    @Autowired
-    private UserService userService;
 
     @Value("${spring.application.name}")
     String appName;
@@ -74,5 +69,10 @@ public class VlolController {
     @GetMapping("/registration")
     public String viewRegistrationPage(Model model) {
         return "registration";
+    }
+
+    @GetMapping("/access-denied")
+    public String viewAccessDeniedPage(Model model) {
+        return "access-denied";
     }
 }

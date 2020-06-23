@@ -37,10 +37,10 @@ public class User implements Serializable {
     private Role role;
 
     @Column(name = "first_name")
-    private String firstname;
+    private String firstName;
 
     @Column(name = "last_name")
-    private String lastname;
+    private String lastName;
 
     @Column(name = "dob")
     @Temporal(javax.persistence.TemporalType.DATE)
@@ -59,7 +59,7 @@ public class User implements Serializable {
     private String state;
 
     @Column(name = "zip_code")
-    private String zipcode;
+    private String zipCode;
 
     @Column(name = "phone")
     private String phone;
@@ -122,11 +122,11 @@ public class User implements Serializable {
     private String securityAnswer;
 
     @Column(name = "date_created")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dateCreated;
 
     @Column(name = "last_login_date")
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date lastLoginDate;
 
     @Column(name = "admin_comments")
@@ -157,20 +157,20 @@ public class User implements Serializable {
         this.role = role;
     }
 
-    public String getFirstname() {
-        return firstname;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirstname(String firstname) {
-        this.firstname = firstname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getLastname() {
-        return lastname;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLastname(String lastname) {
-        this.lastname = lastname;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public Date getDOB() {
@@ -214,11 +214,11 @@ public class User implements Serializable {
     }
 
     public String getZipCode() {
-        return zipcode;
+        return zipCode;
     }
 
-    public void setZipCode(String zipcode) {
-        this.zipcode = zipcode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getPhone() {
