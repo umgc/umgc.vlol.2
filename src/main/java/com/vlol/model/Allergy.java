@@ -22,6 +22,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "allergy")
@@ -32,8 +34,11 @@ public class Allergy implements Serializable {
     @Column(name = "allergy_id")
     private Long allergyID;
 
-    @Column(name = "allergy_name", unique=true)
+    @Column(name = "allergy_name", length = 50, unique=true)
     @NotBlank(message = "Allergy name is required.")
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Size(min = 2, max = 50, message = "Input exceeds size limits.")
     private String allergyName;
     
     @ManyToMany(mappedBy = "allergies", cascade = {CascadeType.PERSIST, CascadeType.MERGE})

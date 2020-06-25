@@ -20,7 +20,8 @@ package com.vlol.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.Set;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "user_med_list")
@@ -28,25 +29,30 @@ public class UserMedList implements Serializable {
 
     @EmbeddedId
     UserMedListKey UserMedListID;
-    
+
     @ManyToOne
     @MapsId("user_id")
     @JoinColumn(name = "user_id")
     User user;
- 
+
     @ManyToOne
     @MapsId("medication_id")
     @JoinColumn(name = "medication_id")
     Medication medication;
-    
+
     @Column(name = "dosage")
+    @Digits(integer = 6, fraction = 2, message = "Input is not in the form of a decimal.")
+    @NotNull
     private float dosage;
 
     @Column(name = "frequency")
+    @Digits(integer = 2, fraction = 1, message = "Input is not in the form of a decimal.")
+    @NotNull
     private int frequency;
 
-    @Column(name = "time_unit")
-    private String timeUnit;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "freq_interval", length = 10)
+    private FrequencyInterval freqInterval;
 
     public float getDosage() {
         return dosage;
@@ -64,11 +70,11 @@ public class UserMedList implements Serializable {
         this.frequency = frequency;
     }
 
-    public String getTimeUnit() {
-        return timeUnit;
+    public FrequencyInterval getFrequencyInterval() {
+        return freqInterval;
     }
 
-    public void setTimeUnit(String timeUnit) {
-        this.timeUnit = timeUnit;
+    public void setFrequencyInterval(FrequencyInterval freqInterval) {
+        this.freqInterval = freqInterval;
     }
 }

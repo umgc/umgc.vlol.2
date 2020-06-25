@@ -27,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vlol.repository.RoleRepository;
 import com.vlol.repository.UserRepository;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -50,12 +52,16 @@ public class UserService {
     }
 
     public User saveUser(User user) {
+        /*
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setIsActive(Boolean.TRUE);
         user.setIsLocked(Boolean.FALSE);
         Role userRole = roleRepository.findByTitle("participant");
         // user.setRoles(new HashSet<VLOLRole>(Arrays.asList(userRole)));
         user.setRole(userRole);
+         */
+        // Date date = new Date();
+        // user.setLastLoginDate(date);
         return userRepository.save(user);
     }
 

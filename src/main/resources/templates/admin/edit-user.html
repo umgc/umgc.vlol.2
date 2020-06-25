@@ -15,7 +15,7 @@
                     <tr>             
                         <td>User ID:</td>
                         <td>
-                            <input type="text" th:field="*{userID}" readonly="readonly" />
+                            <input type="number" th:field="*{userID}" readonly="readonly" />
                         </td>
                     </tr>
                     <tr>             
@@ -39,13 +39,13 @@
                     <tr>             
                         <td>User Email:</td>
                         <td>
-                            <input type="text" th:field="*{email}" />
+                            <input type="email" th:field="*{email}" />
                         </td>
                     </tr>
                     <tr>             
                         <td>Last Login:</td>
                         <td>
-                            <input type="text" th:field="*{lastLoginDate}" readonly="readonly" />
+                            <input type="datetime-local" th:field="*{lastLoginDate}" />
                         </td>
                     </tr>
                     <tr>
