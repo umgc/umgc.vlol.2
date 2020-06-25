@@ -1,98 +1,146 @@
-CREATE TABLE ALLERGY(
-    ALLERGY_ID BIGINT NOT NULL,
-    ALLERGY_NAME VARCHAR(50)
-);
-ALTER TABLE ALLERGY ADD CONSTRAINT PRIMARY KEY(ALLERGY_ID);
-CREATE TABLE MED_CONDITION(
-    CONDITION_ID BIGINT NOT NULL,
-    CONDITION_NAME VARCHAR(50)
-);
-ALTER TABLE MED_CONDITION ADD CONSTRAINT PRIMARY KEY(CONDITION_ID);
-CREATE TABLE MEDICATION(
-    MEDICATION_ID BIGINT NOT NULL,
-    BLOOD_THINNER BOOLEAN,
-    BRAND_NAME VARCHAR(50),
-    CONTROLLED BOOLEAN,
-    DRUG_ACTION VARCHAR(50),
-    GENERIC_NAME VARCHAR(50)
-);
-ALTER TABLE MEDICATION ADD CONSTRAINT PRIMARY KEY(MEDICATION_ID);
-CREATE TABLE USER_ALLERGY(
-    USER_ID BIGINT NOT NULL,
-    ALLERGY_ID BIGINT NOT NULL
-);
-ALTER TABLE USER_ALLERGY ADD CONSTRAINT PRIMARY KEY(USER_ID, ALLERGY_ID);
-CREATE TABLE USER_CONDITION(
-    USER_ID BIGINT NOT NULL,
-    CONDITION_ID BIGINT NOT NULL
-);
-ALTER TABLE USER_CONDITION ADD CONSTRAINT PRIMARY KEY(USER_ID, CONDITION_ID);
-CREATE TABLE USER_MED_LIST(
-    MEDICATION_ID BIGINT NOT NULL,
-    USER_ID BIGINT NOT NULL,
-    DOSAGE FLOAT NOT NULL,
-    FREQ_INTERVAL VARCHAR(10),
-    FREQUENCY INTEGER NOT NULL
-);
-ALTER TABLE USER_MED_LIST ADD CONSTRAINT PRIMARY KEY(MEDICATION_ID, USER_ID);
-CREATE TABLE USER_MEDICATION(
-    USER_ID BIGINT NOT NULL,
-    MEDICATION_ID BIGINT NOT NULL
-);
-ALTER TABLE USER_MEDICATION ADD CONSTRAINT PRIMARY KEY(USER_ID, MEDICATION_ID);
-CREATE TABLE VLOL_ROLE(
-    ROLE_ID BIGINT NOT NULL,
-    ACCESS_LEVEL INTEGER NOT NULL CHECK (ACCESS_LEVEL <= 20),
-    DESCRIPTION VARCHAR(300),
-    TITLE VARCHAR(50) NOT NULL
-);
-ALTER TABLE VLOL_ROLE ADD CONSTRAINT PRIMARY KEY(ROLE_ID);
-CREATE TABLE VLOL_USER(
-    USER_ID BIGINT NOT NULL,
-    DOB DATE NOT NULL,
-    SSN VARCHAR(9) NOT NULL,
-    ADMIN_COMMENTS VARCHAR(300),
-    ADV_DIR_TYPE VARCHAR(50),
-    ADV_DIRECTIVE BOOLEAN,
-    CITY VARCHAR(50) NOT NULL,
-    DATE_CREATED TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    DOCTOR_NAME VARCHAR(100),
-    DOCTOR_PHONE VARCHAR(10),
-    EMAIL VARCHAR(320) NOT NULL,
-    FIRST_NAME VARCHAR(50) NOT NULL,
-    INS_COMPANY VARCHAR(50),
-    INS_POLICY_NO VARCHAR(50),
-    IS_ACTIVE BOOLEAN,
-    IS_LOCKED BOOLEAN,
-    LAST_LOGIN_DATE TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    LAST_NAME VARCHAR(100) NOT NULL,
-    PASSWORD VARCHAR(72) NOT NULL,
-    PHONE VARCHAR(10) NOT NULL,
-    POC_NAME VARCHAR(100) NOT NULL,
-    POC_PHONE VARCHAR(10) NOT NULL,
-    SECURITY_ANSWER VARCHAR(72) NOT NULL,
-    SECURITY_QUESTION VARCHAR(100) NOT NULL,
-    US_STATE VARCHAR(2) NOT NULL,
-    STREET_ADDRESS VARCHAR(100) NOT NULL,
-    USER_COMMENTS VARCHAR(300),
-    USERNAME VARCHAR(320) NOT NULL,
-    ZIP_CODE VARCHAR(5) NOT NULL,
-    ROLE_ID BIGINT NOT NULL
-);
-ALTER TABLE VLOL_USER ADD CONSTRAINT PRIMARY KEY(USER_ID);
-ALTER TABLE ALLERGY ADD CONSTRAINT UNIQUE(ALLERGY_NAME);
-ALTER TABLE VLOL_USER ADD CONSTRAINT UNIQUE(EMAIL);
-ALTER TABLE MEDICATION ADD CONSTRAINT UNIQUE(BRAND_NAME);
-ALTER TABLE VLOL_USER ADD CONSTRAINT UNIQUE(USERNAME);
-ALTER TABLE VLOL_USER ADD CONSTRAINT UNIQUE(SSN);
-ALTER TABLE MED_CONDITION ADD CONSTRAINT UNIQUE(CONDITION_NAME);
-ALTER TABLE VLOL_ROLE ADD CONSTRAINT UNIQUE(TITLE);
-ALTER TABLE USER_MED_LIST ADD CONSTRAINT FOREIGN KEY(MEDICATION_ID) REFERENCES MEDICATION(MEDICATION_ID);
-ALTER TABLE USER_MED_LIST ADD CONSTRAINT FOREIGN KEY(USER_ID) REFERENCES VLOL_USER(USER_ID);
-ALTER TABLE USER_MEDICATION ADD CONSTRAINT FOREIGN KEY(USER_ID) REFERENCES VLOL_USER(USER_ID);
-ALTER TABLE USER_CONDITION ADD CONSTRAINT FOREIGN KEY(USER_ID) REFERENCES VLOL_USER(USER_ID);
-ALTER TABLE USER_ALLERGY ADD CONSTRAINT FOREIGN KEY(ALLERGY_ID) REFERENCES ALLERGY(ALLERGY_ID);
-ALTER TABLE USER_ALLERGY ADD CONSTRAINT FOREIGN KEY(USER_ID) REFERENCES VLOL_USER(USER_ID);
-ALTER TABLE USER_MEDICATION ADD CONSTRAINT FOREIGN KEY(MEDICATION_ID) REFERENCES MEDICATION(MEDICATION_ID);
-ALTER TABLE USER_CONDITION ADD CONSTRAINT FOREIGN KEY(CONDITION_ID) REFERENCES MED_CONDITION(CONDITION_ID);
-ALTER TABLE VLOL_USER ADD CONSTRAINT FOREIGN KEY(ROLE_ID) REFERENCES VLOL_ROLE(ROLE_ID);
+
+/******************************************************************************************************************************** 
+* File:        LetterOfLifeCreateDatabase_DDL.sql
+* Version:     1.0 
+* Created:     June 17, 2020
+* Description: This is the database creation script for the Letter of Life application.
+*			   The script first drops then create database tables and populates them with some sample data. 
+* Author:	   Augustin Mwamba & Team EMSPlus
+* 			   SWEN670, Summer 2020
+*			   University of Maryland Global Campus (UMGC) 
+*              ******************************************************************************************************************
+* Instructions:
+* 1. First, create the letteroflife schema in mysql by either issuing the following SQL statement : CREATE SCHEMA 'letteroflife'; 
+*    or Open the MySQL Workbench and Right-click on the list of existing Schemas and 
+*    select Create Schema... to create the database schema and enter "letteroflife" for the schema name.
+* 2. Once the letteroflife schema is created, select it and run this script to create and populate the different database objects.
+*********************************************************************************************************************************
+*/
+-- Drop database tables statements.
+DROP TABLE IF EXISTS user_illness;
+DROP TABLE IF EXISTS user_medication;
+DROP TABLE IF EXISTS user_allergy;
+DROP TABLE IF EXISTS illness;
+DROP TABLE IF EXISTS medication;
+DROP TABLE IF EXISTS allergy;
+DROP TABLE IF EXISTS approle;
+DROP TABLE IF EXISTS appuser;
+
+-- Create database tables statements.
+CREATE TABLE allergy(
+    allergy_id BIGINT NOT NULL COMMENT 'The unique ID for an allergy.', 
+    allergy_name VARCHAR(50) COMMENT 'The allergy''s name.'
+) COMMENT='The information table for allergies.';
+
+ALTER TABLE allergy ADD CONSTRAINT allergy_pk PRIMARY KEY(allergy_id);
+ALTER TABLE allergy ADD CONSTRAINT alergy_uq_name UNIQUE(allergy_name);
+
+CREATE TABLE illness(
+    illness_id BIGINT NOT NULL COMMENT 'The unique ID for an illness.', 
+    illness_name VARCHAR(50) COMMENT 'The illness'' name.'
+) COMMENT = 'The information table for illnesses.';
+
+ALTER TABLE illness ADD CONSTRAINT illness_pk PRIMARY KEY(illness_id);
+ALTER TABLE illness ADD CONSTRAINT illness_uq_name UNIQUE(illness_name);
+
+CREATE TABLE medication(
+    medication_id BIGINT NOT NULL COMMENT 'The unique ID for a medication.',
+    blood_thinner BOOLEAN COMMENT 'Blood thinner alert flag',
+    brand_name VARCHAR(50) COMMENT 'The medication''s brand name.',
+    controlled BOOLEAN COMMENT 'Controlled substance alert flag',
+    drug_action VARCHAR(50) COMMENT 'The medication''s action on the body.',
+    generic_name VARCHAR(50) COMMENT 'The medication''s generic name.'
+) COMMENT='The information table for medications.';
+
+ALTER TABLE medication ADD CONSTRAINT medication_pk PRIMARY KEY(medication_id);
+ALTER TABLE medication ADD CONSTRAINT medication_uq_brand_name UNIQUE(brand_name);
+
+CREATE TABLE approle (
+    role_id BIGINT NOT NULL COMMENT 'The user\'s role unique ID.',
+    role_level INTEGER NOT NULL COMMENT 'The user\'s role level.',
+    role_title VARCHAR(32) NOT NULL COMMENT 'The title for this database user\'s role',
+    role_description VARCHAR(512) COMMENT 'The description for this database user\'s role',
+    CHECK (role_level <= 20)
+)  COMMENT='The database user role table';
+
+ALTER TABLE approle ADD CONSTRAINT approle_pk PRIMARY KEY(role_id);
+ALTER TABLE approle ADD CONSTRAINT approle_uq_title UNIQUE(role_title);
+
+--  Profile information for a user.
+CREATE TABLE appuser(
+    user_id BIGINT NOT NULL COMMENT 'The unique ID for a user.',
+    dob DATE NOT NULL COMMENT 'The user''s date of birth.',
+    ssn VARCHAR(9) NOT NULL COMMENT 'The user''s social security number.', 
+    admin_comments VARCHAR(300) COMMENT 'System administrator comments.',
+    adv_dir_type VARCHAR(50) COMMENT 'Advance directive type.',
+    adv_directive BOOLEAN COMMENT 'Does the user have an advance directive',
+    city VARCHAR(50) NOT NULL COMMENT 'The user''s city of residence.',
+    date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date for this database user account',
+    doctor_name VARCHAR(100) COMMENT 'The user''s primary care physician.',
+    doctor_phone VARCHAR(10) COMMENT 'The primary care physician''s phone number.',
+    email VARCHAR(320) NOT NULL COMMENT 'The user''s email address.',
+    first_name VARCHAR(32) NOT NULL COMMENT 'The user''s first name.',
+    ins_company VARCHAR(50) COMMENT 'The user''s medical insurance company name.',
+    ins_policy_no VARCHAR(32) COMMENT 'The user''s medical insurance policy number.',
+    is_active BOOLEAN COMMENT 'Is the user''s account active?',
+    is_locked BOOLEAN COMMENT 'Is the user''s account locked?',
+    last_login_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The timestamp of the user last login attempt into the database.',
+    last_name VARCHAR(100) NOT NULL COMMENT 'The user''s last name.',
+    password VARCHAR(72) NOT NULL COMMENT 'The user''s first name.',
+    phone VARCHAR(10) NOT NULL COMMENT 'The user''s phone number.',
+    poc_name VARCHAR(100) NOT NULL COMMENT 'A point of contact for the user.',
+    poc_phone VARCHAR(10) NOT NULL COMMENT 'The phone number for the user''s point of contact.',
+    security_answer VARCHAR(72) NOT NULL COMMENT 'The uniquely generated hash value of the user'' security answer.',
+    security_question VARCHAR(100) NOT NULL COMMENT 'Question enabling the user to re-set a forgotten password.',
+    us_state VARCHAR(2) NOT NULL COMMENT 'The user''s state of residence.',
+    street_address VARCHAR(100) NOT NULL COMMENT 'The user''s street address.',
+    user_comments VARCHAR(300) COMMENT 'User additional comments.',
+    username VARCHAR(320) NOT NULL COMMENT 'The user''s email address.',
+    zipcode VARCHAR(5) NOT NULL COMMENT 'The patient''s zip code number.',
+    role_id BIGINT NOT NULL COMMENT 'The role id of the user.'
+) COMMENT = 'The database user profile table';
+
+ALTER TABLE appuser ADD CONSTRAINT appuser_pk PRIMARY KEY(user_id);
+ALTER TABLE appuser ADD CONSTRAINT appuser_uq_email UNIQUE(email);
+ALTER TABLE appuser ADD CONSTRAINT appuser_uq_username UNIQUE(username);
+ALTER TABLE appuser ADD CONSTRAINT appuser_uq_ssn UNIQUE(ssn);
+ALTER TABLE appuser ADD CONSTRAINT appuser_approle_fk FOREIGN KEY(role_id) REFERENCES approle(role_id);
+
+CREATE TABLE user_allergy(
+    user_id BIGINT NOT NULL COMMENT 'The unique ID for a patient.', 
+    allergy_id BIGINT NOT NULL COMMENT 'The unique ID for an allergy.'
+) COMMENT = 'The information table for the patient''s allergies.';
+
+ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_pk PRIMARY KEY(user_id, allergy_id);
+ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_allergy_fk FOREIGN KEY(allergy_id) REFERENCES allergy(allergy_id);
+ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+
+CREATE TABLE user_illness(
+    user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID.',
+    illness_id BIGINT NOT NULL COMMENT 'The unique ID for the patient''s illness.'
+) COMMENT = 'Information about the patient''s illnesses.';
+
+ALTER TABLE user_illness ADD CONSTRAINT user_illness_pk PRIMARY KEY(user_id, illness_id);
+ALTER TABLE user_illness ADD CONSTRAINT user_illness_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+ALTER TABLE user_illness ADD CONSTRAINT user_illness_illness_fk FOREIGN KEY(illness_id) REFERENCES illness(illness_id);
+
+-- key table for user_med_list
+CREATE TABLE user_medication(
+    user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID',
+    medication_id BIGINT NOT NULL COMMENT 'The medication unique ID.'
+) COMMENT = 'The key table for the user-medication''s list.';
+
+ALTER TABLE user_medication ADD CONSTRAINT user_med_pk PRIMARY KEY(user_id, medication_id);
+ALTER TABLE user_medication ADD CONSTRAINT user_med_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+ALTER TABLE user_medication ADD CONSTRAINT user_med_med_fk FOREIGN KEY(medication_id) REFERENCES medication(medication_id);
+
+CREATE TABLE user_med_list(
+    user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID',
+    medication_id BIGINT NOT NULL COMMENT 'The medication unique ID.', 
+    dosage FLOAT NOT NULL COMMENT 'The amount of medication taken.',
+    frequency VARCHAR(32) NOT NULL COMMENT 'How often the medication is taken (once, twice daily, etc.)'
+) COMMENT = 'The information table for a patient medication.';
+
+ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_pk PRIMARY KEY(medication_id, user_id);
+ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_med_fk FOREIGN KEY(medication_id) REFERENCES medication(medication_id);
+ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);

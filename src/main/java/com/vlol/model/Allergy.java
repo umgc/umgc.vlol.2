@@ -19,6 +19,7 @@
 package com.vlol.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import javax.persistence.*;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
@@ -42,7 +43,7 @@ public class Allergy implements Serializable {
     private String allergyName;
     
     @ManyToMany(mappedBy = "allergies", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set <User> users;
+    private Set <User> users = new HashSet<>();
 
     public Long getAllergyID() {
         return allergyID;

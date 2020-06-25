@@ -1,5 +1,5 @@
 /**
- * Allergy Class Unit Tests.
+ * Allergy class tests.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7

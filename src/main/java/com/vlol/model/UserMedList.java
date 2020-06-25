@@ -21,7 +21,10 @@ package com.vlol.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user_med_list")
@@ -45,14 +48,12 @@ public class UserMedList implements Serializable {
     @NotNull
     private float dosage;
 
-    @Column(name = "frequency")
-    @Digits(integer = 2, fraction = 1, message = "Input is not in the form of a decimal.")
-    @NotNull
-    private int frequency;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "freq_interval", length = 10)
-    private FrequencyInterval freqInterval;
+    @Column(name = "frequency", length = 32)
+    @NotBlank(message = "Frequency of dosage is required.")
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Size(min = 2, max = 100, message = "Input exceeds size limits.")
+    private String frequency;
 
     public float getDosage() {
         return dosage;
@@ -62,19 +63,11 @@ public class UserMedList implements Serializable {
         this.dosage = dosage;
     }
 
-    public int getFrequency() {
+    public String getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(int frequency) {
+    public void setFrequency(String frequency) {
         this.frequency = frequency;
-    }
-
-    public FrequencyInterval getFrequencyInterval() {
-        return freqInterval;
-    }
-
-    public void setFrequencyInterval(FrequencyInterval freqInterval) {
-        this.freqInterval = freqInterval;
     }
 }

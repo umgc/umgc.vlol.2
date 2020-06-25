@@ -22,6 +22,7 @@ import com.vlol.constraint.FieldsValueMatch;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -44,7 +45,7 @@ import org.springframework.format.annotation.DateTimeFormat;
             message = "Email addresses do not match!"
     )
 })
-@Table(name = "vlol_user")
+@Table(name = "appuser")
 public class User implements Serializable {
 
     @Id
@@ -104,7 +105,7 @@ public class User implements Serializable {
     @Size(min = 2, max = 2, message = "Input exceeds size limits.")
     private String state;
 
-    @Column(name = "zip_code", length = 5)
+    @Column(name = "zipcode", length = 5)
     @NotBlank(message = "ZIP Code is required.")
     // Check if US ZIP Code is valid.
     @Pattern(regexp = "^\\d{5}$", message = "Input contains illegal characters.")
@@ -169,19 +170,19 @@ public class User implements Serializable {
     @JoinTable(name = "user_allergy",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "allergy_id"))
-    private Set<Allergy> allergies;
+    private Set<Allergy> allergies = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    @JoinTable(name = "user_condition",
+    @JoinTable(name = "user_illness",
             joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "condition_id"))
-    private Set<Condition> conditions;
+            inverseJoinColumns = @JoinColumn(name = "illness_id"))
+    private Set<Condition> conditions = new HashSet<>();
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(name = "user_medication",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "medication_id"))
-    private Set<Medication> medications;
+    private Set<Medication> medications = new HashSet<>();
 
     @Column(name = "user_comments", length = 300)
     // Check if text is valid per RFC 3986.

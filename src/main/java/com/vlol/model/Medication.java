@@ -19,6 +19,7 @@
 package com.vlol.model;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import javax.persistence.*;
 import java.util.Set;
 import javax.validation.constraints.NotBlank;
@@ -62,7 +63,7 @@ public class Medication implements Serializable {
     private Boolean bloodThinner = false;
 
     @ManyToMany(mappedBy = "medications", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<User> users;
+    private Set<User> users = new HashSet<>();
 
     @OneToMany(mappedBy = "medication")
     Set<UserMedList> userMedList;
