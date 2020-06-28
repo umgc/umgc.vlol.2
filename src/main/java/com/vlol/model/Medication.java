@@ -39,21 +39,21 @@ public class Medication implements Serializable {
     @NotBlank(message = "Brand name is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 2, max = 50, message = "Input exceeds size limits.")
+    @Size(max = 50, message = "Input exceeds size limits.")
     private String brandName;
 
     @Column(name = "generic_name", length = 50)
     @NotBlank(message = "Generic name is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 2, max = 50, message = "Input exceeds size limits.")
+    @Size(max = 50, message = "Input exceeds size limits.")
     private String genericName;
 
     @Column(name = "drug_action", length = 50)
     @NotBlank(message = "Drug action is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 2, max = 50, message = "Input exceeds size limits.")
+    @Size(max = 50, message = "Input exceeds size limits.")
     private String drugAction;
 
     @Column(name = "controlled")

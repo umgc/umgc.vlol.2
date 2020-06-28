@@ -41,7 +41,7 @@ public class Role implements Serializable {
     @NotBlank(message = "Role title is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 2, max = 50, message = "Input exceeds size limits.")
+    @Size(max = 50, message = "Input exceeds size limits.")
     private String title;
 
     @Column(name = "role_level")
@@ -53,7 +53,7 @@ public class Role implements Serializable {
     @Column(name = "role_description", length = 300)
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 2, max = 300, message = "Input exceeds size limits.")
+    @Size(max = 300, message = "Input exceeds size limits.")
     private String description;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)

@@ -461,7 +461,7 @@ public class UserTest {
         System.out.println("getPOCName");
         User instance = new User();
         String expResult = "";
-        String result = instance.getPOCName();
+        String result = instance.getPocName();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -475,7 +475,7 @@ public class UserTest {
         System.out.println("setPOCName");
         String pocName = "";
         User instance = new User();
-        instance.setPOCName(pocName);
+        instance.setPocName(pocName);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -488,7 +488,7 @@ public class UserTest {
         System.out.println("getPOCPhone");
         User instance = new User();
         String expResult = "";
-        String result = instance.getPOCPhone();
+        String result = instance.getPocPhone();
         assertEquals(expResult, result);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
@@ -502,7 +502,7 @@ public class UserTest {
         System.out.println("setPOCPhone");
         String pocPhone = "";
         User instance = new User();
-        instance.setPOCPhone(pocPhone);
+        instance.setPocPhone(pocPhone);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }

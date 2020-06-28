@@ -52,7 +52,7 @@ public class UserMedList implements Serializable {
     @NotBlank(message = "Frequency of dosage is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 2, max = 100, message = "Input exceeds size limits.")
+    @Size(max = 100, message = "Input exceeds size limits.")
     private String frequency;
 
     public float getDosage() {

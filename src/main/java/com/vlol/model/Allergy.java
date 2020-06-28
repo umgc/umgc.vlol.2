@@ -35,15 +35,15 @@ public class Allergy implements Serializable {
     @Column(name = "allergy_id")
     private Long allergyID;
 
-    @Column(name = "allergy_name", length = 50, unique=true)
+    @Column(name = "allergy_name", length = 50, unique = true)
     @NotBlank(message = "Allergy name is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 2, max = 50, message = "Input exceeds size limits.")
+    @Size(max = 50, message = "Input exceeds size limits.")
     private String allergyName;
-    
+
     @ManyToMany(mappedBy = "allergies", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set <User> users = new HashSet<>();
+    private Set<User> users = new HashSet<>();
 
     public Long getAllergyID() {
         return allergyID;
@@ -60,7 +60,7 @@ public class Allergy implements Serializable {
     public void setAllergyName(String allergyName) {
         this.allergyName = allergyName;
     }
-    
+
     public Set<User> getUsers() {
         return users;
     }

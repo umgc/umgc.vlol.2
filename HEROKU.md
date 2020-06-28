@@ -13,3 +13,5 @@ Also make sure that the server port is set to 5000 in the **application.properti
 Then run:
 
     git subtree push --prefix VLOL heroku master
+
+The website is https://warm-hamlet-22515.herokuapp.com/

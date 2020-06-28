@@ -21,42 +21,171 @@
                     <tr>             
                         <td>User Last Name</td>
                         <td>
-                            <input type="text" th:field="*{lastName}" />
+                            <input type="text" th:field="*{lastName}" size="100" />
                         </td>
                     </tr>
                     <tr>             
                         <td>User First Name:</td>
                         <td>
-                            <input type="text" th:field="*{firstName}" />
+                            <input type="text" th:field="*{firstName}" size="50" />
                         </td>
                     </tr>
                     <tr>             
-                        <td>User Role:</td>
+                        <td>User Date of Birth (DOB):</td>
                         <td>
-                            <input type="text" th:field="*{role.title}" readonly="readonly" />
+                            <input type="date" th:field="*{DOB}" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Social Security Number (SSN):</td>
+                        <td>
+                            <input type="number" th:field="*{SSN}" size="9" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Street Address:</td>
+                        <td>
+                            <input type="text" th:field="*{streetAddress}" size="100" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User City:</td>
+                        <td>
+                            <input type="text" th:field="*{city}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User State:</td>
+                        <td>
+                            <input type="text" th:field="*{state}" size="2" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User ZIP Code:</td>
+                        <td>
+                            <input type="text" th:field="*{zipCode}" size="5" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Phone Number:</td>
+                        <td>
+                            <input type="tel" th:field="*{phone}" size="10" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Point of Contact (POC) Name:</td>
+                        <td>
+                            <input type="text" th:field="*{pocName}" size="100" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Point of Contact (POC) Phone Number:</td>
+                        <td>
+                            <input type="tel" th:field="*{pocPhone}" size="10" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Doctor Name:</td>
+                        <td>
+                            <input type="text" th:field="*{doctorName}" size="100" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Doctor Phone Number:</td>
+                        <td>
+                            <input type="tel" th:field="*{doctorPhone}" size="10" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Insurance Company:</td>
+                        <td>
+                            <input type="text" th:field="*{insCompany}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Insurance Policy Number:</td>
+                        <td>
+                            <input type="text" th:field="*{insPolicyNo}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Advance Directive?</td>
+                        <td>
+                            <input type="checkbox" th:field="*{advDirective}" th:value="${user}" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Advance Directive Type:</td>
+                        <td>
+                            <input type="text" th:field="*{advDirType}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Comments:</td>
+                        <td>
+                            <textarea th:field="*{userComments}" rows="4" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <hr />
                         </td>
                     </tr>
                     <tr>             
                         <td>User Email:</td>
                         <td>
-                            <input type="email" th:field="*{email}" />
+                            <input type="email" th:field="*{email}" size="320" />
                         </td>
                     </tr>
+                    <tr>             
+                        <td>User Security Question:</td>
+                        <td>
+                            <input type="text" th:field="*{securityQuestion}" size="100" readonly="readonly" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>Date Created:</td>
+                        <td>
+                            <input type="datetime-local" th:field="*{dateCreated}" />
+                        </td>
+                    </tr>
+
                     <tr>             
                         <td>Last Login:</td>
                         <td>
                             <input type="datetime-local" th:field="*{lastLoginDate}" />
                         </td>
                     </tr>
-                    <tr>
-                        <td colspan="2">
-                            <button type="submit">Save</button>
+                    <tr>             
+                        <td>User Role:</td>
+                        <td>
+                            <select th:field="*{role.title}">
+                                <option value="">Select Role</option>
+                                <option th:each="title : ${titles}" th:value="${role.roleID}" th:text="${role.title}"></option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
                         <td>Active?</td>
                         <td>
                             <input type="checkbox" th:field="*{isActive}" th:value="${user}" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Locked Out?</td>
+                        <td>
+                            <input type="checkbox" th:field="*{isLocked}" th:value="${user}" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>Administrator Comments:</td>
+                        <td>
+                            <textarea th:field="*{adminComments}" rows="4" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button type="submit">Save</button>
                         </td>
                     </tr>
                 </table>

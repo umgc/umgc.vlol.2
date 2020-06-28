@@ -39,7 +39,7 @@ public class Condition implements Serializable {
     @NotBlank(message = "Condition name is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 2, max = 50, message = "Input exceeds size limits.")
+    @Size(max = 50, message = "Input exceeds size limits.")
     private String conditionName;
 
     @ManyToMany(mappedBy = "conditions", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
