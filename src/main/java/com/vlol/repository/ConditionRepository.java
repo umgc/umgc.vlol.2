@@ -29,5 +29,5 @@ import org.springframework.stereotype.Repository;
 public interface ConditionRepository extends JpaRepository<Condition, Long> {
 
     @Query(value = "SELECT c FROM Condition c WHERE lower(c.conditionName) LIKE lower(concat('%', :keyword, '%'))")
-    public List<Condition> search(@Param("keyword") String keyword);
+    public List<Condition> findConditionByKeyword(@Param("keyword") String keyword);
 }

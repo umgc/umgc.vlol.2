@@ -38,13 +38,13 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 public class AllergyController {
-    
+
     @Autowired
     private AllergyService allergyService;
-    
+
     @RequestMapping("/list-allergies")
     public String viewAllergyList(Model model) {
-        List<Allergy> allergyList = allergyService.listAllAllergies();
+        List<Allergy> allergyList = allergyService.getAllAllergies();
         model.addAttribute("allergyList", allergyList);
         return "admin/list-allergies";
     }
@@ -77,8 +77,8 @@ public class AllergyController {
     }
 
     @RequestMapping("/search-allergies")
-    public ModelAndView search(@RequestParam String keyword) {
-        List<Allergy> result = allergyService.searchForAllergy(keyword);
+    public ModelAndView findAllergyByKeyword(@RequestParam String keyword) {
+        List<Allergy> result = allergyService.findAllergyByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-allergies");
         mav.addObject("result", result);
         return mav;

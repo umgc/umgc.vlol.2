@@ -36,8 +36,8 @@ public class AllergyService {
     public AllergyService(AllergyRepository allergyRepository) {
         this.allergyRepository = allergyRepository;
     }
-    
-    public List<Allergy> listAllAllergies() {
+
+    public List<Allergy> getAllAllergies() {
         return allergyRepository.findAll();
     }
 
@@ -53,7 +53,7 @@ public class AllergyService {
         allergyRepository.deleteById(allergyID);
     }
 
-    public List<Allergy> searchForAllergy(String keyword) {
-        return allergyRepository.search(keyword);
+    public List<Allergy> findAllergyByKeyword(String keyword) {
+        return allergyRepository.findAllergyByKeyword(keyword);
     }
 }

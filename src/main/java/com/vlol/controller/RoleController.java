@@ -44,7 +44,7 @@ public class RoleController {
 
     @RequestMapping("/list-roles")
     public String viewRoleList(Model model) {
-        List<Role> roleList = roleService.listAllRoles();
+        List<Role> roleList = roleService.getAllRoles();
         model.addAttribute("roleList", roleList);
         return "admin/list-roles";
     }
@@ -77,8 +77,8 @@ public class RoleController {
     }
 
     @RequestMapping("/search-roles")
-    public ModelAndView search(@RequestParam String keyword) {
-        List<Role> result = roleService.searchForRole(keyword);
+    public ModelAndView findRoleByKeyword(@RequestParam String keyword) {
+        List<Role> result = roleService.findRoleByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-roles");
         mav.addObject("result", result);
         return mav;

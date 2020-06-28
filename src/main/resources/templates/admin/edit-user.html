@@ -159,9 +159,8 @@
                     <tr>             
                         <td>User Role:</td>
                         <td>
-                            <select th:field="*{role.title}">
-                                <option value="">Select Role</option>
-                                <option th:each="title : ${titles}" th:value="${role.roleID}" th:text="${role.title}"></option>
+                            <select th:field="*{role}">
+                                <option th:each="role : ${roles}" th:value="${{role}}" th:text="${role.title}">Choose a Role</option>
                             </select>
                         </td>
                     </tr>

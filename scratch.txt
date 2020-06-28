@@ -1,3 +1,16 @@
+@FieldsValueMatch.List({
+    @FieldsValueMatch(
+            field = "password",
+            fieldMatch = "passwordConfirm",
+            message = "Passwords do not match!"
+    ),
+    @FieldsValueMatch(
+            field = "email",
+            fieldMatch = "username",
+            message = "Email addresses do not match!"
+    )
+})
+
 userID
 roleID
 firstName

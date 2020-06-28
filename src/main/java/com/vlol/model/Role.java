@@ -56,7 +56,7 @@ public class Role implements Serializable {
     @Size(max = 300, message = "Input exceeds size limits.")
     private String description;
 
-    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.ALL)
     private Set<User> users;
 
     public Long getRoleID() {

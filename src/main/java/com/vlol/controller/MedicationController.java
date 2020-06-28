@@ -44,7 +44,7 @@ public class MedicationController {
 
     @RequestMapping("/list-medications")
     public String viewMedicationList(Model model) {
-        List<Medication> medicationList = medicationService.listAllMedications();
+        List<Medication> medicationList = medicationService.getAllMedications();
         model.addAttribute("medicationList", medicationList);
         return "admin/list-medications";
     }
@@ -77,8 +77,8 @@ public class MedicationController {
     }
 
     @RequestMapping("/search-medications")
-    public ModelAndView search(@RequestParam String keyword) {
-        List<Medication> result = medicationService.searchForMedication(keyword);
+    public ModelAndView findMedicationByKeyword(@RequestParam String keyword) {
+        List<Medication> result = medicationService.findMedicationByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-medications");
         mav.addObject("result", result);
         return mav;

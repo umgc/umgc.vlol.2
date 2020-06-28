@@ -23,6 +23,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Application entry class.
+ *
  * @author Rob Garcia <rgarcia92@student.umgc.edu>
  */
 @SpringBootApplication
@@ -30,6 +31,7 @@ public class VlolApplication {
 
     /**
      * Application entry method.
+     *
      * @param args Command-line arguments, if any.
      */
     public static void main(String[] args) {

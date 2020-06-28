@@ -36,8 +36,8 @@ public class ConditionService {
     public ConditionService(ConditionRepository conditionRepository) {
         this.conditionRepository = conditionRepository;
     }
-    
-    public List<Condition> listAllConditions() {
+
+    public List<Condition> getAllConditions() {
         return conditionRepository.findAll();
     }
 
@@ -53,7 +53,7 @@ public class ConditionService {
         conditionRepository.deleteById(conditionID);
     }
 
-    public List<Condition> searchForCondition(String keyword) {
-        return conditionRepository.search(keyword);
+    public List<Condition> findConditionByKeyword(String keyword) {
+        return conditionRepository.findConditionByKeyword(keyword);
     }
 }

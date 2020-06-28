@@ -28,8 +28,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    public User findByEmail(String email);
+    public User findUserByEmail(String email);
 
     @Query(value = "SELECT u FROM User u WHERE lower(u.email) LIKE lower(concat('%', :keyword, '%'))")
-    public List<User> search(@Param("keyword") String keyword);
+    public List<User> findUserByKeyword(@Param("keyword") String keyword);
 }

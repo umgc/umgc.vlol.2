@@ -18,7 +18,9 @@
  */
 package com.vlol.controller;
 
+import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.service.RoleService;
 import com.vlol.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +44,12 @@ public class UserControlller {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private RoleService roleService;
+
     @RequestMapping("/list-users")
     public String viewUserList(Model model) {
-        List<User> userList = userService.listAllUsers();
+        List<User> userList = userService.getAllUsers();
         model.addAttribute("userList", userList);
         return "admin/list-users";
     }
@@ -67,6 +72,8 @@ public class UserControlller {
         ModelAndView mav = new ModelAndView("admin/edit-user");
         User user = userService.getUser(id);
         mav.addObject("user", user);
+        List<Role> roles = roleService.getAllRoles();
+        mav.addObject("roles", roles);
         return mav;
     }
 
@@ -77,8 +84,8 @@ public class UserControlller {
     }
 
     @RequestMapping("/search-users")
-    public ModelAndView search(@RequestParam String keyword) {
-        List<User> result = userService.searchForUser(keyword);
+    public ModelAndView findUserByKeyword(@RequestParam String keyword) {
+        List<User> result = userService.findUserByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-users");
         mav.addObject("result", result);
         return mav;

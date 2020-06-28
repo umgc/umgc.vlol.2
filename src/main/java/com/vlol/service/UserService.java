@@ -18,7 +18,6 @@
  */
 package com.vlol.service;
 
-import com.vlol.model.Role;
 import com.vlol.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,8 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vlol.repository.RoleRepository;
 import com.vlol.repository.UserRepository;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -48,7 +45,7 @@ public class UserService {
     }
 
     public User findUserByEmail(String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.findUserByEmail(email);
     }
 
     public User saveUser(User user) {
@@ -65,7 +62,7 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> listAllUsers() {
+    public List<User> getAllUsers() {
         return userRepository.findAll();
     }
 
@@ -77,7 +74,7 @@ public class UserService {
         userRepository.deleteById(userID);
     }
 
-    public List<User> searchForUser(String keyword) {
-        return userRepository.search(keyword);
+    public List<User> findUserByKeyword(String keyword) {
+        return userRepository.findUserByKeyword(keyword);
     }
 }

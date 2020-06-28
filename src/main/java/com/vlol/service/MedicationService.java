@@ -36,8 +36,8 @@ public class MedicationService {
     public MedicationService(MedicationRepository medicationRepository) {
         this.medicationRepository = medicationRepository;
     }
-    
-    public List<Medication> listAllMedications() {
+
+    public List<Medication> getAllMedications() {
         return medicationRepository.findAll();
     }
 
@@ -53,7 +53,7 @@ public class MedicationService {
         medicationRepository.deleteById(medicationID);
     }
 
-    public List<Medication> searchForMedication(String keyword) {
-        return medicationRepository.search(keyword);
+    public List<Medication> findMedicationByKeyword(String keyword) {
+        return medicationRepository.findMedicationByKeyword(keyword);
     }
 }

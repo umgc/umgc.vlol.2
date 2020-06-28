@@ -18,7 +18,6 @@
  */
 package com.vlol.model;
 
-import com.vlol.constraint.FieldsValueMatch;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -33,18 +32,6 @@ import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@FieldsValueMatch.List({
-    @FieldsValueMatch(
-            field = "password",
-            fieldMatch = "passwordConfirm",
-            message = "Passwords do not match!"
-    ),
-    @FieldsValueMatch(
-            field = "email",
-            fieldMatch = "username",
-            message = "Email addresses do not match!"
-    )
-})
 @Table(name = "appuser")
 public class User implements Serializable {
 
@@ -53,7 +40,7 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private Long userID;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
@@ -72,8 +59,9 @@ public class User implements Serializable {
     private String lastName;
 
     @Column(name = "dob")
-    @NotBlank(message = "DOB is required.")
+    // @NotBlank(message = "DOB is required.")
     @Past(message = "Date must be in the past.")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
     private Date DOB;
 
@@ -234,14 +222,14 @@ public class User implements Serializable {
 
     @Column(name = "date_created")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
-    @NotBlank(message = "Date account created is required.")
+    // @NotBlank(message = "Date account created is required.")
     @PastOrPresent(message = "Date account created cannot be in the future.")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
 
     @Column(name = "last_login_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
-    @NotBlank(message = "Last login date is required.")
+    // @NotBlank(message = "Last login date is required.")
     @PastOrPresent(message = "Last login date cannot be in the future.")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLoginDate;

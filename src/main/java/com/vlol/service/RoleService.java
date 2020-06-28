@@ -36,8 +36,8 @@ public class RoleService {
     public RoleService(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
-    
-    public List<Role> listAllRoles() {
+
+    public List<Role> getAllRoles() {
         return roleRepository.findAll();
     }
 
@@ -53,7 +53,7 @@ public class RoleService {
         roleRepository.deleteById(roleID);
     }
 
-    public List<Role> searchForRole(String keyword) {
-        return roleRepository.search(keyword);
+    public List<Role> findRoleByKeyword(String keyword) {
+        return roleRepository.findRoleByKeyword(keyword);
     }
 }
