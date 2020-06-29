@@ -1,20 +1,7 @@
-/**
- * User class tests.
- *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
- *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
- *
- * @category  com
- * @package vlol
- * @author Mohammed Allibalogun <mohammed.allibalogun@gmail.com>
- * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
  */
 package com.vlol.model;
 
@@ -27,6 +14,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
+/**
+ *
+ * @author Rob
+ */
 public class UserTest {
     
     public UserTest() {
@@ -63,14 +54,14 @@ public class UserTest {
     }
 
     /**
-     * Test of setUserId method, of class User.
+     * Test of setUserID method, of class User.
      */
     @Test
-    public void testSetUserId() {
-        System.out.println("setUserId");
+    public void testSetUserID() {
+        System.out.println("setUserID");
         Long userID = null;
         User instance = new User();
-        instance.setUserId(userID);
+        instance.setUserID(userID);
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
@@ -454,11 +445,11 @@ public class UserTest {
     }
 
     /**
-     * Test of getPOCName method, of class User.
+     * Test of getPocName method, of class User.
      */
     @Test
-    public void testGetPOCName() {
-        System.out.println("getPOCName");
+    public void testGetPocName() {
+        System.out.println("getPocName");
         User instance = new User();
         String expResult = "";
         String result = instance.getPocName();
@@ -468,11 +459,11 @@ public class UserTest {
     }
 
     /**
-     * Test of setPOCName method, of class User.
+     * Test of setPocName method, of class User.
      */
     @Test
-    public void testSetPOCName() {
-        System.out.println("setPOCName");
+    public void testSetPocName() {
+        System.out.println("setPocName");
         String pocName = "";
         User instance = new User();
         instance.setPocName(pocName);
@@ -481,11 +472,11 @@ public class UserTest {
     }
 
     /**
-     * Test of getPOCPhone method, of class User.
+     * Test of getPocPhone method, of class User.
      */
     @Test
-    public void testGetPOCPhone() {
-        System.out.println("getPOCPhone");
+    public void testGetPocPhone() {
+        System.out.println("getPocPhone");
         User instance = new User();
         String expResult = "";
         String result = instance.getPocPhone();
@@ -495,11 +486,38 @@ public class UserTest {
     }
 
     /**
-     * Test of setPOCPhone method, of class User.
+     * Test of setUserAgentID method, of class User.
      */
     @Test
-    public void testSetPOCPhone() {
-        System.out.println("setPOCPhone");
+    public void testSetUserAgentID() {
+        System.out.println("setUserAgentID");
+        Long userAgentID = null;
+        User instance = new User();
+        instance.setUserAgentID(userAgentID);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getUserAgentID method, of class User.
+     */
+    @Test
+    public void testGetUserAgentID() {
+        System.out.println("getUserAgentID");
+        User instance = new User();
+        Long expResult = null;
+        Long result = instance.getUserAgentID();
+        assertEquals(expResult, result);
+        // TODO review the generated test code and remove the default call to fail.
+        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of setPocPhone method, of class User.
+     */
+    @Test
+    public void testSetPocPhone() {
+        System.out.println("setPocPhone");
         String pocPhone = "";
         User instance = new User();
         instance.setPocPhone(pocPhone);

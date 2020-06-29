@@ -94,6 +94,7 @@ CREATE TABLE appuser(
     security_question VARCHAR(100) NOT NULL COMMENT 'Question enabling the user to re-set a forgotten password.',
     us_state VARCHAR(2) NOT NULL COMMENT 'The user''s state of residence.',
     street_address VARCHAR(100) NOT NULL COMMENT 'The user''s street address.',
+    user_agent_id BIGINT COMMENT 'The User ID of the user''s agent.',
     user_comments VARCHAR(300) COMMENT 'User additional comments.',
     username VARCHAR(320) NOT NULL COMMENT 'The user''s email address.',
     zipcode VARCHAR(5) NOT NULL COMMENT 'The patient''s zip code number.',

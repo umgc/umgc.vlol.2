@@ -142,6 +142,9 @@ public class User implements Serializable {
     @Size(min = 10, max = 10, message = "Input exceeds size limits.")
     private String pocPhone;
 
+    @Column(name = "user_agent_id")
+    private Long userAgentID;
+    
     @Column(name = "doctor_name", length = 100)
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
@@ -253,7 +256,7 @@ public class User implements Serializable {
         return userID;
     }
 
-    public void setUserId(Long userID) {
+    public void setUserID(Long userID) {
         this.userID = userID;
     }
 
@@ -381,6 +384,14 @@ public class User implements Serializable {
         return pocPhone;
     }
 
+    public void setUserAgentID(Long userAgentID) {
+        this.userAgentID = userAgentID;
+    }
+
+    public Long getUserAgentID() {
+        return userAgentID;
+    }
+    
     public void setPocPhone(String pocPhone) {
         this.pocPhone = pocPhone;
     }
