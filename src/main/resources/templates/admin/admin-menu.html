@@ -2,28 +2,119 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <head>
+    	<link rel="stylesheet" th:href="@{/css/site.css}"/>
+    	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Main Menu</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Virtual Letter of Life</title>
     </head>
+    
+    
     <body>
-        <div align="center">
-            <h1>Administration Menu</h1>
-            <br />
-            <a href="/list-allergies">Allergy Management Page</a>
-            <br />
-            <a href="/list-conditions">Condition Management Page</a>
-            <br />
-            <a href="/list-medications">Medication Management Page</a>
-            <br />
-            <a href="/list-roles">Role Management Page</a>
-            <br />
-            <a href="/list-users">User Management Page</a>
-            <br />
-            <a href="/console">H2 Console Portal</a>
-            <br />
-            <br />
-            <a href="/">Return to Home Page</a>
-        </div>
+    
+    <!-- -------------- Nav Bar ------------------------ -->
+	<!-- ----------------------------------------------- -->
+  
+    		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    			<div class="container">
+    				<a class="navbar-brand" href="/">VLOL</a>
+    				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    	<span class="navbar-toggler-icon"></span>
+                	</button>
+                
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    
+
+				<ul class="navbar-nav">
+    				<li class="nav-item">
+        				<a class="nav-link text-dark" id="register" href="/Identity/Account/Register">Register</a>
+    				</li>
+    				<li class="nav-item">
+        				<a class="nav-link text-dark" id="login" href="/login">Login</a>
+    				</li>
+				</ul>
+
+                 <ul class="navbar-nav flex-grow-1">
+                 	<li class="nav-item">
+                    	<a class="nav-link text-dark" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/admin-menu">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/contact">Contact</a>
+                    </li>
+                   </ul>
+                </div>
+    			</div>
+    		</nav>
+    	</header>
+    	
+    	<!-- ----------------- End Nav Bar ---------------- -->
+		<!-- ---------------------------------------------- -->
+		
+		<!-- ----------------- Content ---------------- -->
+		<!-- ------------------------------------------ -->
+		
+        <div class="container">
+	        <main role="main" class="pb-3">
+		        <div class="container">
+				    <div class="row">
+					    <div class="col-sm-3">
+					    		<br><br>
+						    	<br><br>
+						    	<a href="/list-allergies">Allergy Management Page</a>
+					            <br />
+					            <a href="/list-conditions">Condition Management Page</a>
+					            <br />
+					            <a href="/list-medications">Medication Management Page</a>
+					            <br />
+					            <a href="/list-roles">Role Management Page</a>
+					            <br />
+					            <a href="/list-users">User Management Page</a>
+					            <br />
+					            <a href="/console">H2 Console Portal</a>
+					            <br />
+					            <br />
+					            <a href="/">Return to Home Page</a>
+					    </div>
+				    
+					    <div class="col-sm-9">
+						    <div align="center">
+							    <h1>Administration Menu</h1>
+							    <br><br>
+							    <p>Content goes here.</p>
+							    <br><br>
+							    <br><br>
+							</div>
+					    </div>
+				    </div>
+				</div>
+	
+	        </main>
+    	</div>
+    
+    	<!-- ----------------- End Content ---------------- -->
+		<!-- ---------------------------------------------- -->
+    
+           
+        <!-- ----------------- Footer ---------------- -->
+		<!-- ----------------------------------------- -->
+
+		<footer class="border-top footer text-muted">
+	        <div class="container">
+	            © 2020 - VLOL - <a href="/">Home</a> | <a href="/about">About</a> | <a href="/contact">Contact</a>
+	        </div>
+    	</footer>
+    
+		<!-- ----------------- End Footer ---------------- -->
+		<!-- ----------------------------------------- -->
+		
+		<script src="/lib/jquery/dist/jquery.min.js"></script>
+		<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="/js/site.js?v=dLGP40S79Xnx6GqUthRF6NWvjvhQ1nOvdVSwaNcgG18"></script>
     </body>
 </html>
