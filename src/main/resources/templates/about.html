@@ -2,13 +2,123 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
     <head>
+    	<link rel="stylesheet" th:href="@{/css/site.css}"/>
+    	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>About Page</title>
+        <title>Virtual Letter of Life</title>
     </head>
     <body>
-        <h1>About Page</h1>
-        <br />
-        <a href="/">Return to Home Page</a>
+    	<header>
+    		<!-- -------------- Nav Bar ------------------------ -->
+		  	<!-- ----------------------------------------------- -->
+  
+    		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    			<div class="container">
+    				<a class="navbar-brand" href="/">VLOL</a>
+    				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    	<span class="navbar-toggler-icon"></span>
+                	</button>
+                
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    
+
+				<ul class="navbar-nav">
+    				<li class="nav-item">
+        				<a class="nav-link text-dark" id="register" href="/Identity/Account/Register">Register</a>
+    				</li>
+    				<li class="nav-item">
+        				<a class="nav-link text-dark" id="login" href="/login">Login</a>
+    				</li>
+				</ul>
+
+                 <ul class="navbar-nav flex-grow-1">
+                 	<li class="nav-item">
+                    	<a class="nav-link text-dark" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/admin-menu">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/contact">Contact</a>
+                    </li>
+                   </ul>
+                </div>
+    			</div>
+    		</nav>
+    	</header>
+    	<!-- ----------------- End Nav Bar ---------------- -->
+		<!-- ---------------------------------------------- -->
+		
+		<!-- ----------------- Content ---------------- -->
+		<!-- ------------------------------------------ -->
+		
+        <div class="container">
+        	<main role="main" class="pb-3">
+       			<div class="container">
+    				<div class="row">
+        				<div class="col-sm-3">
+				            <img src="/img/vlol_logo.png" style="width:100%;">
+				            <br>
+				            <img src="/img/umgc_logo.png" style="width:100%;">
+        				</div>
+        				<div class="col-sm-9">
+					        	<h1>About the Virtual Letter of Life Project</h1>
+					        	<p>On May 20, 2020, the Salisbury Fire Department published a Request For Proposal (RFP) through the City of Salisbury's GovQuote web portal. Team 3, SWEN 670 (Summer), at the University of Maryland, Global Campus (UMGC), responded to the proposal the next day.</p>
+					        	<p>The Salisbury Fire Department's <b>Business Problem</b> and <b>Desired Outcomes</b> were:</p>
+					        	<p>
+					        	<em>"We are searching for a system that will allow emergency medical services (EMS) to retrieve the medical information contained in a patient's <a href="https://salisbury.md/departments/fire/letter-of-life" title="Letter of Life">"Letter of Life"</a> at any location.</em>
+					        	</p>
+					        	<p>
+					        	<em>"In an emergency, the Letter of Life provides responders with a list of pertinent medical conditions and illnesses when the patient cannot provide this information on their own. We recommend all residents, especially the elderly and those suffering from chronic medical conditions, to complete a "Letter of Life" and place it in a location easily accessible by EMS personnel, such as on a refrigerator or by the entry door to the residence. However, when an emergency occurs outside the home, EMS personnel cannot access this list, which is why we are searching for an easily accessible, cloud-based version of the letter.</em>
+					        	</p>
+					        	<p>
+					        	<em>"Our desired outcomes are:</em>
+					        	</p><ul>
+					        		<li><em>Provide EMS personnel access to a patient's Letter of Life information, from a laptop and mobile device, through a secure, but easily navigable interface.</em></li>
+					        		<li><em>Allow EMS personnel to scan a barcode or quick response (QR) code, found on a non-electronic token, such as a card, a bracelet, or necklace, and retrieve Letter of Life information for non-responsive patients.</em></li>
+					        		<li><em>Allow patients and authorized users to create, read, update, and delete records, from a desktop or laptop computer, through a secure, but easily navigable administration interface.</em></li>
+					        		<li><em>Allow patients and authorized users to print Letters of Life or save them in portable data format (PDF).</em></li>
+					        	</ul>
+					        	<p></p>
+						     	<p>
+						     	This web site demonstrates how we satisfied the client's business problem and how we met each desired outcome.
+						        </p>
+						        <br>
+						        <a href="/">Return to Home Page</a>
+						        <br>
+						        <br><a>
+						        <br><br>
+						        
+        				</div>
+    				</div>
+				</div>
+
+
+       		</main>
+    	</div>
+        
+        <!-- ----------------- End Content ---------------- -->
+		<!-- --------------------------------------- -->
+		
+		<!-- ----------------- Footer ---------------- -->
+		<!-- ----------------------------------------- -->
+
+		<footer class="border-top footer text-muted">
+	        <div class="container">
+	            © 2020 - VLOL - <a href="/">Home</a> | <a href="/about">About</a> | <a href="/contact">Contact</a>
+	        </div>
+    	</footer>
+    
+		<!-- ----------------- End Footer ---------------- -->
+		<!-- ----------------------------------------- -->
+		
+		<script src="/lib/jquery/dist/jquery.min.js"></script>
+		<script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="/js/site.js?v=dLGP40S79Xnx6GqUthRF6NWvjvhQ1nOvdVSwaNcgG18"></script>
+        
     </body>
 </html>
