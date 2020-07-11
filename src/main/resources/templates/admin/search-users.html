@@ -31,7 +31,7 @@
                         <td th:text="${user.role.title}">User Role</td>
                         <td th:text="${user.email}">User Email</td>
                         <td th:text="${user.lastLoginDate}">Last Login</td>
-                        <td th:text="${user.active}">Active?</td>
+                        <td th:text="${user.isActive}">Active?</td>
                         <td>
                             <a th:href="@{/edit-user/{id}(id=${user.userID})}">Edit</a>
                             &nbsp;&nbsp;&nbsp;

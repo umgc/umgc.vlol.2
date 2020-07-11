@@ -30,6 +30,27 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findUserByEmail(String email);
 
-    @Query(value = "SELECT u FROM User u WHERE lower(u.email) LIKE lower(concat('%', :keyword, '%'))")
+    @Query(value = "SELECT u FROM User u WHERE lower(u.firstName) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.lastName) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.SSN) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.streetAddress) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.city) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.state) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.zipCode) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.phone) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.email) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.insCompany) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.insPolicyNo) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.advDirType) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.doctorName) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.doctorPhone) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.userComments) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.username) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.securityQuestion) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.adminComments) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.DOB) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.dateCreated) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.lastLoginDate) LIKE lower(concat('%', :keyword, '%'))"
+    )
     public List<User> findUserByKeyword(@Param("keyword") String keyword);
 }

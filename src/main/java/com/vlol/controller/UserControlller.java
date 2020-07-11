@@ -66,6 +66,12 @@ public class UserControlller {
         userService.saveUser(user);
         return "redirect:/list-users";
     }
+    
+    @RequestMapping(value = "/update-user", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("user") User user) {
+        userService.updateUser(user);
+        return "redirect:/list-users";
+    }
 
     @RequestMapping("/edit-user/{id}")
     public ModelAndView viewEditUserPage(@PathVariable(name = "id") int id) {

@@ -62,6 +62,15 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User updateUser(User user) {
+        Long id = user.getUserID();
+        User u = this.getUser(id);
+        user.setPassword(u.getPassword());
+        user.setSecurityAnswer(u.getSecurityAnswer());
+        user.setUsername(u.getUsername());
+        return userRepository.save(user);
+    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
