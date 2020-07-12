@@ -80,6 +80,8 @@ public class UserControlller {
         mav.addObject("user", user);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
+        List<User> agents = userService.getAllUsers();
+        mav.addObject("agents", agents);
         return mav;
     }
 

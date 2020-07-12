@@ -24,7 +24,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
@@ -143,8 +145,8 @@ public class User implements Serializable {
     private String pocPhone;
 
     @Column(name = "user_agent_id")
-    private Long userAgentID;
-    
+    private Long userAgentNo;
+
     @Column(name = "doctor_name", length = 100)
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
@@ -384,16 +386,16 @@ public class User implements Serializable {
         return pocPhone;
     }
 
-    public void setUserAgentID(Long userAgentID) {
-        this.userAgentID = userAgentID;
-    }
-
-    public Long getUserAgentID() {
-        return userAgentID;
-    }
-    
     public void setPocPhone(String pocPhone) {
         this.pocPhone = pocPhone;
+    }
+
+    public Long getuserAgentNo() {
+        return userAgentNo;
+    }
+
+    public void setuserAgentNo(Long userAgentNo) {
+        this.userAgentNo = userAgentNo;
     }
 
     public String getDoctorName() {

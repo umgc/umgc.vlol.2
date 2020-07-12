@@ -87,7 +87,10 @@
                     <tr>             
                         <td>User Agent ID Number:</td>
                         <td>
-                            <input type="number" th:field="*{userAgentID}" min="1" />
+                            <select th:field="*{userAgentNo}">
+                                <option value="">None</option>
+                                <option th:each="agent : ${agents}" th:value="${agent.userID}" th:text="${agent.userID} + ': ' + ${agent.firstName} + ' ' + ${agent.lastName}">Choose a User Agent</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>             
