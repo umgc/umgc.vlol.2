@@ -9,7 +9,28 @@
     </head>
     <body th:onload="warning()">
         <h1>Login Page</h1>
-        <br />
+        <form action="login" method="POST">
+            <span th:text="${message}"></span>
+            <span th:text="${error}"></span>
+            <table>
+                <tr>
+                    <td>User:</td>
+                    <td><input type="text" name="username" placeholder="Username" autofocus="autofocus" /></td>
+                </tr>
+                <tr>
+                    <td>Password:</td>
+                    <td><input type="password" name="password" placeholder="Password" /></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><input name="submit" type="submit" value="submit" /></td>
+                </tr>
+            </table>
+            <a href="/registration">Create an account</a>
+        </form>
+        <br/>
         <a href="/">Return to Home Page</a>
     </body>
 </html>

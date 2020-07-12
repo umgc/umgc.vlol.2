@@ -10,7 +10,7 @@
  *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
  * @category  vlol
- * @package configuration
+ * @package controller
  * @author Rob Garcia <rgarcia92@student.umgc.edu>
  * @license https://opensource.org/licenses/MIT The MIT License
  * @link      https://github.com/garciart/SWEN670
@@ -59,16 +59,6 @@ public class VlolController {
     @GetMapping("/contact")
     public String viewContactPage(Model model) {
         return "contact";
-    }
-
-    @GetMapping("/login")
-    public String viewLoginPage(Model model) {
-        return "login";
-    }
-
-    @GetMapping("/registration")
-    public String viewRegistrationPage(Model model) {
-        return "registration";
     }
 
     @GetMapping("/access-denied")

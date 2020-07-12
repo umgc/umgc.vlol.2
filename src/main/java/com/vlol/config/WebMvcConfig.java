@@ -54,17 +54,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
     }
 
     /**
-     * Instantiates the BCryptPasswordEncoder.
-     *
-     * @return The bCryptPasswordEncoder object.
-     */
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
-    }
-
-    /**
      * Instantiates a servlet to allow access to the h2 database console
      * (https://[website]/console)
      *

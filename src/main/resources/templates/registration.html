@@ -4,11 +4,39 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Registration Page</title>
+        <title>Registration Page Baba Booey</title>
     </head>
     <body>
-        <h1>Registration Page</h1>
-        <br />
-        <a href="/">Return to Home Page</a>
+        <div class="container">
+            <form:form method="POST" modelAttribute="userForm">
+            <h1>Registration Page</h1>
+                <spring:bind path="username">
+                    <div>
+                        <form:input type="text" path="username" placeholder="Username" autofocus="true">
+                        </form:input>
+                        <form:errors path="username"></form:errors>
+                    </div>
+                </spring:bind>
+
+                <spring:bind path="password">
+                    <div>
+                        <form:input type="password" path="password" placeholder="Password"></form:input>
+                        <form:errors path="password"></form:errors>
+                    </div>
+                </spring:bind>
+
+                <spring:bind path="passwordConfirm">
+                    <div>
+                        <form:input type="password" path="passwordConfirm"
+                                    placeholder="Confirm your password"></form:input>
+                        <form:errors path="passwordConfirm"></form:errors>
+                    </div>
+                </spring:bind>
+
+                <button type="submit">Submit</button>
+            </form:form>
+            <br />
+            <a href="/">Return to Home Page</a>
+        </div>
     </body>
 </html>
