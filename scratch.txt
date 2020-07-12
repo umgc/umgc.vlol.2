@@ -39,3 +39,61 @@ lastLoginDate
 adminComments
 isActive
 isLocked
+
+         1         2         3         4         5         6         7         8         9         0  
+1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijkl
+mnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMN
+OPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZab
+cdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABCD
+EFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop
+qrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
+
+testGetAllergyID
+1
+
+testGetAllergyIDNegative
+-1
+
+testGetAllergyIDNull
+null
+
+testGetAllergyIDOutOfRange
+Long.MAX_VALUE + 1
+
+testSetAllergyID
+1
+
+testSetAllergyIDNegative
+-1
+
+testSetAllergyIDNull
+null
+
+testSetAllergyIDOutOfRange
+Long.MAX_VALUE + 1
+
+testGetAllergyName
+Latex
+
+testGetAllergyNameBlank
+
+
+testGetAllergyNameInvalid
+<script>alert("This is an attack!");</script>
+
+testGetAllergyNameOverflow
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
+
+testSetAllergyName
+Latex
+
+testSetAllergyNameBlank
+
+
+testSetAllergyNameInvalid
+<script>alert("This is an attack!");</script>
+
+testSetAllergyNameOverflow
+ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz

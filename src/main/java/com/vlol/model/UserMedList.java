@@ -45,7 +45,7 @@ public class UserMedList implements Serializable {
 
     @Column(name = "dosage")
     @Digits(integer = 6, fraction = 2, message = "Input is not in the form of a decimal.")
-    @NotNull
+    @NotNull(message = "Value cannot be null.")
     private float dosage;
 
     @Column(name = "frequency", length = 32)

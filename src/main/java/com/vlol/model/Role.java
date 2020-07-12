@@ -22,6 +22,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -35,6 +36,8 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
+    @Min(value = 1, message = "Value must be greater than 1.")
+    @NotNull(message = "Value cannot be null.")
     private Long roleID;
 
     @Column(name = "role_title", length = 50, unique = true)
@@ -46,9 +49,10 @@ public class Role implements Serializable {
 
     @Column(name = "role_level")
     @Max(value = 20, message = "Access level must be between 1 and 20.")
-    @NotNull(message = "Access level is required.")
+    @Min(value = 1, message = "Access level must be between 1 and 20.")
+    @NotNull(message = "Value cannot be null.")
     @Positive(message = "Access level must be between 1 and 20.")
-    private int accessLevel;
+    private Integer accessLevel;
 
     @Column(name = "role_description", length = 300)
     // Check if text is valid per RFC 3986.
@@ -75,11 +79,11 @@ public class Role implements Serializable {
         this.title = title;
     }
 
-    public int getAccessLevel() {
+    public Integer getAccessLevel() {
         return accessLevel;
     }
 
-    public void setAccessLevel(int accessLevel) {
+    public void setAccessLevel(Integer accessLevel) {
         this.accessLevel = accessLevel;
     }
 
