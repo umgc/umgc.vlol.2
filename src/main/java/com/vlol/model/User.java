@@ -24,7 +24,9 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
@@ -38,6 +40,8 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
+    @Min(value = 1, message = "Value must be greater than 1.")
+    @NotNull(message = "Value cannot be null.")
     private Long userID;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -388,11 +392,11 @@ public class User implements Serializable {
         this.pocPhone = pocPhone;
     }
 
-    public Long getuserAgentNo() {
+    public Long getUserAgentNo() {
         return userAgentNo;
     }
 
-    public void setuserAgentNo(Long userAgentNo) {
+    public void setUserAgentNo(Long userAgentNo) {
         this.userAgentNo = userAgentNo;
     }
 

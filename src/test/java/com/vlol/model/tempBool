@@ -1,0 +1,53 @@
+    /**
+     * Passing test for the getAdvDirective method, of class User.
+     */
+    @Test
+    public void testGetAdvDirective() {
+        System.out.println("getAdvDirective Test (Passing value)");
+        Boolean expResult = Boolean.FALSE;
+        Boolean result = user.getAdvDirective();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setAdvDirective method, of class User.
+     */
+    @Test
+    public void testSetAdvDirective() {
+        System.out.println("setAdvDirective Test (Passing value)");
+        Boolean advDirective = Boolean.TRUE;
+        user.setAdvDirective(advDirective);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Null value test for the setAdvDirective method, of class User.
+     */
+    @Test
+    public void testSetAdvDirectiveNull() {
+        System.out.println("setAdvDirective Test (Null value)");
+        Boolean advDirective = null;
+        user.setAdvDirective(advDirective);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }

@@ -1,0 +1,91 @@
+    /**
+     * Passing test for the getDOB method, of class User.
+     */
+    @Test
+    public void testGetDOB() throws ParseException {
+        System.out.println("getDOB Test (Passing value)");
+        Date expResult = new SimpleDateFormat("yyyy-MM-dd").parse("1955-11-05");
+        Date result = user.getDOB();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setDOB method, of class User.
+     */
+    @Test
+    public void testSetDOB() throws ParseException {
+        System.out.println("setDOB Test (Passing value)");
+        Date dob = new SimpleDateFormat("yyyy-MM-dd").parse("1955-11-05");
+        user.setDOB(dob);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Future value test for the setDOB method, of class User.
+     */
+    @Test
+    public void testSetDOBFuture() {
+        System.out.println("setDOB Test (Future value)");
+        long millis = System.currentTimeMillis();  
+        java.sql.Date date = new java.sql.Date(millis + 60000);
+        Date dob = date;
+        user.setDOB(dob);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Null value test for the setDOB method, of class User.
+     */
+    @Test
+    public void testSetDOBNull() {
+        System.out.println("setDOB Test (Null value)");
+        Date dob = null;
+        user.setDOB(dob);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Out of Range value test for the setDOB method, of class User.
+     */
+    @Test
+    public void testSetDOBOutOfRange() throws ParseException {
+        System.out.println("setDOB Test (Out of Range value)");
+        Date dob = new SimpleDateFormat("yyyy-MM-dd").parse("1955-13-05");
+        user.setDOB(dob);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }

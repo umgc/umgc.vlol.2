@@ -74,7 +74,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertEquals(expResult, result);
@@ -92,7 +92,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertTrue(violations.isEmpty());
@@ -110,7 +110,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertFalse(violations.isEmpty());
@@ -128,7 +128,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertFalse(violations.isEmpty());
@@ -146,7 +146,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertFalse(violations.isEmpty());
@@ -164,7 +164,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertEquals(expResult, result);
@@ -182,7 +182,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertTrue(violations.isEmpty());
@@ -200,7 +200,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertFalse(violations.isEmpty());
@@ -218,7 +218,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertFalse(violations.isEmpty());
@@ -236,7 +236,7 @@ public class AllergyTest {
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
         if (!violations.isEmpty()) {
-            System.out.println("Violation: " + message);
+            System.out.println("Violation caught: " + message);
         }
         // Test method
         assertFalse(violations.isEmpty());

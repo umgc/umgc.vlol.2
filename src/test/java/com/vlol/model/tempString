@@ -1,0 +1,89 @@
+    /**
+     * Passing test for the getPocPhone method, of class User.
+     */
+    @Test
+    public void testGetPocPhone() {
+        System.out.println("getPocPhone Test (Passing value)");
+        String expResult = "participant";
+        String result = user.getPocPhone();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setPocPhone method, of class User.
+     */
+    @Test
+    public void testSetPocPhone() {
+        System.out.println("setPocPhone Test (Passing value)");
+        String pocPhone = "participant";
+        user.setPocPhone(pocPhone);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Blank value test for the setPocPhone method, of class User.
+     */
+    @Test
+    public void testSetPocPhoneBlank() {
+        System.out.println("setPocPhone Test (Blank value)");
+        String pocPhone = "";
+        user.setPocPhone(pocPhone);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setPocPhone method, of class User.
+     */
+    @Test
+    public void testSetPocPhoneInvalid() {
+        System.out.println("setPocPhone Test (Injection value)");
+        String pocPhone = "<script>alert(\"This is an attack!\");</script>";
+        user.setPocPhone(pocPhone);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setPocPhone method, of class User.
+     */
+    @Test
+    public void testSetPocPhoneOverflow() {
+        System.out.println("setPocPhone Test (Overflow value)");
+        String pocPhone = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        user.setPocPhone(pocPhone);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
