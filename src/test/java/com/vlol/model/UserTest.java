@@ -65,28 +65,26 @@ public class UserTest {
         user.setState("MD");
         user.setZipCode("21801");
         user.setPhone("4108675309");
-        user.setEmail("rgarcia@rgprogramming.com");
+        user.setEmail("jdoe@vlol.com");
         user.setInsCompany("TRICARE");
         user.setInsPolicyNo("A123456789");
         user.setAdvDirective(Boolean.TRUE);
         user.setAdvDirType("MOLST");
-        user.setPocName("Emmett Brown");
-        user.setPocPhone("4105555555");
+        user.setPOCName("Emmett Brown");
+        user.setPOCPhone("4105555555");
         user.setUserAgentNo(1l);
-        /*
-        user.setDoctorName(doctorName);
-        user.setDoctorPhone(doctorPhone);
-        user.setUserComments(userComments);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setSecurityQuestion(securityQuestion);
-        user.setSecurityAnswer(securityAnswer);
-        user.setDateCreated(dateCreated);
-        user.setLastLoginDate(lastLoginDate);
-        user.setAdminComments(adminComments);
+        user.setDoctorName("Emmett Brown");
+        user.setDoctorPhone("4105555555");
+        user.setUserComments("I usually use 2 lpm O2.");
+        user.setUsername("jdoe@vlol.com");
+        user.setPassword("$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.");
+        user.setSecurityQuestion("Favorite numbers.");
+        user.setSecurityAnswer("$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.");
+        user.setDateCreated(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-11-05 06:00:00"));
+        user.setLastLoginDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-11-05 06:00:00"));
+        user.setAdminComments("John is a program participant.");
         user.setIsActive(Boolean.TRUE);
         user.setIsLocked(Boolean.FALSE);
-         */
         // Setup validation of each method's validation annotations
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -645,7 +643,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getCity method, of class User.
      */
@@ -735,7 +733,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getState method, of class User.
      */
@@ -825,7 +823,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getZipCode method, of class User.
      */
@@ -915,7 +913,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getPhone method, of class User.
      */
@@ -1005,14 +1003,14 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getEmail method, of class User.
      */
     @Test
     public void testGetEmail() {
         System.out.println("getEmail Test (Passing value)");
-        String expResult = "rgarcia@rgprogramming.com";
+        String expResult = "jdoe@vlol.com";
         String result = user.getEmail();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
@@ -1030,7 +1028,7 @@ public class UserTest {
     @Test
     public void testSetEmail() {
         System.out.println("setEmail Test (Passing value)");
-        String email = "rgarcia@rgprogramming.com";
+        String email = "jdoe@vlol.com";
         user.setEmail(email);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
@@ -1095,7 +1093,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getInsCompany method, of class User.
      */
@@ -1185,7 +1183,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getInsPolicyNo method, of class User.
      */
@@ -1275,7 +1273,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getAdvDirective method, of class User.
      */
@@ -1329,7 +1327,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getAdvDirType method, of class User.
      */
@@ -1419,15 +1417,15 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
-     * Passing test for the getPocName method, of class User.
+     * Passing test for the getPOCName method, of class User.
      */
     @Test
-    public void testGetPocName() {
-        System.out.println("getPocName Test (Passing value)");
+    public void testGetPOCName() {
+        System.out.println("getPOCName Test (Passing value)");
         String expResult = "Emmett Brown";
-        String result = user.getPocName();
+        String result = user.getPOCName();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1439,13 +1437,13 @@ public class UserTest {
     }
 
     /**
-     * Passing test for the setPocName method, of class User.
+     * Passing test for the setPOCName method, of class User.
      */
     @Test
-    public void testSetPocName() {
-        System.out.println("setPocName Test (Passing value)");
+    public void testSetPOCName() {
+        System.out.println("setPOCName Test (Passing value)");
         String pocName = "Emmett Brown";
-        user.setPocName(pocName);
+        user.setPOCName(pocName);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1457,13 +1455,13 @@ public class UserTest {
     }
 
     /**
-     * Blank value test for the setPocName method, of class User.
+     * Blank value test for the setPOCName method, of class User.
      */
     @Test
-    public void testSetPocNameBlank() {
-        System.out.println("setPocName Test (Blank value)");
+    public void testSetPOCNameBlank() {
+        System.out.println("setPOCName Test (Blank value)");
         String pocName = "";
-        user.setPocName(pocName);
+        user.setPOCName(pocName);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1475,13 +1473,13 @@ public class UserTest {
     }
 
     /**
-     * Invalid value test for the setPocName method, of class User.
+     * Invalid value test for the setPOCName method, of class User.
      */
     @Test
-    public void testSetPocNameInvalid() {
-        System.out.println("setPocName Test (Injection value)");
+    public void testSetPOCNameInvalid() {
+        System.out.println("setPOCName Test (Injection value)");
         String pocName = "<script>alert(\"This is an attack!\");</script>";
-        user.setPocName(pocName);
+        user.setPOCName(pocName);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1493,14 +1491,14 @@ public class UserTest {
     }
 
     /**
-     * Overflow value test for the setPocName method, of class User.
+     * Overflow value test for the setPOCName method, of class User.
      */
     @Test
-    public void testSetPocNameOverflow() {
-        System.out.println("setPocName Test (Overflow value)");
+    public void testSetPOCNameOverflow() {
+        System.out.println("setPOCName Test (Overflow value)");
         String pocName = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                 + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        user.setPocName(pocName);
+        user.setPOCName(pocName);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1510,15 +1508,15 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
-     * Passing test for the getPocPhone method, of class User.
+     * Passing test for the getPOCPhone method, of class User.
      */
     @Test
-    public void testGetPocPhone() {
-        System.out.println("getPocPhone Test (Passing value)");
+    public void testGetPOCPhone() {
+        System.out.println("getPOCPhone Test (Passing value)");
         String expResult = "4105555555";
-        String result = user.getPocPhone();
+        String result = user.getPOCPhone();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1530,13 +1528,13 @@ public class UserTest {
     }
 
     /**
-     * Passing test for the setPocPhone method, of class User.
+     * Passing test for the setPOCPhone method, of class User.
      */
     @Test
-    public void testSetPocPhone() {
-        System.out.println("setPocPhone Test (Passing value)");
+    public void testSetPOCPhone() {
+        System.out.println("setPOCPhone Test (Passing value)");
         String pocPhone = "4105555555";
-        user.setPocPhone(pocPhone);
+        user.setPOCPhone(pocPhone);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1548,13 +1546,13 @@ public class UserTest {
     }
 
     /**
-     * Blank value test for the setPocPhone method, of class User.
+     * Blank value test for the setPOCPhone method, of class User.
      */
     @Test
-    public void testSetPocPhoneBlank() {
-        System.out.println("setPocPhone Test (Blank value)");
+    public void testSetPOCPhoneBlank() {
+        System.out.println("setPOCPhone Test (Blank value)");
         String pocPhone = "";
-        user.setPocPhone(pocPhone);
+        user.setPOCPhone(pocPhone);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1566,13 +1564,13 @@ public class UserTest {
     }
 
     /**
-     * Invalid value test for the setPocPhone method, of class User.
+     * Invalid value test for the setPOCPhone method, of class User.
      */
     @Test
-    public void testSetPocPhoneInvalid() {
-        System.out.println("setPocPhone Test (Injection value)");
+    public void testSetPOCPhoneInvalid() {
+        System.out.println("setPOCPhone Test (Injection value)");
         String pocPhone = "<script>alert(\"This is an attack!\");</script>";
-        user.setPocPhone(pocPhone);
+        user.setPOCPhone(pocPhone);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1584,13 +1582,13 @@ public class UserTest {
     }
 
     /**
-     * Overflow value test for the setPocPhone method, of class User.
+     * Overflow value test for the setPOCPhone method, of class User.
      */
     @Test
-    public void testSetPocPhoneOverflow() {
-        System.out.println("setPocPhone Test (Overflow value)");
+    public void testSetPOCPhoneOverflow() {
+        System.out.println("setPOCPhone Test (Overflow value)");
         String pocPhone = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        user.setPocPhone(pocPhone);
+        user.setPOCPhone(pocPhone);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1600,7 +1598,7 @@ public class UserTest {
         // Test method
         assertFalse(violations.isEmpty());
     }
-    
+
     /**
      * Passing test for the getUserAgentNo method, of class User.
      */
@@ -1656,12 +1654,12 @@ public class UserTest {
     }
 
     /**
-     * Null value test for the setUserAgentNo method, of class User.
+     * Out of Range value test for the setUserAgentNo method, of class User.
      */
     @Test
-    public void testSetUserAgentNoNull() {
-        System.out.println("setUserAgentNo Test (Null value)");
-        Long userAgentNo = null;
+    public void testSetUserAgentNoOutOfRange() {
+        System.out.println("setUserAgentNo Test (Out of Range value)");
+        Long userAgentNo = Long.MAX_VALUE + 1;
         user.setUserAgentNo(userAgentNo);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
@@ -1674,13 +1672,1020 @@ public class UserTest {
     }
 
     /**
-     * Out of Range value test for the setUserAgentNo method, of class User.
+     * Passing test for the getDoctorName method, of class User.
      */
     @Test
-    public void testSetUserAgentNoOutOfRange() {
-        System.out.println("setUserAgentNo Test (Out of Range value)");
-        Long userAgentNo = Long.MAX_VALUE + 1;
-        user.setUserAgentNo(userAgentNo);
+    public void testGetDoctorName() {
+        System.out.println("getDoctorName Test (Passing value)");
+        String expResult = "Emmett Brown";
+        String result = user.getDoctorName();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setDoctorName method, of class User.
+     */
+    @Test
+    public void testSetDoctorName() {
+        System.out.println("setDoctorName Test (Passing value)");
+        String doctorName = "Emmett Brown";
+        user.setDoctorName(doctorName);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setDoctorName method, of class User.
+     */
+    @Test
+    public void testSetDoctorNameInvalid() {
+        System.out.println("setDoctorName Test (Injection value)");
+        String doctorName = "<script>alert(\"This is an attack!\");</script>";
+        user.setDoctorName(doctorName);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setDoctorName method, of class User.
+     */
+    @Test
+    public void testSetDoctorNameOverflow() {
+        System.out.println("setDoctorName Test (Overflow value)");
+        String doctorName = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        user.setDoctorName(doctorName);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getDoctorPhone method, of class User.
+     */
+    @Test
+    public void testGetDoctorPhone() {
+        System.out.println("getDoctorPhone Test (Passing value)");
+        String expResult = "4105555555";
+        String result = user.getDoctorPhone();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setDoctorPhone method, of class User.
+     */
+    @Test
+    public void testSetDoctorPhone() {
+        System.out.println("setDoctorPhone Test (Passing value)");
+        String doctorPhone = "4105555555";
+        user.setDoctorPhone(doctorPhone);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Blank value test for the setDoctorPhone method, of class User.
+     */
+    @Test
+    public void testSetDoctorPhoneBlank() {
+        System.out.println("setDoctorPhone Test (Blank value)");
+        String doctorPhone = "";
+        user.setDoctorPhone(doctorPhone);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setDoctorPhone method, of class User.
+     */
+    @Test
+    public void testSetDoctorPhoneInvalid() {
+        System.out.println("setDoctorPhone Test (Injection value)");
+        String doctorPhone = "<script>alert(\"This is an attack!\");</script>";
+        user.setDoctorPhone(doctorPhone);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setDoctorPhone method, of class User.
+     */
+    @Test
+    public void testSetDoctorPhoneOverflow() {
+        System.out.println("setDoctorPhone Test (Overflow value)");
+        String doctorPhone = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        user.setDoctorPhone(doctorPhone);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getUserComments method, of class User.
+     */
+    @Test
+    public void testGetUserComments() {
+        System.out.println("getUserComments Test (Passing value)");
+        String expResult = "I usually use 2 lpm O2.";
+        String result = user.getUserComments();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setUserComments method, of class User.
+     */
+    @Test
+    public void testSetUserComments() {
+        System.out.println("setUserComments Test (Passing value)");
+        String userComments = "I usually use 2 lpm O2.";
+        user.setUserComments(userComments);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Blank value test for the setUserComments method, of class User.
+     */
+    @Test
+    public void testSetUserCommentsBlank() {
+        System.out.println("setUserComments Test (Blank value)");
+        String userComments = "";
+        user.setUserComments(userComments);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setUserComments method, of class User.
+     */
+    @Test
+    public void testSetUserCommentsInvalid() {
+        System.out.println("setUserComments Test (Injection value)");
+        String userComments = "<script>alert(\"This is an attack!\");</script>";
+        user.setUserComments(userComments);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setUserComments method, of class User.
+     */
+    @Test
+    public void testSetUserCommentsOverflow() {
+        System.out.println("setUserComments Test (Overflow value)");
+        String userComments = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        user.setUserComments(userComments);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getUsername method, of class User.
+     */
+    @Test
+    public void testGetUsername() {
+        System.out.println("getUsername Test (Passing value)");
+        String expResult = "jdoe@vlol.com";
+        String result = user.getUsername();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setUsername method, of class User.
+     */
+    @Test
+    public void testSetUsername() {
+        System.out.println("setUsername Test (Passing value)");
+        String username = "jdoe@vlol.com";
+        user.setUsername(username);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Blank value test for the setUsername method, of class User.
+     */
+    @Test
+    public void testSetUsernameBlank() {
+        System.out.println("setUsername Test (Blank value)");
+        String username = "";
+        user.setUsername(username);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setUsername method, of class User.
+     */
+    @Test
+    public void testSetUsernameInvalid() {
+        System.out.println("setUsername Test (Injection value)");
+        String username = "<script>alert(\"This is an attack!\");</script>";
+        user.setUsername(username);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setUsername method, of class User.
+     */
+    @Test
+    public void testSetUsernameOverflow() {
+        System.out.println("setUsername Test (Overflow value)");
+        String username = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        user.setUsername(username);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getPassword method, of class User.
+     */
+    @Test
+    public void testGetPassword() {
+        System.out.println("getPassword Test (Passing value)");
+        String expResult = "$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.";
+        String result = user.getPassword();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setPassword method, of class User.
+     */
+    @Test
+    public void testSetPassword() {
+        System.out.println("setPassword Test (Passing value)");
+        String password = "$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.";
+        user.setPassword(password);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Blank value test for the setPassword method, of class User.
+     */
+    @Test
+    public void testSetPasswordBlank() {
+        System.out.println("setPassword Test (Blank value)");
+        String password = "";
+        user.setPassword(password);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setPassword method, of class User.
+     */
+    @Test
+    public void testSetPasswordInvalid() {
+        System.out.println("setPassword Test (Injection value)");
+        String password = "<script>alert(\"This is an attack!\");</script>";
+        user.setPassword(password);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setPassword method, of class User.
+     */
+    @Test
+    public void testSetPasswordOverflow() {
+        System.out.println("setPassword Test (Overflow value)");
+        String password = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        user.setPassword(password);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getSecurityQuestion method, of class User.
+     */
+    @Test
+    public void testGetSecurityQuestion() {
+        System.out.println("getSecurityQuestion Test (Passing value)");
+        String expResult = "Favorite numbers.";
+        String result = user.getSecurityQuestion();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setSecurityQuestion method, of class User.
+     */
+    @Test
+    public void testSetSecurityQuestion() {
+        System.out.println("setSecurityQuestion Test (Passing value)");
+        String securityQuestion = "Favorite numbers.";
+        user.setSecurityQuestion(securityQuestion);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Blank value test for the setSecurityQuestion method, of class User.
+     */
+    @Test
+    public void testSetSecurityQuestionBlank() {
+        System.out.println("setSecurityQuestion Test (Blank value)");
+        String securityQuestion = "";
+        user.setSecurityQuestion(securityQuestion);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setSecurityQuestion method, of class User.
+     */
+    @Test
+    public void testSetSecurityQuestionInvalid() {
+        System.out.println("setSecurityQuestion Test (Injection value)");
+        String securityQuestion = "<script>alert(\"This is an attack!\");</script>";
+        user.setSecurityQuestion(securityQuestion);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setSecurityQuestion method, of class User.
+     */
+    @Test
+    public void testSetSecurityQuestionOverflow() {
+        System.out.println("setSecurityQuestion Test (Overflow value)");
+        String securityQuestion = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        user.setSecurityQuestion(securityQuestion);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getSecurityAnswer method, of class User.
+     */
+    @Test
+    public void testGetSecurityAnswer() {
+        System.out.println("getSecurityAnswer Test (Passing value)");
+        String expResult = "$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.";
+        String result = user.getSecurityAnswer();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setSecurityAnswer method, of class User.
+     */
+    @Test
+    public void testSetSecurityAnswer() {
+        System.out.println("setSecurityAnswer Test (Passing value)");
+        String securityAnswer = "$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.";
+        user.setSecurityAnswer(securityAnswer);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Blank value test for the setSecurityAnswer method, of class User.
+     */
+    @Test
+    public void testSetSecurityAnswerBlank() {
+        System.out.println("setSecurityAnswer Test (Blank value)");
+        String securityAnswer = "";
+        user.setSecurityAnswer(securityAnswer);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setSecurityAnswer method, of class User.
+     */
+    @Test
+    public void testSetSecurityAnswerInvalid() {
+        System.out.println("setSecurityAnswer Test (Injection value)");
+        String securityAnswer = "<script>alert(\"This is an attack!\");</script>";
+        user.setSecurityAnswer(securityAnswer);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setSecurityAnswer method, of class User.
+     */
+    @Test
+    public void testSetSecurityAnswerOverflow() {
+        System.out.println("setSecurityAnswer Test (Overflow value)");
+        String securityAnswer = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        user.setSecurityAnswer(securityAnswer);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getDateCreated method, of class User.
+     *
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testGetDateCreated() throws ParseException {
+        System.out.println("getDateCreated Test (Passing value)");
+        Date expResult = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-11-05 06:00:00");
+        Date result = user.getDateCreated();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setDateCreated method, of class User.
+     *
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testSetDateCreated() throws ParseException {
+        System.out.println("setDateCreated Test (Passing value)");
+        Date dateCreated = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-11-05 06:00:00");
+        user.setDateCreated(dateCreated);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Future value test for the setDateCreated method, of class User.
+     */
+    @Test
+    public void testSetDateCreatedFuture() {
+        System.out.println("setDateCreated Test (Future value)");
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis + 60000);
+        Date dateCreated = date;
+        user.setDateCreated(dateCreated);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Null value test for the setDateCreated method, of class User.
+     */
+    @Test
+    public void testSetDateCreatedNull() {
+        System.out.println("setDateCreated Test (Null value)");
+        Date dateCreated = null;
+        user.setDateCreated(dateCreated);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Out of Range value test for the setDateCreated method, of class User.
+     *
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testSetDateCreatedOutOfRange() throws ParseException {
+        System.out.println("setDateCreated Test (Out of Range value)");
+        Date dateCreated = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-13-05 06:00:00");
+        user.setDateCreated(dateCreated);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getLastLoginDate method, of class User.
+     *
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testGetLastLoginDate() throws ParseException {
+        System.out.println("getLastLoginDate Test (Passing value)");
+        Date expResult = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-11-05 06:00:00");
+        Date result = user.getLastLoginDate();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setLastLoginDate method, of class User.
+     *
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testSetLastLoginDate() throws ParseException {
+        System.out.println("setLastLoginDate Test (Passing value)");
+        Date lastLoginDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-11-05 06:00:00");
+        user.setLastLoginDate(lastLoginDate);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Future value test for the setLastLoginDate method, of class User.
+     */
+    @Test
+    public void testSetLastLoginDateFuture() {
+        System.out.println("setLastLoginDate Test (Future value)");
+        long millis = System.currentTimeMillis();
+        Date date = new Date(millis + 60000);
+        Date lastLoginDate = date;
+        user.setLastLoginDate(lastLoginDate);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Null value test for the setLastLoginDate method, of class User.
+     */
+    @Test
+    public void testSetLastLoginDateNull() {
+        System.out.println("setLastLoginDate Test (Null value)");
+        Date lastLoginDate = null;
+        user.setLastLoginDate(lastLoginDate);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Out of Range value test for the setLastLoginDate method, of class User.
+     *
+     * @throws java.text.ParseException
+     */
+    @Test
+    public void testSetLastLoginDateOutOfRange() throws ParseException {
+        System.out.println("setLastLoginDate Test (Out of Range value)");
+        Date lastLoginDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-13-05 06:00:00");
+        user.setLastLoginDate(lastLoginDate);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getAdminComments method, of class User.
+     */
+    @Test
+    public void testGetAdminComments() {
+        System.out.println("getAdminComments Test (Passing value)");
+        String expResult = "participant";
+        String result = user.getAdminComments();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setAdminComments method, of class User.
+     */
+    @Test
+    public void testSetAdminComments() {
+        System.out.println("setAdminComments Test (Passing value)");
+        String adminComments = "participant";
+        user.setAdminComments(adminComments);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Blank value test for the setAdminComments method, of class User.
+     */
+    @Test
+    public void testSetAdminCommentsBlank() {
+        System.out.println("setAdminComments Test (Blank value)");
+        String adminComments = "";
+        user.setAdminComments(adminComments);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Invalid value test for the setAdminComments method, of class User.
+     */
+    @Test
+    public void testSetAdminCommentsInvalid() {
+        System.out.println("setAdminComments Test (Injection value)");
+        String adminComments = "<script>alert(\"This is an attack!\");</script>";
+        user.setAdminComments(adminComments);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Overflow value test for the setAdminComments method, of class User.
+     */
+    @Test
+    public void testSetAdminCommentsOverflow() {
+        System.out.println("setAdminComments Test (Overflow value)");
+        String adminComments = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        user.setAdminComments(adminComments);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getIsActive method, of class User.
+     */
+    @Test
+    public void testGetIsActive() {
+        System.out.println("getIsActive Test (Passing value)");
+        Boolean expResult = Boolean.TRUE;
+        Boolean result = user.getIsActive();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setIsActive method, of class User.
+     */
+    @Test
+    public void testSetIsActive() {
+        System.out.println("setIsActive Test (Passing value)");
+        Boolean isActive = Boolean.TRUE;
+        user.setIsActive(isActive);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Null value test for the setIsActive method, of class User.
+     */
+    @Test
+    public void testSetIsActiveNull() {
+        System.out.println("setIsActive Test (Null value)");
+        Boolean isActive = null;
+        user.setIsActive(isActive);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertFalse(violations.isEmpty());
+    }
+
+    /**
+     * Passing test for the getIsLocked method, of class User.
+     */
+    @Test
+    public void testGetIsLocked() {
+        System.out.println("getIsLocked Test (Passing value)");
+        Boolean expResult = Boolean.FALSE;
+        Boolean result = user.getIsLocked();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setIsLocked method, of class User.
+     */
+    @Test
+    public void testSetIsLocked() {
+        System.out.println("setIsLocked Test (Passing value)");
+        Boolean isLocked = Boolean.FALSE;
+        user.setIsLocked(isLocked);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<User>> violations = validator.validate(user);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Null value test for the setIsLocked method, of class User.
+     */
+    @Test
+    public void testSetIsLockedNull() {
+        System.out.println("setIsLocked Test (Null value)");
+        Boolean isLocked = null;
+        user.setIsLocked(isLocked);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";

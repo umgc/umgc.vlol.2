@@ -1,11 +1,11 @@
     /**
-     * Passing test for the getPocPhone method, of class User.
+     * Passing test for the getAdminComments method, of class User.
      */
     @Test
-    public void testGetPocPhone() {
-        System.out.println("getPocPhone Test (Passing value)");
+    public void testGetAdminComments() {
+        System.out.println("getAdminComments Test (Passing value)");
         String expResult = "participant";
-        String result = user.getPocPhone();
+        String result = user.getAdminComments();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -17,13 +17,13 @@
     }
 
     /**
-     * Passing test for the setPocPhone method, of class User.
+     * Passing test for the setAdminComments method, of class User.
      */
     @Test
-    public void testSetPocPhone() {
-        System.out.println("setPocPhone Test (Passing value)");
-        String pocPhone = "participant";
-        user.setPocPhone(pocPhone);
+    public void testSetAdminComments() {
+        System.out.println("setAdminComments Test (Passing value)");
+        String adminComments = "participant";
+        user.setAdminComments(adminComments);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -35,13 +35,13 @@
     }
 
     /**
-     * Blank value test for the setPocPhone method, of class User.
+     * Blank value test for the setAdminComments method, of class User.
      */
     @Test
-    public void testSetPocPhoneBlank() {
-        System.out.println("setPocPhone Test (Blank value)");
-        String pocPhone = "";
-        user.setPocPhone(pocPhone);
+    public void testSetAdminCommentsBlank() {
+        System.out.println("setAdminComments Test (Blank value)");
+        String adminComments = "";
+        user.setAdminComments(adminComments);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -53,13 +53,13 @@
     }
 
     /**
-     * Invalid value test for the setPocPhone method, of class User.
+     * Invalid value test for the setAdminComments method, of class User.
      */
     @Test
-    public void testSetPocPhoneInvalid() {
-        System.out.println("setPocPhone Test (Injection value)");
-        String pocPhone = "<script>alert(\"This is an attack!\");</script>";
-        user.setPocPhone(pocPhone);
+    public void testSetAdminCommentsInvalid() {
+        System.out.println("setAdminComments Test (Injection value)");
+        String adminComments = "<script>alert(\"This is an attack!\");</script>";
+        user.setAdminComments(adminComments);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -71,13 +71,13 @@
     }
 
     /**
-     * Overflow value test for the setPocPhone method, of class User.
+     * Overflow value test for the setAdminComments method, of class User.
      */
     @Test
-    public void testSetPocPhoneOverflow() {
-        System.out.println("setPocPhone Test (Overflow value)");
-        String pocPhone = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
-        user.setPocPhone(pocPhone);
+    public void testSetAdminCommentsOverflow() {
+        System.out.println("setAdminComments Test (Overflow value)");
+        String adminComments = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        user.setAdminComments(adminComments);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";

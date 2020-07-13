@@ -158,7 +158,7 @@ public class User implements Serializable {
     @Column(name = "doctor_phone", length = 10)
     // Check if phone number is valid.
     @Pattern(regexp = "^[2-9]\\d{2}\\d{3}\\d{4}$", message = "Invalid phone number.")
-    @Size(min = 10, max = 10, message = "Input exceeds size limits.")
+    @Size(max = 10, message = "Input exceeds size limits.")
     private String doctorPhone;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -229,14 +229,14 @@ public class User implements Serializable {
 
     @Column(name = "date_created")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
-    // @NotBlank(message = "Date account created is required.")
+    @NotNull(message = "Date account created is required.")
     @PastOrPresent(message = "Date account created cannot be in the future.")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreated;
 
     @Column(name = "last_login_date")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
-    // @NotBlank(message = "Last login date is required.")
+    @NotNull(message = "Last login date is required.")
     @PastOrPresent(message = "Last login date cannot be in the future.")
     @Temporal(TemporalType.TIMESTAMP)
     private Date lastLoginDate;
@@ -248,9 +248,11 @@ public class User implements Serializable {
     private String adminComments;
 
     @Column(name = "is_active")
+    @NotNull(message = "Value cannot be null.")
     private Boolean isActive;
 
     @Column(name = "is_locked")
+    @NotNull(message = "Value cannot be null.")
     private Boolean isLocked;
 
     @OneToMany(mappedBy = "user")
@@ -376,19 +378,19 @@ public class User implements Serializable {
         this.advDirType = advDirType;
     }
 
-    public String getPocName() {
+    public String getPOCName() {
         return pocName;
     }
 
-    public void setPocName(String pocName) {
+    public void setPOCName(String pocName) {
         this.pocName = pocName;
     }
 
-    public String getPocPhone() {
+    public String getPOCPhone() {
         return pocPhone;
     }
 
-    public void setPocPhone(String pocPhone) {
+    public void setPOCPhone(String pocPhone) {
         this.pocPhone = pocPhone;
     }
 

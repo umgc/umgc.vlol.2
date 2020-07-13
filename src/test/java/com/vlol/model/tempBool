@@ -1,11 +1,11 @@
     /**
-     * Passing test for the getAdvDirective method, of class User.
+     * Passing test for the getIsLocked method, of class User.
      */
     @Test
-    public void testGetAdvDirective() {
-        System.out.println("getAdvDirective Test (Passing value)");
+    public void testGetIsLocked() {
+        System.out.println("getIsLocked Test (Passing value)");
         Boolean expResult = Boolean.FALSE;
-        Boolean result = user.getAdvDirective();
+        Boolean result = user.getIsLocked();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -17,13 +17,13 @@
     }
 
     /**
-     * Passing test for the setAdvDirective method, of class User.
+     * Passing test for the setIsLocked method, of class User.
      */
     @Test
-    public void testSetAdvDirective() {
-        System.out.println("setAdvDirective Test (Passing value)");
-        Boolean advDirective = Boolean.TRUE;
-        user.setAdvDirective(advDirective);
+    public void testSetIsLocked() {
+        System.out.println("setIsLocked Test (Passing value)");
+        Boolean isLocked = Boolean.FALSE;
+        user.setIsLocked(isLocked);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -35,13 +35,13 @@
     }
 
     /**
-     * Null value test for the setAdvDirective method, of class User.
+     * Null value test for the setIsLocked method, of class User.
      */
     @Test
-    public void testSetAdvDirectiveNull() {
-        System.out.println("setAdvDirective Test (Null value)");
-        Boolean advDirective = null;
-        user.setAdvDirective(advDirective);
+    public void testSetIsLockedNull() {
+        System.out.println("setIsLocked Test (Null value)");
+        Boolean isLocked = null;
+        user.setIsLocked(isLocked);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
