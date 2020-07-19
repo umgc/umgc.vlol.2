@@ -19,7 +19,6 @@
 package com.vlol.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -27,10 +26,13 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import javax.sql.DataSource;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * Extension and customization of Spring Boot's built-in
@@ -42,23 +44,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("userDetailsServiceImpl")
     @Autowired
-    private UserDetailsService userDetailsService;
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
-    }
+    private DataSource dataSource;
 
-    /**
-     * Instantiates the BCryptPasswordEncoder.
-     *
-     * @return The bCryptPasswordEncoder object.
-     */
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
+    private final String USERS_QUERY = "select username, password, is_active from appuser where username=?";
+    private final String ROLES_QUERY = "select u.username, r.role_title from appuser u inner join approle r on (u.role_id=r.role_id) where u.username=?";
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication()
+                .usersByUsernameQuery(USERS_QUERY)
+                .authoritiesByUsernameQuery(ROLES_QUERY)
+                .dataSource(dataSource)
+                .passwordEncoder(bCryptPasswordEncoder);
     }
 
     @Bean
@@ -67,29 +68,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    protected void configure(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.httpBasic();
         // For H2 console support only
-        http.headers().frameOptions().disable();
-        http
+        httpSecurity.headers().frameOptions().disable();
+        httpSecurity
                 .authorizeRequests()
-                    .anyRequest()
-                    .permitAll()
-                    .and().csrf().disable();
-        /*
-        http
-            .authorizeRequests()
-                .antMatchers("/resources/**", "/registration").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-            .logout()
-                .permitAll();
-         */
- /*
-        http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/index").permitAll()
                 .antMatchers("/about").permitAll()
@@ -97,24 +81,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/error").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
+                .antMatchers("/console/**").permitAll()
+                //.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("actuator")
+                .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("admin")
                 .antMatchers("/admin/**").hasAnyAuthority("participant", "provider", "agent", "admin").anyRequest()
-                .authenticated().and().csrf().disable().formLogin()
-                .loginPage("/login").failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/adminHome")
-                .usernameParameter("email")
+                .authenticated()
+                .and().csrf().disable()
+                .formLogin().loginPage("/login").failureUrl("/login?error=true")
+                .defaultSuccessUrl("/admin-menu")
+                .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/").and().exceptionHandling()
-                .accessDeniedPage("/access-denied");
-         */
+                .logoutSuccessUrl("/")
+                .and().rememberMe()
+                .tokenRepository(persistentTokenRepository())
+                .tokenValiditySeconds(60 * 60)
+                .and().exceptionHandling().accessDeniedPage("/access_denied");
     }
 
-    /*
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**", "/console/**");
+                .antMatchers("/static/**", "/css/**", "/js/**", "/img/**");
     }
-     */
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl db = new JdbcTokenRepositoryImpl();
+        db.setDataSource(dataSource);
+        return db;
+    }
 }

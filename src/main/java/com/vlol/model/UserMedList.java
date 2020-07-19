@@ -20,6 +20,7 @@ package com.vlol.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -36,14 +37,17 @@ public class UserMedList implements Serializable {
     @ManyToOne
     @MapsId("user_id")
     @JoinColumn(name = "user_id")
+    @NotNull(message = "Value cannot be null.")
     User user;
 
     @ManyToOne
     @MapsId("medication_id")
     @JoinColumn(name = "medication_id")
+    @NotNull(message = "Value cannot be null.")
     Medication medication;
 
     @Column(name = "dosage")
+    @DecimalMin(value = "0.0", inclusive = false, message = "Value must be greater than 1.")
     @Digits(integer = 6, fraction = 2, message = "Input is not in the form of a decimal.")
     @NotNull(message = "Value cannot be null.")
     private float dosage;

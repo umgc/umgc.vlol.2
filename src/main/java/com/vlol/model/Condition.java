@@ -22,9 +22,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import javax.persistence.*;
 import java.util.Set;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -35,8 +33,6 @@ public class Condition implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "illness_id")
-    @Min(value = 1, message = "Value must be greater than 1.")
-    @NotNull(message = "Value cannot be null.")
     private Long conditionID;
 
     @Column(name = "illness_name", length = 50, unique = true)

@@ -18,10 +18,23 @@
  */
 package com.vlol.controller;
 
+import com.vlol.model.Role;
+import com.vlol.model.User;
+import com.vlol.repository.RoleRepository;
+import com.vlol.service.RoleService;
+import com.vlol.service.UserService;
+import java.util.Date;
+import java.util.List;
+import javax.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Application controller class.
@@ -31,38 +44,106 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class VlolController {
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private RoleService roleService;
+    
+    @Autowired
+    private RoleRepository roleRepository;
+
     @Value("${spring.application.name}")
     String appName;
+
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
+    public ModelAndView viewLoginForm() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("login");
+        return mav;
+    }
+
+    @RequestMapping(value = {"/registration"}, method = RequestMethod.GET)
+    public ModelAndView viewRegistrationForm() {
+        ModelAndView mav = new ModelAndView();
+        User user = new User();
+        user.setIsActive(Boolean.TRUE);
+        user.setIsLocked(Boolean.FALSE);
+        // Role userRole = roleRepository.findRoleByTitle("participant");
+        // user.setRole(userRole);
+        Date date = new Date();
+        user.setLastLoginDate(date);
+        user.setDateCreated(date);
+        mav.addObject("user", user);
+        List<Role> roles = roleService.getAllRoles();
+        mav.addObject("roles", roles);
+        List<User> agents = userService.getAllUsers();
+        mav.addObject("agents", agents);
+        mav.setViewName("registration");
+        return mav;
+    }
+
+    @RequestMapping(value = {"/registration"}, method = RequestMethod.POST)
+    public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
+        ModelAndView mav = new ModelAndView();
+        User userExists = userService.findUserByUsername(user.getUsername());
+        if (userExists != null) {
+            bindingResult.rejectValue("username", "error.user", "This user already exists!");
+        }
+        if (bindingResult.hasErrors()) {
+            mav.addObject("msg", "Cannot add user! Check your data.");
+            mav.setViewName("registration");
+        } else {
+            userService.saveUser(user);
+            mav.addObject("msg", "User has been registered successfully!");
+            mav.addObject("user", new User());
+            mav.setViewName("admin/admin-menu");
+        }
+        return mav;
+    }
+    
+    
+
+    @RequestMapping(value = {"/admin-menu"}, method = RequestMethod.GET)
+    public ModelAndView viewMainMenu() {
+        ModelAndView mav = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByUsername(auth.getName());
+        mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
+        mav.setViewName("admin/admin-menu");
+        return mav;
+    }
+
+    @RequestMapping(value = {"/access-denied"}, method = RequestMethod.GET)
+    public ModelAndView viewAccessDeniedPage() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("errors/access_denied");
+        return mav;
+    }
 
     /**
      * Maps the landing page to a view
      *
-     * @param model Spring's built-in UI model.
      * @return The landing page view.
      */
-    @GetMapping("/")
-    public String viewHomePage(Model model) {
-        model.addAttribute("appName", appName);
-        return "index";
+    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
+    public ModelAndView viewHomePage() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("index");
+        return mav;
     }
 
-    @GetMapping("/admin-menu")
-    public String viewMainMenu(Model model) {
-        return "admin/admin-menu";
+    @RequestMapping(value = {"/about"}, method = RequestMethod.GET)
+    public ModelAndView viewAboutPage() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("about");
+        return mav;
     }
 
-    @GetMapping("/about")
-    public String viewAboutPage(Model model) {
-        return "about";
-    }
-
-    @GetMapping("/contact")
-    public String viewContactPage(Model model) {
-        return "contact";
-    }
-
-    @GetMapping("/access-denied")
-    public String viewAccessDeniedPage(Model model) {
-        return "access-denied";
+    @RequestMapping(value = {"/contact"}, method = RequestMethod.GET)
+    public ModelAndView viewContactPage() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("contact");
+        return mav;
     }
 }

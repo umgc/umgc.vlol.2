@@ -25,10 +25,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Long> {
-
-    public User findUserByEmail(String email);
 
     public User findUserByUsername(String username);
 
@@ -40,7 +38,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
             + "OR lower(u.state) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.zipCode) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.phone) LIKE lower(concat('%', :keyword, '%'))"
-            + "OR lower(u.email) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.insCompany) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.insPolicyNo) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.advDirType) LIKE lower(concat('%', :keyword, '%'))"

@@ -36,8 +36,6 @@ public class Role implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
-    @Min(value = 1, message = "Value must be greater than 1.")
-    @NotNull(message = "Value cannot be null.")
     private Long roleID;
 
     @Column(name = "role_title", length = 50, unique = true)

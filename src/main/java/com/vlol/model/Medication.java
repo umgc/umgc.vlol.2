@@ -22,7 +22,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import javax.persistence.*;
 import java.util.Set;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -35,8 +34,6 @@ public class Medication implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medication_id")
-    @Min(value = 1, message = "Value must be greater than 1.")
-    @NotNull(message = "Value cannot be null.")
     private Long medicationID;
 
     @Column(name = "brand_name", length = 50, unique = true)

@@ -3,38 +3,171 @@
       xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Registration Page Baba Booey</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Registration</title>
     </head>
     <body>
-        <div class="container">
-            <form:form method="POST" modelAttribute="userForm">
-            <h1>Registration Page</h1>
-                <spring:bind path="username">
-                    <div>
-                        <form:input type="text" path="username" placeholder="Username" autofocus="true">
-                        </form:input>
-                        <form:errors path="username"></form:errors>
-                    </div>
-                </spring:bind>
-
-                <spring:bind path="password">
-                    <div>
-                        <form:input type="password" path="password" placeholder="Password"></form:input>
-                        <form:errors path="password"></form:errors>
-                    </div>
-                </spring:bind>
-
-                <spring:bind path="passwordConfirm">
-                    <div>
-                        <form:input type="password" path="passwordConfirm"
-                                    placeholder="Confirm your password"></form:input>
-                        <form:errors path="passwordConfirm"></form:errors>
-                    </div>
-                </spring:bind>
-
-                <button type="submit">Submit</button>
-            </form:form>
+        <div align="center">
+            <h1>Registration</h1>
+            <a href="/">Return to Home Page</a>
+            <br />
+            <div role="alert" th:if="${msg}" th:utext="${msg}"></div>
+            <br />
+            <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+                <table border="0" cellpadding="10">
+                    <tr>             
+                        <td>User Last Name</td>
+                        <td>
+                            <input type="text" th:field="*{lastName}" size="100" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User First Name:</td>
+                        <td>
+                            <input type="text" th:field="*{firstName}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Date of Birth (DOB):</td>
+                        <td>
+                            <input type="date" th:field="*{DOB}" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Social Security Number (SSN):</td>
+                        <td>
+                            <input type="number" th:field="*{SSN}" size="9" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Street Address:</td>
+                        <td>
+                            <input type="text" th:field="*{streetAddress}" size="100" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User City:</td>
+                        <td>
+                            <input type="text" th:field="*{city}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User State:</td>
+                        <td>
+                            <input type="text" th:field="*{state}" size="2" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User ZIP Code:</td>
+                        <td>
+                            <input type="text" th:field="*{zipCode}" size="5" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Phone Number:</td>
+                        <td>
+                            <input type="tel" th:field="*{phone}" size="10" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Point of Contact (POC) Name:</td>
+                        <td>
+                            <input type="text" th:field="*{pocName}" size="100" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Point of Contact (POC) Phone Number:</td>
+                        <td>
+                            <input type="tel" th:field="*{pocPhone}" size="10" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Agent ID Number:</td>
+                        <td>
+                            <select th:field="*{userAgentNo}">
+                                <option value="">None</option>
+                                <option th:each="agent : ${agents}" th:value="${agent.userID}" th:text="${agent.userID} + ': ' + ${agent.firstName} + ' ' + ${agent.lastName}">Choose a User Agent</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Doctor Name:</td>
+                        <td>
+                            <input type="text" th:field="*{doctorName}" size="100" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Doctor Phone Number:</td>
+                        <td>
+                            <input type="tel" th:field="*{doctorPhone}" size="10" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Insurance Company:</td>
+                        <td>
+                            <input type="text" th:field="*{insCompany}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Insurance Policy Number:</td>
+                        <td>
+                            <input type="text" th:field="*{insPolicyNo}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Advance Directive?</td>
+                        <td>
+                            <input type="checkbox" th:field="*{advDirective}" th:value="${user}" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Advance Directive Type:</td>
+                        <td>
+                            <input type="text" th:field="*{advDirType}" size="50" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Comments:</td>
+                        <td>
+                            <textarea th:field="*{userComments}" rows="4" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <hr />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Email / User Name:</td>
+                        <td>
+                            <input type="email" th:field="*{username}" size="320" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>Password:</td>
+                        <td>
+                            <input type="password" th:field="*{password}" size="320" required="required" />
+                        </td>
+                    </tr>
+                    <tr>             
+                        <td>User Security Question:</td>
+                        <td>
+                            <input type="text" th:field="*{securityQuestion}" size="100" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>User Security Answer:</td>
+                        <td>
+                            <input type="password" th:field="*{securityAnswer}" size="50" />
+                        </td>
+                    </tr>
+                </table>
+                <input type="hidden" th:field="*{isActive}" />
+                <input type="hidden" th:field="*{isLocked}" />
+                <input type="hidden" th:field="*{dateCreated}" />
+                <input type="hidden" th:field="*{lastLoginDate}" />
+                <button type="submit">Register</button>
+            </form>
             <br />
             <a href="/">Return to Home Page</a>
         </div>

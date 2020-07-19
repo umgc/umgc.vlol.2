@@ -25,6 +25,7 @@ DROP TABLE IF EXISTS medication;
 DROP TABLE IF EXISTS allergy;
 DROP TABLE IF EXISTS approle;
 DROP TABLE IF EXISTS appuser;
+DROP TABLE IF EXISTS persistent_logins;
 
 -- Create database tables statements.
 CREATE TABLE allergy(
@@ -145,3 +146,11 @@ CREATE TABLE user_med_list(
 ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_pk PRIMARY KEY(medication_id, user_id);
 ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_med_fk FOREIGN KEY(medication_id) REFERENCES medication(medication_id);
 ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+
+CREATE TABLE persistent_logins (
+    username varchar(64) NOT NULL,
+    series varchar(64) NOT NULL,
+    token varchar(64) NOT NULL,
+    last_used timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+    PRIMARY KEY (series)
+)

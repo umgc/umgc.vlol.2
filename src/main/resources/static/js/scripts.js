@@ -1,20 +1,21 @@
 function warning() {
-    var redirect = confirm("** Notice and Consent Warning **\n" +
-            "You are accessing a U.S. Government information system, which includes: " +
-            "1) this computer, 2) this computer network, 3) all computers connected to " +
-            "this network, and 4) all devices and storage media attached to this network " +
-            "or to a computer on this network. You understand and consent to the " +
-            "following: you may access this information system for authorized use only; " +
-            "you have no reasonable expectation of privacy regarding any communication of " +
-            "data transiting or stored on this information system; at any time and for " +
-            "any lawful Government purpose, the Government may monitor, intercept, and " +
-            "search and seize any communication or data transiting or stored on this " +
-            "information system; and any communications or data transiting or stored on " +
-            "this information system may be disclosed or used for any lawful Government " +
-            "purpose.");
+    var redirect = confirm("* * * * * * * * * * W A R N I N G * * * * * * * * * *\n" +
+            "This computer system is the property of the University of Maryland Global " +
+            "Campus (UMGC). It is for authorized use only.  By using this system, all users " +
+            "acknowledge notice of, and agree to comply with, UMGC's Acceptable Use Policy " +
+            "(\"AUP\"). Unauthorized or improper use of this system may result in " +
+            "administrative disciplinary action, civil charges/criminal penalties, and/or " +
+            "other sanctions as set forth in UMGC's AUP. By continuing to use this system " +
+            "you indicate your awareness of and consent to these terms and conditions of " +
+            "use.\n" +
+            "If you are physically located in the European Union, you may have additional " +
+            "rights per the GDPR. Visit the web site dataprivacy.utk.edu for more " +
+            "information.\n" +
+            "LEAVE IMMEDIATELY if you do not agree to the conditions stated in this warning.\n" +
+            "* * * * * * * * * * W A R N I N G * * * * * * * * * *");
     if (redirect === false) {
-        // window.location.href = 'https://salisburyfd.com';
-        document.location='index';
+        window.location.href = 'https://www.umgc.edu/administration/policies-and-reporting/policies/fiscal-and-business-affairs/acceptable-use.cfm';
+        // document.location = 'index';
     }
 }
 

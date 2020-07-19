@@ -23,8 +23,8 @@ import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -40,12 +40,11 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    @Min(value = 1, message = "Value must be greater than 1.")
-    @NotNull(message = "Value cannot be null.")
     private Long userID;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "role_id", nullable = false)
+    @Valid
     private Role role;
 
     @Column(name = "first_name", length = 50)
@@ -63,7 +62,7 @@ public class User implements Serializable {
     private String lastName;
 
     @Column(name = "dob")
-    // @NotBlank(message = "DOB is required.")
+    @NotNull(message = "DOB is required.")
     @Past(message = "Date must be in the past.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
@@ -124,6 +123,7 @@ public class User implements Serializable {
     private String insPolicyNo;
 
     @Column(name = "adv_directive")
+    @NotNull(message = "Value cannot be null.")
     private Boolean advDirective;
 
     @Column(name = "adv_dir_type", length = 50)
@@ -184,14 +184,6 @@ public class User implements Serializable {
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 300, message = "Input exceeds size limits.")
     private String userComments;
-
-    @Column(name = "email", length = 320, unique = true)
-    @NotBlank(message = "Email is required.")
-    // Check if text is valid per RFC 3986.
-    @Email(message = "Invalid email address.")
-    // Check if length is valid per RFC 3986.
-    @Size(min = 5, max = 320, message = "Input exceeds size limits.")
-    private String email;
 
     @Column(name = "username", length = 320, unique = true)
     @NotBlank(message = "Username is required.")
@@ -378,19 +370,19 @@ public class User implements Serializable {
         this.advDirType = advDirType;
     }
 
-    public String getPOCName() {
+    public String getPocName() {
         return pocName;
     }
 
-    public void setPOCName(String pocName) {
+    public void setPocName(String pocName) {
         this.pocName = pocName;
     }
 
-    public String getPOCPhone() {
+    public String getPocPhone() {
         return pocPhone;
     }
 
-    public void setPOCPhone(String pocPhone) {
+    public void setPocPhone(String pocPhone) {
         this.pocPhone = pocPhone;
     }
 
@@ -448,14 +440,6 @@ public class User implements Serializable {
 
     public void setUserComments(String userComments) {
         this.userComments = userComments;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getUsername() {

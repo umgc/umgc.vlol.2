@@ -22,9 +22,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import javax.persistence.*;
 import java.util.Set;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
@@ -35,8 +33,6 @@ public class Allergy implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "allergy_id")
-    @Min(value = 1, message = "Value must be greater than 1.")
-    @NotNull(message = "Value cannot be null.")
     private Long allergyID;
 
     @Column(name = "allergy_name", length = 50, unique = true)
