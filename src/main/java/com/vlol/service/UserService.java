@@ -47,7 +47,7 @@ public class UserService {
     }
 
     public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+        return userRepository.findUserByUsername(username);
     }
 
     public User findUserByEmail(String email) {
@@ -58,7 +58,7 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setIsActive(Boolean.TRUE);
         user.setIsLocked(Boolean.FALSE);
-        Role userRole = roleRepository.findByTitle("participant");
+        Role userRole = roleRepository.findRoleByTitle("participant");
         // user.setRoles(new HashSet<VLOLRole>(Arrays.asList(userRole)));
         user.setRole(userRole);
         Date date = new Date();

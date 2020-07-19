@@ -70,7 +70,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         // For H2 console support only
         http.headers().frameOptions().disable();
-
+        http
+                .authorizeRequests()
+                    .anyRequest()
+                    .permitAll()
+                    .and().csrf().disable();
+        /*
         http
             .authorizeRequests()
                 .antMatchers("/resources/**", "/registration").permitAll()
@@ -82,7 +87,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
             .logout()
                 .permitAll();
-        /*
+         */
+ /*
         http.authorizeRequests()
                 .antMatchers("/").permitAll()
                 .antMatchers("/index").permitAll()

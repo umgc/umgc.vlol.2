@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    public Role findByTitle(String title);
+    public Role findRoleByTitle(String title);
 
     // public Role getRoleByRoleID(Long roleID);
     @Query(value = "SELECT r FROM Role r WHERE lower(r.accessLevel) LIKE lower(concat('%', :keyword, '%'))"

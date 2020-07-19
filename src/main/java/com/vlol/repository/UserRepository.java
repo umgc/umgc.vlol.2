@@ -30,7 +30,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findUserByEmail(String email);
 
-    public User findByUsername(String username);
+    public User findUserByUsername(String username);
 
     @Query(value = "SELECT u FROM User u WHERE lower(u.firstName) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.lastName) LIKE lower(concat('%', :keyword, '%'))"
