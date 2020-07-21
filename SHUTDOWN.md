@@ -1,9 +1,12 @@
 # Application Shutdown Procedure
 
->If you are using Windows, ensure you have installed the true version of cURL, located at [https://curl.haxx.se/](https://curl.haxx.se/ "curl download site")
->If you are using Windows, you must use "curl.exe" instead of "curl"; "curl" is an alias for Microsoft's Invoke-WebRequest, and does not have the same functionality
+>If you are using Windows, ensure you have installed the true version of cURL, located at [https://curl.haxx.se/](https://curl.haxx.se/ "curl download site").
+
+>If you are using Windows, you must use "curl.exe" instead of "curl"; "curl" is an alias for Microsoft's Invoke-WebRequest, and does not have the same functionality.
 
     curl.exe -u admin@vlol.gov:P@ssW0rd  -v -X POST http://localhost:5000/actuator/shutdown
+
+Example:
 
     PS C:\Users\Rob\Documents\NetBeansProjects\SWEN670\VLOL> curl.exe -u actuator:P@ssW0rd  -v -X POST http://localhost:5000/actuator/shutdown
     *   Trying ::1...

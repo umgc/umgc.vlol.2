@@ -1,51 +1,62 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      lang="en">
     <head>
-        <title>Log in</title>
         <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+        <title>Log in</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
+        <!-- Warning popup script -->
         <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
     </head>
-    <body th:onload="warning()">
-        <div align="center">
-            <h1 >Log in</h1>
-            <a href="/">Return to Home Page</a>
-            <br />
-            <br />
-            <div role="alert" th:if="${param.error}">
-                The email or password is incorrect!
-            </div>
-            <form th:action="@{/login}" method="post" >
-                <table border="0" cellpadding="10">
-                    <tr>
-                        <td><label for="username">Email:</label></td>
-                        <td><input type="email" id="username" name="username" placeholder="Email" required="required" autofocus="autofocus" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="password">Password:</label></td>
-                        <td><input type="password" id="password" name="password" placeholder="Password" required="required" /></td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <label>
-                                <input type="checkbox" name="remember-me" /> Remember Me
-                            </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
-                            <button type="submit">Sign in</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2" align="center">
+    <body class="text-center" th:onload="warning()">
+        <main class="container">
+            <div class="row">
+                <div class="col-4 mx-auto">
+                    <form class="form-signin" th:action="@{/login}" method="post" >
+                        <img class="mb-4" src="img/vlol_logo.png" alt="" height="128" />
+                        <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                            The email or password is incorrect!
+                        </div>
+                        <h1 class="h3 mb-3">Please log in</h1>
+                        <label for="username" class="sr-only">Email address</label>
+                        <input type="email" id="username" class="form-control" name="username" placeholder="Email address" required="required" autofocus="autofocus" />
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" id="password" class="form-control" name="password" placeholder="Password" required="required" />
+                        <br />
+                        <div class="checkbox mb-3">
+                            <input type="checkbox" value="remember-me" /> Remember me
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+                        <br />
+                        <div class="mb-3">
                             <a th:href="@{/registration}">Create a Letter of Life Account</a>
-                        </td>
-                    </tr>
-                </table>
-            </form>
-        </div>
+                            <br />
+                            <a href="/">Return to Home Page</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </main>
+        <footer class="footer mt-auto py-3">
+            <div class="container">
+                <span class="mt-5 mb-3 text-muted">Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.</span>
+            </div>
+        </footer>
+        <script>
+            // Set copyright ending year to current year
+            var date = new Date();
+            var fullYear = date.getFullYear();
+            if (fullYear !== 2020) {
+                document.getElementById("currentYear").innerHTML = " - " + fullYear;
+            }
+        </script>
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
     </body>
 </html>
