@@ -21,10 +21,11 @@ package com.vlol.controller;
 import com.vlol.model.Condition;
 import com.vlol.service.ConditionService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,11 +58,25 @@ public class ConditionController {
     }
 
     @RequestMapping(value = "/save-condition", method = RequestMethod.POST)
-    public String saveCondition(@ModelAttribute("condition") Condition condition) {
+    public String saveCondition(@Valid Condition condition, BindingResult bindingResult, Model model) {
+        //check for errors
+        if (bindingResult.hasErrors()) {
+            return "admin/add-condition";
+        }
         conditionService.saveCondition(condition);
         return "redirect:/list-conditions";
     }
-
+    
+    @RequestMapping(value = "/update-condition", method = RequestMethod.POST)
+    public String updateCondition(@Valid Condition condition, BindingResult bindingResult, Model model) {
+        //check for errors
+        if (bindingResult.hasErrors()) {
+            return "admin/edit-condition";
+        }
+        conditionService.saveCondition(condition);
+        return "redirect:/list-conditions";
+    }
+    
     @RequestMapping("/edit-condition/{id}")
     public ModelAndView viewEditConditionPage(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("admin/edit-condition");

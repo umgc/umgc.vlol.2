@@ -21,10 +21,11 @@ package com.vlol.controller;
 import com.vlol.model.Medication;
 import com.vlol.service.MedicationService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -57,11 +58,24 @@ public class MedicationController {
     }
 
     @RequestMapping(value = "/save-medication", method = RequestMethod.POST)
-    public String saveMedication(@ModelAttribute("medication") Medication medication) {
+    public String saveMedication(@Valid Medication medication, BindingResult bindingResult, Model model) {
+        //check for errors
+        if (bindingResult.hasErrors()) {
+            return "admin/add-medication";
+        }
         medicationService.saveMedication(medication);
         return "redirect:/list-medications";
     }
-
+    
+    @RequestMapping(value = "/update-medication", method = RequestMethod.POST)
+    public String updateMedication(@Valid Medication medication, BindingResult bindingResult, Model model) {
+        //check for errors
+        if (bindingResult.hasErrors()) {
+            return "admin/edit-medication";
+        }
+        medicationService.saveMedication(medication);
+        return "redirect:/list-medications";
+    }
     @RequestMapping("/edit-medication/{id}")
     public ModelAndView viewEditMedicationPage(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("admin/edit-medication");
