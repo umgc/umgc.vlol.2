@@ -266,10 +266,18 @@ public class User implements Serializable {
         this.role = role;
     }
 
+    /**
+     * Gets the validated first name of the user.
+     * @return the first name attribute.
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Sets the user's first name attribute if valid.
+     * @param firstName the first name value submitted by the user.
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
