@@ -1,6 +1,5 @@
 @charset "UTF-8";
 
-
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -61,8 +60,10 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    padding-bottom: 60px;
 }
 .footer {
+    text-align: center;
     position: absolute;
     bottom: 0;
     width: 100%;

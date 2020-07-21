@@ -7,36 +7,41 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
         <title>Log in</title>
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
-        <!-- Warning popup script -->
-        <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
     </head>
     <body class="text-center" th:onload="warning()">
         <main class="container">
             <div class="row">
                 <div class="col-4 mx-auto">
                     <form class="form-signin" th:action="@{/login}" method="post" >
-                        <img class="mb-4" src="img/vlol_logo.png" alt="" height="128" />
+                        <br />
+                        <img src="img/vlol_logo.png" alt="" height="128" />
+                        <br />
                         <div class="alert alert-danger" role="alert" th:if="${param.error}">
                             The email or password is incorrect!
                         </div>
-                        <h1 class="h3 mb-3">Please log in</h1>
+                        <h1>Please log in</h1>
+                        <br />
                         <label for="username" class="sr-only">Email address</label>
+                        <span class="add-on"><i class="icon-envelope"></i></span>
                         <input type="email" id="username" class="form-control" name="username" placeholder="Email address" required="required" autofocus="autofocus" />
+                        <br />
                         <label for="password" class="sr-only">Password</label>
+                        <span class="add-on"><i class="icon-key"></i></span>
                         <input type="password" id="password" class="form-control" name="password" placeholder="Password" required="required" />
                         <br />
-                        <div class="checkbox mb-3">
+                        <div class="checkbox">
                             <input type="checkbox" value="remember-me" /> Remember me
                         </div>
-                        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
                         <br />
-                        <div class="mb-3">
-                            <a th:href="@{/registration}">Create a Letter of Life Account</a>
-                            <br />
-                            <a href="/">Return to Home Page</a>
-                        </div>
+                        <button class="btn btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Log in</button>
+                        <br />
+                        <a th:href="@{/registration}" class="btn btn-primary btn-block"><i class="fas fa-file-signature"></i> Create a Letter of Life Account</a>
+                        <br />
+                        <a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>
                     </form>
                 </div>
             </div>
@@ -58,5 +63,7 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <!-- Warning popup script -->
+        <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
     </body>
 </html>
