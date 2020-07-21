@@ -21,9 +21,11 @@ package com.vlol.controller;
 import com.vlol.model.Allergy;
 import com.vlol.service.AllergyService;
 import java.util.List;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,8 +58,29 @@ public class AllergyController {
         return "admin/add-allergy";
     }
 
+    /*
     @RequestMapping(value = "/save-allergy", method = RequestMethod.POST)
     public String saveAllergy(@ModelAttribute("allergy") Allergy allergy) {
+        allergyService.saveAllergy(allergy);
+        return "redirect:/list-allergies";
+    }
+     */
+    @RequestMapping(value = "/save-allergy", method = RequestMethod.POST)
+    public String saveAllergy(@Valid Allergy allergy, BindingResult bindingResult, Model model) {
+        //check for errors
+        if (bindingResult.hasErrors()) {
+            return "admin/add-allergy";
+        }
+        allergyService.saveAllergy(allergy);
+        return "redirect:/list-allergies";
+    }
+
+    @RequestMapping(value = "/update-allergy", method = RequestMethod.POST)
+    public String updateAllergy(@Valid Allergy allergy, BindingResult bindingResult, Model model) {
+        //check for errors
+        if (bindingResult.hasErrors()) {
+            return "admin/edit-allergy";
+        }
         allergyService.saveAllergy(allergy);
         return "redirect:/list-allergies";
     }
