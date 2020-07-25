@@ -13,6 +13,53 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
     </head>
     <body class="text-center" th:onload="warning()">
+    <header>
+    		<!-- -------------- Nav Bar ------------------------ -->
+		  	<!-- ----------------------------------------------- -->
+  
+    		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    			<div class="container">
+    				<a class="navbar-brand" href="/">VLOL</a>
+    				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    	<span class="navbar-toggler-icon"></span>
+                	</button>
+                
+                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                    
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" id="register" th:href="@{/registration}">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <div sec:authorize="isAuthenticated()">
+                                    <a class="nav-link text-dark" id="login" th:href="@{/logout}">Log out</a>
+                                </div>
+                                <div sec:authorize="isAnonymous()">
+                                    <a class="nav-link text-dark" id="login" th:href="@{/login}">Log in</a>
+                                </div>
+                            </li>
+                        </ul>
+
+                 <ul class="navbar-nav flex-grow-1">
+                 	<li class="nav-item">
+                    	<a class="nav-link text-dark" href="/">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/admin-menu">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/contact">Contact</a>
+                    </li>
+                   </ul>
+                </div>
+    			</div>
+    		</nav>
+    	</header>
+    	<!-- ----------------- End Nav Bar ---------------- -->
+		<!-- ---------------------------------------------- -->
         <main class="container">
             <div class="row">
                 <div class="col-4 mx-auto">
@@ -42,15 +89,25 @@
                         <a th:href="@{/registration}" class="btn btn-primary btn-block"><i class="fas fa-file-signature"></i> Create a Letter of Life Account</a>
                         <br />
                         <a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>
+                        <br><br><br><br>
                     </form>
                 </div>
             </div>
         </main>
-        <footer class="footer mt-auto py-3">
-            <div class="container">
-                <span class="mt-5 mb-3 text-muted">Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.</span>
-            </div>
-        </footer>
+        
+        <!-- ----------------- Footer ---------------- -->
+		<!-- ----------------------------------------- -->
+
+		<footer class="border-top footer text-muted">
+	        <div class="container">
+	            <span class="mt-5 mb-3 text-muted">Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.</span>
+	            <a href="/">Home</a> | <a href="/about">About</a> | <a href="/contact">Contact</a>
+	        </div>
+    	</footer>
+    
+		<!-- ----------------- End Footer ---------------- -->
+		<!-- ----------------------------------------- -->
+       
         <script>
             // Set copyright ending year to current year
             var date = new Date();

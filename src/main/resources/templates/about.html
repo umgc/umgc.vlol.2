@@ -7,7 +7,7 @@
     	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Virtual Letter of Life</title>
+        <title>About - Virtual Letter of Life</title>
     </head>
     <body>
     	<header>
@@ -23,19 +23,15 @@
                 
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" id="register" th:href="@{/registration}">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <div sec:authorize="isAuthenticated()">
-                                    <a class="nav-link text-dark" id="login" th:href="@{/logout}">Log out</a>
-                                </div>
-                                <div sec:authorize="isAnonymous()">
-                                    <a class="nav-link text-dark" id="login" th:href="@{/login}">Log in</a>
-                                </div>
-                            </li>
-                        </ul>
+
+				<ul class="navbar-nav">
+    				<li class="nav-item">
+        				<a class="nav-link text-dark" id="register" href="/Identity/Account/Register">Register</a>
+    				</li>
+    				<li class="nav-item">
+        				<a class="nav-link text-dark" id="login" href="/login">Login</a>
+    				</li>
+				</ul>
 
                  <ul class="navbar-nav flex-grow-1">
                  	<li class="nav-item">
@@ -60,7 +56,7 @@
 		
 		<!-- ----------------- Content ---------------- -->
 		<!-- ------------------------------------------ -->
-		
+		<br><br>
         <div class="container">
         	<main role="main" class="pb-3">
        			<div class="container">

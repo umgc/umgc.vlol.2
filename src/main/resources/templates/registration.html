@@ -59,7 +59,7 @@
             <h1>Registration</h1>
             <a href="/">Return to Home Page</a>
             <br />
-            <div role="alert" th:if="${msg}" th:utext="${msg}"></div>
+            <div class="errmsg" role="alert" th:if="${msg}" th:utext="${msg}"></div>
             <br />
             <div class="container">
             <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
@@ -178,7 +178,7 @@
                     <tr>             
                         <td>User Comments:</td>
                         <td>
-                            <textarea th:field="*{userComments}" rows="4" />
+                            <textarea th:field="*{userComments}" rows="4" cols="50"/>
                         </td>
                     </tr>
                     <tr>
