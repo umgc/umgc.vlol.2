@@ -69,124 +69,242 @@
                         <hr>
                         <form action="#" th:action="@{/save-user}" th:object="${user}" method="post">
                         	<table id="list_table" class="table table-striped table-bordered dt-responsive display">
-                        		<tr>             
-                                    <td class="align-middle">User Last Name:</td>
+                        		<tr class="d-none">             
+                                    <td colspan="2">
+                                        <input type="text" th:field="*{userID}" readonly="readonly" hidden="hidden" />
+                                    </td>
+                                </tr>
+                                <tr>
+                        			<td class="align-middle">User Last Name:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('lastName')} ? 'input-icon right' : ''">
+                                    <div th:classappend="${#fields.hasErrors('lastName')} ? 'input-icon right' : ''">
                                             <input type="text" class="form-control" maxlength="50" th:field="*{lastName}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">User First Name:</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User First Name:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('firstName')} ? 'input-icon right' : ''">
+                                    <div th:classappend="${#fields.hasErrors('firstName')} ? 'input-icon right' : ''">
                                             <input type="text" class="form-control" maxlength="50" th:field="*{firstName}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">Password:</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Date of Birth (DOB):</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('password')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{password}" placeholder="Required"/>
-                                            <span th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">Security Questin:</td>
-                                    <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('securityQuestion')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{securityQuestion}" placeholder="Required"/>
-                                            <span th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">DOB:</td>
-                                    <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('DOB')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{DOB}" placeholder="Required"/>
+                                    <div th:classappend="${#fields.hasErrors('DOB')} ? 'input-icon right' : ''">
+                                            <input type="date" class="form-control" maxlength="50" th:field="*{DOB}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('DOB')}" class="text-danger" th:errors="*{DOB}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">User Email:</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">SSN:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('username')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{username}" placeholder="Required"/>
-                                            <span th:if="${#fields.hasErrors('username')}" class="text-danger" th:errors="*{username}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">SSN:</td>
-                                    <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('SSN')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{SSN}" placeholder="Required"/>
+                                    <div th:classappend="${#fields.hasErrors('SSN')} ? 'input-icon right' : ''">
+                                            <input type="number" class="form-control"  th:field="*{SSN}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('SSN')}" class="text-danger" th:errors="*{SSN}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">Street Address:</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Street Address:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('SSN')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{streetAddress}" placeholder="Required"/>
+                                    <div th:classappend="${#fields.hasErrors('streetAddress')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{streetAddress}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('streetAddress')}" class="text-danger" th:errors="*{streetAddress}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">City:</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">City:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('city')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{city}" placeholder="Required"/>
+                                    <div th:classappend="${#fields.hasErrors('city')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{city}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('city')}" class="text-danger" th:errors="*{city}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">State:</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">State:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('state')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{city}" placeholder="Required"/>
+                                    <div th:classappend="${#fields.hasErrors('state')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{state}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('state')}" class="text-danger" th:errors="*{state}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">Zip:</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Zip:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('zipCode')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{zipCode}" placeholder="Required"/>
+                                    <div th:classappend="${#fields.hasErrors('zipCode')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{zipCode}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('zipCode')}" class="text-danger" th:errors="*{zipCode}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">Phone:</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Phone:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('phone')} ? 'input-icon right' : ''">
-                                            <input type="text" class="form-control" maxlength="50" th:field="*{phone}" placeholder="Required"/>
+                                    <div th:classappend="${#fields.hasErrors('phone')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{phone}" placeholder="Required"/>
                                             <span th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>             
-                                    <td class="align-middle">Active?</td>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Password:</td>
                                     <td class="align-middle">
-                                        <div th:classappend="${#fields.hasErrors('isActive')} ? 'input-icon right' : ''">
-                                            <input type="checkbox" class="form-control" name="isActive" th:checked="${isActive}"/>
+                                    <div th:classappend="${#fields.hasErrors('password')} ? 'input-icon right' : ''">
+                                            <input type="password" class="form-control" maxlength="50" th:field="*{password}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Point of Contact (POC) Name:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('pocName')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{pocName}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('pocName')}" class="text-danger" th:errors="*{pocName}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Point of Contact (POC) Phone Number:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('pocPhone')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{pocPhone}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('pocPhone')}" class="text-danger" th:errors="*{pocPhone}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Agent ID Number:</td>
+                                    <td class="align-middle">
+			                            <select th:field="*{userAgentNo}" class="form-control">
+			                                <option value="">None</option>
+			                                <option th:each="agent : ${agents}" th:value="${agent.userID}" th:text="${agent.userID} + ': ' + ${agent.firstName} + ' ' + ${agent.lastName}">Choose a User Agent</option>
+			                            </select>
+                        			</td>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Doctor Name:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('doctorName')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{doctorName}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('doctorName')}" class="text-danger" th:errors="*{doctorName}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Doctor Phone Number:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('doctorPhone')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{doctorPhone}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('doctorPhone')}" class="text-danger" th:errors="*{doctorPhone}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Insurance Company:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('insCompany')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{insCompany}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('insCompany')}" class="text-danger" th:errors="*{insCompany}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Insurance Policy Number:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('insPolicyNo')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{insPolicyNo}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('insPolicyNo')}" class="text-danger" th:errors="*{insPolicyNo}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Advance Directive?</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('advDirective')} ? 'input-icon right' : ''">
+                                            <input type="checkbox" class="form-control" th:field="*{advDirective}" th:value="${user}" />
+                                            <span th:if="${#fields.hasErrors('advDirective')}" class="text-danger" th:errors="*{advDirective}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Advance Directive Type:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('advDirType')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{advDirType}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('advDirType')}" class="text-danger" th:errors="*{advDirType}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Comments:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('userComments')} ? 'input-icon right' : ''">
+                                            
+                                            <textarea th:field="*{userComments}" class="form-control" rows="4" cols="50"></textarea>
+                                            <span th:if="${#fields.hasErrors('userComments')}" class="text-danger" th:errors="*{userComments}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+			                        <td colspan="2">
+			                            <hr />
+			                        </td>
+                    			</tr>
+                    			<tr>
+                        			<td class="align-middle">User Email:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('username')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{username}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('username')}" class="text-danger" th:errors="*{username}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User Security Question:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('securityQuestion')} ? 'input-icon right' : ''">
+                                            <input type="text" class="form-control"  maxlength="50" th:field="*{securityQuestion}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Date Created:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('dateCreated')} ? 'input-icon right' : ''">
+                                            <input type="datetime-local" class="form-control"  maxlength="50" th:field="*{dateCreated}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('dateCreated')}" class="text-danger" th:errors="*{dateCreated}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Last Login:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('lastLoginDate')} ? 'input-icon right' : ''">
+                                            <input type="datetime-local" class="form-control"  maxlength="50" th:field="*{lastLoginDate}" placeholder="Required"/>
+                                            <span th:if="${#fields.hasErrors('lastLoginDate')}" class="text-danger" th:errors="*{lastLoginDate}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">User's Role:</td>
+                                    <td class="align-middle">
+			                            <select th:field="*{role}" class="form-control">
+                                			<option th:each="role : ${roles}" th:value="${{role}}" th:text="${role.title}">Choose a Role</option>
+                            			</select>
+                        			</td>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Active?</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('isActive')} ? 'input-icon right' : ''">
+                                            <input type="checkbox" class="form-control" th:field="*{isActive}" th:value="${user}" />
                                             <span th:if="${#fields.hasErrors('isActive')}" class="text-danger" th:errors="*{isActive}"></span>
-                                        </div>
-                                    </td>
-                                </tr>
-                                
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Locked Out</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('isLocked')} ? 'input-icon right' : ''">
+                                            <input type="checkbox" class="form-control" th:field="*{isLocked}" th:value="${user}" />
+                                            <span th:if="${#fields.hasErrors('isLocked')}" class="text-danger" th:errors="*{isLocked}"></span>
+                                    </div>
+                        		</tr>
+                        		<tr>
+                        			<td class="align-middle">Administrator Comments:</td>
+                                    <td class="align-middle">
+                                    <div th:classappend="${#fields.hasErrors('adminComments')} ? 'input-icon right' : ''">
+                                            <textarea th:field="*{adminComments}" class="form-control" rows="4" cols="50"/>
+                                            <span th:if="${#fields.hasErrors('adminComments')}" class="text-danger" th:errors="*{adminComments}"></span>
+                                    </div>
+                        		</tr>
                                 <tr>
                                     <td colspan="2">
                                         <button type="submit" class="btn btn-info">Save</button>
@@ -195,8 +313,8 @@
                         	</table>
                         </form>
                         <br />
-                        <a href="/list-allergies" class="btn btn-primary">Return to Allergy List</a>
-                        <br />
+                        <a href="/list-users" class="btn btn-primary">Return to User List</a>
+                        <br><br><br><br>
                     </div>
         		</div>
         	</div>

@@ -4,7 +4,7 @@
     <head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Allergy Manager</title>
+        <title>Admin Manager</title>
         <link rel="stylesheet" th:href="@{/css/site.css}"/>
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
@@ -56,15 +56,23 @@
                 <div class="row">
                     <div class="col-lg-9 mx-auto">
                         <h1>Administration Menu</h1>
-                        <ul>
-                            <li><a href="/list-allergies">Allergy Management Page</a></li>
-                            <li><a href="/list-conditions">Condition Management Page</a></li>
-                            <li><a href="/list-medications">Medication Management Page</a></li>
-                            <li><a href="/list-roles">Role Management Page</a></li>
-                            <li><a href="/list-users">User Management Page</a></li>
-                            <li><a href="/console">H2 Console Portal</a></li>
-                        </ul>
-                        <a href="/">Return to Home Page</a>
+                        
+		                    <div class="container">
+						        <main role="main" class="pb-3">
+						        	<div class="align-center" align="center"></div>
+							        <div class="grid-container">
+									
+										<div class="item1"><a href="/list-allergies">Allergy Management Page</a></div>
+										<div class="item2"><a href="/list-conditions">Condition Management Page</a></div>
+										<div class="item3"><a href="/list-medications">Medication Management Page</a></div>  
+										<div class="item4"><a href="/list-roles">Role Management Page</a></div>
+										<div class="item5"><a href="/list-users">User Management Page</a></div>
+										
+									</div>
+									<br/>
+										<a href="/">Return to Home Page</a>
+						        </main>
+		    				</div>
                     </div>
                 </div>
             </div>

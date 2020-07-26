@@ -102,7 +102,7 @@
                         			<td class="align-middle">Controlled?</td>
                                     <td class="align-middle">
                                     <div th:classappend="${#fields.hasErrors('controlled')} ? 'input-icon right' : ''">
-                                            <input type="checkbox" class="form-control" name="controlled" th:checked="${controlled}" />
+                                            <input class="form-control" type="checkbox" th:field="*{controlled}" th:value="${controlled}" />
                                             <span th:if="${#fields.hasErrors('controlled')}" class="text-danger" th:errors="*{controlled}"></span>
                                     </div>
                         		</tr>
@@ -110,7 +110,7 @@
                         			<td class="align-middle">Blood Thinner?</td>
                                     <td class="align-middle">
                                     <div th:classappend="${#fields.hasErrors('bloodThinner')} ? 'input-icon right' : ''">
-                                            <input type="checkbox" class="form-control" name="bloodThinner" th:checked="${bloodThinner}" />
+                                            <input class="form-control" type="checkbox" th:field="*{bloodThinner}" th:value="${bloodThinner}" />
                                             <span th:if="${#fields.hasErrors('bloodThinner')}" class="text-danger" th:errors="*{bloodThinner}"></span>
                                     </div>
                         		</tr>
@@ -122,7 +122,7 @@
                         	</table>
                         </form>
                         <br />
-                        <a href="/list-allergies" class="btn btn-primary">Return to Allergy List</a>
+                        <a href="/list-medications" class="btn btn-primary">Return to Medication List</a>
                         <br />
      				</div>
      			</div>
