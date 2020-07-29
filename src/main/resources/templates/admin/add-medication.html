@@ -42,7 +42,66 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/admin-menu">Admin</a>
-                            </li>
+                            </li><!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title>Create a New Medication</title>
+    </head>
+    <body>
+        <div layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="pt-4">Create a New Medication</h1>
+                    <form method="get" action="/search-medications">
+                        <input type="text" name="keyword" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" />&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Full Search</button>
+                    </form>
+                    <hr />
+                    <form action="#" th:action="@{/save-medication}" th:object="${medication}" method="post">
+                        <table id="list_table" class="table table-bordered dt-responsive display">
+                            <tr>
+                                <td>Brand Name:</td>
+                                <td>
+                                    <input type="text" th:field="*{brandName}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Generic Name:</td>
+                                <td>
+                                    <input type="text" th:field="*{genericName}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Drug Action:</td>
+                                <td>
+                                    <input type="text" th:field="*{drugAction}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Controlled?</td>
+                                <td>
+                                    <input type="checkbox" name="controlled" th:checked="${controlled}" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Blood Thinner?</td>
+                                <td>
+                                    <input type="checkbox" name="bloodThinner" th:checked="${bloodThinner}" />
+                                </td>
+                            </tr>
+                        </table>
+                        <button type="submit" class="btn btn-info">Save</button>
+                    </form>
+                    <br />
+                    <a href="/list-medications" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Medication List</a>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/about">About</a>
                             </li>
