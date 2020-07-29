@@ -1,140 +1,57 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      layout:decorate="~{layouts/datatable-master}"
+      lang="en">
     <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Role Search Results</title>
-        <link rel="icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
-        <link rel="stylesheet" th:href="@{/css/site.css}"/>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
-        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.6.2/css/buttons.dataTables.min.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
     </head>
     <body>
-    	<header>
-            <!-- Navigation -->
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" href="/">VLOL</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" id="register" th:href="@{/registration}">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <div sec:authorize="isAuthenticated()">
-                                    <a class="nav-link text-dark" id="login" th:href="@{/logout}">Log out</a>
-                                </div>
-                                <div sec:authorize="isAnonymous()">
-                                    <a class="nav-link text-dark" id="login" th:href="@{/login}">Log in</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/admin-menu">Admin</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/about">About</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/contact">Contact</a>
-                            </li>
-                        </ul>
-                    </div>
+        <div layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="pt-4">Role Search Results</h2>
+                    <form method="get" action="search-roles">
+                        <input type="text" name="keyword" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" />&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Full Search</button>
+                    </form>
+                    <hr />
+                    <a href="/add-role" class="btn btn-success"><i class="fas fa-plus"></i> Add a Role</a>
+                    <hr />
+                    <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap">
+                        <thead>
+                            <tr>
+                                <th data-priority="1">Role ID</th>
+                                <th data-priority="1">Role Title</th>
+                                <th data-priority="99">Role Access Level</th>
+                                <th data-priority="99">Role Description</th>
+                                <th data-priority="99" class="disabled-sorting">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="role : ${result}">
+                                <td th:text="${role.roleID}" class="align-middle">Role ID</td>
+                                <td th:text="${role.title}" class="align-middle">Role Title</td>
+                                <td th:text="${role.accessLevel}" class="align-middle">Role Access Level</td>
+                                <td th:text="${role.description}" class="align-middle">Role Description</td>
+                                <td class="text-nowrap">
+                                    <a th:href="@{/view-role/{id}(id=${role.roleID})}" class="btn btn-info">
+                                        <i class="far fa-eye"></i> View
+                                    </a>
+                                    <a th:href="@{/edit-role/{id}(id=${role.roleID})}" class="btn btn-warning">
+                                        <i class="far fa-edit"></i> Edit
+                                    </a>
+                                    <a th:href="@{/delete-role/{id}(id=${role.roleID})}" class="btn btn-danger"  onclick="return confirm('Are you sure you want to delete this item?')">
+                                        <i class="far fa-trash-alt"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br />
+                    <a href="/list-roles" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Role Manager</a>
+                    <br />
                 </div>
-            </nav>
-        </header>
-        
-        <main role="main" class="pb-3">
-        	<div class="container">
-        		<div class="row">
-        			<div class="col-lg-9 mx-auto">
-        				<h2>Role Search Results</h2>
-        				<form method="get" action="search-roles">
-                            <input type="text" name="keyword" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" />&nbsp;&nbsp;
-                            <input type="submit" value="Search" />
-                        </form>
-                        <br />
-                        <a href="/add-role" class="btn btn-primary">Add a Role</a>
-                        <hr />
-                        <table id="list_table" class="table table-striped table-bordered dt-responsive display">
-                        	<thead>
-			                    <tr>
-			                        <th>Role ID</th>
-			                        <th>Role Title</th>
-			                        <th>Role Access Level</th>
-			                        <th>Role Description</th>
-			                        <th class="disabled-sorting">Actions</th>
-			                    </tr>
-                			</thead>
-                			<tbody>
-			                    <tr th:each="role : ${result}">
-			                        <td th:text="${role.roleID}">Role ID</td>
-			                        <td th:text="${role.title}">Role Title</td>
-			                        <td th:text="${role.accessLevel}">Role Access Level</td>
-			                        <td th:text="${role.description}">Role Description</td>
-			                        <td>
-			                            <a th:href="@{/edit-roles/{id}(id=${role.roleID})}">
-			                            		<i class="far fa-edit"></i>Edit
-			                            </a>
-			                            &nbsp;|&nbsp;
-			                            <a th:href="@{/delete-roles/{id}(id=${role.roleID})}">
-			                            		<i class="far fa-trash-alt"></i>Delete
-			                            </a>
-			                        </td>
-			                    </tr>
-                			</tbody>
-                        </table>
-                        <br />
-                        <a href="/list-roles" class="btn btn-primary">Return to Role List</a>
-                        <br />
-        			</div>
-        		</div>
-        	</div>
-        </main>
-    	<footer class="border-top footer text-muted">
-            <div class="container">
-                <span class="mt-5 mb-3 text-muted">Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.</span>
             </div>
-        </footer>
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/buttons/1.6.2/js/dataTables.buttons.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.flash.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.html5.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/buttons/1.6.2/js/buttons.print.min.js" crossorigin="anonymous"></script>
-        <script>
-            $(document).ready(function () {
-                $('#list_table').DataTable({
-                    dom: 'Bfrtip',
-                    buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
-                    ]
-                });
-            });
-            // Set copyright ending year to current year
-            var date = new Date();
-            var fullYear = date.getFullYear();
-            if (fullYear !== 2020) {
-                document.getElementById("currentYear").innerHTML = " - " + fullYear;
-            }
-        </script>   
+        </div>
     </body>
 </html>
