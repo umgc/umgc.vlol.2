@@ -1,257 +1,259 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
     <head>
-    	<link rel="stylesheet" th:href="@{/css/site.css}"/>
-    	<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Registration</title>
+        <title>VLOL Registration</title>
+        <style>
+            td {
+                text-align: left;
+                vertical-align: top;
+                white-space: nowrap;
+            }
+            input:not([type="checkbox"]) {
+                width: 100%;
+            }
+            textarea {
+                resize: none;
+                width: 100%;
+            }
+        </style>
     </head>
     <body>
-    <header>
-    		<!-- -------------- Nav Bar ------------------------ -->
-		  	<!-- ----------------------------------------------- -->
-  
-    		<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-    			<div class="container">
-    				<a class="navbar-brand" href="/">VLOL</a>
-    				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    	<span class="navbar-toggler-icon"></span>
-                	</button>
-                
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    
-
-				<ul class="navbar-nav">
-    				<li class="nav-item">
-        				<a class="nav-link text-dark" id="register" href="/Identity/Account/Register">Register</a>
-    				</li>
-    				<li class="nav-item">
-        				<a class="nav-link text-dark" id="login" href="/login">Login</a>
-    				</li>
-				</ul>
-
-                 <ul class="navbar-nav flex-grow-1">
-                 	<li class="nav-item">
-                    	<a class="nav-link text-dark" href="/">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/admin-menu">Admin</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" href="/contact">Contact</a>
-                    </li>
-                   </ul>
-                </div>
-    			</div>
-    		</nav>
-    	</header>
-    	<!-- ----------------- End Nav Bar ---------------- -->
-		<!-- ---------------------------------------------- -->
-		
-		<div class="container">
-        <main role="main" class="pb-3">
-        <div align="center">
-            <h1>Registration</h1>
-            <a href="/">Return to Home Page</a>
-            <br />
-            <div class="errmsg" role="alert" th:if="${msg}" th:utext="${msg}"></div>
-            <br />
-            <div class="container">
-            <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
-                <table border="0" cellpadding="10">
-                    <tr>             
-                        <td>User Last Name</td>
-                        <td>
-                            <input type="text" th:field="*{lastName}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User First Name:</td>
-                        <td>
-                            <input type="text" th:field="*{firstName}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Date of Birth (DOB):</td>
-                        <td>
-                            <input type="date" th:field="*{DOB}"/>
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Social Security Number (SSN):</td>
-                        <td>
-                            <input type="number" th:field="*{SSN}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Street Address:</td>
-                        <td>
-                            <input type="text" th:field="*{streetAddress}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User City:</td>
-                        <td>
-                            <input type="text" th:field="*{city}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User State:</td>
-                        <td>
-                            <input type="text" th:field="*{state}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User ZIP Code:</td>
-                        <td>
-                            <input type="text" th:field="*{zipCode}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Phone Number:</td>
-                        <td>
-                            <input type="tel" th:field="*{phone}" size="10" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Point of Contact (POC) Name:</td>
-                        <td>
-                            <input type="text" th:field="*{pocName}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Point of Contact (POC) Phone Number:</td>
-                        <td>
-                            <input type="tel" th:field="*{pocPhone}" size="10" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Agent ID Number:</td>
-                        <td>
-                            <select th:field="*{userAgentNo}">
-                                <option value="">None</option>
-                                <option th:each="agent : ${agents}" th:value="${agent.userID}" th:text="${agent.userID} + ': ' + ${agent.firstName} + ' ' + ${agent.lastName}">Choose a User Agent</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Doctor Name:</td>
-                        <td>
-                            <input type="text" th:field="*{doctorName}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Doctor Phone Number:</td>
-                        <td>
-                            <input type="tel" th:field="*{doctorPhone}" size="10" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Insurance Company:</td>
-                        <td>
-                            <input type="text" th:field="*{insCompany}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Insurance Policy Number:</td>
-                        <td>
-                            <input type="text" th:field="*{insPolicyNo}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Advance Directive?</td>
-                        <td>
-                            <input type="checkbox" th:field="*{advDirective}" th:value="${user}" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Advance Directive Type:</td>
-                        <td>
-                            <input type="text" th:field="*{advDirType}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Comments:</td>
-                        <td>
-                            <textarea th:field="*{userComments}" rows="4" cols="50"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            <hr />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Email / User Name:</td>
-                        <td>
-                            <input type="email" th:field="*{username}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>Password:</td>
-                        <td>
-                            <input type="password" th:field="*{password}" size="50" required="required" />
-                        </td>
-                    </tr>
-                    <tr>             
-                        <td>User Security Question:</td>
-                        <td>
-                            <input type="text" th:field="*{securityQuestion}" size="50" />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>User Security Answer:</td>
-                        <td>
-                            <input type="password" th:field="*{securityAnswer}" size="50" />
-                        </td>
-                    </tr>
-                </table>
-                <input type="hidden" th:field="*{isActive}" />
-                <input type="hidden" th:field="*{isLocked}" />
-                <input type="hidden" th:field="*{dateCreated}" />
-                <input type="hidden" th:field="*{lastLoginDate}" />
-                <button type="submit">Register</button>
-            </form>
+        <div layout:fragment="content" class="container">
+            <div align="center">
+                <h1 class="pt-4">Registration</h1>
+                <a href="/">Return to Home Page</a>
+                <br />
+                <div role="alert" class="text-danger" th:if="${msg}" th:utext="${msg}"></div>
+                <br />
+                <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+                    <table class="table table-bordered dt-responsive display">
+                        <tr>             
+                            <td>Last Name</td>
+                            <td class="w-100">
+                                <input type="text" th:field="*{lastName}" maxlength="100" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>First Name:</td>
+                            <td>
+                                <input type="text" th:field="*{firstName}" maxlength="50" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Date of Birth (DOB):</td>
+                            <td>
+                                <input type="date" th:field="*{DOB}" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('DOB')}" class="text-danger" th:errors="*{DOB}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Social Security Number (SSN):</td>
+                            <td>
+                                <input type="number" th:field="*{SSN}" maxlength="9" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('SSN')}" class="text-danger" th:errors="*{SSN}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Street Address:</td>
+                            <td>
+                                <input type="text" th:field="*{streetAddress}" maxlength="100" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('streetAddress')}" class="text-danger" th:errors="*{streetAddress}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>City:</td>
+                            <td>
+                                <input type="text" th:field="*{city}" maxlength="50" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('city')}" class="text-danger" th:errors="*{city}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>State:</td>
+                            <td>
+                                <input type="text" th:field="*{state}" maxlength="2" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('state')}" class="text-danger" th:errors="*{state}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>ZIP Code:</td>
+                            <td>
+                                <input type="text" th:field="*{zipCode}" maxlength="5" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('zipCode')}" class="text-danger" th:errors="*{zipCode}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Phone Number:</td>
+                            <td>
+                                <input type="tel" th:field="*{phone}" maxlength="10" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Point of Contact (POC) Name:</td>
+                            <td>
+                                <input type="text" th:field="*{pocName}" maxlength="100" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('pocName')}" class="text-danger" th:errors="*{pocName}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>POC Phone Number:</td>
+                            <td>
+                                <input type="tel" th:field="*{pocPhone}" maxlength="10" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('pocPhone')}" class="text-danger" th:errors="*{pocPhone}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Agent ID Number:</td>
+                            <td>
+                                <select th:field="*{userAgentNo}">
+                                    <option value="">None</option>
+                                    <option th:each="agent : ${agents}" th:value="${agent.userID}" th:text="${agent.userID}">Choose a User Agent</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Doctor Name:</td>
+                            <td>
+                                <input type="text" th:field="*{doctorName}" maxlength="100" />
+                                <div th:if="${#fields.hasErrors('doctorName')}" class="text-danger" th:errors="*{doctorName}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Doctor Phone Number:</td>
+                            <td>
+                                <input type="tel" th:field="*{doctorPhone}" maxlength="10" />
+                                <div th:if="${#fields.hasErrors('doctorPhone')}" class="text-danger" th:errors="*{doctorPhone}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Insurance Company:</td>
+                            <td>
+                                <input type="text" th:field="*{insCompany}" maxlength="50" />
+                                <div th:if="${#fields.hasErrors('insCompany')}" class="text-danger" th:errors="*{insCompany}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Insurance Policy Number:</td>
+                            <td>
+                                <input type="text" th:field="*{insPolicyNo}" maxlength="50" />
+                                <div th:if="${#fields.hasErrors('insPolicyNo')}" class="text-danger" th:errors="*{insPolicyNo}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Advance Directive?</td>
+                            <td class="text-wrap">
+                                <div>Check this box if you have an advance directive (e.g., DNR, MOLST, etc.):</div>
+                                <input type="checkbox" th:field="*{advDirective}" th:value="${user}" />
+                                <div th:if="${#fields.hasErrors('advDirective')}" class="text-danger" th:errors="*{advDirective}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Advance Directive Type:</td>
+                            <td>
+                                <input type="text" th:field="*{advDirType}" maxlength="50" />
+                                <div th:if="${#fields.hasErrors('advDirType')}" class="text-danger" th:errors="*{advDirType}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Allergies:</td>
+                            <td class="text-wrap">
+                                <p><b>Note</b> - If any of your allergies are not listed, check 'Other' and enter the missing allergies in the Comments section.</p>
+                                <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                    <li th:each="allergy : ${allergies}">
+                                        <input type="checkbox" name="allergies"
+                                               th:utext="'&nbsp;' + ${allergy.allergyName}"
+                                               th:value="${allergy.allergyID}"
+                                               th:field="*{allergies}"
+                                               />
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Conditions:</td>
+                            <td class="text-wrap">
+                                <p><b>Note</b> - If any of your conditions are not listed, check 'Other' and enter the missing conditions in the Comments section.</p>
+                                <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                    <li th:each="condition : ${conditions}">
+                                        <input type="checkbox" name="conditions"
+                                               th:utext="'&nbsp;' + ${condition.conditionName}"
+                                               th:value="${condition.conditionID}"
+                                               th:field="*{conditions}"
+                                               />
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Medications:</td>
+                            <td class="text-wrap">
+                                <p><b>Note</b> - If any of your medications are not listed, check 'Other' and enter the missing medications in the Comments section.</p>
+                                <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                    <li th:each="medication : ${medications}">
+                                        <input type="checkbox" name="medications"
+                                               th:utext="'&nbsp;' + ${medication.brandName} + ' / ' + ${medication.genericName}"
+                                               th:value="${medication.medicationID}"
+                                               th:field="*{medications}"
+                                               />
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>User Comments:</td>
+                            <td>
+                                <textarea th:field="*{userComments}" rows="4" />
+                                <div th:if="${#fields.hasErrors('userComments')}" class="text-danger" th:errors="*{userComments}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <hr />
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Email / User Name:</td>
+                            <td>
+                                <input type="email" th:field="*{username}" maxlength="320" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('username')}" class="text-danger" th:errors="*{username}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Password:</td>
+                            <td>
+                                <input type="password" th:field="*{password}" maxlength="320" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
+                            </td>
+                        </tr>
+                        <tr>             
+                            <td>Security Question:</td>
+                            <td>
+                                <input type="text" th:field="*{securityQuestion}" maxlength="100" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Security Answer:</td>
+                            <td>
+                                <input type="password" th:field="*{securityAnswer}" maxlength="50" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('securityAnswer')}" class="text-danger" th:errors="*{securityAnswer}"></div>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="hidden" th:field="*{isActive}" />
+                    <input type="hidden" th:field="*{isLocked}" />
+                    <input type="hidden" th:field="*{dateCreated}" />
+                    <input type="hidden" th:field="*{lastLoginDate}" />
+                    <br />
+                    <button type="submit">Register</button>
+                </form>
+                <br />
+                <a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>
             </div>
-            <br />
-            <a href="/">Return to Home Page</a>
-            <br><br><br><br>
-        </div> 
-        </main>
         </div>
-        <!-- End Content -->
-        
-        <!-- ----------------- Footer ---------------- -->
-		<!-- ----------------------------------------- -->
-
-		<footer class="border-top footer text-muted">
-	        <div class="container">
-	            <span class="mt-5 mb-3 text-muted">Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.</span>
-	            <a href="/">Home</a> | <a href="/about">About</a> | <a href="/contact">Contact</a>
-	        </div>
-    	</footer>
-    
-		<!-- ----------------- End Footer ---------------- -->
-		<!-- ----------------------------------------- -->
-       
-        <script>
-            // Set copyright ending year to current year
-            var date = new Date();
-            var fullYear = date.getFullYear();
-            if (fullYear !== 2020) {
-                document.getElementById("currentYear").innerHTML = " - " + fullYear;
-            }
-        </script>
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        <!-- Warning popup script -->
-        <script type="text/javascript" th:src="@{/js/scripts.js}"></script>
     </body>
 </html>
