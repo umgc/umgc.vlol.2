@@ -1,49 +1,5 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <title>Admin Manager</title>
-        <link rel="stylesheet" th:href="@{/css/site.css}"/>
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" />
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
-    </head>
-    <body>
-        <header>
-            <!-- Navigation -->
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-                <div class="container">
-                    <a class="navbar-brand" href="/">VLOL</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" id="register" th:href="@{/registration}">Register</a>
-                            </li>
-                            <li class="nav-item">
-                                <div sec:authorize="isAuthenticated()">
-                                    <a class="nav-link text-dark" id="login" th:href="@{/logout}">Log out</a>
-                                </div>
-                                <div sec:authorize="isAnonymous()">
-                                    <a class="nav-link text-dark" id="login" th:href="@{/login}">Log in</a>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav flex-grow-1">
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/admin-menu">Admin</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/about">About</a>
-                            </li><!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
@@ -68,59 +24,5 @@
                 </div>
             </div>
         </div>
-    </body>
-</html>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" href="/contact">Contact</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
-        <main role="main" class="pb-3">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-9 mx-auto">
-                        <h1>Administration Menu</h1>
-                        
-		                    <div class="container">
-						        <main role="main" class="pb-3">
-						        	<div class="align-center" align="center"></div>
-							        <div class="grid-container">
-									
-										<div class="item1"><a href="/list-allergies">Allergy Management Page</a></div>
-										<div class="item2"><a href="/list-conditions">Condition Management Page</a></div>
-										<div class="item3"><a href="/list-medications">Medication Management Page</a></div>  
-										<div class="item4"><a href="/list-roles">Role Management Page</a></div>
-										<div class="item5"><a href="/list-users">User Management Page</a></div>
-										
-									</div>
-									<br/>
-										<a href="/">Return to Home Page</a>
-						        </main>
-		    				</div>
-                    </div>
-                </div>
-            </div>
-        </main>
-        <footer class="border-top footer text-muted">
-            <div class="container">
-                <span class="mt-5 mb-3 text-muted">Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.</span>
-            </div>
-        </footer>
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
-        <script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js" crossorigin="anonymous"></script>
-        <script>
-            // Set copyright ending year to current year
-            var date = new Date();
-            var fullYear = date.getFullYear();
-            if (fullYear !== 2020) {
-                document.getElementById("currentYear").innerHTML = " - " + fullYear;
-            }
-        </script>
     </body>
 </html>
