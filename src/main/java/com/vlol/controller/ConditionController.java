@@ -66,7 +66,7 @@ public class ConditionController {
         conditionService.saveCondition(condition);
         return "redirect:/list-conditions";
     }
-    
+
     @RequestMapping(value = "/update-condition", method = RequestMethod.POST)
     public String updateCondition(@Valid Condition condition, BindingResult bindingResult, Model model) {
         //check for errors
@@ -76,7 +76,7 @@ public class ConditionController {
         conditionService.saveCondition(condition);
         return "redirect:/list-conditions";
     }
-    
+
     @RequestMapping("/edit-condition/{id}")
     public ModelAndView viewEditConditionPage(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("admin/edit-condition");
@@ -96,6 +96,14 @@ public class ConditionController {
         List<Condition> result = conditionService.findConditionByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-conditions");
         mav.addObject("result", result);
+        return mav;
+    }
+
+    @RequestMapping("/view-condition/{id}")
+    public ModelAndView viewConditionPage(@PathVariable(name = "id") int id) {
+        ModelAndView mav = new ModelAndView("admin/view-condition");
+        Condition condition = conditionService.getCondition(id);
+        mav.addObject("condition", condition);
         return mav;
     }
 }

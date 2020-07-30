@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title>View an Medication</title>
+    </head>
+    <body>
+        <div layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="pt-4">View an Medication</h1>
+                    <form method="get" action="/search-medications">
+                        <input type="text" name="keyword" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" />&nbsp;&nbsp;
+                        <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Full Search</button>
+                    </form>
+                    <hr />
+                    <a href="/add-medication" class="btn btn-success"><i class="fas fa-plus"></i> Add an Medication</a>
+                    <hr />
+                    <table id="list_table" class="table table-bordered dt-responsive display">
+                        <tr>
+                            <td class="text-nowrap">ID:</td>
+                            <td class="w-100" th:text="${medication.medicationID}">ID</td>
+                        </tr>
+                        <tr>             
+                            <td class="text-nowrap">Brand Name:</td>
+                            <td th:text="${medication.brandName}">Brand Name</td>
+                        </tr>
+                        <tr>
+                            <td class="text-nowrap">Generic Name:</td>
+                            <td th:text="${medication.genericName}">Generic Name:</td>
+                        </tr>
+                        <tr>
+                            <td class="text-nowrap">Drug Action:</td>
+                            <td th:text="${medication.drugAction}">Drug Action:</td>
+                        </tr>
+                        <tr>
+                            <td class="text-nowrap">Controlled?</td>
+                            <td><input type="checkbox" th:field="*{medication.controlled}" th:value="${medication}" disabled="disabled"></td>
+                        </tr>
+                        <tr>
+                            <td class="text-nowrap">Blood Thinner?</td>
+                            <td><input type="checkbox" th:field="*{medication.bloodThinner}" th:value="${medication}" disabled="disabled"></td>
+                        </tr>
+                    </table>
+                    <br />
+                    <a href="/list-medications" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Medication List</a>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,51 @@
+/**
+ * Site CSS file.
+ *
+ * @author Rob Garcia <rgarcia92@student.umgc.edu>
+ * @license https://opensource.org/licenses/MIT The MIT License
+ * @link      https://github.com/garciart/SWEN670
+ * @copyright 2020 EMS Plus
+ */
+@charset "UTF-8";
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    /* Allow room for the fixed header and footer */
+    margin-top: 60px;
+    margin-bottom: 60px;
+}
+
+header {
+    position: fixed; /* Fix the navbar to the page */
+    top: 0; /* Position the navbar at the top of the page */
+    width: 100%; /* Full width */
+    z-index:1;
+}
+
+.border-bottom {
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.box-shadow {
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+.border-top {
+    border-top: 1px solid #e5e5e5;
+}
+
+footer {
+    position: fixed; /* Fix the footer to the page */
+    bottom: 0; /* Position the footer at the bottom of the page */
+    width: 100%; /* Full width */
+    height: 50px; /* Set the fixed height of the footer 10px less than the body bottom margin */
+    line-height: 50px; /* Vertically center the footer text there */
+    background-color: white;
+    font-size: small;
+    text-align: center;
+    z-index:1;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title>VLOL QR Code Capture</title>
+        <script type="text/javascript" th:src="@{/js/html5-qrcode.min.js}"></script>
+    </head>
+    <body>
+        <div layout:fragment="content" class="container">
+            <div class="row text-center">
+                <div class="col-lg-9 mx-auto">
+                    <h1 class="pt-4">Capture the QR Code Below:</h1>
+                    <br />
+                    <div id="reader"></div>
+                    <br />
+                    <a href="/admin-menu" class="btn btn-primary">Return to Administration Menu</a>
+                    <br />
+                </div>
+            </div>
+            <script>
+                function onScanSuccess(qrCodeMessage) {
+                    // handle on success condition with the decoded message
+                    console.log(qrCodeMessage);
+                    window.location.replace("/view-user/" + qrCodeMessage);
+                }
+                var html5QrcodeScanner = new Html5QrcodeScanner("reader", {fps: 10, qrbox: 250});
+                html5QrcodeScanner.render(onScanSuccess);
+            </script>
+            
+        </div>
+    </body>
+</html>
+
+

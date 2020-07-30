@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title></title>
+        <link rel="shortcut icon" type="image/png" th:href="@{/img/vlol_icon.png}" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" />
+        <link rel="stylesheet" th:href="@{/DataTables/datatables.min.css}"/>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container">
+                    <a class="navbar-brand" href="/">
+                        <img src="/img/vlol_icon.png" width="30" height="30" alt="" />
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" id="register" th:href="@{/registration}">Register</a>
+                            </li>
+                            <li class="nav-item">
+                                <div sec:authorize="isAuthenticated()">
+                                    <a class="nav-link text-dark" id="login" th:href="@{/logout}">Logout</a>
+                                </div>
+                                <div sec:authorize="isAnonymous()">
+                                    <a class="nav-link text-dark" id="login" th:href="@{/login}">Login</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/admin-menu">Admin</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/about">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="/contact">Contact</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <main>
+            <div layout:fragment="content"></div>
+        </main>
+        <footer class="border-top footer text-muted">
+            <div class="container">
+                Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.
+            </div>
+        </footer>
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+        <!-- Datatable and data export support -->
+
+        <script type="text/javascript" th:src="@{/DataTables/datatables.min.js}"></script>
+        <script>
+            $(document).ready(function () {
+                $('#list_table').DataTable({
+                    responsive: true,
+                    dom: 'Bfrtip',
+                    buttons: [
+                        'copy', 'csv', 'excel', 'pdf', 'print'
+                    ]
+                });
+            });
+            // Set copyright ending year to current year
+            var date = new Date();
+            var fullYear = date.getFullYear();
+            if (fullYear !== 2020) {
+                document.getElementById("currentYear").innerHTML = " - " + fullYear;
+            }
+        </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/js/all.min.js"></script>
+    </body>
+</html>

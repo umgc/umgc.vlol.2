@@ -66,7 +66,7 @@ public class RoleController {
         roleService.saveRole(role);
         return "redirect:/list-roles";
     }
-    
+
     @RequestMapping(value = "/update-role", method = RequestMethod.POST)
     public String updateRole(@Valid Role role, BindingResult bindingResult, Model model) {
         //check for errors
@@ -76,7 +76,7 @@ public class RoleController {
         roleService.saveRole(role);
         return "redirect:/list-roles";
     }
-    
+
     @RequestMapping("/edit-role/{id}")
     public ModelAndView viewEditRolePage(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("admin/edit-role");
@@ -96,6 +96,14 @@ public class RoleController {
         List<Role> result = roleService.findRoleByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-roles");
         mav.addObject("result", result);
+        return mav;
+    }
+
+    @RequestMapping("/view-role/{id}")
+    public ModelAndView viewRolePage(@PathVariable(name = "id") int id) {
+        ModelAndView mav = new ModelAndView("admin/view-role");
+        Role role = roleService.getRole(id);
+        mav.addObject("role", role);
         return mav;
     }
 }

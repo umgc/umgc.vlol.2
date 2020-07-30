@@ -68,4 +68,47 @@ public class Condition implements Serializable {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+    /**
+    Override the toString() method so condition names will be shown in the form. And equals() and hashCode() must be overridden so Spring MVC and Thymeleaf will show the check marks correctly when the form is in edit mode. Thanks to https://www.codejava.net/frameworks/spring-boot/spring-thymeleaf-form-multi-checkboxes-mapping-with-collection-example
+     */
+
+    /**
+     * 
+     * @return 
+     */
+    @Override
+    public String toString() {
+        return this.conditionName;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((conditionID == null) ? 0 : conditionID.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Condition other = (Condition) obj;
+        if (conditionID == null) {
+            if (other.conditionID != null) {
+                return false;
+            }
+        } else if (!conditionID.equals(other.conditionID)) {
+            return false;
+        }
+        return true;
+    }
 }

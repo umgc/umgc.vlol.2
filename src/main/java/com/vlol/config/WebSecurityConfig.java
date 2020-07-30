@@ -82,9 +82,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/console/**").permitAll()
-                .antMatchers( "/favicon.ico").permitAll()
+                .antMatchers("/qr-capture").permitAll()
+                .antMatchers("/test").permitAll()
                 //.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("actuator")
                 .requestMatchers(EndpointRequest.toAnyEndpoint()).hasAuthority("admin")
+
                 .antMatchers("/admin/**").hasAnyAuthority("participant", "provider", "agent", "admin").anyRequest()
                 .authenticated()
                 .and().csrf().disable()
@@ -104,7 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-                .antMatchers("/static/**", "/css/**", "/js/**", "/img/**");
+                .antMatchers("/static/**", "/css/**", "/js/**", "/img/**", "/DataTables/**");
     }
 
     @Bean

@@ -97,4 +97,12 @@ public class MedicationController {
         mav.addObject("result", result);
         return mav;
     }
+
+    @RequestMapping("/view-medication/{id}")
+    public ModelAndView viewMedicationPage(@PathVariable(name = "id") int id) {
+        ModelAndView mav = new ModelAndView("admin/view-medication");
+        Medication medication = medicationService.getMedication(id);
+        mav.addObject("medication", medication);
+        return mav;
+    }
 }

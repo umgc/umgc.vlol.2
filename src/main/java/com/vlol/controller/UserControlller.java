@@ -18,8 +18,14 @@
  */
 package com.vlol.controller;
 
+import com.vlol.model.Allergy;
+import com.vlol.model.Condition;
+import com.vlol.model.Medication;
 import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.service.AllergyService;
+import com.vlol.service.ConditionService;
+import com.vlol.service.MedicationService;
 import com.vlol.service.RoleService;
 import com.vlol.service.UserService;
 import java.util.List;
@@ -43,7 +49,16 @@ public class UserControlller {
 
     @Autowired
     private UserService userService;
-
+    
+    @Autowired
+    private AllergyService allergyService;
+            
+    @Autowired
+    private ConditionService conditionService;
+        
+    @Autowired
+    private MedicationService medicationService;
+    
     @Autowired
     private RoleService roleService;
 
@@ -55,10 +70,21 @@ public class UserControlller {
     }
 
     @RequestMapping("/add-user")
-    public String viewAddUserPage(Model model) {
+    public ModelAndView viewAddUserPage() {
         User user = new User();
-        model.addAttribute("user", user);
-        return "admin/add-user";
+        ModelAndView mav = new ModelAndView("admin/add-user");
+        mav.addObject("user", user);
+        List<Allergy> allergies = allergyService.getAllAllergies();
+        mav.addObject("allergies", allergies);
+        List<Condition> conditions = conditionService.getAllConditions();
+        mav.addObject("conditions", conditions);
+        List<Medication> medications = medicationService.getAllMedications();
+        mav.addObject("medications", medications);
+        List<Role> roles = roleService.getAllRoles();
+        mav.addObject("roles", roles);
+        List<User> agents = userService.getAllUsers();
+        mav.addObject("agents", agents);
+        return mav;
     }
 
     @RequestMapping(value = "/save-user", method = RequestMethod.POST)
@@ -78,6 +104,12 @@ public class UserControlller {
         ModelAndView mav = new ModelAndView("admin/edit-user");
         User user = userService.getUser(id);
         mav.addObject("user", user);
+        List<Allergy> allergies = allergyService.getAllAllergies();
+        mav.addObject("allergies", allergies);
+        List<Condition> conditions = conditionService.getAllConditions();
+        mav.addObject("conditions", conditions);
+        List<Medication> medications = medicationService.getAllMedications();
+        mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
         List<User> agents = userService.getAllUsers();
@@ -96,6 +128,27 @@ public class UserControlller {
         List<User> result = userService.findUserByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-users");
         mav.addObject("result", result);
+        return mav;
+    }
+    
+    @RequestMapping("/view-user/{id}")
+    public ModelAndView viewUserPage(@PathVariable(name = "id") int id) {
+        ModelAndView mav = new ModelAndView("admin/view-user");
+        User user = userService.getUser(id);
+        mav.addObject("user", user);
+        List<Allergy> allergies = allergyService.getAllAllergies();
+        mav.addObject("allergies", allergies);
+        List<Condition> conditions = conditionService.getAllConditions();
+        mav.addObject("conditions", conditions);
+        List<Medication> medications = medicationService.getAllMedications();
+        mav.addObject("medications", medications);
+        List<Role> roles = roleService.getAllRoles();
+        mav.addObject("roles", roles);
+        User agent = new User();
+        if(user.getUserAgentNo() != null) {
+            agent = userService.getUser(user.getUserAgentNo());
+        }        
+        mav.addObject("agent", agent);
         return mav;
     }
 }

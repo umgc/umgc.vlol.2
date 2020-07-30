@@ -68,4 +68,47 @@ public class Allergy implements Serializable {
     public void setUsers(Set<User> users) {
         this.users = users;
     }
+
+    /**
+    Override the toString() method so allergy names will be shown in the form. And equals() and hashCode() must be overridden so Spring MVC and Thymeleaf will show the check marks correctly when the form is in edit mode. Thanks to https://www.codejava.net/frameworks/spring-boot/spring-thymeleaf-form-multi-checkboxes-mapping-with-collection-example
+     */
+
+    /**
+     * 
+     * @return 
+     */
+    @Override
+    public String toString() {
+        return this.allergyName;
+    }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((allergyID == null) ? 0 : allergyID.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        Allergy other = (Allergy) obj;
+        if (allergyID == null) {
+            if (other.allergyID != null) {
+                return false;
+            }
+        } else if (!allergyID.equals(other.allergyID)) {
+            return false;
+        }
+        return true;
+    }
 }
