@@ -4,6 +4,20 @@
       lang="en">
     <head>
         <title>Edit User</title>
+        <style>
+            td {
+                text-align: left;
+                vertical-align: top;
+                white-space: nowrap;
+            }
+            input:not([type="checkbox"]) {
+                width: 100%;
+            }
+            textarea {
+                resize: none;
+                width: 100%;
+            }
+        </style>
     </head>
     <body>
         <div layout:fragment="content" class="container">
@@ -11,7 +25,7 @@
                 <div class="col-lg-12">
                     <h1 class="pt-4">Edit User</h1>
                     <form method="get" action="/search-users">
-                        <input type="text" name="keyword" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" />&nbsp;&nbsp;
+                        <input type="text" name="keyword" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" style="width:20em;" />&nbsp;&nbsp;
                         <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Full Search</button>
                     </form>
                     <hr />
@@ -155,13 +169,47 @@
                             </tr>
                             <tr>
                                 <td>Allergies:</td>
-                                <td>
-                                    <input type="checkbox" name="allergies"
-                                           th:each="allergy : ${allAllergies}"
-                                           th:text="${allergy.allergyName}"
-                                           th:value="${allergy.allergyID}"
-                                           th:field="*{allergies}"
-                                           />
+                                <td class="text-wrap">
+                                    <p><b>Note</b> - If an allergy is not listed, check 'Other' and enter any missing allergies in the User Comments section.</p>
+                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                        <li th:each="allergy : ${allergies}">
+                                            <input type="checkbox" name="allergies"
+                                                   th:utext="'&nbsp;' + ${allergy.allergyName}"
+                                                   th:value="${allergy.allergyID}"
+                                                   th:field="*{allergies}"
+                                                   />
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Conditions:</td>
+                                <td class="text-wrap">
+                                    <p><b>Note</b> - If a condition is not listed, check 'Other' and enter any missing conditions in the User Comments section.</p>
+                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                        <li th:each="condition : ${conditions}">
+                                            <input type="checkbox" name="conditions"
+                                                   th:utext="'&nbsp;' + ${condition.conditionName}"
+                                                   th:value="${condition.conditionID}"
+                                                   th:field="*{conditions}"
+                                                   />
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Medications:</td>
+                                <td class="text-wrap">
+                                    <p><b>Note</b> - If a medication is not listed, check 'Other' and enter any missing medications in the User Comments section.</p>
+                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                        <li th:each="medication : ${medications}">
+                                            <input type="checkbox" name="medications"
+                                                   th:utext="'&nbsp;' + ${medication.brandName} + ' / ' + ${medication.genericName}"
+                                                   th:value="${medication.medicationID}"
+                                                   th:field="*{medications}"
+                                                   />
+                                        </li>
+                                    </ul>
                                 </td>
                             </tr>
                             <tr>             

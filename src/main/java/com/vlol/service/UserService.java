@@ -18,6 +18,7 @@
  */
 package com.vlol.service;
 
+import com.vlol.model.Allergy;
 import com.vlol.model.Role;
 import com.vlol.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

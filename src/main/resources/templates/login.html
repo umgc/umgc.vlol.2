@@ -5,7 +5,7 @@
     <head>
         <title>VLOL Registration</title>
     </head>
-    <body>
+    <body th:onload="warning()">
         <div layout:fragment="content" class="container">
             <div class="col-md-4 text-center mx-auto">
                 <form class="form-signin" th:action="@{/login}" method="post" >

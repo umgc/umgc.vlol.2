@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title>Error Page</title>
+        <style>
+            td {
+                text-align: left;
+                vertical-align: top;
+                white-space: nowrap;
+            }
+        </style>
+    </head>
+    <!DOCTYPE html>
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          layout:decorate="~{layouts/site-master}"
+          lang="en">
+        <head>
+            <title>About the VLOL Project...</title>
+        </head>
+        <body>
+            <div layout:fragment="content" class="container">
+                <div class="text-center">
+                    <h1 class="pt-4">Something went wrong!</h1>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <p><img th:src="@{/img/error.gif}" alt="Something went wrong!" style="width:100%" /></p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 text-center">
+                            <p>Something went wrong, but rest assured, we have logged it in and are working on it!</p>
+                            <p><b>Any questions, please contact us at <a href="mailto:rgarcia92@student.umuc.edu">rgarcia92@student.umuc.edu</a>.</b></p>
+                        </div>
+                    </div>
+                    <div sec:authorize="isAuthenticated()">
+                        <table id="list_table" class="table table-bordered dt-responsive display">
+                            <tr>
+                                <td>Date:</td>
+                                <td th:text="${timestamp}"/>
+                            </tr>
+                            <tr>
+                                <td>Path:</td>
+                                <td th:text="${path}"/>
+                            </tr>
+                            <tr>
+                                <td>Error:</td>
+                                <td th:text="${error}"/>
+                            </tr>
+                            <tr>
+                                <td>Status:</td>
+                                <td th:text="${status}"/>
+                            </tr>
+                            <tr>
+                                <td>Message:</td>
+                                <td th:text="${message}"/>
+                            </tr>
+                            <tr>
+                                <td>Exception:</td>
+                                <td th:text="${exception}"/>
+                            </tr>
+                            <tr>
+                                <td>Trace:</td>
+                                <td>
+                                    <pre th:text="${trace}"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <hr />
+                    <a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>
+                </div>
+            </div>
+            </div>
+        </body>
+    </html>
+

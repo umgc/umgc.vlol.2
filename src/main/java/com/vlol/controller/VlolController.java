@@ -118,7 +118,7 @@ public class VlolController {
             userService.saveUser(user);
             mav.addObject("msg", "User has been registered successfully!");
             mav.addObject("user", new User());
-            mav.setViewName("admin/admin-menu");
+            mav.setViewName("login");
         }
         return mav;
     }
@@ -173,10 +173,17 @@ public class VlolController {
         return mav;
     }
     
-    @RequestMapping(value = {"/test"}, method = RequestMethod.GET)
+        @RequestMapping(value = {"/test"}, method = RequestMethod.GET)
     public ModelAndView viewTestPage() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("test");
+        return mav;
+    }
+    
+    @RequestMapping(value = {"/error"}, method = RequestMethod.GET)
+    public ModelAndView viewErrorPage() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("error");
         return mav;
     }
 }

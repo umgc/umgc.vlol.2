@@ -23,6 +23,7 @@ import com.vlol.model.Condition;
 import com.vlol.model.Medication;
 import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.repository.AllergyRepository;
 import com.vlol.service.AllergyService;
 import com.vlol.service.ConditionService;
 import com.vlol.service.MedicationService;
@@ -49,18 +50,21 @@ public class UserControlller {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private AllergyService allergyService;
-            
+
     @Autowired
     private ConditionService conditionService;
-        
+
     @Autowired
     private MedicationService medicationService;
-    
+
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private AllergyRepository allergyRepository;
 
     @RequestMapping("/list-users")
     public String viewUserList(Model model) {
@@ -104,7 +108,7 @@ public class UserControlller {
         ModelAndView mav = new ModelAndView("admin/edit-user");
         User user = userService.getUser(id);
         mav.addObject("user", user);
-        List<Allergy> allergies = allergyService.getAllAllergies();
+        List<Allergy> allergies = (List<Allergy>) allergyRepository.findAll();
         mav.addObject("allergies", allergies);
         List<Condition> conditions = conditionService.getAllConditions();
         mav.addObject("conditions", conditions);
@@ -130,7 +134,7 @@ public class UserControlller {
         mav.addObject("result", result);
         return mav;
     }
-    
+
     @RequestMapping("/view-user/{id}")
     public ModelAndView viewUserPage(@PathVariable(name = "id") int id) {
         ModelAndView mav = new ModelAndView("admin/view-user");
@@ -145,9 +149,9 @@ public class UserControlller {
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
         User agent = new User();
-        if(user.getUserAgentNo() != null) {
+        if (user.getUserAgentNo() != null) {
             agent = userService.getUser(user.getUserAgentNo());
-        }        
+        }
         mav.addObject("agent", agent);
         return mav;
     }
