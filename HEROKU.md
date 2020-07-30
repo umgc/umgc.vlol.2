@@ -15,3 +15,15 @@ Then run:
     git subtree push --prefix VLOL heroku master
 
 The website is https://warm-hamlet-22515.herokuapp.com/
+
+If you receive the following error:
+
+    fatal: 'heroku' does not appear to be a git repository
+    fatal: Could not read from remote repository.
+
+    Please make sure you have the correct access rights
+    and the repository exists.
+
+Run the following command first:
+
+    heroku git:remote -a warm-hamlet-22515
