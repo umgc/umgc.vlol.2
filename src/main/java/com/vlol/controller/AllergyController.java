@@ -19,9 +19,11 @@
 package com.vlol.controller;
 
 import com.vlol.model.Allergy;
+import com.vlol.model.AllergyDTO;
 import com.vlol.service.AllergyService;
 import java.util.List;
 import javax.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,14 +45,14 @@ public class AllergyController {
     @Autowired
     private AllergyService allergyService;
 
-    @RequestMapping("/list-allergies")
+    @RequestMapping(value = "/list-allergies", method = RequestMethod.GET)
     public String viewAllergyList(Model model) {
         List<Allergy> allergyList = allergyService.getAllAllergies();
         model.addAttribute("allergyList", allergyList);
         return "admin/list-allergies";
     }
 
-    @RequestMapping("/add-allergy")
+    @RequestMapping(value = "/add-allergy", method = RequestMethod.GET)
     public String viewAddAllergyPage(Model model) {
         Allergy allergy = new Allergy();
         model.addAttribute("allergy", allergy);
@@ -84,7 +86,7 @@ public class AllergyController {
         return "redirect:/list-allergies";
     }
 
-    @RequestMapping("/edit-allergy/{id}")
+    @RequestMapping(value = "/edit-allergy/{id}", method = RequestMethod.GET)
     public ModelAndView viewEditAllergyPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-allergy");
         Allergy allergy = allergyService.getAllergy(id);
@@ -92,13 +94,13 @@ public class AllergyController {
         return mav;
     }
 
-    @RequestMapping("/delete-allergy/{id}")
+    @RequestMapping(value = "/delete-allergy/{id}", method = RequestMethod.GET)
     public String deleteAllergy(@PathVariable(name = "id") Long id) {
         allergyService.deleteAllergy(id);
         return "redirect:/list-allergies";
     }
 
-    @RequestMapping("/search-allergies")
+    @RequestMapping(value = "/search-allergies", method = RequestMethod.GET)
     public ModelAndView findAllergyByKeyword(@RequestParam String keyword) {
         List<Allergy> result = allergyService.findAllergyByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-allergies");
@@ -106,7 +108,7 @@ public class AllergyController {
         return mav;
     }
 
-    @RequestMapping("/view-allergy/{id}")
+    @RequestMapping(value = "/view-allergy/{id}", method = RequestMethod.GET)
     public ModelAndView viewAllergyPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-allergy");
         Allergy allergy = allergyService.getAllergy(id);
