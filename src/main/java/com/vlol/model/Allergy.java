@@ -43,7 +43,7 @@ public class Allergy implements Serializable {
     private String allergyName;
 
     @ManyToMany(mappedBy = "allergies", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<User> users = new HashSet<>();
+    private Set<User> users = new HashSet<>(0);
 
     public Long getAllergyID() {
         return allergyID;
@@ -70,12 +70,15 @@ public class Allergy implements Serializable {
     }
 
     /**
-    Override the toString() method so allergy names will be shown in the form. And equals() and hashCode() must be overridden so Spring MVC and Thymeleaf will show the check marks correctly when the form is in edit mode. Thanks to https://www.codejava.net/frameworks/spring-boot/spring-thymeleaf-form-multi-checkboxes-mapping-with-collection-example
+     * Override the toString() method so allergy names will be shown in the
+     * form. And equals() and hashCode() must be overridden so Spring MVC and
+     * Thymeleaf will show the check marks correctly when the form is in edit
+     * mode. Thanks to
+     * https://www.codejava.net/frameworks/spring-boot/spring-thymeleaf-form-multi-checkboxes-mapping-with-collection-example
      */
-
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
     public String toString() {
@@ -110,5 +113,9 @@ public class Allergy implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getIdAsString() {
+        return allergyID.toString();
     }
 }

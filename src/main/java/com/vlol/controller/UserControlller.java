@@ -29,10 +29,16 @@ import com.vlol.service.ConditionService;
 import com.vlol.service.MedicationService;
 import com.vlol.service.RoleService;
 import com.vlol.service.UserService;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomCollectionEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -79,6 +85,10 @@ public class UserControlller {
         ModelAndView mav = new ModelAndView("admin/add-user");
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
+        allergyCache = new HashMap<String, Allergy>();
+        for (Allergy allergy : allergies) {
+            allergyCache.put(allergy.getIdAsString(), allergy);
+        }
         mav.addObject("allergies", allergies);
         List<Condition> conditions = conditionService.getAllConditions();
         mav.addObject("conditions", conditions);
@@ -109,6 +119,10 @@ public class UserControlller {
         User user = userService.getUser(id);
         mav.addObject("user", user);
         List<Allergy> allergies = (List<Allergy>) allergyRepository.findAll();
+        allergyCache = new HashMap<String, Allergy>();
+        for (Allergy allergy : allergies) {
+            allergyCache.put(allergy.getIdAsString(), allergy);
+        }
         mav.addObject("allergies", allergies);
         List<Condition> conditions = conditionService.getAllConditions();
         mav.addObject("conditions", conditions);
@@ -141,6 +155,10 @@ public class UserControlller {
         User user = userService.getUser(id);
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
+        allergyCache = new HashMap<String, Allergy>();
+        for (Allergy allergy : allergies) {
+            allergyCache.put(allergy.getIdAsString(), allergy);
+        }
         mav.addObject("allergies", allergies);
         List<Condition> conditions = conditionService.getAllConditions();
         mav.addObject("conditions", conditions);
@@ -154,5 +172,27 @@ public class UserControlller {
         }
         mav.addObject("agent", agent);
         return mav;
+    }
+
+    private Map<String, Allergy> allergyCache;
+
+    @InitBinder
+    protected void initBinder(WebDataBinder binder) throws Exception {
+        binder.registerCustomEditor(Set.class, "allergies", new CustomCollectionEditor(Set.class) {
+            @Override
+            protected Object convertElement(Object element) {
+                if (element instanceof Allergy) {
+                    System.out.println("Converting from Allergy to Allergy: " + element);
+                    return element;
+                }
+                if (element instanceof String) {
+                    Allergy allergy = allergyCache.get(element);
+                    System.out.println("Looking up allergy for id " + element + ": " + allergy);
+                    return allergy;
+                }
+                System.out.println("Don't know what to do with: " + element);
+                return null;
+            }
+        });
     }
 }
