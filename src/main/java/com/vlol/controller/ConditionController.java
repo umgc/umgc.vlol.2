@@ -78,7 +78,7 @@ public class ConditionController {
     }
 
     @RequestMapping("/edit-condition/{id}")
-    public ModelAndView viewEditConditionPage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewEditConditionPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-condition");
         Condition condition = conditionService.getCondition(id);
         mav.addObject("condition", condition);
@@ -86,7 +86,7 @@ public class ConditionController {
     }
 
     @RequestMapping("/delete-condition/{id}")
-    public String deleteCondition(@PathVariable(name = "id") int id) {
+    public String deleteCondition(@PathVariable(name = "id") Long id) {
         conditionService.deleteCondition(id);
         return "redirect:/list-conditions";
     }
@@ -100,7 +100,7 @@ public class ConditionController {
     }
 
     @RequestMapping("/view-condition/{id}")
-    public ModelAndView viewConditionPage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewConditionPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-condition");
         Condition condition = conditionService.getCondition(id);
         mav.addObject("condition", condition);

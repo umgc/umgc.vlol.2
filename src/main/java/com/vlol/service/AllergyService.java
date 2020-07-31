@@ -45,11 +45,11 @@ public class AllergyService {
         allergyRepository.save(allergy);
     }
 
-    public Allergy getAllergy(long allergyID) {
-        return allergyRepository.findById(allergyID).get();
+    public Allergy getAllergy(Long allergyID) {
+        return allergyRepository.findById(allergyID).orElse(null);
     }
 
-    public void deleteAllergy(long allergyID) {
+    public void deleteAllergy(Long allergyID) {
         allergyRepository.deleteById(allergyID);
     }
 

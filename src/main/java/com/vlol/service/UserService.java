@@ -77,11 +77,11 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User getUser(long userID) {
-        return userRepository.findById(userID).get();
+    public User getUser(Long userID) {
+        return userRepository.findById(userID).orElse(null);
     }
 
-    public void deleteUser(long userID) {
+    public void deleteUser(Long userID) {
         userRepository.deleteById(userID);
     }
 

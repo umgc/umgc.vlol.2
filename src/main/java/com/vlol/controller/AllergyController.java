@@ -85,7 +85,7 @@ public class AllergyController {
     }
 
     @RequestMapping("/edit-allergy/{id}")
-    public ModelAndView viewEditAllergyPage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewEditAllergyPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-allergy");
         Allergy allergy = allergyService.getAllergy(id);
         mav.addObject("allergy", allergy);
@@ -93,7 +93,7 @@ public class AllergyController {
     }
 
     @RequestMapping("/delete-allergy/{id}")
-    public String deleteAllergy(@PathVariable(name = "id") int id) {
+    public String deleteAllergy(@PathVariable(name = "id") Long id) {
         allergyService.deleteAllergy(id);
         return "redirect:/list-allergies";
     }
@@ -105,9 +105,9 @@ public class AllergyController {
         mav.addObject("result", result);
         return mav;
     }
-    
+
     @RequestMapping("/view-allergy/{id}")
-    public ModelAndView viewAllergyPage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewAllergyPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-allergy");
         Allergy allergy = allergyService.getAllergy(id);
         mav.addObject("allergy", allergy);

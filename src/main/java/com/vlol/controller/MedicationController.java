@@ -77,7 +77,7 @@ public class MedicationController {
         return "redirect:/list-medications";
     }
     @RequestMapping("/edit-medication/{id}")
-    public ModelAndView viewEditMedicationPage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewEditMedicationPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-medication");
         Medication medication = medicationService.getMedication(id);
         mav.addObject("medication", medication);
@@ -85,7 +85,7 @@ public class MedicationController {
     }
 
     @RequestMapping("/delete-medication/{id}")
-    public String deleteMedication(@PathVariable(name = "id") int id) {
+    public String deleteMedication(@PathVariable(name = "id") Long id) {
         medicationService.deleteMedication(id);
         return "redirect:/list-medications";
     }
@@ -99,7 +99,7 @@ public class MedicationController {
     }
 
     @RequestMapping("/view-medication/{id}")
-    public ModelAndView viewMedicationPage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewMedicationPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-medication");
         Medication medication = medicationService.getMedication(id);
         mav.addObject("medication", medication);

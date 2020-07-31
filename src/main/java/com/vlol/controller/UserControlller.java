@@ -104,7 +104,7 @@ public class UserControlller {
     }
 
     @RequestMapping("/edit-user/{id}")
-    public ModelAndView viewEditUserPage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewEditUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-user");
         User user = userService.getUser(id);
         mav.addObject("user", user);
@@ -122,7 +122,7 @@ public class UserControlller {
     }
 
     @RequestMapping("/delete-user/{id}")
-    public String deleteUser(@PathVariable(name = "id") int id) {
+    public String deleteUser(@PathVariable(name = "id") Long id) {
         userService.deleteUser(id);
         return "redirect:/list-users";
     }
@@ -136,7 +136,7 @@ public class UserControlller {
     }
 
     @RequestMapping("/view-user/{id}")
-    public ModelAndView viewUserPage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-user");
         User user = userService.getUser(id);
         mav.addObject("user", user);

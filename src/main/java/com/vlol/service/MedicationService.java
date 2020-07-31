@@ -45,11 +45,11 @@ public class MedicationService {
         medicationRepository.save(medication);
     }
 
-    public Medication getMedication(long medicationID) {
-        return medicationRepository.findById(medicationID).get();
+    public Medication getMedication(Long medicationID) {
+        return medicationRepository.findById(medicationID).orElse(null);
     }
 
-    public void deleteMedication(long medicationID) {
+    public void deleteMedication(Long medicationID) {
         medicationRepository.deleteById(medicationID);
     }
 

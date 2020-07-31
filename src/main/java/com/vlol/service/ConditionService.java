@@ -45,11 +45,11 @@ public class ConditionService {
         conditionRepository.save(condition);
     }
 
-    public Condition getCondition(long conditionID) {
-        return conditionRepository.findById(conditionID).get();
+    public Condition getCondition(Long conditionID) {
+        return conditionRepository.findById(conditionID).orElse(null);
     }
 
-    public void deleteCondition(long conditionID) {
+    public void deleteCondition(Long conditionID) {
         conditionRepository.deleteById(conditionID);
     }
 

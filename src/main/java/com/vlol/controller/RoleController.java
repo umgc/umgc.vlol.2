@@ -78,7 +78,7 @@ public class RoleController {
     }
 
     @RequestMapping("/edit-role/{id}")
-    public ModelAndView viewEditRolePage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewEditRolePage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-role");
         Role role = roleService.getRole(id);
         mav.addObject("role", role);
@@ -86,7 +86,7 @@ public class RoleController {
     }
 
     @RequestMapping("/delete-role/{id}")
-    public String deleteRole(@PathVariable(name = "id") int id) {
+    public String deleteRole(@PathVariable(name = "id") Long id) {
         roleService.deleteRole(id);
         return "redirect:/list-roles";
     }
@@ -100,7 +100,7 @@ public class RoleController {
     }
 
     @RequestMapping("/view-role/{id}")
-    public ModelAndView viewRolePage(@PathVariable(name = "id") int id) {
+    public ModelAndView viewRolePage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-role");
         Role role = roleService.getRole(id);
         mav.addObject("role", role);
