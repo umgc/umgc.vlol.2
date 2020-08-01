@@ -41,7 +41,9 @@
                                 <a class="nav-link text-dark" href="/">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/admin-menu">Admin</a>
+                                <div sec:authorize="isAuthenticated()">
+                                    <a class="nav-link text-dark" href="/admin-menu">Admin</a>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/about">About</a>
@@ -55,7 +57,7 @@
             </nav>
         </header>
         <main>
-        <div layout:fragment="content"></div>
+            <div layout:fragment="content"></div>
         </main>
         <footer class="border-top footer text-muted">
             <div class="container">
