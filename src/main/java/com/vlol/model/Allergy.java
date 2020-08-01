@@ -43,7 +43,7 @@ public class Allergy implements Serializable {
     private String allergyName;
 
     @ManyToMany(mappedBy = "allergies", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<User> users = new HashSet<>(0);
+    private Set<User> users = new HashSet<>();
 
     public Long getAllergyID() {
         return allergyID;

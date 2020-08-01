@@ -176,15 +176,12 @@
                                             <input type="checkbox" name="allergies"
                                                    th:utext="'&nbsp;' + ${allergy.allergyName}"
                                                    th:value="${allergy.allergyID}"
+                                                   th:checked="${user.getAllergies().contains(allergy.allergyID)}"
                                                    th:field="*{allergies}"
                                                    />
                                         </li>
                                     </ul>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td>Allergies 2:</td>
-                                <td><form:select path="allergies" itemValue="idAsString" multiple="true" items="${allergies}" itemLabel="allergyName"/></td>
                             </tr>
                             <tr>
                                 <td>Conditions:</td>

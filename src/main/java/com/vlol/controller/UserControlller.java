@@ -119,6 +119,9 @@ public class UserControlller {
         User user = userService.getUser(id);
         mav.addObject("user", user);
         List<Allergy> allergies = (List<Allergy>) allergyRepository.findAll();
+        if (user.getAllergies().contains(allergies.get(1))) {
+            System.out.println("Yay!");
+        }
         allergyCache = new HashMap<String, Allergy>();
         for (Allergy allergy : allergies) {
             allergyCache.put(allergy.getIdAsString(), allergy);
