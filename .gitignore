@@ -29,6 +29,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-vloldb.mv.db
-vloldb.trace.db
