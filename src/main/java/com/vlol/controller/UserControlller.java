@@ -23,7 +23,6 @@ import com.vlol.model.Condition;
 import com.vlol.model.Medication;
 import com.vlol.model.Role;
 import com.vlol.model.User;
-import com.vlol.repository.AllergyRepository;
 import com.vlol.service.AllergyService;
 import com.vlol.service.ConditionService;
 import com.vlol.service.MedicationService;
@@ -69,8 +68,9 @@ public class UserControlller {
     @Autowired
     private RoleService roleService;
 
-    @Autowired
-    private AllergyRepository allergyRepository;
+    private Map<String, Allergy> allergyCache;
+    private Map<String, Condition> conditionCache;
+    private Map<String, Medication> medicationCache;
 
     @RequestMapping("/list-users")
     public String viewUserList(Model model) {
@@ -91,8 +91,16 @@ public class UserControlller {
         }
         mav.addObject("allergies", allergies);
         List<Condition> conditions = conditionService.getAllConditions();
+        conditionCache = new HashMap<String, Condition>();
+        for (Condition condition : conditions) {
+            conditionCache.put(condition.getIdAsString(), condition);
+        }
         mav.addObject("conditions", conditions);
         List<Medication> medications = medicationService.getAllMedications();
+        medicationCache = new HashMap<String, Medication>();
+        for (Medication medication : medications) {
+            medicationCache.put(medication.getIdAsString(), medication);
+        }
         mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
@@ -118,18 +126,23 @@ public class UserControlller {
         ModelAndView mav = new ModelAndView("admin/edit-user");
         User user = userService.getUser(id);
         mav.addObject("user", user);
-        List<Allergy> allergies = (List<Allergy>) allergyRepository.findAll();
-        if (user.getAllergies().contains(allergies.get(1))) {
-            System.out.println("Yay!");
-        }
+        List<Allergy> allergies = allergyService.getAllAllergies();
         allergyCache = new HashMap<String, Allergy>();
         for (Allergy allergy : allergies) {
             allergyCache.put(allergy.getIdAsString(), allergy);
         }
         mav.addObject("allergies", allergies);
         List<Condition> conditions = conditionService.getAllConditions();
+        conditionCache = new HashMap<String, Condition>();
+        for (Condition condition : conditions) {
+            conditionCache.put(condition.getIdAsString(), condition);
+        }
         mav.addObject("conditions", conditions);
         List<Medication> medications = medicationService.getAllMedications();
+        medicationCache = new HashMap<String, Medication>();
+        for (Medication medication : medications) {
+            medicationCache.put(medication.getIdAsString(), medication);
+        }
         mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
@@ -164,8 +177,16 @@ public class UserControlller {
         }
         mav.addObject("allergies", allergies);
         List<Condition> conditions = conditionService.getAllConditions();
+        conditionCache = new HashMap<String, Condition>();
+        for (Condition condition : conditions) {
+            conditionCache.put(condition.getIdAsString(), condition);
+        }
         mav.addObject("conditions", conditions);
         List<Medication> medications = medicationService.getAllMedications();
+        medicationCache = new HashMap<String, Medication>();
+        for (Medication medication : medications) {
+            medicationCache.put(medication.getIdAsString(), medication);
+        }
         mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
@@ -176,8 +197,6 @@ public class UserControlller {
         mav.addObject("agent", agent);
         return mav;
     }
-
-    private Map<String, Allergy> allergyCache;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) throws Exception {
@@ -192,6 +211,38 @@ public class UserControlller {
                     Allergy allergy = allergyCache.get(element);
                     System.out.println("Looking up allergy for id " + element + ": " + allergy);
                     return allergy;
+                }
+                System.out.println("Don't know what to do with: " + element);
+                return null;
+            }
+        });
+        binder.registerCustomEditor(Set.class, "conditions", new CustomCollectionEditor(Set.class) {
+            @Override
+            protected Object convertElement(Object element) {
+                if (element instanceof Condition) {
+                    System.out.println("Converting from Condition to Condition: " + element);
+                    return element;
+                }
+                if (element instanceof String) {
+                    Condition condition = conditionCache.get(element);
+                    System.out.println("Looking up condition for id " + element + ": " + condition);
+                    return condition;
+                }
+                System.out.println("Don't know what to do with: " + element);
+                return null;
+            }
+        });
+        binder.registerCustomEditor(Set.class, "medications", new CustomCollectionEditor(Set.class) {
+            @Override
+            protected Object convertElement(Object element) {
+                if (element instanceof Medication) {
+                    System.out.println("Converting from Medication to Medication: " + element);
+                    return element;
+                }
+                if (element instanceof String) {
+                    Medication medication = medicationCache.get(element);
+                    System.out.println("Looking up medication for id " + element + ": " + medication);
+                    return medication;
                 }
                 System.out.println("Don't know what to do with: " + element);
                 return null;

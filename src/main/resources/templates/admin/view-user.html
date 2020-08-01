@@ -117,7 +117,8 @@
                                         <input type="checkbox" name="allergies"
                                                th:utext="'&nbsp;' + ${allergy.allergyName}"
                                                th:value="${allergy.allergyID}"
-                                               th:field="*{allergies}"
+                                               th:checked="${#sets.contains(user.allergies, allergy)}"
+                                               th:name="allergies"
                                                disabled="disabled"
                                                />
                                     </li>
@@ -133,7 +134,8 @@
                                         <input type="checkbox" name="conditions"
                                                th:utext="'&nbsp;' + ${condition.conditionName}"
                                                th:value="${condition.conditionID}"
-                                               th:field="*{conditions}"
+                                               th:checked="${#sets.contains(user.conditions, condition)}"
+                                               th:name="conditions"
                                                disabled="disabled"
                                                />
                                     </li>
@@ -149,7 +151,8 @@
                                         <input type="checkbox" name="medications"
                                                th:utext="'&nbsp;' + ${medication.brandName} + ' / ' + ${medication.genericName}"
                                                th:value="${medication.medicationID}"
-                                               th:field="*{medications}"
+                                               th:checked="${#sets.contains(user.medications, medication)}"
+                                               th:name="medications"
                                                disabled="disabled"
                                                />
                                     </li>

@@ -99,14 +99,14 @@ public class User implements Serializable {
     @Column(name = "zipcode", length = 5)
     @NotBlank(message = "ZIP Code is required.")
     // Check if US ZIP Code is valid.
-    @Pattern(regexp = "^\\d{5}$", message = "Input contains illegal characters.")
+    @Pattern(regexp = "^(?(^00000)|(\\d{5}))$", message = "Input contains illegal characters.")
     @Size(min = 5, max = 5, message = "Input exceeds size limits.")
     private String zipCode;
 
     @Column(name = "phone", length = 10)
     @NotBlank(message = "Phone number is required.")
     // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}\\d{3}\\d{4}$", message = "Invalid phone number.")
+    @Pattern(regexp = "^[2-9]\\d{2}[2-9]\\d{2}\\d{4}$", message = "Invalid phone number.")
     @Size(min = 10, max = 10, message = "Input exceeds size limits.")
     private String phone;
 
@@ -142,7 +142,7 @@ public class User implements Serializable {
     @Column(name = "poc_phone", length = 10)
     @NotBlank(message = "A Point of Contact phone number is required.")
     // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}\\d{3}\\d{4}$", message = "Invalid phone number.")
+    @Pattern(regexp = "^[2-9]\\d{2}[2-9]\\d{2}\\d{4}$", message = "Invalid phone number.")
     @Size(min = 10, max = 10, message = "Input exceeds size limits.")
     private String pocPhone;
 
@@ -157,7 +157,7 @@ public class User implements Serializable {
 
     @Column(name = "doctor_phone", length = 10)
     // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}\\d{3}\\d{4}$", message = "Invalid phone number.")
+    @Pattern(regexp = "^[2-9]\\d{2}[2-9]\\d{2}\\d{4}$", message = "Invalid phone number.")
     @Size(max = 10, message = "Input exceeds size limits.")
     private String doctorPhone;
 

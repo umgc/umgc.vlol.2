@@ -111,4 +111,8 @@ public class Condition implements Serializable {
         }
         return true;
     }
+    
+    public String getIdAsString() {
+        return conditionID.toString();
+    }
 }

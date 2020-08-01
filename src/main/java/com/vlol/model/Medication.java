@@ -168,5 +168,9 @@ public class Medication implements Serializable {
         }
         return true;
     }
+    
+    public String getIdAsString() {
+        return medicationID.toString();
+    }
 }
 
