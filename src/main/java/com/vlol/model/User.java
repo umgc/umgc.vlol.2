@@ -99,7 +99,7 @@ public class User implements Serializable {
     @Column(name = "zipcode", length = 5)
     @NotBlank(message = "ZIP Code is required.")
     // Check if US ZIP Code is valid.
-    @Pattern(regexp = "^(?(^00000)|(\\d{5}))$", message = "Input contains illegal characters.")
+    @Pattern(regexp = "^(?!00000)\\d{5}$", message = "Input contains illegal characters.")
     @Size(min = 5, max = 5, message = "Input exceeds size limits.")
     private String zipCode;
 
