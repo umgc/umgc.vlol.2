@@ -19,6 +19,7 @@
  */
 package com.vlol.model;
 
+import com.vlol.model.Role;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

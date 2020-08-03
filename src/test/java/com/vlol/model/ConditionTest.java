@@ -18,6 +18,7 @@
  */
 package com.vlol.model;
 
+import com.vlol.model.Condition;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;

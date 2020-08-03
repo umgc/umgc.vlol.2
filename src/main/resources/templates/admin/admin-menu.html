@@ -10,16 +10,21 @@
             <div class="row">
                 <div class="col-lg-12">
                     <h1 class="pt-4">Administration Menu</h1>
-                        <ul>
+                    <ul>
+                        <li><a th:href="|/edit-user/${userID}|">Edit Profile</a></li>
+                        <span sec:authorize="hasAnyAuthority('admin')">
                             <li><a href="/list-allergies">Allergy Management Page</a></li>
                             <li><a href="/list-conditions">Condition Management Page</a></li>
                             <li><a href="/list-medications">Medication Management Page</a></li>
                             <li><a href="/list-roles">Role Management Page</a></li>
+                        </span>
+                        <span sec:authorize="hasAnyAuthority('admin', 'agent', 'provider')">
                             <li><a href="/list-users">User Management Page</a></li>
-                            <li><a href="/console">H2 Console Portal</a></li>
+                            <!--<li><a href="/console">H2 Console Portal</a></li>-->
                             <li><a href="/qr-capture">Capture QR Code</a></li>
-                        </ul>
-                        <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Home Page</a>
+                        </span>
+                    </ul>
+                    <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Home Page</a>
                     <br />
                 </div>
             </div>

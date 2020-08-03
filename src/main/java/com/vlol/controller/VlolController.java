@@ -52,16 +52,16 @@ public class VlolController {
 
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private AllergyService allergyService;
-            
+
     @Autowired
     private ConditionService conditionService;
-        
+
     @Autowired
     private MedicationService medicationService;
-    
+
     @Autowired
     private RoleService roleService;
 
@@ -126,17 +126,8 @@ public class VlolController {
     @RequestMapping(value = {"/admin-menu"}, method = RequestMethod.GET)
     public ModelAndView viewMainMenu() {
         ModelAndView mav = new ModelAndView();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByUsername(auth.getName());
-        mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
+        mav = getUserName(mav);
         mav.setViewName("admin/admin-menu");
-        return mav;
-    }
-
-    @RequestMapping(value = {"/access-denied"}, method = RequestMethod.GET)
-    public ModelAndView viewAccessDeniedPage() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("errors/access_denied");
         return mav;
     }
 
@@ -148,6 +139,7 @@ public class VlolController {
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView viewHomePage() {
         ModelAndView mav = new ModelAndView();
+        mav = getUserName(mav);
         mav.setViewName("index");
         return mav;
     }
@@ -155,6 +147,7 @@ public class VlolController {
     @RequestMapping(value = {"/about"}, method = RequestMethod.GET)
     public ModelAndView viewAboutPage() {
         ModelAndView mav = new ModelAndView();
+        mav = getUserName(mav);
         mav.setViewName("about");
         return mav;
     }
@@ -162,6 +155,7 @@ public class VlolController {
     @RequestMapping(value = {"/contact"}, method = RequestMethod.GET)
     public ModelAndView viewContactPage() {
         ModelAndView mav = new ModelAndView();
+        mav = getUserName(mav);
         mav.setViewName("contact");
         return mav;
     }
@@ -169,21 +163,26 @@ public class VlolController {
     @RequestMapping(value = {"/qr-capture"}, method = RequestMethod.GET)
     public ModelAndView viewQRCapturePage() {
         ModelAndView mav = new ModelAndView();
+        mav = getUserName(mav);
         mav.setViewName("qr-capture");
         return mav;
     }
-    
-        @RequestMapping(value = {"/test"}, method = RequestMethod.GET)
-    public ModelAndView viewTestPage() {
-        ModelAndView mav = new ModelAndView();
-        mav.setViewName("test");
-        return mav;
-    }
-    
+
     @RequestMapping(value = {"/error"}, method = RequestMethod.GET)
     public ModelAndView viewErrorPage() {
         ModelAndView mav = new ModelAndView();
+        mav = getUserName(mav);
         mav.setViewName("error");
+        return mav;
+    }
+
+    private ModelAndView getUserName(ModelAndView mav) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser") {
+            User user = userService.findUserByUsername(auth.getName());
+            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
+            mav.addObject("userID", user.getUserID());
+        }
         return mav;
     }
 }

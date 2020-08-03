@@ -19,10 +19,14 @@
 package com.vlol.controller;
 
 import com.vlol.model.Medication;
+import com.vlol.model.User;
 import com.vlol.service.MedicationService;
+import com.vlol.service.UserService;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,19 +46,26 @@ public class MedicationController {
 
     @Autowired
     private MedicationService medicationService;
+    
+    @Autowired
+    private UserService userService;
 
-    @RequestMapping("/list-medications")
-    public String viewMedicationList(Model model) {
+    @RequestMapping(value = "/list-medications", method = RequestMethod.GET)
+    public ModelAndView viewMedicationList() {
+        ModelAndView mav = new ModelAndView("admin/list-medications");
+        mav = getUserName(mav);
         List<Medication> medicationList = medicationService.getAllMedications();
-        model.addAttribute("medicationList", medicationList);
-        return "admin/list-medications";
+        mav.addObject("medicationList", medicationList);
+        return mav;
     }
 
-    @RequestMapping("/add-medication")
-    public String viewAddMedicationPage(Model model) {
+    @RequestMapping(value = "/add-medication", method = RequestMethod.GET)
+    public ModelAndView viewAddMedicationPage() {
+        ModelAndView mav = new ModelAndView("admin/add-medication");
+        mav = getUserName(mav);
         Medication medication = new Medication();
-        model.addAttribute("medication", medication);
-        return "admin/add-medication";
+        mav.addObject("medication", medication);
+        return mav;
     }
 
     @RequestMapping(value = "/save-medication", method = RequestMethod.POST)
@@ -79,6 +90,7 @@ public class MedicationController {
     @RequestMapping("/edit-medication/{id}")
     public ModelAndView viewEditMedicationPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-medication");
+        mav = getUserName(mav);
         Medication medication = medicationService.getMedication(id);
         mav.addObject("medication", medication);
         return mav;
@@ -92,8 +104,9 @@ public class MedicationController {
 
     @RequestMapping("/search-medications")
     public ModelAndView findMedicationByKeyword(@RequestParam String keyword) {
-        List<Medication> result = medicationService.findMedicationByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-medications");
+        mav = getUserName(mav);
+        List<Medication> result = medicationService.findMedicationByKeyword(keyword);
         mav.addObject("result", result);
         return mav;
     }
@@ -101,8 +114,18 @@ public class MedicationController {
     @RequestMapping("/view-medication/{id}")
     public ModelAndView viewMedicationPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-medication");
+        mav = getUserName(mav);
         Medication medication = medicationService.getMedication(id);
         mav.addObject("medication", medication);
+        return mav;
+    }
+    
+    private ModelAndView getUserName(ModelAndView mav) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser") {
+            User user = userService.findUserByUsername(auth.getName());
+            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
+        }
         return mav;
     }
 }

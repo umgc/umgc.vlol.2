@@ -19,6 +19,7 @@
  */
 package com.vlol.model;
 
+import com.vlol.model.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;

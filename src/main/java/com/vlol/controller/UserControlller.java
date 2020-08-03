@@ -34,8 +34,9 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -73,16 +74,19 @@ public class UserControlller {
     private Map<String, Medication> medicationCache;
 
     @RequestMapping("/list-users")
-    public String viewUserList(Model model) {
+    public ModelAndView viewUserList() {
+        ModelAndView mav = new ModelAndView("admin/list-users");
+        mav = getUserName(mav);
         List<User> userList = userService.getAllUsers();
-        model.addAttribute("userList", userList);
-        return "admin/list-users";
+        mav.addObject("userList", userList);
+        return mav;
     }
 
     @RequestMapping("/add-user")
     public ModelAndView viewAddUserPage() {
         User user = new User();
         ModelAndView mav = new ModelAndView("admin/add-user");
+        mav = getUserName(mav);
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
         allergyCache = new HashMap<String, Allergy>();
@@ -124,6 +128,7 @@ public class UserControlller {
     @RequestMapping("/edit-user/{id}")
     public ModelAndView viewEditUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-user");
+        mav = getUserName(mav);
         User user = userService.getUser(id);
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
@@ -161,6 +166,7 @@ public class UserControlller {
     public ModelAndView findUserByKeyword(@RequestParam String keyword) {
         List<User> result = userService.findUserByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-users");
+        mav = getUserName(mav);
         mav.addObject("result", result);
         return mav;
     }
@@ -168,6 +174,7 @@ public class UserControlller {
     @RequestMapping("/view-user/{id}")
     public ModelAndView viewUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-user");
+        mav = getUserName(mav);
         User user = userService.getUser(id);
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
@@ -248,5 +255,14 @@ public class UserControlller {
                 return null;
             }
         });
+    }
+
+    private ModelAndView getUserName(ModelAndView mav) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser") {
+            User user = userService.findUserByUsername(auth.getName());
+            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
+        }
+        return mav;
     }
 }

@@ -19,10 +19,14 @@
 package com.vlol.controller;
 
 import com.vlol.model.Role;
+import com.vlol.model.User;
 import com.vlol.service.RoleService;
+import com.vlol.service.UserService;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -42,19 +46,26 @@ public class RoleController {
 
     @Autowired
     private RoleService roleService;
+    
+    @Autowired
+    private UserService userService;
 
-    @RequestMapping("/list-roles")
-    public String viewRoleList(Model model) {
+    @RequestMapping(value = "/list-roles", method = RequestMethod.GET)
+    public ModelAndView viewRoleList() {
+        ModelAndView mav = new ModelAndView("admin/list-roles");
+        mav = getUserName(mav);
         List<Role> roleList = roleService.getAllRoles();
-        model.addAttribute("roleList", roleList);
-        return "admin/list-roles";
+        mav.addObject("roleList", roleList);
+        return mav;
     }
 
-    @RequestMapping("/add-role")
-    public String viewAddRolePage(Model model) {
+    @RequestMapping(value = "/add-role", method = RequestMethod.GET)
+    public ModelAndView viewAddRolePage() {
+        ModelAndView mav = new ModelAndView("admin/add-role");
+        mav = getUserName(mav);
         Role role = new Role();
-        model.addAttribute("role", role);
-        return "admin/add-role";
+        mav.addObject("role", role);
+        return mav;
     }
 
     @RequestMapping(value = "/save-role", method = RequestMethod.POST)
@@ -80,6 +91,7 @@ public class RoleController {
     @RequestMapping("/edit-role/{id}")
     public ModelAndView viewEditRolePage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-role");
+        mav = getUserName(mav);
         Role role = roleService.getRole(id);
         mav.addObject("role", role);
         return mav;
@@ -93,8 +105,9 @@ public class RoleController {
 
     @RequestMapping("/search-roles")
     public ModelAndView findRoleByKeyword(@RequestParam String keyword) {
-        List<Role> result = roleService.findRoleByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-roles");
+        mav = getUserName(mav);
+        List<Role> result = roleService.findRoleByKeyword(keyword);
         mav.addObject("result", result);
         return mav;
     }
@@ -102,8 +115,18 @@ public class RoleController {
     @RequestMapping("/view-role/{id}")
     public ModelAndView viewRolePage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-role");
+        mav = getUserName(mav);
         Role role = roleService.getRole(id);
         mav.addObject("role", role);
+        return mav;
+    }
+    
+    private ModelAndView getUserName(ModelAndView mav) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser") {
+            User user = userService.findUserByUsername(auth.getName());
+            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
+        }
         return mav;
     }
 }
