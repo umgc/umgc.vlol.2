@@ -19,7 +19,6 @@
  */
 package com.vlol.model;
 
-import com.vlol.model.User;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,12 +27,15 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class UserTest {
 
@@ -45,15 +47,15 @@ public class UserTest {
         this.user = new User();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() throws ParseException {
         // Populate the User object before each test
         user.setUserID(1l);
@@ -90,7 +92,7 @@ public class UserTest {
         validator = factory.getValidator();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
@@ -137,24 +139,6 @@ public class UserTest {
     public void testSetUserIDNegative() {
         System.out.println("setUserID Test (Negative value)");
         Long userID = -1l;
-        user.setUserID(userID);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Null value test for the setUserID method, of class User.
-     */
-    @Test
-    public void testSetUserIDNull() {
-        System.out.println("setUserID Test (Null value)");
-        Long userID = null;
         user.setUserID(userID);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
@@ -409,12 +393,11 @@ public class UserTest {
      * Future value test for the setDOB method, of class User.
      */
     @Test
-    public void testSetDOBFuture() {
+    public void testSetDOBFuture() throws ParseException {
         System.out.println("setDOB Test (Future value)");
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis + 60000);
-        Date dob = date;
-        user.setDOB(dob);
+        user.setDOB(new SimpleDateFormat("yyyy-MM-dd").parse("9999-12-31"));
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -432,26 +415,6 @@ public class UserTest {
     public void testSetDOBNull() {
         System.out.println("setDOB Test (Null value)");
         Date dob = null;
-        user.setDOB(dob);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Out of Range value test for the setDOB method, of class User.
-     *
-     * @throws java.text.ParseException
-     */
-    @Test
-    public void testSetDOBOutOfRange() throws ParseException {
-        System.out.println("setDOB Test (Out of Range value)");
-        Date dob = new SimpleDateFormat("yyyy-MM-dd").parse("1955-13-05");
         user.setDOB(dob);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
@@ -1041,24 +1004,6 @@ public class UserTest {
     }
 
     /**
-     * Blank value test for the setInsCompany method, of class User.
-     */
-    @Test
-    public void testSetInsCompanyBlank() {
-        System.out.println("setInsCompany Test (Blank value)");
-        String insCompany = "";
-        user.setInsCompany(insCompany);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
      * Invalid value test for the setInsCompany method, of class User.
      */
     @Test
@@ -1128,24 +1073,6 @@ public class UserTest {
         }
         // Test method
         assertTrue(violations.isEmpty());
-    }
-
-    /**
-     * Blank value test for the setInsPolicyNo method, of class User.
-     */
-    @Test
-    public void testSetInsPolicyNoBlank() {
-        System.out.println("setInsPolicyNo Test (Blank value)");
-        String insPolicyNo = "";
-        user.setInsPolicyNo(insPolicyNo);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
     }
 
     /**
@@ -1272,24 +1199,6 @@ public class UserTest {
         }
         // Test method
         assertTrue(violations.isEmpty());
-    }
-
-    /**
-     * Blank value test for the setAdvDirType method, of class User.
-     */
-    @Test
-    public void testSetAdvDirTypeBlank() {
-        System.out.println("setAdvDirType Test (Blank value)");
-        String advDirType = "";
-        user.setAdvDirType(advDirType);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
     }
 
     /**
@@ -1691,24 +1600,6 @@ public class UserTest {
     }
 
     /**
-     * Blank value test for the setDoctorPhone method, of class User.
-     */
-    @Test
-    public void testSetDoctorPhoneBlank() {
-        System.out.println("setDoctorPhone Test (Blank value)");
-        String doctorPhone = "";
-        user.setDoctorPhone(doctorPhone);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
      * Invalid value test for the setDoctorPhone method, of class User.
      */
     @Test
@@ -1778,24 +1669,6 @@ public class UserTest {
         }
         // Test method
         assertTrue(violations.isEmpty());
-    }
-
-    /**
-     * Blank value test for the setUserComments method, of class User.
-     */
-    @Test
-    public void testSetUserCommentsBlank() {
-        System.out.println("setUserComments Test (Blank value)");
-        String userComments = "";
-        user.setUserComments(userComments);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
     }
 
     /**
@@ -2286,26 +2159,6 @@ public class UserTest {
     }
 
     /**
-     * Out of Range value test for the setDateCreated method, of class User.
-     *
-     * @throws java.text.ParseException
-     */
-    @Test
-    public void testSetDateCreatedOutOfRange() throws ParseException {
-        System.out.println("setDateCreated Test (Out of Range value)");
-        Date dateCreated = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-13-05 06:00:00");
-        user.setDateCreated(dateCreated);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
      * Passing test for the getLastLoginDate method, of class User.
      *
      * @throws java.text.ParseException
@@ -2384,32 +2237,12 @@ public class UserTest {
     }
 
     /**
-     * Out of Range value test for the setLastLoginDate method, of class User.
-     *
-     * @throws java.text.ParseException
-     */
-    @Test
-    public void testSetLastLoginDateOutOfRange() throws ParseException {
-        System.out.println("setLastLoginDate Test (Out of Range value)");
-        Date lastLoginDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-13-05 06:00:00");
-        user.setLastLoginDate(lastLoginDate);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
      * Passing test for the getAdminComments method, of class User.
      */
     @Test
     public void testGetAdminComments() {
         System.out.println("getAdminComments Test (Passing value)");
-        String expResult = "participant";
+        String expResult = "John is a program participant.";
         String result = user.getAdminComments();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
@@ -2437,24 +2270,6 @@ public class UserTest {
         }
         // Test method
         assertTrue(violations.isEmpty());
-    }
-
-    /**
-     * Blank value test for the setAdminComments method, of class User.
-     */
-    @Test
-    public void testSetAdminCommentsBlank() {
-        System.out.println("setAdminComments Test (Blank value)");
-        String adminComments = "";
-        user.setAdminComments(adminComments);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
     }
 
     /**

@@ -19,18 +19,19 @@
  */
 package com.vlol.model;
 
-import com.vlol.model.Medication;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class MedicationTest {
 
@@ -42,15 +43,15 @@ public class MedicationTest {
         this.medication = new Medication();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Populate the Medication object before each test
         medication.setMedicationID(1l);
@@ -64,7 +65,7 @@ public class MedicationTest {
         validator = factory.getValidator();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
@@ -111,24 +112,6 @@ public class MedicationTest {
     public void testSetMedicationIDNegative() {
         System.out.println("setMedicationID Test (Negative value)");
         Long medicationID = -1l;
-        medication.setMedicationID(medicationID);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Medication>> violations = validator.validate(medication);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Null value test for the setMedicationID method, of class Medication.
-     */
-    @Test
-    public void testSetMedicationIDNull() {
-        System.out.println("setMedicationID Test (Null value)");
-        Long medicationID = null;
         medication.setMedicationID(medicationID);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Medication>> violations = validator.validate(medication);

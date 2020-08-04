@@ -22,9 +22,12 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.validation.Valid;
+import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -40,6 +43,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
+    @Min(value = 1, message = "Value must be greater than 1.")
     private Long userID;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
@@ -146,6 +150,7 @@ public class User implements Serializable {
     @Size(min = 10, max = 10, message = "Input exceeds size limits.")
     private String pocPhone;
 
+    @Min(value = 1, message = "Value must be greater than 1.")
     @Column(name = "user_agent_id")
     private Long userAgentNo;
 
@@ -268,6 +273,7 @@ public class User implements Serializable {
 
     /**
      * Gets the validated first name of the user.
+     *
      * @return the first name attribute.
      */
     public String getFirstName() {
@@ -276,6 +282,7 @@ public class User implements Serializable {
 
     /**
      * Sets the user's first name attribute if valid.
+     *
      * @param firstName the first name value submitted by the user.
      */
     public void setFirstName(String firstName) {

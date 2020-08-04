@@ -22,6 +22,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import javax.persistence.*;
 import java.util.Set;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -33,6 +34,7 @@ public class Condition implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "illness_id")
+    @Min(value = 1, message = "Value must be greater than 1.")
     private Long conditionID;
 
     @Column(name = "illness_name", length = 50, unique = true)
@@ -70,12 +72,15 @@ public class Condition implements Serializable {
     }
 
     /**
-    Override the toString() method so condition names will be shown in the form. And equals() and hashCode() must be overridden so Spring MVC and Thymeleaf will show the check marks correctly when the form is in edit mode. Thanks to https://www.codejava.net/frameworks/spring-boot/spring-thymeleaf-form-multi-checkboxes-mapping-with-collection-example
+     * Override the toString() method so condition names will be shown in the
+     * form. And equals() and hashCode() must be overridden so Spring MVC and
+     * Thymeleaf will show the check marks correctly when the form is in edit
+     * mode. Thanks to
+     * https://www.codejava.net/frameworks/spring-boot/spring-thymeleaf-form-multi-checkboxes-mapping-with-collection-example
      */
-
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     @Override
     public String toString() {
@@ -111,7 +116,7 @@ public class Condition implements Serializable {
         }
         return true;
     }
-    
+
     public String getIdAsString() {
         return conditionID.toString();
     }

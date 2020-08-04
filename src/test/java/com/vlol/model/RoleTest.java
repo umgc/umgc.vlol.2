@@ -19,18 +19,19 @@
  */
 package com.vlol.model;
 
-import com.vlol.model.Role;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class RoleTest {
 
@@ -42,15 +43,15 @@ public class RoleTest {
         this.role = new Role();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Populate the Role object before each test
         role.setRoleID(1l);
@@ -62,7 +63,7 @@ public class RoleTest {
         validator = factory.getValidator();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
@@ -109,24 +110,6 @@ public class RoleTest {
     public void testSetRoleIDNegative() {
         System.out.println("setRoleID Test (Negative value)");
         Long roleID = -1l;
-        role.setRoleID(roleID);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Role>> violations = validator.validate(role);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Null value test for the setRoleID method, of class Role.
-     */
-    @Test
-    public void testSetRoleIDNull() {
-        System.out.println("setRoleID Test (Null value)");
-        Long roleID = null;
         role.setRoleID(roleID);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Role>> violations = validator.validate(role);

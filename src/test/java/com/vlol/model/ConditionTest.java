@@ -18,18 +18,19 @@
  */
 package com.vlol.model;
 
-import com.vlol.model.Condition;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 public class ConditionTest {
 
@@ -41,15 +42,15 @@ public class ConditionTest {
         this.condition = new Condition();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Populate the Condition object before each test
         condition.setConditionID(1l);
@@ -59,7 +60,7 @@ public class ConditionTest {
         validator = factory.getValidator();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
@@ -106,24 +107,6 @@ public class ConditionTest {
     public void testSetConditionIDNegative() {
         System.out.println("setConditionID Test (Negative value)");
         Long conditionID = -1l;
-        condition.setConditionID(conditionID);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Condition>> violations = validator.validate(condition);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Null value test for the setConditionID method, of class Condition.
-     */
-    @Test
-    public void testSetConditionIDNull() {
-        System.out.println("setConditionID Test (Null value)");
-        Long conditionID = null;
         condition.setConditionID(conditionID);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Condition>> violations = validator.validate(condition);

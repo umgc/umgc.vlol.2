@@ -23,12 +23,15 @@ import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
 
 public class AllergyTest {
 
@@ -40,15 +43,15 @@ public class AllergyTest {
         this.allergy = new Allergy();
     }
 
-    @BeforeClass
+    @BeforeAll
     public static void setUpClass() {
     }
 
-    @AfterClass
+    @AfterAll
     public static void tearDownClass() {
     }
 
-    @Before
+    @BeforeEach
     public void setUp() {
         // Populate the Allergy object before each test
         allergy.setAllergyID(1l);
@@ -58,7 +61,7 @@ public class AllergyTest {
         validator = factory.getValidator();
     }
 
-    @After
+    @AfterEach
     public void tearDown() {
     }
 
@@ -105,24 +108,6 @@ public class AllergyTest {
     public void testSetAllergyIDNegative() {
         System.out.println("setAllergyID Test (Negative value)");
         Long allergyID = -1l;
-        allergy.setAllergyID(allergyID);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Null value test for the setAllergyID method, of class Allergy.
-     */
-    @Test
-    public void testSetAllergyIDNull() {
-        System.out.println("setAllergyID Test (Null value)");
-        Long allergyID = null;
         allergy.setAllergyID(allergyID);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
