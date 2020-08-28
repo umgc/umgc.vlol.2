@@ -50,8 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private DataSource dataSource;
 
-    private final String USERS_QUERY = "select username, password, is_active from appuser where username=?";
-    private final String ROLES_QUERY = "select u.username, r.role_title from appuser u inner join approle r on (u.role_id=r.role_id) where u.username=?";
+    private final String USERS_QUERY = "select email, password, is_active from appuser where email=?";
+    private final String ROLES_QUERY = "select u.email, r.role_title from appuser u inner join approle r on (u.role_id=r.role_id) where u.email=?";
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -92,7 +92,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().csrf().disable()
                 .formLogin().loginPage("/login").failureUrl("/login?error=true")
                 .defaultSuccessUrl("/admin-menu")
-                .usernameParameter("username")
+                .usernameParameter("email")
                 .passwordParameter("password")
                 .and().logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))

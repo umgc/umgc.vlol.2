@@ -107,7 +107,7 @@ public class VlolController {
     @RequestMapping(value = {"/registration"}, method = RequestMethod.POST)
     public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView mav = new ModelAndView();
-        User userExists = userService.findUserByUsername(user.getUsername());
+        User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
             bindingResult.rejectValue("username", "error.user", "This user already exists!");
         }
@@ -179,7 +179,7 @@ public class VlolController {
     private ModelAndView getUserName(ModelAndView mav) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getPrincipal() != "anonymousUser") {
-            User user = userService.findUserByUsername(auth.getName());
+            User user = userService.findUserByEmail(auth.getName());
             mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
             mav.addObject("userID", user.getUserID());
         }

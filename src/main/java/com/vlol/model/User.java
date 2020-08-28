@@ -190,13 +190,13 @@ public class User implements Serializable {
     @Size(max = 300, message = "Input exceeds size limits.")
     private String userComments;
 
-    @Column(name = "username", length = 320, unique = true)
-    @NotBlank(message = "Username is required.")
+    @Column(name = "email", length = 320, unique = true)
+    @NotBlank(message = "Email is required.")
     // Check if text is valid per RFC 3986.
     @Email(message = "Invalid email address.")
     // Check if length is valid per RFC 3986.
     @Size(min = 5, max = 320, message = "Input exceeds size limits.")
-    private String username;
+    private String email;
 
     @Column(name = "password", length = 72)
     @NotBlank(message = "Password is required.")
@@ -457,12 +457,12 @@ public class User implements Serializable {
         this.userComments = userComments;
     }
 
-    public String getUsername() {
-        return username;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

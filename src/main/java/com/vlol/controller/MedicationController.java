@@ -123,7 +123,7 @@ public class MedicationController {
     private ModelAndView getUserName(ModelAndView mav) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getPrincipal() != "anonymousUser") {
-            User user = userService.findUserByUsername(auth.getName());
+            User user = userService.findUserByEmail(auth.getName());
             mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
         }
         return mav;

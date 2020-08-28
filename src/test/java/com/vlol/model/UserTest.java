@@ -78,7 +78,7 @@ public class UserTest {
         user.setDoctorName("Emmett Brown");
         user.setDoctorPhone("4105555555");
         user.setUserComments("I usually use 2 lpm O2.");
-        user.setUsername("jdoe@vlol.com");
+        user.setEmail("jdoe@vlol.com");
         user.setPassword("$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.");
         user.setSecurityQuestion("Favorite numbers.");
         user.setSecurityAnswer("$2a$10$EblZqNptyYvcLm/VwDCVAuBjzZOI7khzdyGPBr08PpIi0na624b8.");
@@ -1713,13 +1713,13 @@ public class UserTest {
     }
 
     /**
-     * Passing test for the getUsername method, of class User.
+     * Passing test for the getEmail method, of class User.
      */
     @Test
-    public void testGetUsername() {
-        System.out.println("getUsername Test (Passing value)");
+    public void testGetEmail() {
+        System.out.println("getEmail Test (Passing value)");
         String expResult = "jdoe@vlol.com";
-        String result = user.getUsername();
+        String result = user.getEmail();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1731,13 +1731,13 @@ public class UserTest {
     }
 
     /**
-     * Passing test for the setUsername method, of class User.
+     * Passing test for the setEmail method, of class User.
      */
     @Test
-    public void testSetUsername() {
-        System.out.println("setUsername Test (Passing value)");
-        String username = "jdoe@vlol.com";
-        user.setUsername(username);
+    public void testSetEmail() {
+        System.out.println("setEmail Test (Passing value)");
+        String email = "jdoe@vlol.com";
+        user.setEmail(email);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1749,13 +1749,13 @@ public class UserTest {
     }
 
     /**
-     * Blank value test for the setUsername method, of class User.
+     * Blank value test for the setEmail method, of class User.
      */
     @Test
-    public void testSetUsernameBlank() {
-        System.out.println("setUsername Test (Blank value)");
-        String username = "";
-        user.setUsername(username);
+    public void testSetEmailBlank() {
+        System.out.println("setEmail Test (Blank value)");
+        String email = "";
+        user.setEmail(email);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1767,13 +1767,13 @@ public class UserTest {
     }
 
     /**
-     * Invalid value test for the setUsername method, of class User.
+     * Invalid value test for the setEmail method, of class User.
      */
     @Test
-    public void testSetUsernameInvalid() {
-        System.out.println("setUsername Test (Injection value)");
-        String username = "<script>alert(\"This is an attack!\");</script>";
-        user.setUsername(username);
+    public void testSetEmailInvalid() {
+        System.out.println("setEmail Test (Injection value)");
+        String email = "<script>alert(\"This is an attack!\");</script>";
+        user.setEmail(email);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1785,18 +1785,18 @@ public class UserTest {
     }
 
     /**
-     * Overflow value test for the setUsername method, of class User.
+     * Overflow value test for the setEmail method, of class User.
      */
     @Test
-    public void testSetUsernameOverflow() {
-        System.out.println("setUsername Test (Overflow value)");
-        String username = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+    public void testSetEmailOverflow() {
+        System.out.println("setEmail Test (Overflow value)");
+        String email = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                 + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                 + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                 + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                 + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
                 + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        user.setUsername(username);
+        user.setEmail(email);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";

@@ -21,17 +21,18 @@ DROP TABLE IF EXISTS user_illness;
 DROP TABLE IF EXISTS user_medication;
 DROP TABLE IF EXISTS user_allergy;
 DROP TABLE IF EXISTS illness;
+DROP TABLE IF EXISTS user_med_list;
 DROP TABLE IF EXISTS medication;
 DROP TABLE IF EXISTS allergy;
-DROP TABLE IF EXISTS approle;
 DROP TABLE IF EXISTS appuser;
+DROP TABLE IF EXISTS approle;
 DROP TABLE IF EXISTS persistent_logins;
 
 -- Create database tables statements.
 CREATE TABLE allergy(
     allergy_id BIGINT NOT NULL COMMENT 'The unique ID for an allergy.', 
     allergy_name VARCHAR(50) COMMENT 'The allergy''s name.'
-) COMMENT='The information table for allergies.';
+); -- COMMENT='The information table for allergies.';
 
 ALTER TABLE allergy ADD CONSTRAINT allergy_pk PRIMARY KEY(allergy_id);
 ALTER TABLE allergy ADD CONSTRAINT alergy_uq_name UNIQUE(allergy_name);
@@ -39,7 +40,7 @@ ALTER TABLE allergy ADD CONSTRAINT alergy_uq_name UNIQUE(allergy_name);
 CREATE TABLE illness(
     illness_id BIGINT NOT NULL COMMENT 'The unique ID for an illness.', 
     illness_name VARCHAR(50) COMMENT 'The illness'' name.'
-) COMMENT = 'The information table for illnesses.';
+); -- COMMENT = 'The information table for illnesses.';
 
 ALTER TABLE illness ADD CONSTRAINT illness_pk PRIMARY KEY(illness_id);
 ALTER TABLE illness ADD CONSTRAINT illness_uq_name UNIQUE(illness_name);
@@ -51,18 +52,18 @@ CREATE TABLE medication(
     controlled BOOLEAN COMMENT 'Controlled substance alert flag',
     drug_action VARCHAR(50) COMMENT 'The medication''s action on the body.',
     generic_name VARCHAR(50) COMMENT 'The medication''s generic name.'
-) COMMENT='The information table for medications.';
+); -- COMMENT='The information table for medications.';
 
 ALTER TABLE medication ADD CONSTRAINT medication_pk PRIMARY KEY(medication_id);
 ALTER TABLE medication ADD CONSTRAINT medication_uq_brand_name UNIQUE(brand_name);
 
 CREATE TABLE approle (
-    role_id BIGINT NOT NULL COMMENT 'The user\'s role unique ID.',
-    role_level INTEGER NOT NULL COMMENT 'The user\'s role level.',
-    role_title VARCHAR(32) NOT NULL COMMENT 'The title for this database user\'s role',
-    role_description VARCHAR(512) COMMENT 'The description for this database user\'s role',
+    role_id BIGINT NOT NULL COMMENT 'The user''s role unique ID.',
+    role_level INTEGER NOT NULL COMMENT 'The user''s role level.',
+    role_title VARCHAR(32) NOT NULL COMMENT 'The title for this database user''s role',
+    role_description VARCHAR(512) COMMENT 'The description for this database user''s role',
     CHECK (role_level <= 20)
-)  COMMENT='The database user role table';
+); -- COMMENT='The database user role table';
 
 ALTER TABLE approle ADD CONSTRAINT approle_pk PRIMARY KEY(role_id);
 ALTER TABLE approle ADD CONSTRAINT approle_uq_title UNIQUE(role_title);
@@ -97,21 +98,19 @@ CREATE TABLE appuser(
     street_address VARCHAR(100) NOT NULL COMMENT 'The user''s street address.',
     user_agent_id BIGINT COMMENT 'The User ID of the user''s agent.',
     user_comments VARCHAR(300) COMMENT 'User additional comments.',
-    username VARCHAR(320) NOT NULL COMMENT 'The user''s email address.',
     zipcode VARCHAR(5) NOT NULL COMMENT 'The user''s zip code number.',
     role_id BIGINT NOT NULL COMMENT 'The role id of the user.'
-) COMMENT = 'The database user profile table';
+); -- COMMENT = 'The database user profile table';
 
 ALTER TABLE appuser ADD CONSTRAINT appuser_pk PRIMARY KEY(user_id);
 ALTER TABLE appuser ADD CONSTRAINT appuser_uq_email UNIQUE(email);
-ALTER TABLE appuser ADD CONSTRAINT appuser_uq_username UNIQUE(username);
 ALTER TABLE appuser ADD CONSTRAINT appuser_uq_ssn UNIQUE(ssn);
 ALTER TABLE appuser ADD CONSTRAINT appuser_approle_fk FOREIGN KEY(role_id) REFERENCES approle(role_id);
 
 CREATE TABLE user_allergy(
     user_id BIGINT NOT NULL COMMENT 'The unique ID for a patient.', 
     allergy_id BIGINT NOT NULL COMMENT 'The unique ID for an allergy.'
-) COMMENT = 'The information table for the patient''s allergies.';
+); -- COMMENT = 'The information table for the patient''s allergies.';
 
 ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_pk PRIMARY KEY(user_id, allergy_id);
 ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_allergy_fk FOREIGN KEY(allergy_id) REFERENCES allergy(allergy_id);
@@ -120,7 +119,7 @@ ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_user_fk FOREIGN KEY(user_id
 CREATE TABLE user_illness(
     user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID.',
     illness_id BIGINT NOT NULL COMMENT 'The unique ID for the patient''s illness.'
-) COMMENT = 'Information about the patient''s illnesses.';
+); -- COMMENT = 'Information about the patient''s illnesses.';
 
 ALTER TABLE user_illness ADD CONSTRAINT user_illness_pk PRIMARY KEY(user_id, illness_id);
 ALTER TABLE user_illness ADD CONSTRAINT user_illness_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
@@ -130,7 +129,7 @@ ALTER TABLE user_illness ADD CONSTRAINT user_illness_illness_fk FOREIGN KEY(illn
 CREATE TABLE user_medication(
     user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID',
     medication_id BIGINT NOT NULL COMMENT 'The medication unique ID.'
-) COMMENT = 'The key table for the user-medication''s list.';
+); -- COMMENT = 'The key table for the user-medication''s list.';
 
 ALTER TABLE user_medication ADD CONSTRAINT user_med_pk PRIMARY KEY(user_id, medication_id);
 ALTER TABLE user_medication ADD CONSTRAINT user_med_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
@@ -141,16 +140,16 @@ CREATE TABLE user_med_list(
     medication_id BIGINT NOT NULL COMMENT 'The medication unique ID.', 
     dosage FLOAT NOT NULL COMMENT 'The amount of medication taken.',
     frequency VARCHAR(32) NOT NULL COMMENT 'How often the medication is taken (once, twice daily, etc.)'
-) COMMENT = 'The information table for a patient medication.';
+); -- COMMENT = 'The information table for a patient medication.';
 
 ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_pk PRIMARY KEY(medication_id, user_id);
 ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_med_fk FOREIGN KEY(medication_id) REFERENCES medication(medication_id);
 ALTER TABLE user_med_list ADD CONSTRAINT user_med_list_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
 
 CREATE TABLE persistent_logins (
-    username varchar(64) NOT NULL,
+    email varchar(64) NOT NULL,
     series varchar(64) NOT NULL,
     token varchar(64) NOT NULL,
     last_used timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
     PRIMARY KEY (series)
-)
+);

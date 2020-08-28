@@ -28,7 +28,7 @@ import org.springframework.stereotype.Repository;
 @Repository("userRepository")
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    public User findUserByUsername(String username);
+    public User findUserByEmail(String email);
 
     @Query(value = "SELECT u FROM User u WHERE lower(u.firstName) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.lastName) LIKE lower(concat('%', :keyword, '%'))"
@@ -44,7 +44,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             + "OR lower(u.doctorName) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.doctorPhone) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.userComments) LIKE lower(concat('%', :keyword, '%'))"
-            + "OR lower(u.username) LIKE lower(concat('%', :keyword, '%'))"
+            + "OR lower(u.email) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.securityQuestion) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.adminComments) LIKE lower(concat('%', :keyword, '%'))"
             + "OR lower(u.DOB) LIKE lower(concat('%', :keyword, '%'))"

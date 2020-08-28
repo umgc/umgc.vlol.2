@@ -46,8 +46,8 @@ public class UserService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
     
-    public User findUserByUsername(String username) {
-        return userRepository.findUserByUsername(username);
+    public User findUserByEmail(String email) {
+        return userRepository.findUserByEmail(email);
     }
 
     public User saveUser(User user) {
@@ -68,7 +68,7 @@ public class UserService {
         User u = this.getUser(id);
         user.setPassword(u.getPassword());
         user.setSecurityAnswer(u.getSecurityAnswer());
-        user.setUsername(u.getUsername());
+        user.setEmail(u.getEmail());
         return userRepository.save(user);
     }
 
