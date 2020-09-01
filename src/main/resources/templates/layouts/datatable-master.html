@@ -49,15 +49,14 @@
                                 <a class="nav-link text-dark" href="/">Home</a>
                             </li>
                             <li class="nav-item">
-                                <div sec:authorize="isAuthenticated()">
-                                    <a class="nav-link text-dark" href="/admin-menu">Admin</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
                                 <a class="nav-link text-dark" href="/about">About</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/contact">Contact</a>
+                            </li>
+                            <li class="vertical-divider" sec:authorize="isAuthenticated()"></li>
+                            <li class="nav-item" sec:authorize="isAuthenticated()">
+                                <a class="nav-link text-dark" href="/menu">Menu</a>
                             </li>
                         </ul>
                     </div>
@@ -93,7 +92,11 @@
                     responsive: true,
                     dom: 'Bfrtip',
                     buttons: [
-                        'copy', 'csv', 'excel', 'pdf', 'print'
+                        {extend: 'copy', className: 'btn btn-secondary' },
+                        {extend: 'csv', className: 'btn btn-secondary' },
+                        {extend: 'excel', className: 'btn btn-secondary' },
+                        {extend: 'pdf', className: 'btn btn-secondary' },
+                        {extend: 'print', className: 'btn btn-secondary' }
                     ]
                 });
             });

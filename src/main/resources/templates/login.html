@@ -5,7 +5,7 @@
     <head>
         <title>VLOL Registration</title>
     </head>
-    <body th:onload="warning()">
+    <body>
         <div layout:fragment="content" class="container">
             <div class="col-md-4 text-center mx-auto">
                 <form class="form-signin" th:action="@{/login}" method="post" >
@@ -32,9 +32,24 @@
                     <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Log in</button>
                     <br />
                     <a th:href="@{/registration}" class="btn btn-primary btn-block"><i class="fas fa-file-signature"></i> Create a Letter of Life Account</a>
-                    <br />
-                    <a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>
+                    <!--<br />-->
+                    <!--<a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>-->
                 </form>
+            </div>
+            <div class="jumbotron" style="font-size:12px;margin-top:2rem;padding:2rem;">
+                <p>* * * * * * * * * * W A R N I N G * * * * * * * * * *<br/>
+                This computer system is the property of the University of Maryland Global
+                Campus (UMGC). It is for authorized use only.  By using this system, all users
+                acknowledge notice of, and agree to comply with, UMGC's Acceptable Use Policy
+                ("AUP"). Unauthorized or improper use of this system may result in
+                administrative disciplinary action, civil charges/criminal penalties, and/or
+                other sanctions as set forth in UMGC's AUP. By continuing to use this system
+                you indicate your awareness of and consent to these terms and conditions of use.<br/>
+                If you are physically located in the European Union, you may have additional
+                rights per the GDPR. Visit the web site <a href="dataprivacy.utk.edu">dataprivacy.utk.edu</a> for more
+                information.<br/>
+                LEAVE IMMEDIATELY if you do not agree to the conditions stated in this warning.</p>
+                <a href="https://www.umgc.edu/administration/policies-and-reporting/policies/fiscal-and-business-affairs/acceptable-use.cfm">UMGC Policy</a>
             </div>
         </div>
     </body>

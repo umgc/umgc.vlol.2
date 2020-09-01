@@ -57,7 +57,7 @@ This is quick site walkthrough for testing functionality:
 - Attempt to delete "Bees". Click on "Cancel"; nothing shuold be deleted.
 - Attempt to delete "Bees" again. Click on "OK"; "Bees" shuold be deleted.
 - Click on "Print"; a print dialog should appear. KNOWN BUG - The Actions column is printed or exported as well. Close the print dialog.
-- Click on Return to Administration Menu.
+- Click on Return to Menu.
 - Repeat the process with each Management Page. KNOWN BUG - DO NOT SELECT ANY ALLERGIES, CONDITIONS, OR MEDICATIONS when adding or editing a User. I have a known bug where the page returns strings in set format which need to be converted into actual set types.
 - Print out https://github.com/garciart/SWEN670/blob/master/VLOL/qr_code_testpage.pdf or open it on a different device.
 - Click on Capture QR Code.

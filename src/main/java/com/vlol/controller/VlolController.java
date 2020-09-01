@@ -123,11 +123,11 @@ public class VlolController {
         return mav;
     }
 
-    @RequestMapping(value = {"/admin-menu"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"/menu"}, method = RequestMethod.GET)
     public ModelAndView viewMainMenu() {
         ModelAndView mav = new ModelAndView();
         mav = getUserName(mav);
-        mav.setViewName("admin/admin-menu");
+        mav.setViewName("admin/menu");
         return mav;
     }
 

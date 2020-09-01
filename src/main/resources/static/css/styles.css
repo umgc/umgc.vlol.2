@@ -49,3 +49,7 @@ footer {
     text-align: center;
     z-index:1;
 }
+.vertical-divider{
+    border-right: 1px solid gray;
+    margin: 8px 0;
+}
