@@ -126,7 +126,7 @@ public class VlolController {
     @RequestMapping(value = {"/menu"}, method = RequestMethod.GET)
     public ModelAndView viewMainMenu() {
         ModelAndView mav = new ModelAndView();
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         mav.setViewName("admin/menu");
         return mav;
     }
@@ -139,7 +139,7 @@ public class VlolController {
     @RequestMapping(value = {"/", "/index"}, method = RequestMethod.GET)
     public ModelAndView viewHomePage() {
         ModelAndView mav = new ModelAndView();
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         mav.setViewName("index");
         return mav;
     }
@@ -147,7 +147,7 @@ public class VlolController {
     @RequestMapping(value = {"/about"}, method = RequestMethod.GET)
     public ModelAndView viewAboutPage() {
         ModelAndView mav = new ModelAndView();
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         mav.setViewName("about");
         return mav;
     }
@@ -155,7 +155,7 @@ public class VlolController {
     @RequestMapping(value = {"/contact"}, method = RequestMethod.GET)
     public ModelAndView viewContactPage() {
         ModelAndView mav = new ModelAndView();
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         mav.setViewName("contact");
         return mav;
     }
@@ -163,7 +163,7 @@ public class VlolController {
     @RequestMapping(value = {"/qr-capture"}, method = RequestMethod.GET)
     public ModelAndView viewQRCapturePage() {
         ModelAndView mav = new ModelAndView();
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         mav.setViewName("qr-capture");
         return mav;
     }
@@ -171,18 +171,8 @@ public class VlolController {
     @RequestMapping(value = {"/error"}, method = RequestMethod.GET)
     public ModelAndView viewErrorPage() {
         ModelAndView mav = new ModelAndView();
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         mav.setViewName("error");
-        return mav;
-    }
-
-    private ModelAndView getUserName(ModelAndView mav) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getPrincipal() != "anonymousUser") {
-            User user = userService.findUserByEmail(auth.getName());
-            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-            mav.addObject("userID", user.getUserID());
-        }
         return mav;
     }
 }

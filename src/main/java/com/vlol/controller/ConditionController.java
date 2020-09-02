@@ -53,7 +53,7 @@ public class ConditionController {
     @RequestMapping(value = "/list-conditions", method = RequestMethod.GET)
     public ModelAndView viewConditionList() {
         ModelAndView mav = new ModelAndView("admin/list-conditions");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<Condition> conditionList = conditionService.getAllConditions();
         mav.addObject("conditionList", conditionList);
         return mav;
@@ -62,7 +62,7 @@ public class ConditionController {
     @RequestMapping(value = "/add-condition", method = RequestMethod.GET)
     public ModelAndView viewAddConditionPage() {
         ModelAndView mav = new ModelAndView("admin/add-condition");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Condition condition = new Condition();
         mav.addObject("condition", condition);
         return mav;
@@ -91,7 +91,7 @@ public class ConditionController {
     @RequestMapping("/edit-condition/{id}")
     public ModelAndView viewEditConditionPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-condition");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Condition condition = conditionService.getCondition(id);
         mav.addObject("condition", condition);
         return mav;
@@ -106,7 +106,7 @@ public class ConditionController {
     @RequestMapping("/search-conditions")
     public ModelAndView findConditionByKeyword(@RequestParam String keyword) {
         ModelAndView mav = new ModelAndView("admin/search-conditions");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<Condition> result = conditionService.findConditionByKeyword(keyword);
         mav.addObject("result", result);
         return mav;
@@ -115,18 +115,9 @@ public class ConditionController {
     @RequestMapping("/view-condition/{id}")
     public ModelAndView viewConditionPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-condition");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Condition condition = conditionService.getCondition(id);
         mav.addObject("condition", condition);
-        return mav;
-    }
-    
-    private ModelAndView getUserName(ModelAndView mav) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getPrincipal() != "anonymousUser") {
-            User user = userService.findUserByEmail(auth.getName());
-            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-        }
         return mav;
     }
 }

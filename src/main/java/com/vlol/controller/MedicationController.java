@@ -53,7 +53,7 @@ public class MedicationController {
     @RequestMapping(value = "/list-medications", method = RequestMethod.GET)
     public ModelAndView viewMedicationList() {
         ModelAndView mav = new ModelAndView("admin/list-medications");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<Medication> medicationList = medicationService.getAllMedications();
         mav.addObject("medicationList", medicationList);
         return mav;
@@ -62,7 +62,7 @@ public class MedicationController {
     @RequestMapping(value = "/add-medication", method = RequestMethod.GET)
     public ModelAndView viewAddMedicationPage() {
         ModelAndView mav = new ModelAndView("admin/add-medication");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Medication medication = new Medication();
         mav.addObject("medication", medication);
         return mav;
@@ -90,7 +90,7 @@ public class MedicationController {
     @RequestMapping("/edit-medication/{id}")
     public ModelAndView viewEditMedicationPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-medication");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Medication medication = medicationService.getMedication(id);
         mav.addObject("medication", medication);
         return mav;
@@ -105,7 +105,7 @@ public class MedicationController {
     @RequestMapping("/search-medications")
     public ModelAndView findMedicationByKeyword(@RequestParam String keyword) {
         ModelAndView mav = new ModelAndView("admin/search-medications");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<Medication> result = medicationService.findMedicationByKeyword(keyword);
         mav.addObject("result", result);
         return mav;
@@ -114,18 +114,9 @@ public class MedicationController {
     @RequestMapping("/view-medication/{id}")
     public ModelAndView viewMedicationPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-medication");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Medication medication = medicationService.getMedication(id);
         mav.addObject("medication", medication);
-        return mav;
-    }
-    
-    private ModelAndView getUserName(ModelAndView mav) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getPrincipal() != "anonymousUser") {
-            User user = userService.findUserByEmail(auth.getName());
-            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-        }
         return mav;
     }
 }

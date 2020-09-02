@@ -53,7 +53,7 @@ public class AllergyController {
     @RequestMapping(value = "/list-allergies", method = RequestMethod.GET)
     public ModelAndView viewAllergyList() {
         ModelAndView mav = new ModelAndView("admin/list-allergies");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<Allergy> allergyList = allergyService.getAllAllergies();
         mav.addObject("allergyList", allergyList);
         return mav;
@@ -62,7 +62,7 @@ public class AllergyController {
     @RequestMapping(value = "/add-allergy", method = RequestMethod.GET)
     public ModelAndView viewAddAllergyPage() {
         ModelAndView mav = new ModelAndView("admin/add-allergy");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Allergy allergy = new Allergy();
         mav.addObject("allergy", allergy);
         return mav;
@@ -91,7 +91,7 @@ public class AllergyController {
     @RequestMapping(value = "/edit-allergy/{id}", method = RequestMethod.GET)
     public ModelAndView viewEditAllergyPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-allergy");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Allergy allergy = allergyService.getAllergy(id);
         mav.addObject("allergy", allergy);
         return mav;
@@ -106,7 +106,7 @@ public class AllergyController {
     @RequestMapping(value = "/search-allergies", method = RequestMethod.GET)
     public ModelAndView findAllergyByKeyword(@RequestParam String keyword) {
         ModelAndView mav = new ModelAndView("admin/search-allergies");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<Allergy> result = allergyService.findAllergyByKeyword(keyword);
         mav.addObject("result", result);
         return mav;
@@ -115,18 +115,9 @@ public class AllergyController {
     @RequestMapping(value = "/view-allergy/{id}", method = RequestMethod.GET)
     public ModelAndView viewAllergyPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-allergy");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Allergy allergy = allergyService.getAllergy(id);
         mav.addObject("allergy", allergy);
-        return mav;
-    }
-
-    private ModelAndView getUserName(ModelAndView mav) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getPrincipal() != "anonymousUser") {
-            User user = userService.findUserByEmail(auth.getName());
-            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-        }
         return mav;
     }
 }

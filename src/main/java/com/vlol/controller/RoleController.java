@@ -53,7 +53,7 @@ public class RoleController {
     @RequestMapping(value = "/list-roles", method = RequestMethod.GET)
     public ModelAndView viewRoleList() {
         ModelAndView mav = new ModelAndView("admin/list-roles");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<Role> roleList = roleService.getAllRoles();
         mav.addObject("roleList", roleList);
         return mav;
@@ -62,7 +62,7 @@ public class RoleController {
     @RequestMapping(value = "/add-role", method = RequestMethod.GET)
     public ModelAndView viewAddRolePage() {
         ModelAndView mav = new ModelAndView("admin/add-role");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Role role = new Role();
         mav.addObject("role", role);
         return mav;
@@ -91,7 +91,7 @@ public class RoleController {
     @RequestMapping("/edit-role/{id}")
     public ModelAndView viewEditRolePage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-role");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Role role = roleService.getRole(id);
         mav.addObject("role", role);
         return mav;
@@ -106,7 +106,7 @@ public class RoleController {
     @RequestMapping("/search-roles")
     public ModelAndView findRoleByKeyword(@RequestParam String keyword) {
         ModelAndView mav = new ModelAndView("admin/search-roles");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<Role> result = roleService.findRoleByKeyword(keyword);
         mav.addObject("result", result);
         return mav;
@@ -115,18 +115,9 @@ public class RoleController {
     @RequestMapping("/view-role/{id}")
     public ModelAndView viewRolePage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/view-role");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         Role role = roleService.getRole(id);
         mav.addObject("role", role);
-        return mav;
-    }
-    
-    private ModelAndView getUserName(ModelAndView mav) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getPrincipal() != "anonymousUser") {
-            User user = userService.findUserByEmail(auth.getName());
-            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-        }
         return mav;
     }
 }
