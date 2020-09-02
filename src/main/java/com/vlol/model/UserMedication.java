@@ -19,17 +19,15 @@
 package com.vlol.model;
 
 import java.io.Serializable;
-import java.util.HashSet;
 import javax.persistence.*;
-import java.util.Set;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table(name = "medication")
-public class Medication implements Serializable {
+@Table(name = "user_medication")
+public class UserMedication implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,11 +52,38 @@ public class Medication implements Serializable {
     @Column(name = "controlled")
     @NotNull(message = "Value cannot be null.")
     private Boolean controlled = false;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    @Column(name = "blood_thinner")
+    @Column(name = "dosage", length = 32)
     @NotNull(message = "Value cannot be null.")
-    private Boolean bloodThinner = false;
+    @Size(max = 32, message = "Input exceeds size limits.")
+    private String dosage;
 
+    @Column(name = "frequency", length = 32)
+    @NotBlank(message = "Frequency of dosage is required.")
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Size(max = 32, message = "Input exceeds size limits.")
+    private String frequency;
+
+    public String getDosage() {
+        return dosage;
+    }
+
+    public void setDosage(String dosage) {
+        this.dosage = dosage;
+    }
+
+    public String getFrequency() {
+        return frequency;
+    }
+
+    public void setFrequency(String frequency) {
+        this.frequency = frequency;
+    }
     public Long getMedicationID() {
         return medicationID;
     }
@@ -99,12 +124,49 @@ public class Medication implements Serializable {
         this.controlled = controlled;
     }
 
-    public Boolean getBloodThinner() {
-        return bloodThinner;
+    public User getUser() {
+        return user;
     }
 
-    public void setBloodThinner(Boolean bloodThinner) {
-        this.bloodThinner = bloodThinner;
+    public void setUser(User user) {
+        this.user = user;
+    }
+    @Override
+    public String toString() {
+        return this.genericName;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((medicationID == null) ? 0 : medicationID.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        UserMedication other = (UserMedication) obj;
+        if (medicationID == null) {
+            if (other.medicationID != null) {
+                return false;
+            }
+        } else if (!medicationID.equals(other.medicationID)) {
+            return false;
+        }
+        return true;
+    }
+    
+    public String getIdAsString() {
+        return medicationID.toString();
+    }
 }

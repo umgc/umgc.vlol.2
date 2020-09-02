@@ -57,67 +57,63 @@
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Date of Birth (DOB):</td>
-                                <td th:text="${user.DOB}">Date of Birth (DOB):</td>
+                                <td th:text="${user.userInfo.DOB}">Date of Birth (DOB):</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Social Security Number (SSN):</td>
-                                <td th:text="${user.SSN}">Social Security Number (SSN):</td>
+                                <td th:text="${user.userInfo.SSN}">Social Security Number (SSN):</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Street Address:</td>
-                                <td th:text="${user.streetAddress}">Street Address:</td>
+                                <td th:text="${user.userInfo.streetAddress}">Street Address:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">City:</td>
-                                <td th:text="${user.city}">City:</td>
+                                <td th:text="${user.userInfo.city}">City:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">State:</td>
-                                <td th:text="${user.state}">State:</td>
+                                <td th:text="${user.userInfo.state}">State:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">ZIP Code:</td>
-                                <td th:text="${user.zipCode}">ZIP Code:</td>
+                                <td th:text="${user.userInfo.zipCode}">ZIP Code:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Phone Number:</td>
-                                <td th:text="${user.phone}">Phone Number:</td>
+                                <td th:text="${user.userInfo.phone}">Phone Number:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Point of Contact (POC) Name:</td>
-                                <td th:text="${user.pocName}">Point of Contact (POC) Name:</td>
+                                <td th:text="${user.userInfo.pocName}">Point of Contact (POC) Name:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">POC Phone Number:</td>
-                                <td th:text="${user.pocPhone}">POC Phone Number:</td>
-                            </tr>
-                            <tr>             
-                                <td class="text-nowrap">Agent ID Number:</td>
-                                <td th:text="${agent.userID} != null ? ${agent.userID} + ': ' + ${agent.firstName} + ' ' + ${agent.lastName} : 'None.'">Agent ID Number:</td>
+                                <td th:text="${user.userInfo.pocPhone}">POC Phone Number:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Doctor Name:</td>
-                                <td th:text="${user.doctorName}">Doctor Name:</td>
+                                <td th:text="${user.userInfo.doctorName}">Doctor Name:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Doctor Phone Number:</td>
-                                <td th:text="${user.doctorPhone}">Doctor Phone Number:</td>
+                                <td th:text="${user.userInfo.doctorPhone}">Doctor Phone Number:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Insurance Company:</td>
-                                <td th:text="${user.insCompany}">Insurance Company:</td>
+                                <td th:text="${user.userInfo.insCompany}">Insurance Company:</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Insurance Policy Number:</td>
-                                <td th:text="${user.insPolicyNo}">Insurance Policy Number:</td>
+                                <td th:text="${user.userInfo.insPolicyNo}">Insurance Policy Number:</td>
                             </tr>
                             <tr>
                                 <td class="text-nowrap">Advance Directive?</td>
-                                <td><input type="checkbox" th:field="*{user.advDirective}" th:value="${user}" disabled="disabled" /></td>
+                                <td><input type="checkbox" th:field="*{user.userInfo.advDirective}" th:value="${user}" disabled="disabled" /></td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Advance Directive Type:</td>
-                                <td th:text="${user.advDirType} != '' ? ${user.advDirType} : 'None.'">Advance Directive Type:</td>
+                                <td th:text="${user.userInfo.advDirType} != '' ? ${user.userInfo.advDirType} : 'None.'">Advance Directive Type:</td>
                             </tr>
                             <tr>
                                 <td class="text-nowrap">Allergies:</td>
@@ -172,7 +168,7 @@
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">User Comments:</td>
-                                <td th:text="${user.userComments} != '' ? ${user.userComments} : 'None.'">User Comments:</td>
+                                <td th:text="${user.userInfo.userComments} != '' ? ${user.userInfo.userComments} : 'None.'">User Comments:</td>
                             </tr>
                             <tr sec:authorize="hasAnyAuthority('admin')">
                                 <td colspan="2">

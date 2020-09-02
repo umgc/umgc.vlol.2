@@ -19,5 +19,5 @@
 package com.vlol.controller;
 
 public class QRController {
-
+    
 }

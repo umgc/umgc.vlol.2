@@ -1,5 +1,5 @@
 /**
- * Medication service class.
+ * UserMedication service class.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7
@@ -18,48 +18,50 @@
  */
 package com.vlol.service;
 
-import com.vlol.data.FDADownloader;
-import com.vlol.model.Medication;
-import com.vlol.repository.MedicationRepository;
+import com.vlol.model.UserMedication;
+import com.vlol.repository.UserMedicationRepository;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class MedicationService {
+public class UserMedicationService {
+    @Autowired
+    private final UserMedicationRepository medicationRepository;
 
     @Autowired
-    private final MedicationRepository medicationRepository;
-
-    @Autowired
-    public MedicationService(MedicationRepository medicationRepository, EntityManager em) {
+    public UserMedicationService(UserMedicationRepository medicationRepository) {
         this.medicationRepository = medicationRepository;
-        new FDADownloader(this, em);
     }
 
-    public List<Medication> getAllMedications() {
+    public List<UserMedication> getAllMedications() {
         return medicationRepository.findAll();
     }
 
-    public void saveMedication(Medication medication) {
+    public void saveMedication(UserMedication medication) {
         medicationRepository.save(medication);
     }
-
-    public Medication getMedication(Long medicationID) {
-        return medicationRepository.findById(medicationID).orElse(null);
+    public void truncateMedication() {
+        medicationRepository.deleteAll();
     }
 
-    public void deleteMedication(Long medicationID) {
+    public UserMedication getMedication(long medicationID) {
+        return medicationRepository.findById(medicationID).get();
+    }
+
+    public void deleteMedication(long medicationID) {
         medicationRepository.deleteById(medicationID);
     }
-    public void truncateMedication() {
-        medicationRepository.deleteAllInBatch();
-    }
 
-    public List<Medication> findMedicationByKeyword(String keyword) {
+    public List<UserMedication> findMedicationByKeyword(String keyword) {
         return medicationRepository.findMedicationByKeyword(keyword);
+    }
+    
+    public List<UserMedication> findMedicationsByEmail(String email) {
+        return medicationRepository.findMedicationByEmail(email);
     }
 }

@@ -20,13 +20,13 @@ package com.vlol.controller;
 
 import com.vlol.model.Allergy;
 import com.vlol.model.Condition;
-import com.vlol.model.Medication;
 import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.model.UserMedication;
 import com.vlol.service.AllergyService;
 import com.vlol.service.ConditionService;
-import com.vlol.service.MedicationService;
 import com.vlol.service.RoleService;
+import com.vlol.service.UserMedicationService;
 import com.vlol.service.UserService;
 import java.util.HashMap;
 import java.util.List;
@@ -64,19 +64,19 @@ public class UserControlller {
     private ConditionService conditionService;
 
     @Autowired
-    private MedicationService medicationService;
+    private UserMedicationService medicationService;
 
     @Autowired
     private RoleService roleService;
 
     private Map<String, Allergy> allergyCache;
     private Map<String, Condition> conditionCache;
-    private Map<String, Medication> medicationCache;
+    private Map<String, UserMedication> medicationCache;
 
     @RequestMapping("/list-users")
     public ModelAndView viewUserList() {
         ModelAndView mav = new ModelAndView("admin/list-users");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         List<User> userList = userService.getAllUsers();
         mav.addObject("userList", userList);
         return mav;
@@ -86,7 +86,7 @@ public class UserControlller {
     public ModelAndView viewAddUserPage() {
         User user = new User();
         ModelAndView mav = new ModelAndView("admin/add-user");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
         allergyCache = new HashMap<String, Allergy>();
@@ -100,9 +100,9 @@ public class UserControlller {
             conditionCache.put(condition.getIdAsString(), condition);
         }
         mav.addObject("conditions", conditions);
-        List<Medication> medications = medicationService.getAllMedications();
-        medicationCache = new HashMap<String, Medication>();
-        for (Medication medication : medications) {
+        List<UserMedication> medications = medicationService.getAllMedications();
+        medicationCache = new HashMap<String, UserMedication>();
+        for (UserMedication medication : medications) {
             medicationCache.put(medication.getIdAsString(), medication);
         }
         mav.addObject("medications", medications);
@@ -122,14 +122,17 @@ public class UserControlller {
     @RequestMapping(value = "/update-user", method = RequestMethod.POST)
     public String updateUser(@ModelAttribute("user") User user) {
         userService.updateUser(user);
-        return "redirect:/list-users";
+        return "redirect:/edit-user/"+user.getUserID();
     }
 
     @RequestMapping("/edit-user/{id}")
     public ModelAndView viewEditUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-user");
-        mav = getUserName(mav);
-        User user = userService.getUser(id);
+        User user = Utils.getIfAuthorizedForUser(userService, id, true);
+        if(user == null)
+            return new ModelAndView("redirect:/login");
+        Utils.getUserName(userService, mav);
+        System.out.println(user);
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
         allergyCache = new HashMap<String, Allergy>();
@@ -143,9 +146,9 @@ public class UserControlller {
             conditionCache.put(condition.getIdAsString(), condition);
         }
         mav.addObject("conditions", conditions);
-        List<Medication> medications = medicationService.getAllMedications();
-        medicationCache = new HashMap<String, Medication>();
-        for (Medication medication : medications) {
+        List<UserMedication> medications = medicationService.getAllMedications();
+        medicationCache = new HashMap<String, UserMedication>();
+        for (UserMedication medication : medications) {
             medicationCache.put(medication.getIdAsString(), medication);
         }
         mav.addObject("medications", medications);
@@ -166,16 +169,28 @@ public class UserControlller {
     public ModelAndView findUserByKeyword(@RequestParam String keyword) {
         List<User> result = userService.findUserByKeyword(keyword);
         ModelAndView mav = new ModelAndView("admin/search-users");
-        mav = getUserName(mav);
+        Utils.getUserName(userService, mav);
         mav.addObject("result", result);
         return mav;
     }
 
-    @RequestMapping("/view-user/{id}")
-    public ModelAndView viewUserPage(@PathVariable(name = "id") Long id) {
+    @RequestMapping(value = {"/view-user/{id}", "/view-user/{id}/{jwt}"})
+    public ModelAndView viewUserPage(@PathVariable(name = "id") Long id, @PathVariable(name = "jwt", required = false) String jwt) {
+        
         ModelAndView mav = new ModelAndView("admin/view-user");
-        mav = getUserName(mav);
-        User user = userService.getUser(id);
+        Utils.getUserName(userService, mav);
+        User user;
+        if(jwt != null){
+            user = userService.getUser(id);
+            if(!Utils.verifyJWT(user, jwt)){ // Check jwt verification
+                return new ModelAndView("redirect:/login");
+            }
+        }else{ // If just an id check if 
+            user = Utils.getIfAuthorizedForUser(userService, id, false);
+            if(user == null)
+                return new ModelAndView("redirect:/login");
+        }
+        
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
         allergyCache = new HashMap<String, Allergy>();
@@ -189,19 +204,15 @@ public class UserControlller {
             conditionCache.put(condition.getIdAsString(), condition);
         }
         mav.addObject("conditions", conditions);
-        List<Medication> medications = medicationService.getAllMedications();
-        medicationCache = new HashMap<String, Medication>();
-        for (Medication medication : medications) {
+        List<UserMedication> medications = medicationService.getAllMedications();
+        medicationCache = new HashMap<String, UserMedication>();
+        for (UserMedication medication : medications) {
             medicationCache.put(medication.getIdAsString(), medication);
         }
         mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
-        User agent = new User();
-        if (user.getUserAgentNo() != null) {
-            agent = userService.getUser(user.getUserAgentNo());
-        }
-        mav.addObject("agent", agent);
+
         return mav;
     }
 
@@ -242,12 +253,12 @@ public class UserControlller {
         binder.registerCustomEditor(Set.class, "medications", new CustomCollectionEditor(Set.class) {
             @Override
             protected Object convertElement(Object element) {
-                if (element instanceof Medication) {
-                    System.out.println("Converting from Medication to Medication: " + element);
+                if (element instanceof UserMedication) {
+                    System.out.println("Converting from UserMedication to UserMedication: " + element);
                     return element;
                 }
                 if (element instanceof String) {
-                    Medication medication = medicationCache.get(element);
+                    UserMedication medication = medicationCache.get(element);
                     System.out.println("Looking up medication for id " + element + ": " + medication);
                     return medication;
                 }
@@ -255,14 +266,5 @@ public class UserControlller {
                 return null;
             }
         });
-    }
-
-    private ModelAndView getUserName(ModelAndView mav) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.getPrincipal() != "anonymousUser") {
-            User user = userService.findUserByEmail(auth.getName());
-            mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-        }
-        return mav;
     }
 }
