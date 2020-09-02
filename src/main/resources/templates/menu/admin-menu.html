@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title>Menu</title>
+    </head>
+    <body>
+        <div layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-lg-9 mx-auto">
+                    <h1 class="pt-4">Menu</h1>
+                    <div class="card-deck card-deck justify-content-center justify-content-sm-stretch">
+                        <a href="/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                            <i class="fas fa-users fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">User Search Page</div>
+                        </a>
+                        <a href="/qr-capture" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                            <i class="fas fa-qrcode fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">Capture QR Code</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

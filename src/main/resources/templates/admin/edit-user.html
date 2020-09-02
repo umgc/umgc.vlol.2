@@ -23,19 +23,18 @@
         <div layout:fragment="content" class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="pt-4">Edit User</h1>
-                    <span sec:authorize="hasAnyAuthority('admin', 'agent', 'provider')">
+                    <div sec:authorize="hasAnyAuthority('admin', 'provider')" class="pt-4">
                         <form method="get" action="/search-users">
                             <input type="text" name="keyword" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" style="width:20em;" />&nbsp;&nbsp;
                             <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Full Search</button>
                         </form>
-                    </span>
-                    <span sec:authorize="hasAnyAuthority('admin')">                    
-                        <hr />
+                    </div>
+                    <div sec:authorize="hasAnyAuthority('admin')">                    
                         <a href="/add-user" class="btn btn-success"><i class="fas fa-plus"></i> Add a User</a>
-                    </span>
+                    </div>
                     <hr />
-                    <form action="#" th:action="@{/update-user}" th:object="${user}" method="post">
+                    <h1>Edit User</h1>
+                    <form action="#" th:action="@{/user/update/}+${user.userID}" th:object="${user}" method="post">
                         <table id="list_table" class="table table-bordered dt-responsive display">
                             <tr class="d-none">             
                                 <td colspan="2">

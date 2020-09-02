@@ -75,6 +75,10 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+    
+    public List<User> getAllParticipants() {
+        return userRepository.findAllParticipants();
+    }
 
     public User getUser(Long userID) {
         return userRepository.findById(userID).orElse(null);

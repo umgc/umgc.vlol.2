@@ -45,4 +45,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             + " OR lower(u.email) LIKE lower(concat('%', :keyword, '%'))"
     )
     public List<User> findUserByKeyword(@Param("keyword") String keyword);
+    
+    @Query(value = "SELECT u FROM User u  WHERE u.role.roleID = 1")
+    public List<User> findAllParticipants();
 }

@@ -33,15 +33,21 @@ public class Utils {
             mav.addObject("userID", user.getUserID());
         }
     }
+    public static User getIfAuthorizedForUser(UserService userService){
+        return getIfAuthorizedForUser(userService, null, false);
+    }
+    public static User getIfAuthorizedForUser(UserService userService, Boolean editable){
+        return getIfAuthorizedForUser(userService, null, editable);
+    }
     public static User getIfAuthorizedForUser(UserService userService, Long userId, Boolean editable){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getPrincipal() != "anonymousUser") {
             // Check if user is admin or provider
             if(isAdmin() || (isProvider() && !editable)){
-                return userService.getUser(userId);
+                return userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
             }else{
                 ArrayList emails = new ArrayList<String>();
-                User user = userService.getUser(userId);
+                User user = userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
                 user.getAuthorizedEmails().forEach(ae->emails.add(ae.getEmail().toLowerCase()));
                 // Check if user is authorized for this user or if the user is itself
                 if(emails.contains(auth.getName()) || user.getEmail().equals(auth.getName())) return user;

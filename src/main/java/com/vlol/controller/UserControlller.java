@@ -77,13 +77,21 @@ public class UserControlller {
     public ModelAndView viewUserList() {
         ModelAndView mav = new ModelAndView("admin/list-users");
         Utils.getUserName(userService, mav);
-        List<User> userList = userService.getAllUsers();
+        List<User> userList;
+        if(Utils.isAdmin())
+            userList = userService.getAllUsers();
+        else if(Utils.isProvider())
+            userList = userService.getAllParticipants();
+        else
+            return new ModelAndView("redirect:/login");
         mav.addObject("userList", userList);
         return mav;
     }
 
     @RequestMapping("/add-user")
     public ModelAndView viewAddUserPage() {
+        if(!Utils.isAdmin())
+            return new ModelAndView("redirect:/login");
         User user = new User();
         ModelAndView mav = new ModelAndView("admin/add-user");
         Utils.getUserName(userService, mav);
@@ -108,24 +116,28 @@ public class UserControlller {
         mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
-        List<User> agents = userService.getAllUsers();
-        mav.addObject("agents", agents);
         return mav;
     }
 
     @RequestMapping(value = "/save-user", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
+        if(!Utils.isAdmin())
+            return "redirect:/login";
         userService.saveUser(user);
         return "redirect:/list-users";
     }
 
-    @RequestMapping(value = "/update-user", method = RequestMethod.POST)
-    public String updateUser(@ModelAttribute("user") User user) {
+    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
+    public String updateUser(@ModelAttribute("user") User user,
+            @ModelAttribute("allergies") User allergies,
+            @ModelAttribute("conditions") User conditions,
+            @ModelAttribute("medications") User medications,
+            @ModelAttribute("roles") User roles) {
         userService.updateUser(user);
-        return "redirect:/edit-user/"+user.getUserID();
+        return "redirect:/user/edit/"+user.getUserID();
     }
 
-    @RequestMapping("/edit-user/{id}")
+    @RequestMapping("/user/edit/{id}")
     public ModelAndView viewEditUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-user");
         User user = Utils.getIfAuthorizedForUser(userService, id, true);
@@ -154,12 +166,10 @@ public class UserControlller {
         mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
-        List<User> agents = userService.getAllUsers();
-        mav.addObject("agents", agents);
         return mav;
     }
 
-    @RequestMapping("/delete-user/{id}")
+    @RequestMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable(name = "id") Long id) {
         userService.deleteUser(id);
         return "redirect:/list-users";
@@ -174,10 +184,10 @@ public class UserControlller {
         return mav;
     }
 
-    @RequestMapping(value = {"/view-user/{id}", "/view-user/{id}/{jwt}"})
+    @RequestMapping(value = {"/user/view/{id}", "/user/view/{id}/{jwt}"})
     public ModelAndView viewUserPage(@PathVariable(name = "id") Long id, @PathVariable(name = "jwt", required = false) String jwt) {
         
-        ModelAndView mav = new ModelAndView("admin/view-user");
+        ModelAndView mav = new ModelAndView("user/view-user");
         Utils.getUserName(userService, mav);
         User user;
         if(jwt != null){
