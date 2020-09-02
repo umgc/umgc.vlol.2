@@ -174,24 +174,24 @@
                                 <td class="text-nowrap">User Comments:</td>
                                 <td th:text="${user.userComments} != '' ? ${user.userComments} : 'None.'">User Comments:</td>
                             </tr>
-                            <tr>
+                            <tr sec:authorize="hasAnyAuthority('admin')">
                                 <td colspan="2">
                                     <hr />
                                 </td>
                             </tr>
-                            <tr>             
-                                <td class="text-nowrap">Email / User Name:</td>
+                            <tr sec:authorize="hasAnyAuthority('admin')">             
+                                <td class="text-nowrap">Email:</td>
                                 <td th:text="${user.email}">Email / User Name:</td>
                             </tr>
-                            <tr>             
+                            <tr sec:authorize="hasAnyAuthority('admin')">             
                                 <td class="text-nowrap">Date Created:</td>
                                 <td th:text="${user.dateCreated}">Date Created:</td>
                             </tr>
-                            <tr>             
+                            <tr sec:authorize="hasAnyAuthority('admin')">             
                                 <td class="text-nowrap">Last Login:</td>
                                 <td th:text="${user.lastLoginDate}">Last Login:</td>
                             </tr>
-                            <tr>
+                            <tr sec:authorize="hasAnyAuthority('admin')">
                                 <td class="text-nowrap">Active?</td>
                                 <td th:text="${user.isActive}">Active?</td>
                             </tr>

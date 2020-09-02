@@ -8,9 +8,41 @@
     <body>
         <div layout:fragment="content" class="container">
             <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-9 mx-auto">
                     <h1 class="pt-4">Menu</h1>
-                    <ul>
+                    <div class="card-deck card-deck justify-content-center justify-content-sm-stretch">
+                        <a href="/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                            <i class="fas fa-users fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">User Management Page</div>
+                        </a>
+                        <a href="/qr-capture" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                            <i class="fas fa-qrcode fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">Capture QR Code</div>
+                        </a>
+                        <a th:href="|/edit-user/${userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'participant')}">
+                            <i class="fas fa-id-badge fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">My Profile</div>
+                        </a>
+                        <a href="/list-allergies" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'participant')}">
+                            <i class="fas fa-allergies fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">Allergies</div>
+                        </a>
+                        <a href="/list-medications" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'participant')}">
+                            <i class="fas fa-tablets fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">Medication</div>
+                        </a>
+                        <a href="/list-conditions" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'participant')}">
+                            <i class="fas fa-disease fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">Conditions</div>
+                        </a>
+                    </div>
+<!--                    <ul>
                         <li><a th:href="|/edit-user/${userID}|">Edit Profile</a></li>
                         <span sec:authorize="hasAnyAuthority('admin')">
                             <li><a href="/list-allergies">Allergy Management Page</a></li>
@@ -20,12 +52,12 @@
                         </span>
                         <span sec:authorize="hasAnyAuthority('admin', 'agent', 'provider')">
                             <li><a href="/list-users">User Management Page</a></li>
-                            <!--<li><a href="/console">H2 Console Portal</a></li>-->
+                            <li><a href="/console">H2 Console Portal</a></li>
                             <li><a href="/qr-capture">Capture QR Code</a></li>
                         </span>
-                    </ul>
-                    <a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Home Page</a>
-                    <br />
+                    </ul>-->
+                    <!--<a href="/" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Home Page</a>-->
+                    <!--<br />-->
                 </div>
             </div>
         </div>

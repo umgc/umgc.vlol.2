@@ -81,17 +81,17 @@ public class FDADownloader {
             // Check if data was updated in the last 7 days
             try{
                 Boolean shouldUpdate = (Boolean)_em.createNativeQuery("SELECT last_updated <= curdate() - 7 FROM datasets WHERE name = 'fda'").getSingleResult();
-//                if(!shouldUpdate) return;
+                if(!shouldUpdate) return;
                 _em.createNativeQuery("UPDATE datasets SET last_updated=curdate() WHERE name = 'fda'").executeUpdate();
             }catch(javax.persistence.NoResultException e){
-                
                 _em.createNativeQuery("INSERT INTO datasets (name, last_updated) VALUES('fda', curdate())").executeUpdate();
             }
             session.flush();
             session.clear();
-                    
+//            return;
             try {
                 HttpResponse response = download("https://api.fda.gov/download.json", HttpResponse.BodyHandlers.ofString());
+    
                 Map obj = (Map)new Gson().fromJson(response.body().toString(), Map.class).get("results");
                 List <Map<String, String>> partitions = (List <Map<String, String>>)((Map)((Map)obj.get("drug")).get("ndc")).get("partitions");
                 String exportDate = (String)((Map)((Map)obj.get("drug")).get("ndc")).get("export_date");
@@ -99,7 +99,10 @@ public class FDADownloader {
                 medicationService.truncateMedication();
                 for (Map<String, String> part : partitions){
                     HttpResponse zipResponse = download(part.get("file"), HttpResponse.BodyHandlers.ofInputStream());
+                    
+                    System.out.println("Start "+part.get("file")+" download ~25mb"); 
                     ZipInputStream zis = new ZipInputStream((InputStream)zipResponse.body());
+                    System.out.println("Done"); 
                     ZipEntry zipEntry = zis.getNextEntry();
                     while (zipEntry != null) {
                         List<Map> res = (List)new Gson().fromJson(new BufferedReader(new InputStreamReader(zis)), Map.class).get("results");
@@ -147,7 +150,6 @@ public class FDADownloader {
                                         pharmaClasses.contains("Decreased Platelet Aggregation [PE]") ||
                                         activeIngredients.contains("asprrin"));
                                 
-//                                medicationService.saveMedication(m);
                                 session.save(m);
                                 
                                 if (this.count++ % 100 == 0) { //100, same as the JDBC batch size
