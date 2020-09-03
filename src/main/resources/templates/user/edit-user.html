@@ -193,22 +193,6 @@
                                     </ul>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>Medications:</td>
-                                <td class="text-wrap">
-                                    <p><b>Note</b> - If a medication is not listed, check 'Other' and enter any missing medications in the User Comments section.</p>
-                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
-                                        <li th:each="medication : ${medications}">
-                                            <input type="checkbox" name="medications"
-                                                   th:utext="'&nbsp;' + ${medication.brandName} + ' / ' + ${medication.genericName}"
-                                                   th:value="${medication.medicationID}"
-                                                   th:checked="${#sets.contains(user.medications, medication)}"
-                                                   th:name="medications"
-                                                   />
-                                        </li>
-                                    </ul>
-                                </td>
-                            </tr>
                             <tr>             
                                 <td>User Comments:</td>
                                 <td>

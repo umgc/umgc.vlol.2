@@ -47,7 +47,7 @@ public class Utils {
             }else{
                 ArrayList emails = new ArrayList<String>();
                 User user = userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
-                user.getAuthorizedEmails().forEach(ae->emails.add(ae.getEmail().toLowerCase()));
+                user.getAuthorizedEmails().forEach(ae->emails.add(ae.getAuthorizedEmail().toLowerCase()));
                 // Check if user is authorized for this user or if the user is itself
                 if(emails.contains(auth.getName()) || user.getEmail().equals(auth.getName())) return user;
             }

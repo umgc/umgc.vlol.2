@@ -18,9 +18,9 @@
  */
 package com.vlol.controller;
 
-import com.vlol.model.UserMedication;
+import com.vlol.model.AuthorizedUser;
 import com.vlol.model.User;
-import com.vlol.service.UserMedicationService;
+import com.vlol.service.AuthorizedUserService;
 import com.vlol.service.UserService;
 import java.security.Principal;
 import java.util.ArrayList;
@@ -41,95 +41,95 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * Medication controller class.
+ * Authorized User controller class.
  *
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
+ * @author Michael Marcucci
  */
 @Controller
-public class UserMedicationController {
+public class AuthorizedUserController {
 
     @Autowired
-    private UserMedicationService medicationService;
+    private AuthorizedUserService authorizedUserService;
     @Autowired
     private UserService userService;
 
-    @RequestMapping( value = {"/user/medications", "/user/medications/{id}"})
-    public ModelAndView viewMedicationList(@PathVariable(name = "id", required=false) Long id, Model model, Principal principal) {
-        ModelAndView mav = new ModelAndView("user/medications");
+    @RequestMapping( value = {"/user/authorized-user", "/user/authorized-user/{id}"})
+    public ModelAndView viewAuthorizedUserList(@PathVariable(name = "id", required=false) Long id, Model model, Principal principal) {
+        ModelAndView mav = new ModelAndView("user/authorized-user");
         Utils.getUserName(userService, mav);
         User user = Utils.getIfAuthorizedForUser(userService, id, true);
         if(user == null)
             return new ModelAndView("redirect:/login");
         model.addAttribute("userID", user.getUserID());
-        model.addAttribute("medicationList", user.getMedications());
+        model.addAttribute("authorizedUserList", user.getAuthorizedEmails());
         return mav;
     }
 
-    @RequestMapping(value = {"/user/save-medication", "/user/save-medication/{id}"}, method = RequestMethod.POST)
-    public String saveMedication(@PathVariable(name = "id", required=false) Long id, @Valid UserMedication medication, BindingResult bindingResult, Model model) {
+    @RequestMapping(value = {"/user/save-authorized-user", "/user/save-authorized-user/{id}"}, method = RequestMethod.POST)
+    public String saveAuthorizedUser(@PathVariable(name = "id", required=false) Long id, @Valid AuthorizedUser authorizedUser, BindingResult bindingResult, Model model) {
         User user = Utils.getIfAuthorizedForUser(userService, id, true);
         if(user == null)
             return "redirect:/login";
-        medication.setUser(user);
+        authorizedUser.setUser(user);
         if (bindingResult.hasErrors()) {
-            return "redirect:/user/add-medication";
+            return "redirect:/user/add-authorized-user";
         }
-        medicationService.saveMedication(medication);
-        return "redirect:/user/medications";
+        authorizedUserService.saveAuthorizedUser(authorizedUser);
+        return "redirect:/user/authorized-user";
     }
     
-    @RequestMapping(value = {"/user/add-medication", "/user/add-medication/{id}"})
+    @RequestMapping(value = {"/user/add-authorized-user", "/user/add-authorized-user/{id}"})
     public ModelAndView viewAddConditionPage(@PathVariable(name = "id", required=false) Long id, Model model) {
         User user = Utils.getIfAuthorizedForUser(userService, id, false);
         if(user == null) return new ModelAndView("redirect:/login");
         
-        ModelAndView mav = new ModelAndView("user/add-edit-medication");
+        ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
         Utils.getUserName(userService, mav);
-        UserMedication medication = new UserMedication();
-        medication.setUser(user);
-        model.addAttribute("medication", medication);
+        AuthorizedUser authorizedUser = new AuthorizedUser();
+        authorizedUser.setUser(user);
+        model.addAttribute("authorizedUser", authorizedUser);
         model.addAttribute("userID", user.getUserID());
         return mav;
     }
-    @RequestMapping(value = {"/user/edit-medication/{medicationId}", "/user/edit-medication/{id}/{medicationId}"})
-    public ModelAndView viewEditMedicationPage(@PathVariable(name = "id", required=false) Long id, @PathVariable(name = "medicationId") Long medicationId, Model model) {
+    @RequestMapping(value = {"/user/edit-authorized-user/{authorizedUserId}", "/user/edit-authorized-user/{id}/{authorizedUserId}"})
+    public ModelAndView viewEditAuthorizedUserPage(@PathVariable(name = "id", required=false) Long id, @PathVariable(name = "authorizedUserId") Long authorizedUserId, Model model) {
         // Check if this user can edit the requested user
         User user = Utils.getIfAuthorizedForUser(userService, id, true);
         if(user == null)
             return new ModelAndView("redirect:/login");
-        ModelAndView mav = new ModelAndView("user/add-edit-medication");
+        ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
         Utils.getUserName(userService, mav);
-        // Check if the medication belongs to the user
+        // Check if the authorizedUser belongs to the user
         Boolean found = false;
-        for(UserMedication med : user.getMedications())
-            if(med.getMedicationID().equals(medicationId))
+        for(AuthorizedUser au : user.getAuthorizedEmails())
+            if(au.getAuthorizedUserId().equals(authorizedUserId))
                 found = true;
         if(!found)
             return new ModelAndView("redirect:/login");
-        UserMedication medication = medicationService.getMedication(medicationId);
-        model.addAttribute("medication", medication);
+        AuthorizedUser authorizedUser = authorizedUserService.getAuthorizedUser(authorizedUserId);
+        model.addAttribute("authorizedUser", authorizedUser);
         model.addAttribute("userID", user.getUserID());
         return mav;
     }
 
-    @RequestMapping(value = {"/user/delete-medication/{medicationId}", "/user/delete-medication/{id}/{medicationId}"})
-    public String deleteMedication(@PathVariable(name = "id", required=false) Long id, @PathVariable(name = "medicationId") Long medicationId) {
+    @RequestMapping(value = {"/user/delete-authorized-user/{authorizedUserId}", "/user/delete-authorized-user/{id}/{authorizedUserId}"})
+    public String deleteAuthorizedUser(@PathVariable(name = "id", required=false) Long id, @PathVariable(name = "authorizedUserId") Long authorizedUserId) {
         // Check if this user can edit the requested user
         User user = Utils.getIfAuthorizedForUser(userService, id, true);
         if(user == null)
             return "redirect:/login";
-        // Check if the medication belongs to the user
+        // Check if the authorizedUser belongs to the user
         Boolean found = false;
-        for(UserMedication med : user.getMedications()){
-            if(med.getMedicationID().equals(medicationId))
+        for(AuthorizedUser au : user.getAuthorizedEmails()){
+            if(au.getAuthorizedUserId().equals(authorizedUserId))
                 found = true;
         }
         if(!found)
             return "redirect:/login";
-        medicationService.deleteMedication(medicationId);
+        authorizedUserService.deleteAuthorizedUser(authorizedUserId);
         if(id==null)
-            return "redirect:/user/medications";
+            return "redirect:/user/authorized-user";
         else
-            return "redirect:/user/medications/"+id;
+            return "redirect:/user/authorized-user/"+id;
     }
 }

@@ -64,12 +64,20 @@ public class AuthorizedUser implements Serializable {
         this.authorizedUserId = authorizedUserId;
     }
 
-    public String getEmail() {
+    public String getAuthorizedEmail() {
         return authorizedEmail;
     }
 
-    public void setEmail(String authorizedEmail) {
+    public void setAuthorizedEmail(String authorizedEmail) {
         this.authorizedEmail = authorizedEmail;
+    }
+    
+    public String getAuthorizedName() {
+        return authorizedName;
+    }
+
+    public void setAuthorizedName(String authorizedName) {
+        this.authorizedName = authorizedName;
     }
 
     public User getUser() {
@@ -96,4 +104,29 @@ public class AuthorizedUser implements Serializable {
         return this.authorizedEmail;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        AuthorizedUser other = (AuthorizedUser) obj;
+        if (authorizedUserId == null) {
+            if (other.authorizedUserId != null) {
+                return false;
+            }
+        } else if (!authorizedUserId.equals(other.authorizedUserId)) {
+            return false;
+        }
+        return true;
+    }
+    
+    public String getIdAsString() {
+        return authorizedUserId.toString();
+    }
 }

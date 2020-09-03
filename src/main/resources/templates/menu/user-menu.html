@@ -31,6 +31,11 @@
                             <i class="fas fa-disease fa-9x" style="margin: 1rem"></i>
                             <div class="card-body">Conditions</div>
                         </a>
+                        <a th:href="|/user/authorized-user/${user.userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-user-shield fa-9x" style="margin: 1rem"></i>
+                            <div class="card-body">Authorized Users</div>
+                        </a>
                     </div>
                 </div>
             </div>

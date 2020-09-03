@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/datatable-master}"
+      lang="en">
+    <head>
+        <title>Authorized User Manager</title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <h1>Authorized User Manager</h1>
+            <a th:href="|/user/add-authorized-user/${userID}|">Add an Authorized User</a>
+            <br/><br/>
+            <table border="1" cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="authorizedUser : ${authorizedUserList}">
+                        <td th:text="${authorizedUser.authorizedName}"></td>
+                        <td th:text="${authorizedUser.authorizedEmail}"></td>
+                        <td>
+                            <a th:href="|/user/edit-authorized-user/${userID}/${authorizedUser.authorizedUserId}|">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/user/delete-authorized-user/${userID}/${authorizedUser.authorizedUserId}|">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a href="/menu">Return to Administration Menu</a>
+        </div>
+        <div th:replace="./fragments/footer :: 'footer'" />
+    </body>
+</html>
