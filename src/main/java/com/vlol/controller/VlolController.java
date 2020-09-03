@@ -119,6 +119,10 @@ public class VlolController {
         ModelAndView mav = new ModelAndView();
         Utils.getUserName(userService, mav);
         if(id == null){
+            User user = Utils.getIfAuthorizedForUser(userService);
+            if(user == null) return new ModelAndView("redirect:/login");
+            mav.addObject("userID", user.getUserID());
+            mav.addObject("user", user);
             if(Utils.isAdmin() || Utils.isProvider()){
                 mav.setViewName("menu/admin-menu");
             }else{

@@ -11,22 +11,22 @@
                 <div class="col-lg-9 mx-auto">
                     <h1 class="pt-4" th:text="${user}?${user.firstName+' '+user.lastName}:'Menu'">Menu</h1>
                     <div class="card-deck card-deck justify-content-center justify-content-sm-stretch">
-                        <a th:href="|/user/edit/${userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                        <a th:href="|/user/edit/${user.userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-id-badge fa-9x" style="margin: 1rem"></i>
                             <div class="card-body">My Profile</div>
                         </a>
-                        <a th:href="|/user/allergies/${userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                        <a th:href="|/user/allergies/${user.userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-allergies fa-9x" style="margin: 1rem"></i>
                             <div class="card-body">Allergies</div>
                         </a>
-                        <a th:href="|/user/medications/${userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                        <a th:href="|/user/medications/${user.userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-tablets fa-9x" style="margin: 1rem"></i>
                             <div class="card-body">Medication</div>
                         </a>
-                        <a th:href="|/user/conditions/${userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                        <a th:href="|/user/conditions/${user.userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-disease fa-9x" style="margin: 1rem"></i>
                             <div class="card-body">Conditions</div>

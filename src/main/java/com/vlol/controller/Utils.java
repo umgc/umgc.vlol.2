@@ -30,7 +30,6 @@ public class Utils {
         if (auth.getPrincipal() != "anonymousUser") {
             User user = userService.findUserByEmail(auth.getName());
             mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-            mav.addObject("userID", user.getUserID());
         }
     }
     public static User getIfAuthorizedForUser(UserService userService){

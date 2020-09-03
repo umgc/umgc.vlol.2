@@ -48,7 +48,7 @@
                                         <i class="far fa-eye"></i> View
                                     </a>
                                     <span sec:authorize="hasAnyAuthority('admin')">
-                                        <a th:href="@{/user/edit/{id}(id=${user.userID})}" class="btn btn-warning">
+                                        <a th:href="@{/menu/{id}(id=${user.userID})}" class="btn btn-warning">
                                             <i class="far fa-edit"></i> Edit
                                         </a>
                                     </span>

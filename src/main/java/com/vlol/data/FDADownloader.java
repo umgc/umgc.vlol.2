@@ -41,12 +41,11 @@ public class FDADownloader {
     private EntityManager em;
     private List<Pattern> badWords = new ArrayList<Pattern>(List.of(
             Pattern.compile("sunscreen"), 
-            Pattern.compile("hand (sanitizer|gel|cleaner)"),
-            Pattern.compile("wet wipe"),
-            Pattern.compile("disinfect.*wipe"),
+            Pattern.compile("hand (sanitizer|gel|cleaner|wash)"),
+            Pattern.compile("(disinfect|wet|alcohol|sanitiz).+(wipe|tissue|hand|swab)"),
             Pattern.compile("antiperspirant"),
+            Pattern.compile("lip.+balm|balm.+lip"),
             Pattern.compile("^([0-9]+% )?alcohol$"),
-            Pattern.compile("alcohol swabs"),
             Pattern.compile("^([0-9]+% )?ethyl alcohol$"),
             Pattern.compile("^([0-9]+% )?salicylic acid$"),
             Pattern.compile("^([0-9]+% )?isopropyl alcohol$"),

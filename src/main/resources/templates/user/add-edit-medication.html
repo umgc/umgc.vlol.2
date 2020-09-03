@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title th:text="(${medication.medicationID}!=null?'Edit':'Add')+ ' a Medication'">Add a New Medication</title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <h1 th:text="(${medication.medicationID}!=null?'Edit':'Add')+ ' a Medication'"></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <div class="form-group">
+
+                        <div><label for="drug">Drug Search</label></div>
+                        <input class="form-control typeahead" type="search" id="drug" placeholder="Search"/>
+                      <!--<input type="search" class="form-control" id="drug" placeholder="Search"/>-->
+                    </div>
+                </div>
+            </div>
+            <form action="#" th:object="${medication}" th:action="'/user/save-medication/'+${userID}" method="post">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="form-group">
+                          <label for="brandName">Brand Name</label>
+                          <input type="text" class="form-control" id="brandName" th:field="*{brandName}"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="genericName">Generic Name</label>
+                          <input type="text" class="form-control" id="genericName" th:field="*{genericName}"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="drugAction">Drug Action</label>
+                          <input type="text" class="form-control" id="drugAction" th:field="*{drugAction}"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="controlled">Is Prescribed</label>
+                          <input type="checkbox" class="form-control" id="controlled" th:field="*{controlled}"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="bloodThinner">Is Blood Thinner</label>
+                          <input type="checkbox" class="form-control" id="bloodThinner" th:field="*{bloodThinner}"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="dosage">Dosage</label>
+                          <input type="text" class="form-control" id="dosage" th:field="*{dosage}" required="true" placeholder="Required"/>
+                        </div>
+                        <div class="form-group">
+                          <label for="frequency">Frequency</label>
+                          <input type="text" class="form-control" id="frequency" th:field="*{frequency}" required="true" placeholder="Required"/>
+                        </div>
+                        <input type="hidden" th:field="*{medicationID}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+                <!--<input type="text" th:field="*{user}" id="user" readonly="readonly" hidden="hidden" />-->
+                <input type="text" th:field="*{user.email}" id="email" readonly="readonly" hidden="hidden" />
+            </form>
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    <a th:href="|/user/medications/${userID}|">Return to Medication Manager</a>
+                </div>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", ()=>{
+                    $('.typeahead').typeahead({
+                        minLength: 1
+                      },
+                    {
+                        name: 'medication',
+                        display: 'value',
+                        async: true,
+                        limit: Infinity,
+                        source: function (medication, syncResults, asyncResults) {
+                            // let's do a custom ajax call
+                            fetch("/search-medications?keyword="+medication).then(res=>res.json()).then((data)=>{
+                                const ret = data.map((d)=>{
+                                    const value = d.brandName && d.brandName !== d.genericName
+                                    ? d.brandName+"\n("+d.genericName+")"
+                                    : d.genericName;
+                                    return {...d,value:value}
+                                });
+                                asyncResults(ret);
+                            }).catch(()=>asyncResults([]));
+                        }
+                    });
+                    $('.typeahead').bind('typeahead:select', function(ev, medication) {
+                        $('#brandName').val(medication.brandName);
+                        $('#drugAction').val(medication.drugAction);
+                        $('#genericName').val(medication.genericName);
+                        $('#controlled').prop('checked', medication.controlled);
+                        $('#bloodThinner').prop('checked', medication.bloodThinner);
+                      });
+                });
+            </script>
+        </div>
+    </body>
+</html>

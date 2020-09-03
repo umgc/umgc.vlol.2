@@ -19,22 +19,13 @@
 package com.vlol.controller;
 
 import com.vlol.model.Medication;
-import com.vlol.model.User;
 import com.vlol.service.MedicationService;
-import com.vlol.service.UserService;
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Medication controller class.
@@ -46,77 +37,10 @@ public class MedicationController {
 
     @Autowired
     private MedicationService medicationService;
-    
-    @Autowired
-    private UserService userService;
 
-    @RequestMapping(value = "/list-medications", method = RequestMethod.GET)
-    public ModelAndView viewMedicationList() {
-        ModelAndView mav = new ModelAndView("admin/list-medications");
-        Utils.getUserName(userService, mav);
-        List<Medication> medicationList = medicationService.getAllMedications();
-        mav.addObject("medicationList", medicationList);
-        return mav;
-    }
-
-    @RequestMapping(value = "/add-medication", method = RequestMethod.GET)
-    public ModelAndView viewAddMedicationPage() {
-        ModelAndView mav = new ModelAndView("admin/add-medication");
-        Utils.getUserName(userService, mav);
-        Medication medication = new Medication();
-        mav.addObject("medication", medication);
-        return mav;
-    }
-
-    @RequestMapping(value = "/save-medication", method = RequestMethod.POST)
-    public String saveMedication(@Valid Medication medication, BindingResult bindingResult, Model model) {
-        //check for errors
-        if (bindingResult.hasErrors()) {
-            return "admin/add-medication";
-        }
-        medicationService.saveMedication(medication);
-        return "redirect:/list-medications";
-    }
-    
-    @RequestMapping(value = "/update-medication", method = RequestMethod.POST)
-    public String updateMedication(@Valid Medication medication, BindingResult bindingResult, Model model) {
-        //check for errors
-        if (bindingResult.hasErrors()) {
-            return "admin/edit-medication";
-        }
-        medicationService.saveMedication(medication);
-        return "redirect:/list-medications";
-    }
-    @RequestMapping("/edit-medication/{id}")
-    public ModelAndView viewEditMedicationPage(@PathVariable(name = "id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/edit-medication");
-        Utils.getUserName(userService, mav);
-        Medication medication = medicationService.getMedication(id);
-        mav.addObject("medication", medication);
-        return mav;
-    }
-
-    @RequestMapping("/delete-medication/{id}")
-    public String deleteMedication(@PathVariable(name = "id") Long id) {
-        medicationService.deleteMedication(id);
-        return "redirect:/list-medications";
-    }
-
-    @RequestMapping("/search-medications")
-    public ModelAndView findMedicationByKeyword(@RequestParam String keyword) {
-        ModelAndView mav = new ModelAndView("admin/search-medications");
-        Utils.getUserName(userService, mav);
-        List<Medication> result = medicationService.findMedicationByKeyword(keyword);
-        mav.addObject("result", result);
-        return mav;
-    }
-
-    @RequestMapping("/view-medication/{id}")
-    public ModelAndView viewMedicationPage(@PathVariable(name = "id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/view-medication");
-        Utils.getUserName(userService, mav);
-        Medication medication = medicationService.getMedication(id);
-        mav.addObject("medication", medication);
-        return mav;
+    @GetMapping("/search-medications")
+    public @ResponseBody List<Medication> findMedicationByKeyword(@RequestParam String keyword) {
+        List<Medication> meds =  medicationService.findMedicationByKeyword(keyword);
+        return meds.subList(0, Math.min(20, meds.size()));
     }
 }

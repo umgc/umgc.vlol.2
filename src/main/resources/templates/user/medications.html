@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/datatable-master}"
+      lang="en">
+    <head>
+        <title>Medication Manager</title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <h1>Medication Manager</h1>
+            <form method="get" action="search-medications">
+                <input type="text" name="keyword" />&nbsp;&nbsp;
+                <input type="submit" value="Search" />
+            </form>
+            <br />
+            <a th:href="|/user/add-medication/${userID}|">Add a Medication</a>
+            <br/><br/>
+            <table border="1" cellpadding="10">
+                <thead>
+                    <tr>
+                        <th>Brand Name</th>
+                        <th>Generic Name</th>
+                        <th>Dosage</th>
+                        <th>Frequency</th>
+                        <th>Prescription</th>
+                        <th>Blood Thinner</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="medication : ${medicationList}">
+                        <td th:text="${medication.brandName}"></td>
+                        <td th:text="${medication.genericName}"></td>
+                        <td th:text="${medication.dosage}"></td>
+                        <td th:text="${medication.frequency}"></td>
+                        <td th:text="${medication.controlled}?'Yes':'No'"></td>
+                        <td th:text="${medication.bloodThinner}?'Yes':'No'"></td>
+                        <td>
+                            <a th:href="|/user/edit-medication/${userID}/${medication.medicationID}|">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/user/delete-medication/${userID}/${medication.medicationID}|">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a href="/menu">Return to Administration Menu</a>
+        </div>
+        <div th:replace="./fragments/footer :: 'footer'" />
+    </body>
+</html>

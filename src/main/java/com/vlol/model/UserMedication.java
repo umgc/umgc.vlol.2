@@ -34,7 +34,7 @@ public class UserMedication implements Serializable {
     @Column(name = "medication_id")
     private Long medicationID;
 
-    @Column(name = "brand_name", length = 256, unique = true)
+    @Column(name = "brand_name", length = 256)
     // Check if text is valid per RFC 3986.
     @Size(max = 256, message = "Input exceeds size limits.")
     private String brandName;
@@ -56,6 +56,10 @@ public class UserMedication implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+    
+    @Column(name = "blood_thinner")
+    @NotNull(message = "Value cannot be null.")
+    private Boolean bloodThinner = false;
 
     @Column(name = "dosage", length = 32)
     @NotNull(message = "Value cannot be null.")
@@ -124,6 +128,14 @@ public class UserMedication implements Serializable {
         this.controlled = controlled;
     }
 
+    public Boolean getBloodThinner() {
+        return bloodThinner;
+    }
+
+    public void setBloodThinner(Boolean bloodThinner) {
+        this.bloodThinner = bloodThinner;
+    }
+
     public User getUser() {
         return user;
     }
@@ -146,6 +158,7 @@ public class UserMedication implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
+        System.out.println("equals"+medicationID);
         if (this == obj) {
             return true;
         }
@@ -167,6 +180,7 @@ public class UserMedication implements Serializable {
     }
     
     public String getIdAsString() {
+        System.out.println("getIdAsString"+medicationID);
         return medicationID.toString();
     }
 }
