@@ -27,15 +27,15 @@
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
                           <label for="brandName">Brand Name</label>
-                          <input type="text" class="form-control" id="brandName" th:field="*{brandName}"/>
+                          <input type="text" class="form-control" id="brandName" th:field="*{brandName}" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
                           <label for="genericName">Generic Name</label>
-                          <input type="text" class="form-control" id="genericName" th:field="*{genericName}"/>
+                          <input type="text" class="form-control" id="genericName" th:field="*{genericName}" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
                           <label for="drugAction">Drug Action</label>
-                          <input type="text" class="form-control" id="drugAction" th:field="*{drugAction}"/>
+                          <input type="text" class="form-control" id="drugAction" th:field="*{drugAction}" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
                           <label for="controlled">Is Prescribed</label>
@@ -47,11 +47,11 @@
                         </div>
                         <div class="form-group">
                           <label for="dosage">Dosage</label>
-                          <input type="text" class="form-control" id="dosage" th:field="*{dosage}" required="true" placeholder="Required"/>
+                          <input type="text" class="form-control" id="dosage" th:field="*{dosage}" required="" placeholder="Required" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
                           <label for="frequency">Frequency</label>
-                          <input type="text" class="form-control" id="frequency" th:field="*{frequency}" required="true" placeholder="Required"/>
+                          <input type="text" class="form-control" id="frequency" th:field="*{frequency}" required="" placeholder="Required" data-parsley-rfc3986=""/>
                         </div>
                         <input type="hidden" th:field="*{medicationID}" />
                     </div>

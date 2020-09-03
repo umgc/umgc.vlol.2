@@ -21,6 +21,7 @@ package com.vlol.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -37,8 +38,9 @@ public class UserInfo implements Serializable {
     private Long infoID;
 
     @OneToOne
-//    @Fetch(FetchMode.JOIN)
     @JoinColumn(name = "user_id")
+    @NotNull(message = "Value cannot be null.")
+    @Min(value = 1, message = "Value must be greater than 1.")
     private User user;
     
     @Column(name = "dob")
@@ -50,6 +52,8 @@ public class UserInfo implements Serializable {
     @Column(name = "ssn", length = 9, unique = true)
     // Check if SSN is valid per the SSA.
     @Pattern(regexp = "^((?!000)(?!666)(?:[0-6]\\d{2}|7[0-2][0-9]|73[0-3]|7[5-6][0-9]|77[0-2]))((?!00)\\d{2})((?!0000)\\d{4})$", message = "Invalid SSN.")
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(min = 9, max = 9, message = "Input exceeds size limits.")
     private String SSN;
 
@@ -66,8 +70,8 @@ public class UserInfo implements Serializable {
     private String city;
 
     @Column(name = "us_state", length = 2)
-    // Check if US state code is valid.
-    @Pattern(regexp = "^(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$", message = "Invalid state code.")
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 2, message = "Input exceeds size limits.")
     private String state;
 
@@ -79,8 +83,8 @@ public class UserInfo implements Serializable {
 
     @Column(name = "phone", length = 10)
     // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}\\d{3}\\d{4}$", message = "Invalid phone number.")
-    @Size(min = 10, max = 10, message = "Input exceeds size limits.")
+    @Pattern(regexp = "^\\d{32}$", message = "Invalid phone number.")
+    @Size(min = 5, max = 32, message = "Input exceeds size limits.")
     private String phone;
 
     @Column(name = "ins_company", length = 64)
@@ -96,7 +100,6 @@ public class UserInfo implements Serializable {
     private String insPolicyNo;
 
     @Column(name = "adv_directive")
-    @NotNull(message = "Value cannot be null.")
     private Boolean advDirective;
 
     @Column(name = "adv_dir_type", length = 64)
@@ -111,25 +114,22 @@ public class UserInfo implements Serializable {
     @Size(max = 100, message = "Input exceeds size limits.")
     private String pocName;
 
-    @Column(name = "poc_phone", length = 10)
+    @Column(name = "poc_phone", length = 32)
     // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}\\d{3}\\d{4}$", message = "Invalid phone number.")
-    @Size(min = 10, max = 10, message = "Input exceeds size limits.")
+    @Size(max = 32, message = "Input exceeds size limits.")
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     private String pocPhone;
-
-    @Column(name = "user_agent_id")
-    private Long userAgentNo;
-
+    
     @Column(name = "doctor_name", length = 100)
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 100, message = "Input exceeds size limits.")
     private String doctorName;
 
-    @Column(name = "doctor_phone", length = 10)
+    @Column(name = "doctor_phone", length = 32)
     // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}\\d{3}\\d{4}$", message = "Invalid phone number.")
-    @Size(max = 10, message = "Input exceeds size limits.")
+    @Size(max = 32, message = "Input exceeds size limits.")
     private String doctorPhone;
 
     @Column(name = "user_comments", length = 300)
@@ -259,14 +259,6 @@ public class UserInfo implements Serializable {
 
     public void setPocPhone(String pocPhone) {
         this.pocPhone = pocPhone;
-    }
-
-    public Long getUserAgentNo() {
-        return userAgentNo;
-    }
-
-    public void setUserAgentNo(Long userAgentNo) {
-        this.userAgentNo = userAgentNo;
     }
 
     public String getDoctorName() {

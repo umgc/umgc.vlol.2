@@ -101,23 +101,23 @@ ALTER TABLE appuser ADD CONSTRAINT appuser_approle_fk FOREIGN KEY(role_id) REFER
 CREATE TABLE user_info(
     info_id BIGINT auto_increment COMMENT 'The unique ID for a user.',
     user_id BIGINT COMMENT 'The user'' s unique ID foreign key.',
-    dob DATE NOT NULL COMMENT 'The user''s date of birth.',
-    ssn VARCHAR(9) NOT NULL COMMENT 'The user''s social security number.', 
+    dob DATE COMMENT 'The user''s date of birth.',
+    ssn VARCHAR(9) COMMENT 'The user''s social security number.', 
     adv_dir_type VARCHAR(64) COMMENT 'Advance directive type.',
     adv_directive BOOLEAN COMMENT 'Does the user have an advance directive?',
-    city VARCHAR(64) NOT NULL COMMENT 'The user''s city of residence.',
+    city VARCHAR(64) COMMENT 'The user''s city of residence.',
     doctor_name VARCHAR(100) COMMENT 'The user''s primary care physician.',
-    doctor_phone VARCHAR(10) COMMENT 'The primary care physician''s phone number.',
+    doctor_phone VARCHAR(32) COMMENT 'The primary care physician''s phone number.',
     ins_company VARCHAR(64) COMMENT 'The user''s medical insurance company name.',
     ins_policy_no VARCHAR(32) COMMENT 'The user''s medical insurance policy number.',
-    phone VARCHAR(10) NOT NULL COMMENT 'The user''s phone number.',
-    poc_name VARCHAR(100) NOT NULL COMMENT 'A point of contact for the user.',
-    poc_phone VARCHAR(10) NOT NULL COMMENT 'The phone number for the user''s point of contact.',
-    us_state VARCHAR(2) NOT NULL COMMENT 'The user''s state of residence.',
-    street_address VARCHAR(100) NOT NULL COMMENT 'The user''s street address.',
+    phone VARCHAR(10) COMMENT 'The user''s phone number.',
+    poc_name VARCHAR(100) COMMENT 'A point of contact for the user.',
+    poc_phone VARCHAR(32) COMMENT 'The phone number for the user''s point of contact.',
+    us_state VARCHAR(2) COMMENT 'The user''s state of residence.',
+    street_address VARCHAR(100) COMMENT 'The user''s street address.',
     user_agent_id BIGINT COMMENT 'The User ID of the user''s agent.',
     user_comments VARCHAR(300) COMMENT 'User additional comments.',
-    zipcode VARCHAR(5) NOT NULL COMMENT 'The user''s zip code number.'
+    zipcode VARCHAR(5) COMMENT 'The user''s zip code number.'
     --COMMENT 'The database user profile table'
 ) ;
 

@@ -34,7 +34,7 @@
                     </div>
                     <hr />
                     <h1>Edit User</h1>
-                    <form action="#" th:action="@{/user/update/}+${user.userID}" th:object="${user}" method="post">
+                    <form action="#" th:action="@{/user/update/}+${user.userID}" th:object="${user}" method="post" data-parsley-validate="">
                         <table id="list_table" class="table table-bordered dt-responsive display">
                             <tr class="d-none">             
                                 <td colspan="2">
@@ -101,7 +101,7 @@
                                 <td>Phone Number:</td>
                                 <td>
                                     <input type="tel" th:field="*{userInfo.phone}" maxlength="10" />
-                                    <div th:if="${#fields.hasErrors('userInfo.phone')}" class="text-danger" th:errors="*{userInfo.phone}"></div>
+                                    <div th:if="${#fields.hasErrors('userInfo.phone')}" class="text-danger" th:errors="*{userInfo.phone}" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$"></div>
                                 </td>
                             </tr>
                             <tr>             
@@ -115,7 +115,7 @@
                                 <td>POC Phone Number:</td>
                                 <td>
                                     <input type="tel" th:field="*{userInfo.pocPhone}" maxlength="10" />
-                                    <div th:if="${#fields.hasErrors('userInfo.pocPhone')}" class="text-danger" th:errors="*{userInfo.pocPhone}"></div>
+                                    <div th:if="${#fields.hasErrors('userInfo.pocPhone')}" class="text-danger" th:errors="*{userInfo.pocPhone}" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$"></div>
                                 </td>
                             </tr>
                             <tr>             

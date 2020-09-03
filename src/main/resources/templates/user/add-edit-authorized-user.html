@@ -17,11 +17,11 @@
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
                           <label for="authorizedName">Name</label>
-                          <input type="text" class="form-control" id="authorizedName" th:field="*{authorizedName}" required="true" placeholder="Required"/>
+                          <input type="text" class="form-control" id="authorizedName" th:field="*{authorizedName}" required="true" placeholder="Required" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
                           <label for="authorizedEmail">Email</label>
-                          <input type="email" class="form-control" id="authorizedEmail" th:field="*{authorizedEmail}" required="true" placeholder="Required"/>
+                          <input type="email" class="form-control" id="authorizedEmail" th:field="*{authorizedEmail}" required="true" placeholder="Required" data-parsley-rfc3986=""/>
                         </div>
                         <input type="hidden" th:field="*{authorizedUserId}" />
                     </div>

@@ -20,6 +20,7 @@ package com.vlol.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -32,20 +33,24 @@ public class UserMedication implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medication_id")
+    @Min(value = 1, message = "Value must be greater than 1.")
     private Long medicationID;
 
     @Column(name = "brand_name", length = 256)
     // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 256, message = "Input exceeds size limits.")
     private String brandName;
 
     @Column(name = "generic_name", length = 256)
     // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 256, message = "Input exceeds size limits.")
     private String genericName;
 
     @Column(name = "drug_action", length = 1024)
     // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 1024, message = "Input exceeds size limits.")
     private String drugAction;
 
@@ -63,6 +68,8 @@ public class UserMedication implements Serializable {
 
     @Column(name = "dosage", length = 32)
     @NotNull(message = "Value cannot be null.")
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 32, message = "Input exceeds size limits.")
     private String dosage;
 

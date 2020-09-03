@@ -193,7 +193,7 @@ public class MedicationTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -220,7 +220,7 @@ public class MedicationTest {
     @Test
     public void testSetBrandNameOverflow() {
         System.out.println("setBrandName Test (Overflow value)");
-        String brandName = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String brandName = "A".repeat( 2048 );
         medication.setBrandName(brandName);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Medication>> violations = validator.validate(medication);
@@ -283,7 +283,7 @@ public class MedicationTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -310,7 +310,7 @@ public class MedicationTest {
     @Test
     public void testSetGenericNameOverflow() {
         System.out.println("setGenericName Test (Overflow value)");
-        String genericName = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String genericName = "A".repeat( 2048 );
         medication.setGenericName(genericName);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Medication>> violations = validator.validate(medication);
@@ -373,7 +373,7 @@ public class MedicationTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -400,7 +400,7 @@ public class MedicationTest {
     @Test
     public void testSetDrugActionOverflow() {
         System.out.println("setDrugAction Test (Overflow value)");
-        String drugAction = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String drugAction = "A".repeat( 2048 );
         medication.setDrugAction(drugAction);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Medication>> violations = validator.validate(medication);

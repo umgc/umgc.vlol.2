@@ -29,6 +29,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -44,7 +45,8 @@ public class PersistentLogins implements Serializable {
     @NotBlank(message = "Email is required.")
     // Check if text is valid per RFC 3986.
     @Email(message = "Invalid email address.")
-    // Check if length is valid per RFC 3986.
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(min = 5, max = 320, message = "Input exceeds size limits.")
     private String email;
 

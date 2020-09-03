@@ -69,7 +69,6 @@ public class UserInfoTest {
         userInfo.setAdvDirType("MOLST");
         userInfo.setPocName("Emmett Brown");
         userInfo.setPocPhone("4105555555");
-        userInfo.setUserAgentNo(1l);
         userInfo.setDoctorName("Emmett Brown");
         userInfo.setDoctorPhone("4105555555");
         userInfo.setUserComments("I usually use 2 lpm O2.");
@@ -247,7 +246,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -321,7 +320,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -411,7 +410,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -502,7 +501,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -592,7 +591,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -682,7 +681,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -772,7 +771,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -862,7 +861,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -952,7 +951,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -1096,7 +1095,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -1186,7 +1185,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -1277,7 +1276,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -1306,78 +1305,6 @@ public class UserInfoTest {
         System.out.println("setPocPhone Test (Overflow value)");
         String pocPhone = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
         userInfo.setPocPhone(pocPhone);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Passing test for the getUserAgentNo method, of class User.
-     */
-    @Test
-    public void testGetUserAgentNo() {
-        System.out.println("getUserAgentNo Test (Passing value)");
-        Long expResult = 1l;
-        Long result = userInfo.getUserAgentNo();
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Passing test for the setUserAgentNo method, of class User.
-     */
-    @Test
-    public void testSetUserAgentNo() {
-        System.out.println("setUserAgentNo Test (Passing value)");
-        Long userAgentNo = 1l;
-        userInfo.setUserAgentNo(userAgentNo);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertTrue(violations.isEmpty());
-    }
-
-    /**
-     * Negative value test for the setUserAgentNo method, of class User.
-     */
-    @Test
-    public void testSetUserAgentNoNegative() {
-        System.out.println("setUserAgentNo Test (Negative value)");
-        Long userAgentNo = -1l;
-        userInfo.setUserAgentNo(userAgentNo);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Out of Range value test for the setUserAgentNo method, of class User.
-     */
-    @Test
-    public void testSetUserAgentNoOutOfRange() {
-        System.out.println("setUserAgentNo Test (Out of Range value)");
-        Long userAgentNo = Long.MAX_VALUE + 1;
-        userInfo.setUserAgentNo(userAgentNo);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -1512,7 +1439,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -1602,7 +1529,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**

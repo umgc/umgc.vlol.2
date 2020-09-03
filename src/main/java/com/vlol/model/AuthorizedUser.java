@@ -26,6 +26,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -45,6 +46,7 @@ public class AuthorizedUser implements Serializable {
     @Column(name = "authorized_email", length = 320)
     @NotBlank(message = "Email is required.")
     // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Email(message = "Invalid email address.")
     // Check if length is valid per RFC 3986.
     @Size(min = 5, max = 320, message = "Input exceeds size limits.")
@@ -52,6 +54,7 @@ public class AuthorizedUser implements Serializable {
     
     @Column(name = "authorized_name", length = 128)
     // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 128, message = "Input exceeds size limits.")
     private String authorizedName;
     

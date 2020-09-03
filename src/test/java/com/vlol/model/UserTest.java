@@ -893,44 +893,6 @@ public class UserTest {
     }
 
     /**
-     * Out of Range value test for the setLastLoginDate method, of class User.
-     *
-     * @throws java.text.ParseException
-     */
-    @Test
-    public void testSetLastLoginDateOutOfRange() throws ParseException {
-        System.out.println("setLastLoginDate Test (Out of Range value)");
-        Date lastLoginDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-13-05 06:00:00");
-        user.setLastLoginDate(lastLoginDate);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Passing test for the getAdminComments method, of class User.
-     */
-    @Test
-    public void testGetAdminComments() {
-        System.out.println("getAdminComments Test (Passing value)");
-        String expResult = "participant";
-        String result = user.getAdminComments();
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Passing test for the setAdminComments method, of class User.
      */
     @Test
@@ -963,7 +925,7 @@ public class UserTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
