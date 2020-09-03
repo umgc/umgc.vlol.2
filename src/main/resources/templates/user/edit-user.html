@@ -44,15 +44,15 @@
                             <tr>             
                                 <td>Last Name</td>
                                 <td class="w-100">
-                                    <input type="text" th:field="*{lastName}" maxlength="100" />
-                                    <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{lastName}" maxlength="100" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>First Name:</td>
                                 <td>
-                                    <input type="text" th:field="*{firstName}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{firstName}" maxlength="50" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></div>
                                 </td>
                             </tr>
                             <tr>             
@@ -66,84 +66,84 @@
                                 <td>Social Security Number (SSN):</td>
                                 <td>
                                     <input type="number" th:field="*{userInfo.SSN}" maxlength="9" />
-                                    <div th:if="${#fields.hasErrors('userInfo.SSN')}" class="text-danger" th:errors="*{userInfo.SSN}" data-parsley-rfc3986=""></div>
+                                    <div th:if="${#fields.hasErrors('userInfo.SSN')}" class="text-danger" th:errors="*{userInfo.SSN}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Street Address:</td>
                                 <td>
-                                    <input type="text" th:field="*{userInfo.streetAddress}" maxlength="100" />
-                                    <div th:if="${#fields.hasErrors('userInfo.streetAddress')}" class="text-danger" th:errors="*{userInfo.streetAddress}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{userInfo.streetAddress}" maxlength="100" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.streetAddress')}" class="text-danger" th:errors="*{userInfo.streetAddress}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>City:</td>
                                 <td>
-                                    <input type="text" th:field="*{userInfo.city}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('userInfo.city')}" class="text-danger" th:errors="*{userInfo.city}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{userInfo.city}" maxlength="50" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.city')}" class="text-danger" th:errors="*{userInfo.city}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>State:</td>
                                 <td>
-                                    <input type="text" th:field="*{userInfo.state}" maxlength="2" />
-                                    <div th:if="${#fields.hasErrors('userInfo.state')}" class="text-danger" th:errors="*{userInfo.state}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{userInfo.state}" maxlength="2" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.state')}" class="text-danger" th:errors="*{userInfo.state}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>ZIP Code:</td>
                                 <td>
-                                    <input type="text" th:field="*{userInfo.zipCode}" maxlength="5" />
-                                    <div th:if="${#fields.hasErrors('userInfo.zipCode')}" class="text-danger" th:errors="*{userInfo.zipCode}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{userInfo.zipCode}" maxlength="5" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.zipCode')}" class="text-danger" th:errors="*{userInfo.zipCode}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Phone Number:</td>
                                 <td>
                                     <input type="tel" th:field="*{userInfo.phone}" maxlength="10" />
-                                    <div th:if="${#fields.hasErrors('userInfo.phone')}" class="text-danger" th:errors="*{userInfo.phone}" data-parsley-rfc3986=""></div>
+                                    <div th:if="${#fields.hasErrors('userInfo.phone')}" class="text-danger" th:errors="*{userInfo.phone}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Point of Contact (POC) Name:</td>
                                 <td>
-                                    <input type="text" th:field="*{userInfo.pocName}" maxlength="100" />
-                                    <div th:if="${#fields.hasErrors('userInfo.pocName')}" class="text-danger" th:errors="*{userInfo.pocName}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{userInfo.pocName}" maxlength="100" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.pocName')}" class="text-danger" th:errors="*{userInfo.pocName}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>POC Phone Number:</td>
                                 <td>
                                     <input type="tel" th:field="*{userInfo.pocPhone}" maxlength="10" />
-                                    <div th:if="${#fields.hasErrors('userInfo.pocPhone')}" class="text-danger" th:errors="*{userInfo.pocPhone}" data-parsley-rfc3986=""></div>
+                                    <div th:if="${#fields.hasErrors('userInfo.pocPhone')}" class="text-danger" th:errors="*{userInfo.pocPhone}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Doctor Name:</td>
                                 <td>
-                                    <input type="text" th:field="*{userInfo.doctorName}" maxlength="100" />
-                                    <div th:if="${#fields.hasErrors('userInfo.doctorName')}" class="text-danger" th:errors="*{userInfo.doctorName}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{userInfo.doctorName}" maxlength="100" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.doctorName')}" class="text-danger" th:errors="*{userInfo.doctorName}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Doctor Phone Number:</td>
                                 <td>
-                                    <input type="tel" th:field="*{userInfo.doctorPhone}" maxlength="10" />
-                                    <div th:if="${#fields.hasErrors('userInfo.doctorPhone')}" class="text-danger" th:errors="*{userInfo.doctorPhone}" data-parsley-rfc3986=""></div>
+                                    <input type="tel" th:field="*{userInfo.doctorPhone}" maxlength="10" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.doctorPhone')}" class="text-danger" th:errors="*{userInfo.doctorPhone}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Insurance Company:</td>
                                 <td>
-                                    <input type="text" th:field="*{userInfo.insCompany}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('userInfo.insCompany')}" class="text-danger" th:errors="*{userInfo.insCompany}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{userInfo.insCompany}" maxlength="50" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.insCompany')}" class="text-danger" th:errors="*{userInfo.insCompany}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Insurance Policy Number:</td>
                                 <td>
-                                    <input type="text" th:field="*{userInfo.insPolicyNo}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('userInfo.insPolicyNo')}" class="text-danger" th:errors="*{userInfo.insPolicyNo}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{userInfo.insPolicyNo}" maxlength="50" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.insPolicyNo')}" class="text-danger" th:errors="*{userInfo.insPolicyNo}"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -151,14 +151,14 @@
                                 <td class="text-wrap">
                                     <div>Check this box if the user has an advance directive (e.g., DNR, MOLST, etc.):</div>
                                     <input type="checkbox" th:field="*{userInfo.advDirective}" th:value="${user}" />
-                                    <div th:if="${#fields.hasErrors('userInfo.advDirective')}" class="text-danger" th:errors="*{userInfo.advDirective}" data-parsley-rfc3986=""></div>
+                                    <div th:if="${#fields.hasErrors('userInfo.advDirective')}" class="text-danger" th:errors="*{userInfo.advDirective}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Advance Directive Type:</td>
                                 <td>
                                     <input type="text" th:field="*{userInfo.advDirType}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('userInfo.advDirType')}" class="text-danger" th:errors="*{userInfo.advDirType}" data-parsley-rfc3986=""></div>
+                                    <div th:if="${#fields.hasErrors('userInfo.advDirType')}" class="text-danger" th:errors="*{userInfo.advDirType}"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -196,8 +196,8 @@
                             <tr>             
                                 <td>User Comments:</td>
                                 <td>
-                                    <textarea th:field="*{userInfo.userComments}" rows="4" />
-                                    <div th:if="${#fields.hasErrors('userInfo.userComments')}" class="text-danger" th:errors="*{userInfo.userComments}" data-parsley-rfc3986=""></div>
+                                    <textarea th:field="*{userInfo.userComments}" rows="4" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.userComments')}" class="text-danger" th:errors="*{userInfo.userComments}"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -208,15 +208,15 @@
                             <tr>             
                                 <td>Email:</td>
                                 <td>
-                                    <input type="email" th:field="*{email}" maxlength="320" />
-                                    <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}" data-parsley-rfc3986=""></div>
+                                    <input type="email" th:field="*{email}" maxlength="320" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Security Question:</td>
                                 <td>
-                                    <input type="text" th:field="*{securityQuestion}" maxlength="100" />
-                                    <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}" data-parsley-rfc3986=""></div>
+                                    <input type="text" th:field="*{securityQuestion}" maxlength="100" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></div>
                                 </td>
                             </tr>
                             <tr>             
@@ -254,7 +254,7 @@
                             <tr>             
                                 <td>Administrator Comments:</td>
                                 <td>
-                                    <textarea th:field="*{adminComments}" rows="4"  data-parsley-rfc3986=""/>
+                                    <textarea th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" />
                                 </td>
                             </tr>
                         </table>
