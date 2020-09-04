@@ -116,21 +116,6 @@ public class User implements Serializable {
     @Transient
     private String passwordConfirm;
 
-    @Column(name = "security_question", length = 100)
-    @NotBlank(message = "Security question is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 100, message = "Input exceeds size limits.")
-    private String securityQuestion;
-
-    @Column(name = "security_answer", length = 72)
-    @NotBlank(message = "Security answer is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    // bcrypt maximum input length is 71 characters + 1 byte null terminator
-    @Size(max = 72, message = "Input exceeds size limits.")
-    private String securityAnswer;
-
     @Column(name = "date_created")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
     @NotNull(message = "Date account created is required.")
@@ -275,22 +260,6 @@ public class User implements Serializable {
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
-    }
-
-    public String getSecurityQuestion() {
-        return securityQuestion;
-    }
-
-    public void setSecurityQuestion(String securityQuestion) {
-        this.securityQuestion = securityQuestion;
-    }
-
-    public String getSecurityAnswer() {
-        return securityAnswer;
-    }
-
-    public void setSecurityAnswer(String securityAnswer) {
-        this.securityAnswer = securityAnswer;
     }
 
     public Date getDateCreated() {

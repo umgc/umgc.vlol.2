@@ -67,7 +67,7 @@ public class UserService {
         Long id = user.getUserID();
         User u = this.getUser(id);
         user.setPassword(u.getPassword());
-        user.setSecurityAnswer(u.getSecurityAnswer());
+        //user.setSecurityAnswer(u.getSecurityAnswer());
         user.setEmail(u.getEmail());
         return userRepository.save(user);
     }
