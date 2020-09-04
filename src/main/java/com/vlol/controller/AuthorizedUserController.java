@@ -71,6 +71,8 @@ public class AuthorizedUserController {
         if(user == null)
             return "redirect:/login";
         authorizedUser.setUser(user);
+        // Lower Case the email for better matching
+        authorizedUser.setAuthorizedEmail(authorizedUser.getAuthorizedEmail().toLowerCase());
         if (bindingResult.hasErrors()) {
             return "redirect:/user/add-authorized-user";
         }

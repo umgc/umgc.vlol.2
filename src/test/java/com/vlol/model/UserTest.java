@@ -145,7 +145,7 @@ public class UserTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -600,26 +600,6 @@ public class UserTest {
     public void testSetDateCreatedNull() {
         System.out.println("setDateCreated Test (Null value)");
         Date dateCreated = null;
-        user.setDateCreated(dateCreated);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Out of Range value test for the setDateCreated method, of class User.
-     *
-     * @throws java.text.ParseException
-     */
-    @Test
-    public void testSetDateCreatedOutOfRange() throws ParseException {
-        System.out.println("setDateCreated Test (Out of Range value)");
-        Date dateCreated = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-13-05 06:00:00");
         user.setDateCreated(dateCreated);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);

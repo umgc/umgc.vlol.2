@@ -79,7 +79,7 @@ ALTER TABLE approle ADD CONSTRAINT approle_uq_title UNIQUE(role_title);
 
 --  Profile information for a user.
 CREATE TABLE appuser(
-    user_id BIGINT PRIMARY KEY COMMENT 'The user'' s unique ID.',
+    user_id BIGINT auto_increment PRIMARY KEY COMMENT 'The user'' s unique ID.',
     email VARCHAR(320) NOT NULL COMMENT 'The user''s email address.',
     admin_comments VARCHAR(300) COMMENT 'System administrator comments.',
     date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date for this database user account',

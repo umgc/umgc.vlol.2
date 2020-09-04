@@ -35,12 +35,12 @@ public class UserInfo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "info_id")
+    @Min(value = 1, message = "Value must be greater than 1.")
     private Long infoID;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     @NotNull(message = "Value cannot be null.")
-    @Min(value = 1, message = "Value must be greater than 1.")
     private User user;
     
     @Column(name = "dob")
@@ -83,7 +83,7 @@ public class UserInfo implements Serializable {
 
     @Column(name = "phone", length = 10)
     // Check if phone number is valid.
-    @Pattern(regexp = "^\\d{32}$", message = "Invalid phone number.")
+    @Pattern(regexp = "^\\d{5,32}$", message = "Invalid phone number.")
     @Size(min = 5, max = 32, message = "Input exceeds size limits.")
     private String phone;
 
@@ -100,6 +100,7 @@ public class UserInfo implements Serializable {
     private String insPolicyNo;
 
     @Column(name = "adv_directive")
+    @NotNull(message = "Value cannot be null.")
     private Boolean advDirective;
 
     @Column(name = "adv_dir_type", length = 64)
@@ -117,8 +118,7 @@ public class UserInfo implements Serializable {
     @Column(name = "poc_phone", length = 32)
     // Check if phone number is valid.
     @Size(max = 32, message = "Input exceeds size limits.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Pattern(regexp = "^[\\d\\+\\-\\.\\(\\)\\/\\s]*$", message = "Invalid phone number.")
     private String pocPhone;
     
     @Column(name = "doctor_name", length = 100)
@@ -130,6 +130,7 @@ public class UserInfo implements Serializable {
     @Column(name = "doctor_phone", length = 32)
     // Check if phone number is valid.
     @Size(max = 32, message = "Input exceeds size limits.")
+    @Pattern(regexp = "^[\\d\\+\\-\\.\\(\\)\\/\\s]*$", message = "Invalid phone number.")
     private String doctorPhone;
 
     @Column(name = "user_comments", length = 300)
@@ -140,12 +141,12 @@ public class UserInfo implements Serializable {
 
 
 
-    public Long getUserID() {
+    public Long getInfoID() {
         return infoID;
     }
 
-    public void setUserID(Long userID) {
-        this.infoID = userID;
+    public void setInfoID(Long infoID) {
+        this.infoID = infoID;
     }
 
     public User getUser() {

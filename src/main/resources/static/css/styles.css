@@ -130,3 +130,6 @@ textarea.parsley-error {
 .parsley-errors-list.filled {
   opacity: 1;
 }
+#list_table{
+    width: 100% !important;
+}

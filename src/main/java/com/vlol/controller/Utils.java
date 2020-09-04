@@ -68,6 +68,13 @@ public class Utils {
         });
         return authorities.contains("provider");
     }
+    public static Boolean isParticipant(){
+        ArrayList authorities = new ArrayList<String>();
+        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach((a)->{
+            authorities.add(a.getAuthority());
+        });
+        return authorities.contains("participant");
+    }
     public static String createJWT(User user){
         return JWT.create()
                 .withClaim("userId", user.getUserID())

@@ -29,6 +29,7 @@ import com.vlol.service.MedicationService;
 import com.vlol.service.RoleService;
 import com.vlol.service.UserService;
 import com.vlol.repository.RoleRepository;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
@@ -115,25 +116,28 @@ public class VlolController {
     }
 
     @RequestMapping(value = {"/menu", "/menu/{id}"}, method = RequestMethod.GET)
-    public ModelAndView viewMainMenu(@PathVariable(name = "id", required=false) Long id) {
+    public ModelAndView viewMainMenu(@PathVariable(name = "id", required=false) Long id, Principal principal) {
         ModelAndView mav = new ModelAndView();
+        User user;
         Utils.getUserName(userService, mav);
         if(id == null){
-            User user = Utils.getIfAuthorizedForUser(userService);
-            if(user == null) return new ModelAndView("redirect:/login");
-            mav.addObject("userID", user.getUserID());
-            mav.addObject("user", user);
+            user = Utils.getIfAuthorizedForUser(userService);
             if(Utils.isAdmin() || Utils.isProvider()){
                 mav.setViewName("menu/admin-menu");
             }else{
                 mav.setViewName("menu/user-menu");
             }
         }else{
-            User user = Utils.getIfAuthorizedForUser(userService, id, false);
-            if(user == null) return new ModelAndView("redirect:/login");
-            mav.addObject("userID", user.getUserID());
-            mav.addObject("user", user);
+            user = Utils.getIfAuthorizedForUser(userService, id, false);
             mav.setViewName("menu/user-menu");
+        }
+        if(user == null) return new ModelAndView("redirect:/login");
+        mav.addObject("userID", user.getUserID());
+        mav.addObject("user", user);
+        // Check if this participant is authorized for other accounts, and if on the current page
+        if(Utils.isParticipant() && user.getEmail().equals(principal.getName())){
+            System.out.println("hasAuthorizingUsers: "+userService.findAuthorizingUsers(user.getEmail().toLowerCase()).size());
+            mav.addObject("hasAuthorizingUsers", userService.findAuthorizingUsers(user.getEmail().toLowerCase()).size()>0);
         }
         return mav;
     }

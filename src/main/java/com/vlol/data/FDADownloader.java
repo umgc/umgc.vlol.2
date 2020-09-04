@@ -125,6 +125,11 @@ public class FDADownloader {
                             }
                             if(brandName == null)
                                 brandName = genericName;
+                            
+                            if(genericName != null) genericName = genericName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+                            if(brandName != null) brandName = brandName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+                            if(drugAction != null) drugAction = drugAction.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+                            
                             Boolean skip = false;
                             for(Pattern regexp : badWords){
                                 if(regexp.matcher(brandName.toLowerCase()).find())skip = true;
@@ -147,7 +152,7 @@ public class FDADownloader {
                                         pharmaClasses.contains("Vitamin K Antagonist [EPC]") || 
                                         pharmaClasses.contains("Platelet Aggregation Inhibitor [EPC]") || 
                                         pharmaClasses.contains("Decreased Platelet Aggregation [PE]") ||
-                                        activeIngredients.contains("asprrin"));
+                                        activeIngredients.contains("aspirin"));
                                 
                                 session.save(m);
                                 
