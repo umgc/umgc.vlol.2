@@ -43,7 +43,6 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
-    @NotNull(message = "Value cannot be null.")
     @Min(value = 1, message = "Value must be greater than 1.")
     private Long userID;
 
