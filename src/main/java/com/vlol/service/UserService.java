@@ -91,4 +91,7 @@ public class UserService {
     public List<User> findUserByKeyword(String keyword) {
         return userRepository.findUserByKeyword(keyword);
     }
+    public List<User> findAuthorizingUsers(String email) {
+        return userRepository.findAuthorizingUsers(email);
+    }
 }

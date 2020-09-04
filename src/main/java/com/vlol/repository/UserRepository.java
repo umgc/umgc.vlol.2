@@ -46,6 +46,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     )
     public List<User> findUserByKeyword(@Param("keyword") String keyword);
     
-    @Query(value = "SELECT u FROM User u  WHERE u.role.roleID = 1")
+    @Query(value = "SELECT u FROM User u WHERE u.role.roleID = 1")
     public List<User> findAllParticipants();
+    
+    @Query(value = "SELECT u.* FROM authorized_user au INNER JOIN appuser u USING(user_id) WHERE au.authorized_email = :email", nativeQuery=true) // Assume email is always lower case
+    public List<User> findAuthorizingUsers(@Param("email") String email);
 }

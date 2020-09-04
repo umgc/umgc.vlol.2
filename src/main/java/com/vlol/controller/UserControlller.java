@@ -28,6 +28,7 @@ import com.vlol.service.ConditionService;
 import com.vlol.service.RoleService;
 import com.vlol.service.UserMedicationService;
 import com.vlol.service.UserService;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -74,7 +75,7 @@ public class UserControlller {
     private Map<String, UserMedication> medicationCache;
 
     @RequestMapping("/list-users")
-    public ModelAndView viewUserList() {
+    public ModelAndView viewUserList(Principal principal) {
         ModelAndView mav = new ModelAndView("admin/list-users");
         Utils.getUserName(userService, mav);
         List<User> userList;
@@ -82,7 +83,9 @@ public class UserControlller {
             userList = userService.getAllUsers();
         else if(Utils.isProvider())
             userList = userService.getAllParticipants();
-        else
+        else if(Utils.isParticipant()){
+            userList = userService.findAuthorizingUsers(principal.getName().toLowerCase());
+        }else
             return new ModelAndView("redirect:/login");
         mav.addObject("userList", userList);
         return mav;
@@ -144,7 +147,6 @@ public class UserControlller {
         if(user == null)
             return new ModelAndView("redirect:/login");
         Utils.getUserName(userService, mav);
-        System.out.println(user);
         mav.addObject("user", user);
         List<Allergy> allergies = allergyService.getAllAllergies();
         allergyCache = new HashMap<String, Allergy>();
