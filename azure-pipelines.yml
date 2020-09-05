@@ -12,6 +12,9 @@ pool:
 
 
 steps:
+- task: CmdLine@2
+  inputs:
+    script: 'make build' 
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
@@ -20,5 +23,6 @@ steps:
     javaHomeOption: 'JDKVersion'
     mavenVersionOption: 'Default'
     mavenAuthenticateFeed: false
+    mavenOptions: '-Dversion=1.0'
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
