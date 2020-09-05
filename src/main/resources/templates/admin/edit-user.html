@@ -23,19 +23,18 @@
         <div layout:fragment="content" class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="pt-4">Edit User</h1>
-                    <span sec:authorize="hasAnyAuthority('admin', 'agent', 'provider')">
+                    <div sec:authorize="hasAnyAuthority('admin', 'provider')" class="pt-4">
                         <form method="get" action="/search-users">
                             <input type="text" name="keyword" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" style="width:20em;" />&nbsp;&nbsp;
                             <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Full Search</button>
                         </form>
-                    </span>
-                    <span sec:authorize="hasAnyAuthority('admin')">                    
-                        <hr />
+                    </div>
+                    <div sec:authorize="hasAnyAuthority('admin')">                    
                         <a href="/add-user" class="btn btn-success"><i class="fas fa-plus"></i> Add a User</a>
-                    </span>
+                    </div>
                     <hr />
-                    <form action="#" th:action="@{/update-user}" th:object="${user}" method="post">
+                    <h1>Edit User</h1>
+                    <form action="#" th:action="@{/user/update/}+${user.userID}" th:object="${user}" method="post" data-parsley-validate="">
                         <table id="list_table" class="table table-bordered dt-responsive display">
                             <tr class="d-none">             
                                 <td colspan="2">
@@ -45,130 +44,121 @@
                             <tr>             
                                 <td>Last Name</td>
                                 <td class="w-100">
-                                    <input type="text" th:field="*{lastName}" maxlength="100" placeholder="Required" required="required" />
+                                    <input type="text" th:field="*{lastName}" maxlength="100" />
                                     <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>First Name:</td>
                                 <td>
-                                    <input type="text" th:field="*{firstName}" maxlength="50" placeholder="Required" required="required" />
+                                    <input type="text" th:field="*{firstName}" maxlength="50" />
                                     <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Date of Birth (DOB):</td>
                                 <td>
-                                    <input type="date" th:field="*{DOB}" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('DOB')}" class="text-danger" th:errors="*{DOB}"></div>
+                                    <input type="date" th:field="*{userInfo.DOB}" />
+                                    <div th:if="${#fields.hasErrors('userInfo.DOB')}" class="text-danger" th:errors="*{userInfo.DOB}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Social Security Number (SSN):</td>
                                 <td>
-                                    <input type="number" th:field="*{SSN}" maxlength="9" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('SSN')}" class="text-danger" th:errors="*{SSN}"></div>
+                                    <input type="number" th:field="*{userInfo.SSN}" maxlength="9" />
+                                    <div th:if="${#fields.hasErrors('userInfo.SSN')}" class="text-danger" th:errors="*{userInfo.SSN}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Street Address:</td>
                                 <td>
-                                    <input type="text" th:field="*{streetAddress}" maxlength="100" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('streetAddress')}" class="text-danger" th:errors="*{streetAddress}"></div>
+                                    <input type="text" th:field="*{userInfo.streetAddress}" maxlength="100" />
+                                    <div th:if="${#fields.hasErrors('userInfo.streetAddress')}" class="text-danger" th:errors="*{userInfo.streetAddress}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>City:</td>
                                 <td>
-                                    <input type="text" th:field="*{city}" maxlength="50" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('city')}" class="text-danger" th:errors="*{city}"></div>
+                                    <input type="text" th:field="*{userInfo.city}" maxlength="50" />
+                                    <div th:if="${#fields.hasErrors('userInfo.city')}" class="text-danger" th:errors="*{userInfo.city}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>State:</td>
                                 <td>
-                                    <input type="text" th:field="*{state}" maxlength="2" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('state')}" class="text-danger" th:errors="*{state}"></div>
+                                    <input type="text" th:field="*{userInfo.state}" maxlength="2" />
+                                    <div th:if="${#fields.hasErrors('userInfo.state')}" class="text-danger" th:errors="*{userInfo.state}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>ZIP Code:</td>
                                 <td>
-                                    <input type="text" th:field="*{zipCode}" maxlength="5" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('zipCode')}" class="text-danger" th:errors="*{zipCode}"></div>
+                                    <input type="text" th:field="*{userInfo.zipCode}" maxlength="5" />
+                                    <div th:if="${#fields.hasErrors('userInfo.zipCode')}" class="text-danger" th:errors="*{userInfo.zipCode}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Phone Number:</td>
                                 <td>
-                                    <input type="tel" th:field="*{phone}" maxlength="10" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></div>
+                                    <input type="tel" th:field="*{userInfo.phone}" maxlength="10" />
+                                    <div th:if="${#fields.hasErrors('userInfo.phone')}" class="text-danger" th:errors="*{userInfo.phone}" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Point of Contact (POC) Name:</td>
                                 <td>
-                                    <input type="text" th:field="*{pocName}" maxlength="100" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('pocName')}" class="text-danger" th:errors="*{pocName}"></div>
+                                    <input type="text" th:field="*{userInfo.pocName}" maxlength="100" />
+                                    <div th:if="${#fields.hasErrors('userInfo.pocName')}" class="text-danger" th:errors="*{userInfo.pocName}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>POC Phone Number:</td>
                                 <td>
-                                    <input type="tel" th:field="*{pocPhone}" maxlength="10" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('pocPhone')}" class="text-danger" th:errors="*{pocPhone}"></div>
-                                </td>
-                            </tr>
-                            <tr>             
-                                <td>Agent ID Number:</td>
-                                <td>
-                                    <select th:field="*{userAgentNo}">
-                                        <option value="">None</option>
-                                        <option th:each="agent : ${agents}" th:value="${agent.userID}" th:text="${agent.userID} + ': ' + ${agent.firstName} + ' ' + ${agent.lastName}">Choose a User Agent</option>
-                                    </select>
+                                    <input type="tel" th:field="*{userInfo.pocPhone}" maxlength="10" />
+                                    <div th:if="${#fields.hasErrors('userInfo.pocPhone')}" class="text-danger" th:errors="*{userInfo.pocPhone}" data-parsley-pattern="^[\d\+\-\.\(\)\/\s]*$"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Doctor Name:</td>
                                 <td>
-                                    <input type="text" th:field="*{doctorName}" maxlength="100" />
-                                    <div th:if="${#fields.hasErrors('doctorName')}" class="text-danger" th:errors="*{doctorName}"></div>
+                                    <input type="text" th:field="*{userInfo.doctorName}" maxlength="100" />
+                                    <div th:if="${#fields.hasErrors('userInfo.doctorName')}" class="text-danger" th:errors="*{userInfo.doctorName}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Doctor Phone Number:</td>
                                 <td>
-                                    <input type="tel" th:field="*{doctorPhone}" maxlength="10" />
-                                    <div th:if="${#fields.hasErrors('doctorPhone')}" class="text-danger" th:errors="*{doctorPhone}"></div>
+                                    <input type="tel" th:field="*{userInfo.doctorPhone}" maxlength="10" />
+                                    <div th:if="${#fields.hasErrors('userInfo.doctorPhone')}" class="text-danger" th:errors="*{userInfo.doctorPhone}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Insurance Company:</td>
                                 <td>
-                                    <input type="text" th:field="*{insCompany}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('insCompany')}" class="text-danger" th:errors="*{insCompany}"></div>
+                                    <input type="text" th:field="*{userInfo.insCompany}" maxlength="50" />
+                                    <div th:if="${#fields.hasErrors('userInfo.insCompany')}" class="text-danger" th:errors="*{userInfo.insCompany}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Insurance Policy Number:</td>
                                 <td>
-                                    <input type="text" th:field="*{insPolicyNo}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('insPolicyNo')}" class="text-danger" th:errors="*{insPolicyNo}"></div>
+                                    <input type="text" th:field="*{userInfo.insPolicyNo}" maxlength="50" />
+                                    <div th:if="${#fields.hasErrors('userInfo.insPolicyNo')}" class="text-danger" th:errors="*{userInfo.insPolicyNo}"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td>Advance Directive?</td>
                                 <td class="text-wrap">
                                     <div>Check this box if the user has an advance directive (e.g., DNR, MOLST, etc.):</div>
-                                    <input type="checkbox" th:field="*{advDirective}" th:value="${user}" />
-                                    <div th:if="${#fields.hasErrors('advDirective')}" class="text-danger" th:errors="*{advDirective}"></div>
+                                    <input type="checkbox" th:field="*{userInfo.advDirective}" th:value="${user}" />
+                                    <div th:if="${#fields.hasErrors('userInfo.advDirective')}" class="text-danger" th:errors="*{userInfo.advDirective}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Advance Directive Type:</td>
                                 <td>
-                                    <input type="text" th:field="*{advDirType}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('advDirType')}" class="text-danger" th:errors="*{advDirType}"></div>
+                                    <input type="text" th:field="*{userInfo.advDirType}" maxlength="50" />
+                                    <div th:if="${#fields.hasErrors('userInfo.advDirType')}" class="text-danger" th:errors="*{userInfo.advDirType}"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -222,8 +212,8 @@
                             <tr>             
                                 <td>User Comments:</td>
                                 <td>
-                                    <textarea th:field="*{userComments}" rows="4" />
-                                    <div th:if="${#fields.hasErrors('userComments')}" class="text-danger" th:errors="*{userComments}"></div>
+                                    <textarea th:field="*{userInfo.userComments}" rows="4" />
+                                    <div th:if="${#fields.hasErrors('userInfo.userComments')}" class="text-danger" th:errors="*{userInfo.userComments}"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -234,14 +224,14 @@
                             <tr>             
                                 <td>Email:</td>
                                 <td>
-                                    <input type="email" th:field="*{email}" maxlength="320" placeholder="Required" required="required" />
+                                    <input type="email" th:field="*{email}" maxlength="320" />
                                     <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
                                 </td>
                             </tr>
                             <tr>             
                                 <td>Security Question:</td>
                                 <td>
-                                    <input type="text" th:field="*{securityQuestion}" maxlength="100" placeholder="Required" required="required" />
+                                    <input type="text" th:field="*{securityQuestion}" maxlength="100" />
                                     <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></div>
                                 </td>
                             </tr>
@@ -284,6 +274,7 @@
                                 </td>
                             </tr>
                         </table>
+                        <input type="hidden" th:field="*{userInfo.userID}" />
                         <button type="submit" class="btn btn-info">Save</button>
                     </form>
                     <br />

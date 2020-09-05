@@ -75,6 +75,10 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+    
+    public List<User> getAllParticipants() {
+        return userRepository.findAllParticipants();
+    }
 
     public User getUser(Long userID) {
         return userRepository.findById(userID).orElse(null);
@@ -86,5 +90,8 @@ public class UserService {
 
     public List<User> findUserByKeyword(String keyword) {
         return userRepository.findUserByKeyword(keyword);
+    }
+    public List<User> findAuthorizingUsers(String email) {
+        return userRepository.findAuthorizingUsers(email);
     }
 }

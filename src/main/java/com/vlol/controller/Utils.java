@@ -30,19 +30,26 @@ public class Utils {
         if (auth.getPrincipal() != "anonymousUser") {
             User user = userService.findUserByEmail(auth.getName());
             mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-            mav.addObject("userID", user.getUserID());
         }
     }
-    public static User getIfAuthorizedForUser(UserService userService, Long userId){
+    public static User getIfAuthorizedForUser(UserService userService){
+        return getIfAuthorizedForUser(userService, null, false);
+    }
+    public static User getIfAuthorizedForUser(UserService userService, Boolean editable){
+        return getIfAuthorizedForUser(userService, null, editable);
+    }
+    public static User getIfAuthorizedForUser(UserService userService, Long userId, Boolean editable){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth.getPrincipal() != "anonymousUser") {
-            if(isAdmin() || isProvider()){
-                return userService.getUser(userId);
+            // Check if user is admin or provider
+            if(isAdmin() || (isProvider() && !editable)){
+                return userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
             }else{
                 ArrayList emails = new ArrayList<String>();
-                User user = userService.getUser(userId);
-                user.getAuthorizedEmails().forEach(ae->emails.add(ae.getEmail().toLowerCase()));
-                if(emails.contains(auth.getName())) return user;
+                User user = userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
+                user.getAuthorizedEmails().forEach(ae->emails.add(ae.getAuthorizedEmail().toLowerCase()));
+                // Check if user is authorized for this user or if the user is itself
+                if(emails.contains(auth.getName()) || user.getEmail().equals(auth.getName())) return user;
             }
         }
         return null;
@@ -60,6 +67,13 @@ public class Utils {
             authorities.add(a.getAuthority());
         });
         return authorities.contains("provider");
+    }
+    public static Boolean isParticipant(){
+        ArrayList authorities = new ArrayList<String>();
+        SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach((a)->{
+            authorities.add(a.getAuthority());
+        });
+        return authorities.contains("participant");
     }
     public static String createJWT(User user){
         return JWT.create()

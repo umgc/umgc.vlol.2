@@ -18,9 +18,11 @@
  */
 package com.vlol.service;
 
+import com.vlol.data.FDADownloader;
 import com.vlol.model.Medication;
 import com.vlol.repository.MedicationRepository;
 import java.util.List;
+import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +35,9 @@ public class MedicationService {
     private final MedicationRepository medicationRepository;
 
     @Autowired
-    public MedicationService(MedicationRepository medicationRepository) {
+    public MedicationService(MedicationRepository medicationRepository, EntityManager em) {
         this.medicationRepository = medicationRepository;
+        new FDADownloader(this, em);
     }
 
     public List<Medication> getAllMedications() {
@@ -51,6 +54,9 @@ public class MedicationService {
 
     public void deleteMedication(Long medicationID) {
         medicationRepository.deleteById(medicationID);
+    }
+    public void truncateMedication() {
+        medicationRepository.deleteAllInBatch();
     }
 
     public List<Medication> findMedicationByKeyword(String keyword) {

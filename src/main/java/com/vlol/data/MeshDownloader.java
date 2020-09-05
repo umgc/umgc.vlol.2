@@ -99,7 +99,9 @@
 //                while(dataList.size() > 0){
 //                    dataList.forEach((obj)->{
 //                        Condition c = new Condition();
-//                        c.setConditionName((String)((Map)obj.get("name")).get("value"));
+//                        String conditionName = (String)((Map)obj.get("name")).get("value");
+//                        if(conditionName != null) conditionName = conditionName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+//                        c.setConditionName(conditionName);
 //                        session.save(c);
 //
 //                        if (this.count++ % 100 == 0) { //100, same as the JDBC batch size

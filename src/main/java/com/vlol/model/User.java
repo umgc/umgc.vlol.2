@@ -65,130 +65,36 @@ public class User implements Serializable {
     @Size(max = 100, message = "Input exceeds size limits.")
     private String lastName;
 
-    @Column(name = "dob")
-    @NotNull(message = "DOB is required.")
-    @Past(message = "Date must be in the past.")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Temporal(TemporalType.DATE)
-    private Date DOB;
-
-    @Column(name = "ssn", length = 9, unique = true)
-    @NotBlank(message = "SSN is required.")
-    // Check if SSN is valid per the SSA.
-    @Pattern(regexp = "^((?!000)(?!666)(?:[0-6]\\d{2}|7[0-2][0-9]|73[0-3]|7[5-6][0-9]|77[0-2]))((?!00)\\d{2})((?!0000)\\d{4})$", message = "Invalid SSN.")
-    @Size(min = 9, max = 9, message = "Input exceeds size limits.")
-    private String SSN;
-
-    @Column(name = "street_address", length = 100)
-    @NotBlank(message = "Street address is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 100, message = "Input exceeds size limits.")
-    private String streetAddress;
-
-    @Column(name = "city", length = 50)
-    @NotBlank(message = "City name is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 50, message = "Input exceeds size limits.")
-    private String city;
-
-    @Column(name = "us_state", length = 2)
-    @NotBlank(message = "State abbreviation is required.")
-    // Check if US state code is valid.
-    @Pattern(regexp = "^(?-i:A[LKSZRAEP]|C[AOT]|D[EC]|F[LM]|G[AU]|HI|I[ADLN]|K[SY]|LA|M[ADEHINOPST]|N[CDEHJMVY]|O[HKR]|P[ARW]|RI|S[CD]|T[NX]|UT|V[AIT]|W[AIVY])$", message = "Invalid state code.")
-    @Size(max = 2, message = "Input exceeds size limits.")
-    private String state;
-
-    @Column(name = "zipcode", length = 5)
-    @NotBlank(message = "ZIP Code is required.")
-    // Check if US ZIP Code is valid.
-    @Pattern(regexp = "^(?!00000)\\d{5}$", message = "Input contains illegal characters.")
-    @Size(min = 5, max = 5, message = "Input exceeds size limits.")
-    private String zipCode;
-
-    @Column(name = "phone", length = 10)
-    @NotBlank(message = "Phone number is required.")
-    // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}[2-9]\\d{2}\\d{4}$", message = "Invalid phone number.")
-    @Size(min = 10, max = 10, message = "Input exceeds size limits.")
-    private String phone;
-
-    @Column(name = "ins_company", length = 50)
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 50, message = "Input exceeds size limits.")
-    private String insCompany;
-
-    @Column(name = "ins_policy_no", length = 50)
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 50, message = "Input exceeds size limits.")
-    private String insPolicyNo;
-
-    @Column(name = "adv_directive")
-    @NotNull(message = "Value cannot be null.")
-    private Boolean advDirective;
-
-    @Column(name = "adv_dir_type", length = 50)
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 50, message = "Input exceeds size limits.")
-    private String advDirType;
-
-    @Column(name = "poc_name", length = 100)
-    @NotBlank(message = "A Point of Contact is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 100, message = "Input exceeds size limits.")
-    private String pocName;
-
-    @Column(name = "poc_phone", length = 10)
-    @NotBlank(message = "A Point of Contact phone number is required.")
-    // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}[2-9]\\d{2}\\d{4}$", message = "Invalid phone number.")
-    @Size(min = 10, max = 10, message = "Input exceeds size limits.")
-    private String pocPhone;
-
-    @Min(value = 1, message = "Value must be greater than 1.")
-    @Column(name = "user_agent_id")
-    private Long userAgentNo;
-
-    @Column(name = "doctor_name", length = 100)
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 100, message = "Input exceeds size limits.")
-    private String doctorName;
-
-    @Column(name = "doctor_phone", length = 10)
-    // Check if phone number is valid.
-    @Pattern(regexp = "^[2-9]\\d{2}[2-9]\\d{2}\\d{4}$", message = "Invalid phone number.")
-    @Size(max = 10, message = "Input exceeds size limits.")
-    private String doctorPhone;
-
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "user_allergy",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "allergy_id"))
     private Set<Allergy> allergies = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+
+//    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+//    @JoinTable(name = "authorized_user",
+//            joinColumns = @JoinColumn(name = "authorized_email"),
+//            inverseJoinColumns = @JoinColumn(name = "email"))
+//    private Set<User> authorizedUsers = new HashSet<>();
+
+//    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+//    @JoinTable(name = "authorized_user",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "authorized_user_id"))
+//    private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
+    
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = "user_illness",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "illness_id"))
     private Set<Condition> conditions = new HashSet<>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_medication",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "medication_id"))
-    private Set<Medication> medications = new HashSet<>();
-
-    @Column(name = "user_comments", length = 300)
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 300, message = "Input exceeds size limits.")
-    private String userComments;
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
+    
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<UserMedication> medications = new HashSet<>();
 
     @Column(name = "email", length = 320, unique = true)
     @NotBlank(message = "Email is required.")
@@ -251,9 +157,9 @@ public class User implements Serializable {
     @Column(name = "is_locked")
     @NotNull(message = "Value cannot be null.")
     private Boolean isLocked;
-
-    @OneToMany(mappedBy = "user")
-    Set<UserMedList> userMedList;
+    
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user", optional=true)
+    private UserInfo userInfo;
 
     public Long getUserID() {
         return userID;
@@ -296,134 +202,23 @@ public class User implements Serializable {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+    
+//    public Set<User> getAuthorizedUsers() {
+//        return authorizedUsers;
+//    }
+//
+//    public void setAuthorizedUsers(Set<User> authorizedUsers) {
+//        this.authorizedUsers = authorizedUsers;
+//    }
 
-    public Date getDOB() {
-        return DOB;
+    public Set<AuthorizedUser> getAuthorizedEmails() {
+        return authorizedEmails;
     }
 
-    public void setDOB(Date DOB) {
-        this.DOB = DOB;
+    public void setAuthorizedEmails(Set<AuthorizedUser> authorizedEmails) {
+        this.authorizedEmails = authorizedEmails;
     }
 
-    public String getSSN() {
-        return SSN;
-    }
-
-    public void setSSN(String SSN) {
-        this.SSN = SSN;
-    }
-
-    public String getStreetAddress() {
-        return streetAddress;
-    }
-
-    public void setStreetAddress(String streetAddress) {
-        this.streetAddress = streetAddress;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
-    public String getZipCode() {
-        return zipCode;
-    }
-
-    public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getInsCompany() {
-        return insCompany;
-    }
-
-    public void setInsCompany(String insCompany) {
-        this.insCompany = insCompany;
-    }
-
-    public String getInsPolicyNo() {
-        return insPolicyNo;
-    }
-
-    public void setInsPolicyNo(String insPolicyNo) {
-        this.insPolicyNo = insPolicyNo;
-    }
-
-    public Boolean getAdvDirective() {
-        return advDirective;
-    }
-
-    public void setAdvDirective(Boolean advDirective) {
-        this.advDirective = advDirective;
-    }
-
-    public String getAdvDirType() {
-        return advDirType;
-    }
-
-    public void setAdvDirType(String advDirType) {
-        this.advDirType = advDirType;
-    }
-
-    public String getPocName() {
-        return pocName;
-    }
-
-    public void setPocName(String pocName) {
-        this.pocName = pocName;
-    }
-
-    public String getPocPhone() {
-        return pocPhone;
-    }
-
-    public void setPocPhone(String pocPhone) {
-        this.pocPhone = pocPhone;
-    }
-
-    public Long getUserAgentNo() {
-        return userAgentNo;
-    }
-
-    public void setUserAgentNo(Long userAgentNo) {
-        this.userAgentNo = userAgentNo;
-    }
-
-    public String getDoctorName() {
-        return doctorName;
-    }
-
-    public void setDoctorName(String doctorName) {
-        this.doctorName = doctorName;
-    }
-
-    public String getDoctorPhone() {
-        return doctorPhone;
-    }
-
-    public void setDoctorPhone(String doctorPhone) {
-        this.doctorPhone = doctorPhone;
-    }
 
     public Set<Allergy> getAllergies() {
         return allergies;
@@ -441,20 +236,20 @@ public class User implements Serializable {
         this.conditions = conditions;
     }
 
-    public Set<Medication> getMedications() {
+    public Set<UserMedication> getMedications() {
         return medications;
     }
 
-    public void setMedications(Set<Medication> medications) {
+    public void setMedications(Set<UserMedication> medications) {
         this.medications = medications;
     }
 
-    public String getUserComments() {
-        return userComments;
+    public UserInfo getUserInfo() {
+        return userInfo;
     }
 
-    public void setUserComments(String userComments) {
-        this.userComments = userComments;
+    public void setUserInfo(UserInfo userInfo) {
+        this.userInfo = userInfo;
     }
 
     public String getEmail() {

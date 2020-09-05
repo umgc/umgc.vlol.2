@@ -29,6 +29,7 @@ import com.vlol.service.MedicationService;
 import com.vlol.service.RoleService;
 import com.vlol.service.UserService;
 import com.vlol.repository.RoleRepository;
+import java.security.Principal;
 import java.util.Date;
 import java.util.List;
 import javax.validation.Valid;
@@ -38,6 +39,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -90,16 +92,6 @@ public class VlolController {
         user.setLastLoginDate(date);
         user.setDateCreated(date);
         mav.addObject("user", user);
-        List<Allergy> allergies = allergyService.getAllAllergies();
-        mav.addObject("allergies", allergies);
-        List<Condition> conditions = conditionService.getAllConditions();
-        mav.addObject("conditions", conditions);
-        List<Medication> medications = medicationService.getAllMedications();
-        mav.addObject("medications", medications);
-        List<Role> roles = roleService.getAllRoles();
-        mav.addObject("roles", roles);
-        List<User> agents = userService.getAllUsers();
-        mav.addObject("agents", agents);
         mav.setViewName("registration");
         return mav;
     }
@@ -123,11 +115,30 @@ public class VlolController {
         return mav;
     }
 
-    @RequestMapping(value = {"/menu"}, method = RequestMethod.GET)
-    public ModelAndView viewMainMenu() {
+    @RequestMapping(value = {"/menu", "/menu/{id}"}, method = RequestMethod.GET)
+    public ModelAndView viewMainMenu(@PathVariable(name = "id", required=false) Long id, Principal principal) {
         ModelAndView mav = new ModelAndView();
+        User user;
         Utils.getUserName(userService, mav);
-        mav.setViewName("admin/menu");
+        if(id == null){
+            user = Utils.getIfAuthorizedForUser(userService);
+            if(Utils.isAdmin() || Utils.isProvider()){
+                mav.setViewName("menu/admin-menu");
+            }else{
+                mav.setViewName("menu/user-menu");
+            }
+        }else{
+            user = Utils.getIfAuthorizedForUser(userService, id, false);
+            mav.setViewName("menu/user-menu");
+        }
+        if(user == null) return new ModelAndView("redirect:/login");
+        mav.addObject("userID", user.getUserID());
+        mav.addObject("user", user);
+        // Check if this participant is authorized for other accounts, and if on the current page
+        if(Utils.isParticipant() && user.getEmail().equals(principal.getName())){
+            System.out.println("hasAuthorizingUsers: "+userService.findAuthorizingUsers(user.getEmail().toLowerCase()).size());
+            mav.addObject("hasAuthorizingUsers", userService.findAuthorizingUsers(user.getEmail().toLowerCase()).size()>0);
+        }
         return mav;
     }
 

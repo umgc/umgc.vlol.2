@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title th:text="(${authorizedUser.authorizedUserId}!=null?'Edit':'Add')+ ' an Authorized User'"></title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <h1 th:text="(${authorizedUser.authorizedUserId}!=null?'Edit':'Add')+ ' an Authorized User'"></h1>
+                </div>
+            </div>
+            <form action="#" th:object="${authorizedUser}" th:action="'/user/save-authorized-user/'+${userID}" method="post" data-parsley-validate="">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="form-group">
+                          <label for="authorizedName">Name</label>
+                          <input type="text" class="form-control" id="authorizedName" th:field="*{authorizedName}" required="true" placeholder="Required" data-parsley-rfc3986=""/>
+                        </div>
+                        <div class="form-group">
+                          <label for="authorizedEmail">Email</label>
+                          <input type="email" class="form-control" id="authorizedEmail" th:field="*{authorizedEmail}" required="true" placeholder="Required" data-parsley-rfc3986=""/>
+                        </div>
+                        <input type="hidden" th:field="*{authorizedUserId}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    <a th:href="|/user/authorized-user/${userID}|">Return to Medication Manager</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

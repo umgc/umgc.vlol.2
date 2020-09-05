@@ -41,12 +41,11 @@ public class FDADownloader {
     private EntityManager em;
     private List<Pattern> badWords = new ArrayList<Pattern>(List.of(
             Pattern.compile("sunscreen"), 
-            Pattern.compile("hand (sanitizer|gel|cleaner)"),
-            Pattern.compile("wet wipe"),
-            Pattern.compile("disinfect.*wipe"),
+            Pattern.compile("hand (sanitizer|gel|cleaner|wash)"),
+            Pattern.compile("(disinfect|wet|alcohol|sanitiz).+(wipe|tissue|hand|swab)"),
             Pattern.compile("antiperspirant"),
+            Pattern.compile("lip.+balm|balm.+lip"),
             Pattern.compile("^([0-9]+% )?alcohol$"),
-            Pattern.compile("alcohol swabs"),
             Pattern.compile("^([0-9]+% )?ethyl alcohol$"),
             Pattern.compile("^([0-9]+% )?salicylic acid$"),
             Pattern.compile("^([0-9]+% )?isopropyl alcohol$"),
@@ -81,17 +80,17 @@ public class FDADownloader {
             // Check if data was updated in the last 7 days
             try{
                 Boolean shouldUpdate = (Boolean)_em.createNativeQuery("SELECT last_updated <= curdate() - 7 FROM datasets WHERE name = 'fda'").getSingleResult();
-//                if(!shouldUpdate) return;
+                if(!shouldUpdate) return;
                 _em.createNativeQuery("UPDATE datasets SET last_updated=curdate() WHERE name = 'fda'").executeUpdate();
             }catch(javax.persistence.NoResultException e){
-                
                 _em.createNativeQuery("INSERT INTO datasets (name, last_updated) VALUES('fda', curdate())").executeUpdate();
             }
             session.flush();
             session.clear();
-                    
+//            return;
             try {
                 HttpResponse response = download("https://api.fda.gov/download.json", HttpResponse.BodyHandlers.ofString());
+    
                 Map obj = (Map)new Gson().fromJson(response.body().toString(), Map.class).get("results");
                 List <Map<String, String>> partitions = (List <Map<String, String>>)((Map)((Map)obj.get("drug")).get("ndc")).get("partitions");
                 String exportDate = (String)((Map)((Map)obj.get("drug")).get("ndc")).get("export_date");
@@ -99,7 +98,10 @@ public class FDADownloader {
                 medicationService.truncateMedication();
                 for (Map<String, String> part : partitions){
                     HttpResponse zipResponse = download(part.get("file"), HttpResponse.BodyHandlers.ofInputStream());
+                    
+                    System.out.println("Start "+part.get("file")+" download ~25mb"); 
                     ZipInputStream zis = new ZipInputStream((InputStream)zipResponse.body());
+                    System.out.println("Done"); 
                     ZipEntry zipEntry = zis.getNextEntry();
                     while (zipEntry != null) {
                         List<Map> res = (List)new Gson().fromJson(new BufferedReader(new InputStreamReader(zis)), Map.class).get("results");
@@ -123,6 +125,11 @@ public class FDADownloader {
                             }
                             if(brandName == null)
                                 brandName = genericName;
+                            
+                            if(genericName != null) genericName = genericName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+                            if(brandName != null) brandName = brandName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+                            if(drugAction != null) drugAction = drugAction.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+                            
                             Boolean skip = false;
                             for(Pattern regexp : badWords){
                                 if(regexp.matcher(brandName.toLowerCase()).find())skip = true;
@@ -145,9 +152,8 @@ public class FDADownloader {
                                         pharmaClasses.contains("Vitamin K Antagonist [EPC]") || 
                                         pharmaClasses.contains("Platelet Aggregation Inhibitor [EPC]") || 
                                         pharmaClasses.contains("Decreased Platelet Aggregation [PE]") ||
-                                        activeIngredients.contains("asprrin"));
+                                        activeIngredients.contains("aspirin"));
                                 
-//                                medicationService.saveMedication(m);
                                 session.save(m);
                                 
                                 if (this.count++ % 100 == 0) { //100, same as the JDBC batch size
