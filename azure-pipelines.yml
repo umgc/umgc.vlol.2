@@ -18,11 +18,6 @@ steps:
     jdkSourceOption: 'PreInstalled'
 
 
-- task: Bash@3
-  inputs:
-    filePath: '/usr/bin/ls'
-
-
 - task: Maven@3
   inputs:
     mavenPomFile: 'pom.xml'
