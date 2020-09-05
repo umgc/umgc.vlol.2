@@ -117,10 +117,11 @@ CREATE TABLE user_info(
     street_address VARCHAR(100) COMMENT 'The user''s street address.',
     user_agent_id BIGINT COMMENT 'The User ID of the user''s agent.',
     user_comments VARCHAR(300) COMMENT 'User additional comments.',
-    zipcode VARCHAR(5) COMMENT 'The user''s zip code number.'
+    zipcode VARCHAR(5) COMMENT 'The user''s zip code number.',
+    is_deceased BOOLEAN
     --COMMENT 'The database user profile table'
 ) ;
-
+ALTER TABLE user_info ALTER is_deceased SET DEFAULT 'false'
 ALTER TABLE user_info ADD CONSTRAINT user_info_pk PRIMARY KEY(info_id);
 ALTER TABLE user_info ADD CONSTRAINT user_info_uq_ssn UNIQUE(ssn);
 ALTER TABLE user_info ADD CONSTRAINT user_info_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
