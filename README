@@ -1,0 +1,54 @@
+# Virtual Letter of Life (VLOL) Application 
+## Description
+ TBD
+
+## Enviroment requirments
+* Make
+* Docker 
+
+## Developer Guide
+
+Run this this make command to create the Docker image (vlol-build-env) capable of building and testing
+the VLOL application.
+```
+make build-env
+```
+```
+WSLv2-MEGATRON@:~/GitHub/umgc.vlol.2$ make build-env
+docker build -f ./docker/Dockerfile.build.env -t vlol-build-env:latest .
+Sending build context to Docker daemon  93.98MB
+Step 1/4 : FROM centos:latest
+ ---> 0d120b6ccaa8
+Step 2/4 : RUN yum install -y                     java-11-openjdk-devel          make                           wget
+ ---> Using cache
+ ---> 590a6ccb8aa0
+Step 3/4 : RUN cd /var/tmp &&     wget http://www.gtlib.gatech.edu/pub/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz &&     tar xf apache-maven-3.6.3-bin.tar.gz -C /usr/lib &&     ln -s /usr/lib/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
+ ---> Using cache
+ ---> 486b44dc5599
+Step 4/4 : ENV JAVA_HOME=/usr/lib/jvm/jre-11-openjdk-11.0.8.10-0.el8_2.x86_64
+ ---> Using cache
+ ---> ce827f0cb6a6
+Successfully built ce827f0cb6a6
+Successfully tagged vlol-build-env:latest
+```
+
+
+Run this command to start the vlol-build-env Docker image with the gitrepo mapped under /repo
+Then run command as nessary
+```
+make start-env
+```
+```
+WSLv2-MEGATRON@:~/GitHub/umgc.vlol.2$ make start-env
+docker run -it -v /root/GitHub/umgc.vlol.2/:/repo vlol-build-env:latest bash
+[root@069fa498aeca /]# cd repo/
+[root@069fa498aeca repo]# ls
+Makefile  README  azure-pipelines.yml  data.sql  docker  docs  nbactions.tmp  nbactions.xml  nbproject  pom.xml  qr_code_testpage.pdf  schema.sql  src  system.properties  target  vloldb.mv.db  vloldb.trace.db
+[root@069fa498aeca repo]#
+```
+
+Run this command to build the VLOL application with in the vlol-build-env context
+```
+make all
+```
+
