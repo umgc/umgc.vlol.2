@@ -15,14 +15,8 @@ steps:
 - task: CmdLine@2
   inputs:
     script: 'make build' 
-- task: Maven@3
+- task: PublishTestResults@2
   inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
+    testResultsFormat: 'JUnit'
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    mavenOptions: '-Dversion=1.0'
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    failTaskOnFailedTests: true
