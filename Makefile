@@ -31,7 +31,7 @@ ifdef SKIP_TESTS
 endif  
 
 # PHONY 
-.PHONY: all build-env start-env clean all
+.PHONY: all build build-vlol start-vlol build-env start-env clean 
 
 	
 ##############################################################
@@ -44,6 +44,14 @@ endif
 all:
 	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) -c 'cd /repo && make target/$(VLOL_JAR) VERSION=$(VERSION)'
 
+
+##############################################################
+#	make all:
+#		This recipe is like make all but without the Docker
+#		context.
+##############################################################
+build: target/$(VLOL_JAR)
+	
 
 ##############################################################
 #	make vlol-app:
