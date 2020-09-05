@@ -52,3 +52,25 @@ Run this command to build the VLOL application with in the vlol-build-env contex
 make all
 ```
 
+Run this command to display make recipes and targets
+```
+make help
+```
+```
+WSLv2-MEGATRON@:~/GitHub/umgc.vlol.2$ make help
+        make all:
+                This recipe starts the volo-build-env with repo volumed
+                mapped into the container can creates the vlol-app jar
+                then exits. This is useful so that developer do not
+                need to modify enviorments.
+        make vlol-app:
+                This recipe creats the vlol java jar
+        make build-env:
+                This recipe create the Docker image capable of building
+                the vlol-app
+        make start-env:
+                This recipe start the Docker image
+        make clean:
+                This recipe cleans the user workspace
+                This recipe prints make commands
+```
