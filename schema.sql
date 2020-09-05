@@ -179,5 +179,3 @@ CREATE TABLE persistent_logins (
     PRIMARY KEY (series)
 );
 
-Alter TABLE User_Info
-ADD IS_DECEASED BIT DEFAULT 'FALSE'
