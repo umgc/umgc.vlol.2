@@ -121,7 +121,7 @@ CREATE TABLE user_info(
     is_deceased BOOLEAN
     --COMMENT 'The database user profile table'
 ) ;
-ALTER TABLE user_info ALTER is_deceased SET DEFAULT 'false'
+
 ALTER TABLE user_info ADD CONSTRAINT user_info_pk PRIMARY KEY(info_id);
 ALTER TABLE user_info ADD CONSTRAINT user_info_uq_ssn UNIQUE(ssn);
 ALTER TABLE user_info ADD CONSTRAINT user_info_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
