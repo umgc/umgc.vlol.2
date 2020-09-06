@@ -108,6 +108,7 @@ public class VlolController {
             mav.setViewName("registration");
         } else {
             userService.saveUser(user);
+            System.out.print("get here ");
             mav.addObject("msg", "User has been registered successfully!");
             mav.addObject("user", new User());
             mav.setViewName("login");

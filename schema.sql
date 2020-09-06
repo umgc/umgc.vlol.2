@@ -89,9 +89,7 @@ CREATE TABLE appuser(
     password VARCHAR(72) NOT NULL COMMENT 'The generated hash value of the user''s password.',
     role_id BIGINT NOT NULL COMMENT 'The role id of the user.',
     first_name VARCHAR(32) NOT NULL COMMENT 'The user''s first name.',
-    last_name VARCHAR(100) NOT NULL COMMENT 'The user''s last name.',
-    security_answer VARCHAR(72) NOT NULL COMMENT 'The generated hash value of the user''s security answer.',
-    security_question VARCHAR(100) NOT NULL COMMENT 'Question enabling the user to re-set a forgotten password.'
+    last_name VARCHAR(100) NOT NULL COMMENT 'The user''s last name.'
     --COMMENT 'The database user profile table'
 ) ;
 
