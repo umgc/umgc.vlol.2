@@ -78,7 +78,7 @@ build-vlol: target/$(VLOL_JAR)
 #		This recipe start the vlol Docker app
 ##############################################################
 start-vlol:
-	docker run --rm --name $(VLOL_APP) --network=host $(APP_IMG)
+	docker run --rm --name $(VLOL_APP) -p 5000:5000 $(APP_IMG)
 
 
 ##############################################################
