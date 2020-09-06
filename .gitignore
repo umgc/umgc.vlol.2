@@ -32,4 +32,5 @@ build/
 .vscode/
 
 ### Tomcat logs ###
-/tomcat/logs/
+tomcat/logs/
+bin/
