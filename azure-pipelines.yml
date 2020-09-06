@@ -12,13 +12,11 @@ pool:
 
 
 steps:
-- task: Maven@3
+- task: CmdLine@2
   inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: true
+    script: 'make build' 
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: false
+    failTaskOnFailedTests: true
