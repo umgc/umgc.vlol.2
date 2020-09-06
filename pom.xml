@@ -10,7 +10,7 @@
     </parent>
     <groupId>com</groupId>
     <artifactId>VLOL</artifactId>
-    <version>${version}</version>
+    <version>1.0.121</version>
     <name>VLOL</name>
     <description>Virtual Letter of Life Spring Boot Application</description>
 
@@ -66,7 +66,7 @@
             <artifactId>tomcat-embed-jasper</artifactId>  
         </dependency>
         <dependency>
-            <groupId>org.hibernate</groupId> <!-- For validation annotations -->
+            <groupId>org.hibernate.validator</groupId> <!-- For validation annotations -->
             <artifactId>hibernate-validator</artifactId>
             <version>6.1.5.Final</version>
         </dependency>
