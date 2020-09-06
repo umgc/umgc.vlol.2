@@ -40,23 +40,21 @@ endif
 #		mapped into the container can creates the vlol-app jar
 #		then exits. This is useful so that developer do not 
 #		need to modify environments.
+#
 ##############################################################
 all:
 	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) -c 'cd /repo && make target/$(VLOL_JAR) VERSION=$(VERSION)'
 
 
 ##############################################################
-#	make all:
+#	make build:
 #		This recipe is like make all but without the Docker
 #		context.
+#
 ##############################################################
 build: target/$(VLOL_JAR)
 	
-
-##############################################################
-#	make vlol-app:
-#		This recipe create the vlol java jar
-##############################################################
+# This internal recipe is used by build to create the vlol versioned jar
 target/$(VLOL_JAR):	
 	@mvn versions:set -DnewVersion=$(VERSION)
 	mvn $(MAVEN_OPTS) package -f pom.xml
@@ -66,6 +64,7 @@ target/$(VLOL_JAR):
 ##############################################################
 #	make build-vlol:
 #		This recipe create the vlol Docker image
+#
 ##############################################################
 build-vlol: target/$(VLOL_JAR)
 	cp target/$(VLOL_JAR) ./$(VLOL_JAR)
@@ -76,6 +75,7 @@ build-vlol: target/$(VLOL_JAR)
 ##############################################################
 #	make start-vlol:
 #		This recipe start the vlol Docker app
+#
 ##############################################################
 start-vlol:
 	docker run --rm --name $(VLOL_APP) -p 5000:5000 $(APP_IMG)
@@ -85,6 +85,7 @@ start-vlol:
 #	make build-env:
 #		This recipe create the Docker build env image capable 
 #		of building the vlol-app
+#
 ##############################################################
 build-env:
 	docker build -f ./docker/Dockerfile.build -t $(BUILD_IMG) .
@@ -93,6 +94,7 @@ build-env:
 ##############################################################
 #	make start-env:
 #		This recipe starts the Docker build env image 
+#
 ##############################################################
 start-env:
 	docker run -it -v $(PWD)/:/repo $(BUILD_IMG) bash
@@ -101,16 +103,14 @@ start-env:
 ##############################################################
 #	make clean:
 #		This recipe cleans the user workspace
+#
 ##############################################################
 clean:
 	@mvn $(MAVEN_OPTS) clean -f pom.xml
 	@rm -rf ./tomcat
 
 
-##############################################################
-#	make help:
-#		This recipe prints make commands
-##############################################################
+# This prints make commands and usage
 help:
 	@$(info For new environment setup follow the below steps)
 	@$(info Prerequisites: )
@@ -118,6 +118,7 @@ help:
 	@$(info 1. Docker version 19.03.12)
 	@$(info -----------------------------------------------------------------------------------------------------------)
 	@$(info 1. make build-env:    Creates a Docker image used for building the VLOL application.)
+	@$(info                       Note: This only needs to be done once takes ~3m)
 	@$(info 2. make all:          Creates the VLOL application using the Docker image created in the previous step.)
 	@$(info 2. make build-vlol:   Creates a VLOL Docker image from the artifact created in the previous step.)
 	@$(info 3. make start-vlol:   Starts the VLOL Docker image.)
