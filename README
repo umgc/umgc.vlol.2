@@ -1,0 +1,34 @@
+# Virtual Letter of Life (VLOL) Application 
+## Description
+ TBD
+
+## Environment requirements
+* Make
+* Docker 
+
+## Developer Guide
+
+Run this this make command to create the Docker image (vlol-build-env) capable of building and testing
+the VLOL application.
+```
+make build-env
+```
+
+
+Run this command to start the vlol-build-env Docker image with the git repo mapped under /repo
+Then run command as necessary
+```
+make start-env
+```
+
+
+Run this command to build the VLOL application with in the vlol-build-env context
+```
+make all
+```
+
+Run this command to display make recipes and targets
+```
+make help
+```
+```

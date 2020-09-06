@@ -1,3 +1,4 @@
+  
 # Maven
 # Build your Java project and run tests with Apache Maven.
 # Add steps that analyze code, save build artifacts, deploy, and more:
@@ -7,16 +8,15 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  vmImage: 'ubuntu-20.04'
+
 
 steps:
-- task: Maven@3
+- task: CmdLine@2
   inputs:
-    mavenPomFile: 'pom.xml'
-    mavenOptions: '-Xmx3072m'
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '11.0.8'
-    jdkArchitectureOption: 'x64'
-    publishJUnitResults: true
+    script: 'make build' 
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    failTaskOnFailedTests: true

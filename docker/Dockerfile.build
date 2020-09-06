@@ -1,0 +1,16 @@
+FROM centos:latest 
+
+# Install packages
+RUN yum install -y             \
+        java-11-openjdk-devel  \
+        make                   \
+        wget                   \
+        git
+
+RUN cd /var/tmp && \
+    wget http://www.gtlib.gatech.edu/pub/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz && \
+    tar xf apache-maven-3.6.3-bin.tar.gz -C /usr/lib && \
+    ln -s /usr/lib/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
+
+ENV JAVA_HOME=/usr/lib/jvm/jre-11-openjdk-11.0.8.10-0.el8_2.x86_64
+
