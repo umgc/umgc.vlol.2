@@ -1,0 +1,48 @@
+# domain for the emails
+mydomain = ${DOMAIN}
+myorigin = ${DOMAIN}
+
+# we do NOT want to receive emails from any domain... specify an empty list here
+mydestination =
+
+# tells Postfix from which networks it should accept emails to send
+# subnet == Postfix should forward mail from SMTP clients in the same IP subnetworks as the local machine
+mynetworks_style = subnet
+
+# direct delivery to Internet
+relayhost =
+
+# accept emails from all network interfaces (we will restrict this using Docker networks)
+inet_interfaces = loopback-only
+smtp_bind_address = 0.0.0.0
+
+
+# opendkim
+#odkim milter_protocol = 2
+#odkim milter_default_action = tempfail
+#odkim smtpd_milters = inet:localhost:12301
+#odkim non_smtpd_milters = inet:localhost:12301
+
+# no limits on the email number
+mailbox_size_limit = 0
+
+# cleanup incoming emails
+always_add_missing_headers = yes
+
+# hide details about this instance of Postfix
+smtpd_banner = $myhostname
+
+# hide details of the real email sender
+header_checks = regexp:/etc/postfix/header_checks
+
+# disable useless services
+biff = no
+readme_directory = no
+
+## TLS parameters
+smtpd_tls_cert_file=/etc/ssl/certs/ssl-cert-snakeoil.pem
+smtpd_tls_key_file=/etc/ssl/private/ssl-cert-snakeoil.key
+smtpd_use_tls=yes
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+inet_protocols = ipv4

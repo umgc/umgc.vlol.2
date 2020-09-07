@@ -78,7 +78,7 @@ build-vlol: target/$(VLOL_JAR)
 #
 ##############################################################
 start-vlol:
-	docker run --rm --name $(VLOL_APP) -p 5000:5000 $(APP_IMG)
+	docker run --rm --name $(VLOL_APP) -p 5000:5000 --mount source=h2data,target=/data $(APP_IMG)
 
 
 ##############################################################
