@@ -27,6 +27,7 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
+tomcat/
 
 ### VS Code ###
 .vscode/
