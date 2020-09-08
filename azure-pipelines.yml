@@ -14,9 +14,22 @@ pool:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'make build' 
+    script: 'make build-env' 
+
+- task: CmdLine@2
+  inputs:
+    script: 'make all' 
+
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     failTaskOnFailedTests: true
+    
+- task: CmdLine@2
+  inputs:
+    script: 'make build-vlol'
+
+- task: CmdLine@2
+  inputs:
+    script: 'make push'

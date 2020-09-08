@@ -5,8 +5,9 @@
 # Run make SKIP_TEST=y
 SKIP_TESTS:=
 
-# Git tag based versioning 
-VERSION:=$(shell git describe --abbrev=0).$(shell git rev-list HEAD | wc -l)
+# Version vars
+VERSION:=1.0.$(shell git rev-list HEAD | wc -l)
+VLOL_JAR=VLOL-1.0.0.jar
 
 # Docker app vars
 APP_NAME=vlol
@@ -15,14 +16,12 @@ APP_IMG=$(APP_NAME):$(APP_TAG)
 
 # Docker build vars
 BUILD_ENV_NAME=vlol-build-env
-BUILD_ENV_TAG=latest
+BUILD_ENV_TAG=$(VERSION)
 BUILD_IMG=$(BUILD_ENV_NAME):$(BUILD_ENV_TAG)
+REMOTE_IMG=umgccontainerregistry.azurecr.io/$(APP_IMG)
 
 # Maven options
 MAVEN_OPTS:=-Dversion=$(VERSION)
-
-VLOL_APP=VLOL-$(VERSION)
-VLOL_JAR=$(VLOL_APP).jar
 
 # Skip test flag
 # make all SKIP_TESTS=y <- doest not run unit tests
@@ -31,7 +30,7 @@ ifdef SKIP_TESTS
 endif  
 
 # PHONY 
-.PHONY: all build build-vlol start-vlol build-env start-env clean 
+.PHONY: all push build build-vlol start-vlol build-env start-env clean 
 
 	
 ##############################################################
@@ -45,6 +44,16 @@ endif
 all:
 	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) -c 'cd /repo && make target/$(VLOL_JAR) VERSION=$(VERSION)'
 
+##############################################################
+#	make push:
+#		This recipe pushes the Docker vlol application to the
+#		Azure container registry 
+#
+##############################################################
+push:
+	docker tag $(BUILD_IMG) $(REMOTE_IMG)
+	docker push $(REMOTE_IMG)
+
 
 ##############################################################
 #	make build:
@@ -56,9 +65,7 @@ build: target/$(VLOL_JAR)
 	
 # This internal recipe is used by build to create the vlol versioned jar
 target/$(VLOL_JAR):	
-	@mvn versions:set -DnewVersion=$(VERSION)
 	mvn $(MAVEN_OPTS) package -f pom.xml
-	@mvn versions:commit
 
 
 ##############################################################
@@ -78,7 +85,7 @@ build-vlol: target/$(VLOL_JAR)
 #
 ##############################################################
 start-vlol:
-	docker run --rm --name $(VLOL_APP) -p 5000:5000 $(APP_IMG)
+	docker run --rm --name $(APP_NAME) -p 5000:5000 $(APP_IMG)
 
 
 ##############################################################
