@@ -242,7 +242,10 @@ public class VlolController {
         Utils.getUserName(userService, mav);
         if(id == null){
             user = Utils.getIfAuthorizedForUser(userService);
-            if(Utils.isAdmin() || Utils.isProvider()){
+            if(!user.getIsVerified()){
+                return new ModelAndView("redirect:/verify-email");
+            }
+            else if(Utils.isAdmin() || Utils.isProvider()){
                 mav.setViewName("menu/admin-menu");
             }else{
                 mav.setViewName("menu/user-menu");
