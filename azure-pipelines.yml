@@ -32,4 +32,8 @@ steps:
 
 - task: CmdLine@2
   inputs:
+    script: 'docker login -u $(container-pass) -p $(container-pass) $(container-login)'
+
+- task: CmdLine@2
+  inputs:
     script: 'make push'
