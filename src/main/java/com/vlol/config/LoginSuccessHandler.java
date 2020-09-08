@@ -18,23 +18,17 @@
  */
 package com.vlol.config;
 
+import com.vlol.model.User;
 import com.vlol.service.UserService;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.WebAttributes;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 public class LoginSuccessHandler implements AuthenticationSuccessHandler {
@@ -55,13 +49,14 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
 
 
     protected void handle(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
-        userService.userLogin(authentication.getName());
-
+        User user = userService.userLogin(authentication.getName());
         if (response.isCommitted()) {
             return;
         }
-
-        redirectStrategy.sendRedirect(request, response, "/menu");
+        if(!user.getIsVerified())
+            redirectStrategy.sendRedirect(request, response, "/verify-email?error=true");
+        else
+            redirectStrategy.sendRedirect(request, response, "/menu");
     }
 
 }

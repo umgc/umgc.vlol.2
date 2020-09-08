@@ -85,6 +85,7 @@ CREATE TABLE appuser(
     date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date for this database user account',
     is_active BOOLEAN COMMENT 'Is the user''s account active?',
     is_locked BOOLEAN COMMENT 'Is the user''s account locked?',
+    is_verified BOOLEAN COMMENT 'Is the user''s account verified?',
     last_login_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The timestamp of the user last login.',
     password VARCHAR(72) NOT NULL COMMENT 'The generated hash value of the user''s password.',
     role_id BIGINT NOT NULL COMMENT 'The role id of the user.',

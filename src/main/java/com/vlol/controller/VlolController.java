@@ -111,7 +111,7 @@ public class VlolController {
         User user = userService.findUserByEmail(email.toLowerCase());
         if(user != null){
             try{
-                    new Mailer(env).resetPassword(user);
+                new Mailer(env).resetPassword(user);
             }catch(Exception e){
                 // Always return success
             }
@@ -169,6 +169,7 @@ public class VlolController {
     public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView mav = new ModelAndView();
         user.setIsActive(Boolean.TRUE);
+        user.setIsVerified(Boolean.FALSE);
         user.setIsLocked(Boolean.FALSE);
         Date date = new Date();
         user.setLastLoginDate(date);
@@ -184,6 +185,12 @@ public class VlolController {
             mav.setViewName("registration");
         } else {
             userService.createUser(user);
+            // Send a verification email after registration
+            try{
+                new Mailer(env).verifyEmail(user);
+            }catch(Exception e){
+                // Always return success
+            }
             mav.addObject("msg", "User has been registered successfully!");
             mav.addObject("user", new User());
             mav.setViewName("login");
@@ -196,16 +203,17 @@ public class VlolController {
      * @return 
      */
     @RequestMapping(value = {"/verify-email"}, method = RequestMethod.GET)
-    public ModelAndView verifyEmailRecieve(@PathVariable(name="jwt", required=false) String jwt) {
-        ModelAndView mav = new ModelAndView("user/verify-email");
+    public ModelAndView verifyEmailRecieve(@RequestParam(name="jwt", required=false) String jwt) {
         if(jwt != null){
             User user = Utils.verifyJWT(userService, jwt);
             if(user == null){
                 return new ModelAndView("redirect:/verify-email?error");
             }
-            user.setIsActive(true); // Verify email
+            user.setIsVerified(true); // Verify email
+            userService.updateUser(user);
+            return new ModelAndView("redirect:/verify-email?success");
         }
-        return mav;
+        return new ModelAndView("user/verify-email");
     }
     /**
      * Send verification email, used for resending
@@ -216,7 +224,12 @@ public class VlolController {
     public ModelAndView verifyEmail(Model model) {
         String email = (String)model.getAttribute("email");
         if(email != null){
-            new Mailer(env).verifyEmail(userService.findUserByEmail(email));
+            // Re-send a verification email
+            try{
+                new Mailer(env).verifyEmail(userService.findUserByEmail(email));
+            }catch(Exception e){
+                return new ModelAndView("redirect:/verify-email?erroremail");
+            }
         }else
             return new ModelAndView("redirect:/verify-email?error");
         return new ModelAndView("redirect:/verify-email?success");

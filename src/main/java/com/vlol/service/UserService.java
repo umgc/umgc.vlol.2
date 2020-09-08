@@ -82,11 +82,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public void userLogin(String email) {
+    public User userLogin(String email) {
         User user = this.findUserByEmail(email);
         Date date = new Date();
         user.setLastLoginDate(date);
         userRepository.save(user);
+        return user;
     }
     
     public List<User> getAllUsers() {

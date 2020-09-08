@@ -133,6 +133,10 @@ public class User implements Serializable {
     @Column(name = "is_active")
     @NotNull(message = "Value cannot be null.")
     private Boolean isActive;
+    
+    @Column(name = "is_verified")
+    @NotNull(message = "Value cannot be null.")
+    private Boolean isVerified;
 
     @Column(name = "is_locked")
     @NotNull(message = "Value cannot be null.")
@@ -278,6 +282,13 @@ public class User implements Serializable {
 
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+    public Boolean getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
     }
 
     public Boolean getIsLocked() {
