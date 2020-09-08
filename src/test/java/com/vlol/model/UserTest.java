@@ -65,6 +65,7 @@ public class UserTest {
         user.setDateCreated(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-11-05 06:00:00"));
         user.setLastLoginDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("1955-11-05 06:00:00"));
         user.setAdminComments("John is a program participant.");
+        user.setIsVerified(Boolean.TRUE);
         user.setIsActive(Boolean.TRUE);
         user.setIsLocked(Boolean.FALSE);
         // Setup validation of each method's validation annotations
