@@ -106,14 +106,9 @@ public class User implements Serializable {
 
     @Column(name = "password", length = 72)
     @NotBlank(message = "Password is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     // bcrypt maximum password length is 71 characters + 1 byte null terminator
     @Size(min = 8, max = 72, message = "Input exceeds size limits.")
     private String password;
-
-    @Transient
-    private String passwordConfirm;
 
     @Column(name = "date_created")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
@@ -251,14 +246,6 @@ public class User implements Serializable {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
     }
 
     public Date getDateCreated() {

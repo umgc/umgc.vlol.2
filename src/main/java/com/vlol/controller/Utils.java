@@ -6,13 +6,15 @@
 package com.vlol.controller;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.vlol.model.User;
 import com.vlol.service.UserService;
-import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
@@ -76,8 +78,14 @@ public class Utils {
         return authorities.contains("participant");
     }
     public static String createJWT(User user){
-        return JWT.create()
-                .withClaim("userId", user.getUserID())
+        return createJWT(user, null);
+    }
+    public static String createJWT(User user, Long expiry){
+        JWTCreator.Builder jwtBuilder = JWT.create()
+                .withClaim("userId", user.getUserID());
+        if(expiry != null)
+            jwtBuilder = jwtBuilder.withExpiresAt(new Date(System.currentTimeMillis() + expiry));
+        return jwtBuilder
                 .sign(algorithm);
     }
     public static Boolean verifyJWT(User user, String jwt){
@@ -91,5 +99,15 @@ public class Utils {
             
         }
         return false;
+    }
+    public static User verifyJWT(UserService userService, String jwt){
+        JWTVerifier verifier = JWT.require(algorithm)
+            .build();
+        try {
+            return userService.getUser(verifier.verify(jwt).getClaim("userId").as(Long.class));
+        } catch(JWTVerificationException e) {
+            
+        }
+        return null;
     }
 }

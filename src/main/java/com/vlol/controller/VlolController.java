@@ -18,6 +18,7 @@
  */
 package com.vlol.controller;
 
+import com.vlol.Mailer;
 import com.vlol.model.Allergy;
 import com.vlol.model.Condition;
 import com.vlol.model.Medication;
@@ -32,16 +33,24 @@ import com.vlol.repository.RoleRepository;
 import java.security.Principal;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -69,6 +78,9 @@ public class VlolController {
 
     @Autowired
     private RoleRepository roleRepository;
+    
+    @Autowired
+    private Environment env;
 
     @Value("${spring.application.name}")
     String appName;
@@ -79,18 +91,75 @@ public class VlolController {
         mav.setViewName("login");
         return mav;
     }
+    /**
+     * Show the reset password form
+     * @return 
+     */
+    @RequestMapping(value = {"/forgot-password"}, method = RequestMethod.GET)
+    public String forgotPasswordForm() {
+        return "user/forgot-password";
+    }
+
+    /**
+     * When an email is entered in the form get the user and send an email
+     * Always return success
+     * @param email
+     * @return 
+     */
+    @RequestMapping(value = {"/forgot-password"}, method = RequestMethod.POST)
+    public String forgotPasswordRequest(@ModelAttribute("email") String email) {
+        User user = userService.findUserByEmail(email.toLowerCase());
+        if(user != null){
+            try{
+                    new Mailer(env).resetPassword(user);
+            }catch(Exception e){
+                // Always return success
+            }
+        }
+        return "redirect:/forgot-password?success=true";
+    }
+    /**
+     * Reset password form for the user after they have clicked on the email link
+     * Verify JWT before showing
+     * @param jwt
+     * @return 
+     */
+    @RequestMapping(value = {"/reset-password"}, method = RequestMethod.GET)
+    public ModelAndView resetPasswordView(@RequestParam("jwt") String jwt) {
+        ModelAndView mav = new ModelAndView("user/reset-password");
+        User user = Utils.verifyJWT(userService, jwt);
+        if(user == null){
+            return new ModelAndView("redirect:/forgot-password?urlExpired=true");
+        }
+        mav.addObject("email", user.getEmail());
+        mav.addObject("jwt", jwt);
+        return mav;
+    }
+    /**
+     * Change password on submit from the reset password form
+     * Verify JWT again before changing password
+     * @param body
+     * @param jwt
+     * @return 
+     */
+    @RequestMapping(value = {"/reset-password"}, method = RequestMethod.POST, consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
+    public ModelAndView resetPasswordRequest(@RequestParam("jwt") String jwt, @RequestParam Map<String, String> body) {
+        User u = Utils.verifyJWT(userService, jwt);
+        if(u == null){
+            return new ModelAndView("redirect:/forgot-password");
+        }
+        if(body.get("password") == null) return new ModelAndView("redirect:/reset-password?error");
+        u.setPassword(body.get("password"));
+        userService.updateUser(u, true);
+        return new ModelAndView("redirect:/login?passwordchanged=true");
+    }
 
     @RequestMapping(value = {"/registration"}, method = RequestMethod.GET)
     public ModelAndView viewRegistrationForm() {
         ModelAndView mav = new ModelAndView();
         User user = new User();
-        user.setIsActive(Boolean.TRUE);
-        user.setIsLocked(Boolean.FALSE);
         // Role userRole = roleRepository.findRoleByTitle("participant");
         // user.setRole(userRole);
-        Date date = new Date();
-        user.setLastLoginDate(date);
-        user.setDateCreated(date);
         mav.addObject("user", user);
         mav.setViewName("registration");
         return mav;
@@ -99,21 +168,58 @@ public class VlolController {
     @RequestMapping(value = {"/registration"}, method = RequestMethod.POST)
     public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView mav = new ModelAndView();
+        user.setIsActive(Boolean.TRUE);
+        user.setIsLocked(Boolean.FALSE);
+        Date date = new Date();
+        user.setLastLoginDate(date);
+        user.setDateCreated(date);
+        Role userRole = roleRepository.findRoleByTitle("participant");
+        user.setRole(userRole);
+
         User userExists = userService.findUserByEmail(user.getEmail());
         if (userExists != null) {
-            bindingResult.rejectValue("username", "error.user", "This user already exists!");
-        }
-        if (bindingResult.hasErrors()) {
+            bindingResult.rejectValue("email", "error.user", "This user already exists!");
+        }else if (!userService.isValid(user).isEmpty()) {
             mav.addObject("msg", "Cannot add user! Check your data.");
             mav.setViewName("registration");
         } else {
-            userService.saveUser(user);
-            System.out.print("get here ");
+            userService.createUser(user);
             mav.addObject("msg", "User has been registered successfully!");
             mav.addObject("user", new User());
             mav.setViewName("login");
         }
         return mav;
+    }
+    /**
+     * Check the verification email's link, if valid mark the account as verified.
+     * @param jwt
+     * @return 
+     */
+    @RequestMapping(value = {"/verify-email"}, method = RequestMethod.GET)
+    public ModelAndView verifyEmailRecieve(@PathVariable(name="jwt", required=false) String jwt) {
+        ModelAndView mav = new ModelAndView("user/verify-email");
+        if(jwt != null){
+            User user = Utils.verifyJWT(userService, jwt);
+            if(user == null){
+                return new ModelAndView("redirect:/verify-email?error");
+            }
+            user.setIsActive(true); // Verify email
+        }
+        return mav;
+    }
+    /**
+     * Send verification email, used for resending
+     * @param model
+     * @return 
+     */
+    @RequestMapping(value = {"/verify-email"}, method = RequestMethod.POST)
+    public ModelAndView verifyEmail(Model model) {
+        String email = (String)model.getAttribute("email");
+        if(email != null){
+            new Mailer(env).verifyEmail(userService.findUserByEmail(email));
+        }else
+            return new ModelAndView("redirect:/verify-email?error");
+        return new ModelAndView("redirect:/verify-email?success");
     }
 
     @RequestMapping(value = {"/menu", "/menu/{id}"}, method = RequestMethod.GET)
@@ -137,7 +243,6 @@ public class VlolController {
         mav.addObject("user", user);
         // Check if this participant is authorized for other accounts, and if on the current page
         if(Utils.isParticipant() && user.getEmail().equals(principal.getName())){
-            System.out.println("hasAuthorizingUsers: "+userService.findAuthorizingUsers(user.getEmail().toLowerCase()).size());
             mav.addObject("hasAuthorizingUsers", userService.findAuthorizingUsers(user.getEmail().toLowerCase()).size()>0);
         }
         return mav;

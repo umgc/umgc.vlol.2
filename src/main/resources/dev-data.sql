@@ -25,9 +25,6 @@ INSERT INTO illness (illness_id, illness_name) VALUES (12, 'Pacemaker');
 INSERT INTO illness (illness_id, illness_name) VALUES (13, 'Seizure Disorder');
 INSERT INTO illness (illness_id, illness_name) VALUES (14, 'Stroke');
 
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (1, 1, 'participant', 'Program Participant (Profile Access Only)');
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (2, 5, 'provider', 'Medical Services Provider (Read Access Only)');
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (3, 10, 'admin', 'System Administrator (CRUD Access)');
 
 
 INSERT INTO appuser (user_id, role_id, first_name, last_name, email, password, date_created, last_login_date, admin_comments, is_active, is_locked) VALUES 

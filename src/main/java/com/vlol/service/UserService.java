@@ -18,6 +18,7 @@
  */
 package com.vlol.service;
 
+import com.vlol.model.Condition;
 import com.vlol.model.Role;
 import com.vlol.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,11 +30,17 @@ import com.vlol.repository.RoleRepository;
 import com.vlol.repository.UserRepository;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
 
 @Service("userService")
 @Transactional
 public class UserService {
 
+    private Validator validator;
     @Autowired
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -44,34 +51,44 @@ public class UserService {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        validator = factory.getValidator();
+    }
+    public Set<ConstraintViolation<User>> isValid(User user){
+        return validator.validate(user);
     }
     
     public User findUserByEmail(String email) {
         return userRepository.findUserByEmail(email);
     }
 
-    public User saveUser(User user) {
+    public User createUser(User user) {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setIsActive(Boolean.TRUE);
-        user.setIsLocked(Boolean.FALSE);
-        Role userRole = roleRepository.findRoleByTitle("participant");
-        // user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-        user.setRole(userRole);
-        Date date = new Date();
-        user.setLastLoginDate(date);
-        user.setDateCreated(date);
         return userRepository.save(user);
     }
 
     public User updateUser(User user) {
+        return updateUser(user, false);
+    }
+    public User updateUser(User user, Boolean updatePassword) {
         Long id = user.getUserID();
         User u = this.getUser(id);
-        user.setPassword(u.getPassword());
+        if(updatePassword)
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+        else
+            user.setPassword(u.getPassword());
         //user.setSecurityAnswer(u.getSecurityAnswer());
         user.setEmail(u.getEmail());
         return userRepository.save(user);
     }
 
+    public void userLogin(String email) {
+        User user = this.findUserByEmail(email);
+        Date date = new Date();
+        user.setLastLoginDate(date);
+        userRepository.save(user);
+    }
+    
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }

@@ -126,7 +126,7 @@ public class UserControlller {
     public String saveUser(@ModelAttribute("user") User user) {
         if(!Utils.isAdmin())
             return "redirect:/login";
-        userService.saveUser(user);
+        userService.createUser(user);
         return "redirect:/list-users";
     }
 
