@@ -10,6 +10,8 @@ trigger:
 pool:
   vmImage: 'ubuntu-20.04'
 
+variables:
+  isMain: $[eq(variables['Build.SourceBranch'], 'refs/heads/master')]
 
 steps:
 - task: CmdLine@2
@@ -31,9 +33,12 @@ steps:
     script: 'make build-vlol'
 
 - task: CmdLine@2
+  condition: and(succeeded(), eq(variables.isMain, true))
   inputs:
     script: 'docker login $(container-login) -u $(container-user) -p $(container-pass)'
 
 - task: CmdLine@2
+  condition: and(succeeded(), eq(variables.isMain, true))
   inputs:
     script: 'make push'
+    
