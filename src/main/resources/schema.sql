@@ -179,6 +179,7 @@ CREATE TABLE persistent_logins (
 );
 
 
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (1, 1, 'participant', 'Program Participant (Profile Access Only)');
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (2, 5, 'provider', 'Medical Services Provider (Read Access Only)');
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (3, 10, 'admin', 'System Administrator (CRUD Access)');
+INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (1, 1, 'participant', 'Program Participant');
+INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (2, 5, 'provider', 'Medical Services Provider');
+INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (3, 10, 'admin', 'System Administrator');
+

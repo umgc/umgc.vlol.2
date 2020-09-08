@@ -498,24 +498,6 @@ public class UserTest {
     }
 
     /**
-     * Invalid value test for the setPassword method, of class User.
-     */
-    @Test
-    public void testSetPasswordInvalid() {
-        System.out.println("setPassword Test (Injection value)");
-        String password = "<script>alert(\"This is an attack!\");</script>";
-        user.setPassword(password);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<User>> violations = validator.validate(user);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
      * Overflow value test for the setPassword method, of class User.
      */
     @Test
