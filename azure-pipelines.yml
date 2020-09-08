@@ -32,7 +32,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'docker login $CONTAINER_LOGIN -u $CONTAINER_USER -p $CONTAINER_PASS'
+    script: 'docker login $(container-login) -u $(container-user) -p $(container-pass)'
 
 - task: CmdLine@2
   inputs:
