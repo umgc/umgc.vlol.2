@@ -109,6 +109,7 @@ public class FDADownloader {
                             String type = (String)drug.get("product_type");
                             String brandName = (String)drug.get("brand_name");
                             String genericName = (String)drug.get("generic_name");
+                            String ndc = (String)drug.get("product_ndc");
                             
                             String dosageForm = (String)drug.get("dosage_form");
                             HashSet activeIngredients = new HashSet();
@@ -126,6 +127,7 @@ public class FDADownloader {
                             if(brandName == null)
                                 brandName = genericName;
                             
+                            if(ndc != null) ndc = ndc.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
                             if(genericName != null) genericName = genericName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
                             if(brandName != null) brandName = brandName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
                             if(drugAction != null) drugAction = drugAction.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
@@ -147,6 +149,7 @@ public class FDADownloader {
                                 m.setGenericName(genericName);
                                 m.setBrandName(brandName);
                                 m.setDrugAction(drugAction);
+                                m.setReferenceId(ndc);
                                 m.setBloodThinner(
                                         pharmaClasses.contains("Vitamin K Inhibitors [MoA]") || 
                                         pharmaClasses.contains("Vitamin K Antagonist [EPC]") || 

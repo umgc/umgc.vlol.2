@@ -45,12 +45,12 @@ public class RoleService {
         roleRepository.save(role);
     }
 
-    public Role getRole(Long roleID) {
-        return roleRepository.findById(roleID).orElse(null);
+    public Role getRole(Long roleId) {
+        return roleRepository.findById(roleId).orElse(null);
     }
 
-    public void deleteRole(Long roleID) {
-        roleRepository.deleteById(roleID);
+    public void deleteRole(Long roleId) {
+        roleRepository.deleteById(roleId);
     }
 
     public List<Role> findRoleByKeyword(String keyword) {

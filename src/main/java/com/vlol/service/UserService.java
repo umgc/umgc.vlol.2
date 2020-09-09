@@ -77,7 +77,7 @@ public class UserService {
         return updateUser(user, false);
     }
     public User updateUser(User user, Boolean updatePassword) {
-        Long id = user.getUserID();
+        Long id = user.getUserId();
         User u = this.getUser(id);
         if(updatePassword)
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -104,12 +104,15 @@ public class UserService {
         return userRepository.findAllParticipants();
     }
 
-    public User getUser(Long userID) {
-        return userRepository.findById(userID).orElse(null);
+    public User getUser(Long userId) {
+        return userRepository.findById(userId).orElse(null);
     }
 
-    public void deleteUser(Long userID) {
-        userRepository.deleteById(userID);
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
+    public void delete(User user) {
+        userRepository.delete(user);
     }
 
     public List<User> findUserByKeyword(String keyword) {

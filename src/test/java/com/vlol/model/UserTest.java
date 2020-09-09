@@ -55,7 +55,7 @@ public class UserTest {
     @BeforeEach
     public void setUp() throws ParseException {
         // Populate the User object before each test
-        user.setUserID(1l);
+        user.setUserId(1l);
         user.setFirstName("John");
         user.setLastName("Doe");
         user.setEmail("jdoe@vlol.com");
@@ -78,13 +78,13 @@ public class UserTest {
     }
 
     /**
-     * Passing test for the getUserID method, of class User.
+     * Passing test for the getUserId method, of class User.
      */
     @Test
-    public void testGetUserID() {
-        System.out.println("getUserID Test (Passing value)");
+    public void testGetUserId() {
+        System.out.println("getUserId Test (Passing value)");
         Long expResult = 1l;
-        Long result = user.getUserID();
+        Long result = user.getUserId();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -96,13 +96,13 @@ public class UserTest {
     }
 
     /**
-     * Passing test for the setUserID method, of class User.
+     * Passing test for the setUserId method, of class User.
      */
     @Test
-    public void testSetUserID() {
-        System.out.println("setUserID Test (Passing value)");
-        Long userID = 1l;
-        user.setUserID(userID);
+    public void testSetUserId() {
+        System.out.println("setUserId Test (Passing value)");
+        Long userId = 1l;
+        user.setUserId(userId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -114,13 +114,13 @@ public class UserTest {
     }
 
     /**
-     * Negative value test for the setUserID method, of class User.
+     * Negative value test for the setUserId method, of class User.
      */
     @Test
-    public void testSetUserIDNegative() {
-        System.out.println("setUserID Test (Negative value)");
-        Long userID = -1l;
-        user.setUserID(userID);
+    public void testSetUserIdNegative() {
+        System.out.println("setUserId Test (Negative value)");
+        Long userId = -1l;
+        user.setUserId(userId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -132,13 +132,13 @@ public class UserTest {
     }
 
     /**
-     * Null value test for the setUserID method, of class User.
+     * Null value test for the setUserId method, of class User.
      */
     @Test
-    public void testSetUserIDNull() {
-        System.out.println("setUserID Test (Null value)");
-        Long userID = null;
-        user.setUserID(userID);
+    public void testSetUserIdNull() {
+        System.out.println("setUserId Test (Null value)");
+        Long userId = null;
+        user.setUserId(userId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -150,13 +150,13 @@ public class UserTest {
     }
 
     /**
-     * Out of Range value test for the setUserID method, of class User.
+     * Out of Range value test for the setUserId method, of class User.
      */
     @Test
-    public void testSetUserIDOutOfRange() {
-        System.out.println("setUserID Test (Out of Range value)");
-        Long userID = Long.MAX_VALUE + 1;
-        user.setUserID(userID);
+    public void testSetUserIdOutOfRange() {
+        System.out.println("setUserId Test (Out of Range value)");
+        Long userId = Long.MAX_VALUE + 1;
+        user.setUserId(userId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<User>> violations = validator.validate(user);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";

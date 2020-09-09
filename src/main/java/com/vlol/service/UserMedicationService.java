@@ -49,12 +49,16 @@ public class UserMedicationService {
         medicationRepository.deleteAll();
     }
 
-    public UserMedication getMedication(Long medicationID) {
-        return medicationRepository.findById(medicationID).get();
+    public UserMedication getMedication(Long medicationId) {
+        return medicationRepository.findById(medicationId).get();
     }
-
-    public void deleteMedication(Long medicationID) {
-        medicationRepository.deleteByPK(medicationID);
+    
+    public void deleteByUserId(long userId){
+        medicationRepository.deleteByUserId(userId);
+    }
+    
+    public void deleteMedication(Long medicationId) {
+        medicationRepository.deleteByPK(medicationId);
     }
 
     public List<UserMedication> findMedicationByKeyword(String keyword) {

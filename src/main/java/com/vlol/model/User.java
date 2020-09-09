@@ -44,7 +44,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     @Min(value = 1, message = "Value must be greater than 1.")
-    private Long userID;
+    private Long userId;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
@@ -84,11 +84,8 @@ public class User implements Serializable {
 //            inverseJoinColumns = @JoinColumn(name = "authorized_user_id"))
 //    private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
     
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_illness",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "illness_id"))
-    private Set<Condition> conditions = new HashSet<>();
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<UserCondition> conditions = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
@@ -145,12 +142,12 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user", optional=true)
     private UserInfo userInfo;
 
-    public Long getUserID() {
-        return userID;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Role getRole() {
@@ -212,11 +209,11 @@ public class User implements Serializable {
         this.allergies = allergies;
     }
 
-    public Set<Condition> getConditions() {
+    public Set<UserCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(Set<Condition> conditions) {
+    public void setConditions(Set<UserCondition> conditions) {
         this.conditions = conditions;
     }
 

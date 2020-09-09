@@ -45,7 +45,7 @@
                         <tbody>
                             <tr>
                                 <td class="text-nowrap">ID:</td>
-                                <td class="w-100" th:text="${user.userID}">ID</td>
+                                <td class="w-100" th:text="${user.userId}">ID</td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Last Name:</td>
@@ -140,7 +140,7 @@
                                         <li th:each="condition : ${conditions}">
                                             <input type="checkbox" name="conditions"
                                                    th:utext="'&nbsp;' + ${condition.conditionName}"
-                                                   th:value="${condition.conditionID}"
+                                                   th:value="${condition.conditionId}"
                                                    th:checked="${#sets.contains(user.conditions, condition)}"
                                                    th:name="conditions"
                                                    disabled="disabled"
@@ -157,7 +157,7 @@
                                         <li th:each="medication : ${medications}">
                                             <input type="checkbox" name="medications"
                                                    th:utext="'&nbsp;' + ${medication.brandName} + ' / ' + ${medication.genericName}"
-                                                   th:value="${medication.medicationID}"
+                                                   th:value="${medication.medicationId}"
                                                    th:checked="${#sets.contains(user.medications, medication)}"
                                                    th:name="medications"
                                                    disabled="disabled"

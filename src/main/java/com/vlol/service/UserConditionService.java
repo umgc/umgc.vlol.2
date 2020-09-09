@@ -1,5 +1,5 @@
 /**
- * Condition service class.
+ * UserCondition service class.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7
@@ -19,49 +19,40 @@
 package com.vlol.service;
 
 import com.vlol.data.ICDDownloader;
-import com.vlol.model.Condition;
+import com.vlol.model.UserCondition;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.vlol.repository.ConditionRepository;
+import com.vlol.repository.UserConditionRepository;
 import javax.persistence.EntityManager;
 
 @Service
 @Transactional
-public class ConditionService {
+public class UserConditionService {
 
     @Autowired
-    private final ConditionRepository conditionRepository;
+    private final UserConditionRepository userConditionRepository;
 
     @Autowired
-    public ConditionService(ConditionRepository conditionRepository, EntityManager em) {
-        this.conditionRepository = conditionRepository;
-        new ICDDownloader(this, em);
+    public UserConditionService(UserConditionRepository conditionRepository, EntityManager em) {
+        this.userConditionRepository = conditionRepository;
+//        new ICDDownloader(this, em);
     }
 
-    public List<Condition> getAllConditions() {
-        return conditionRepository.findAll();
+    public List<UserCondition> getAllConditions() {
+        return userConditionRepository.findAll();
     }
 
-    public void saveCondition(Condition condition) {
-        conditionRepository.save(condition);
+    public void saveCondition(UserCondition condition) {
+        userConditionRepository.save(condition);
     }
 
-    public Condition getCondition(Long conditionId) {
-        return conditionRepository.findById(conditionId).orElse(null);
+    public UserCondition getCondition(Long conditionId) {
+        return userConditionRepository.findById(conditionId).orElse(null);
     }
 
     public void deleteCondition(Long conditionId) {
-        conditionRepository.deleteById(conditionId);
-    }
-
-    public void truncateConditions() {
-        conditionRepository.deleteAllInBatch();
-    }
-    
-
-    public List<Condition> findConditionByKeyword(String keyword) {
-        return conditionRepository.findConditionByKeyword(keyword);
+        userConditionRepository.deleteById(conditionId);
     }
 }

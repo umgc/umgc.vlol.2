@@ -26,4 +26,9 @@ public interface UserMedicationRepository extends JpaRepository<UserMedication, 
     @Modifying
     @Query(value = "DELETE FROM UserMedication m WHERE m.id = :id")
     public void deleteByPK(@Param("id") Long id);
+    
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM User_Medication m WHERE m.user_id = :id", nativeQuery=true)
+    public void deleteByUserId(@Param("id") Long id);
 }

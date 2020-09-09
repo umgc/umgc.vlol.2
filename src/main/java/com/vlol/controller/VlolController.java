@@ -255,7 +255,7 @@ public class VlolController {
             mav.setViewName("menu/user-menu");
         }
         if(user == null) return new ModelAndView("redirect:/login");
-        mav.addObject("userID", user.getUserID());
+        mav.addObject("userId", user.getUserId());
         mav.addObject("user", user);
         // Check if this participant is authorized for other accounts, and if on the current page
         if(Utils.isParticipant() && user.getEmail().equals(principal.getName())){

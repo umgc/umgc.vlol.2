@@ -98,7 +98,7 @@ public class Utils {
     }
     public static String createJWT(User user, Long expiry){
         JWTCreator.Builder jwtBuilder = JWT.create()
-                .withClaim("userId", user.getUserID());
+                .withClaim("userId", user.getUserId());
         if(expiry != null)
             jwtBuilder = jwtBuilder.withExpiresAt(new Date(System.currentTimeMillis() + expiry));
         return jwtBuilder
@@ -106,7 +106,7 @@ public class Utils {
     }
     public static Boolean verifyJWT(User user, String jwt){
         JWTVerifier verifier = JWT.require(algorithm)
-            .withClaim("userId", user.getUserID())
+            .withClaim("userId", user.getUserId())
             .build();
         try {
             verifier.verify(jwt);

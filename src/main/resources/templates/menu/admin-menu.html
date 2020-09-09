@@ -11,7 +11,7 @@
                 <div class="col-lg-9 mx-auto">
                     <h1 class="pt-4">Menu</h1>
                     <div class="card-deck card-deck justify-content-center justify-content-sm-stretch">
-                        <a th:href="|/user/account/${user.userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                        <a th:href="|/user/account/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
                             <i class="fas fa-user-circle fa-9x" style="margin: 1rem"></i>
                             <div class="card-body">My Account</div>

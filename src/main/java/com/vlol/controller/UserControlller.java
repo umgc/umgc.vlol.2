@@ -21,6 +21,7 @@ package com.vlol.controller;
 import com.vlol.Mailer;
 import com.vlol.model.Allergy;
 import com.vlol.model.Condition;
+import com.vlol.model.UserCondition;
 import com.vlol.model.Role;
 import com.vlol.model.User;
 import com.vlol.model.UserInfo;
@@ -28,6 +29,7 @@ import com.vlol.model.UserMedication;
 import com.vlol.service.AllergyService;
 import com.vlol.service.ConditionService;
 import com.vlol.service.RoleService;
+import com.vlol.service.UserConditionService;
 import com.vlol.service.UserMedicationService;
 import com.vlol.service.UserService;
 import java.security.Principal;
@@ -69,7 +71,7 @@ public class UserControlller {
     private AllergyService allergyService;
 
     @Autowired
-    private ConditionService conditionService;
+    private UserConditionService conditionService;
 
     @Autowired
     private UserMedicationService medicationService;
@@ -78,7 +80,7 @@ public class UserControlller {
     private RoleService roleService;
 
     private Map<String, Allergy> allergyCache;
-    private Map<String, Condition> conditionCache;
+    private Map<String, UserCondition> conditionCache;
     private Map<String, UserMedication> medicationCache;
 
     @RequestMapping("/list-users")
@@ -112,9 +114,9 @@ public class UserControlller {
             allergyCache.put(allergy.getIdAsString(), allergy);
         }
         mav.addObject("allergies", allergies);
-        List<Condition> conditions = conditionService.getAllConditions();
-        conditionCache = new HashMap<String, Condition>();
-        for (Condition condition : conditions) {
+        List<UserCondition> conditions = conditionService.getAllConditions();
+        conditionCache = new HashMap<String, UserCondition>();
+        for (UserCondition condition : conditions) {
             conditionCache.put(condition.getIdAsString(), condition);
         }
         mav.addObject("conditions", conditions);
@@ -212,7 +214,7 @@ public class UserControlller {
             return new ModelAndView("redirect:/login");
         Utils.getUserName(userService, mav);
         mav.addObject("userInfo", user.getUserInfo());
-        mav.addObject("userID", user.getUserID());
+        mav.addObject("userId", user.getUserId());
         return mav;
     }
     @RequestMapping(value={"/user/profile", "/user/profile/{id}"}, method = RequestMethod.POST)
@@ -222,7 +224,7 @@ public class UserControlller {
             return "redirect:/login";
         // All fields come back from form except user and user info id
         changedUser.setUser(user);
-        changedUser.setInfoID(user.getUserInfo().getInfoID());
+        changedUser.setInfoId(user.getUserInfo().getInfoId());
         userService.updateUserInfo(changedUser);
         if(id != null)
             return "redirect:/user/profile/"+id;
@@ -235,7 +237,8 @@ public class UserControlller {
         User user = Utils.getIfUserOrAdmin(userService, id, true);
         if(user == null)
             return "redirect:/login";
-        userService.deleteUser(id);
+        medicationService.deleteByUserId(id);
+        userService.delete(user);
         return "redirect:/list-users";
     }
 
@@ -272,9 +275,9 @@ public class UserControlller {
             allergyCache.put(allergy.getIdAsString(), allergy);
         }
         mav.addObject("allergies", allergies);
-        List<Condition> conditions = conditionService.getAllConditions();
-        conditionCache = new HashMap<String, Condition>();
-        for (Condition condition : conditions) {
+        List<UserCondition> conditions = conditionService.getAllConditions();
+        conditionCache = new HashMap<String, UserCondition>();
+        for (UserCondition condition : conditions) {
             conditionCache.put(condition.getIdAsString(), condition);
         }
         mav.addObject("conditions", conditions);
@@ -316,7 +319,7 @@ public class UserControlller {
                     return element;
                 }
                 if (element instanceof String) {
-                    Condition condition = conditionCache.get(element);
+                    UserCondition condition = conditionCache.get(element);
                     System.out.println("Looking up condition for id " + element + ": " + condition);
                     return condition;
                 }

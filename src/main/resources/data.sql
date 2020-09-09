@@ -10,23 +10,6 @@ INSERT INTO allergy (allergy_id, allergy_name) VALUES (8, 'Morphine');
 INSERT INTO allergy (allergy_id, allergy_name) VALUES (9, 'Penicillin');
 INSERT INTO allergy (allergy_id, allergy_name) VALUES (10, 'Sulfa');
 
-INSERT INTO illness (illness_id, illness_name) VALUES (1, 'None');
-INSERT INTO illness (illness_id, illness_name) VALUES (2, 'Other');
-INSERT INTO illness (illness_id, illness_name) VALUES (3, 'Asthma');
-INSERT INTO illness (illness_id, illness_name) VALUES (4, 'Bleeding Disorder');
-INSERT INTO illness (illness_id, illness_name) VALUES (5, 'Cancer');
-INSERT INTO illness (illness_id, illness_name) VALUES (6, 'Cardiac');
-INSERT INTO illness (illness_id, illness_name) VALUES (7, 'COPD');
-INSERT INTO illness (illness_id, illness_name) VALUES (8, 'Dementia');
-INSERT INTO illness (illness_id, illness_name) VALUES (9, 'Diabetes (Blood Sugar)');
-INSERT INTO illness (illness_id, illness_name) VALUES (10, 'Hepatitis');
-INSERT INTO illness (illness_id, illness_name) VALUES (11, 'Hypertension (Blood Pressure)');
-INSERT INTO illness (illness_id, illness_name) VALUES (12, 'Pacemaker');
-INSERT INTO illness (illness_id, illness_name) VALUES (13, 'Seizure Disorder');
-INSERT INTO illness (illness_id, illness_name) VALUES (14, 'Stroke');
-
-
-
 INSERT INTO appuser (user_id, role_id, first_name, last_name, email, password, date_created, last_login_date, admin_comments, is_active, is_locked, is_verified) VALUES 
 (1, 1, 'Lorraine', 'Baines', 'parti@vlol.gov', '$2a$10$wbBBPoyyiMNr5sUbInHCM.rrXk8PfbfLTkWJ9KEglBynBFaNSmjsS', '2020-05-20 16:30:00', '2020-06-23 15:10:00', 'Lorraine is a program participant.', true, false, true),
 (2, 2, 'Marty', 'McFly', 'provi@vlol.gov', '$2a$10$wbBBPoyyiMNr5sUbInHCM.rrXk8PfbfLTkWJ9KEglBynBFaNSmjsS', '2020-05-20 18:30:00', '2020-06-23 15:10:00', 'Marty is an emergency medical provider.', true, false, true),

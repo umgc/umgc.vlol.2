@@ -3,13 +3,13 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title th:text="(${medication.medicationID}!=null?'Edit':'Add')+ ' a Medication'">Add a New Medication</title>
+        <title th:text="(${medication.medicationId}!=null?'Edit':'Add')+ ' a Medication'"></title>
     </head>
     <body>
         <div align="center" layout:fragment="content" class="container">
             <div class="row">
                 <div class="col-md-6 offset-md-3 mb-5">
-                    <h1 th:text="(${medication.medicationID}!=null?'Edit':'Add')+ ' a Medication'"></h1>
+                    <h1 th:text="(${medication.medicationId}!=null?'Edit':'Add')+ ' a Medication'"></h1>
                 </div>
             </div>
             <div class="row">
@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <form action="#" th:object="${medication}" th:action="'/user/save-medication/'+${userID}" method="post" data-parsley-validate="">
+            <form action="#" th:object="${medication}" th:action="'/user/save-medication/'+${userId}" method="post" data-parsley-validate="">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
@@ -53,7 +53,8 @@
                           <label for="frequency">Frequency</label>
                           <input type="text" class="form-control" id="frequency" th:field="*{frequency}" required="" placeholder="Required" data-parsley-rfc3986=""/>
                         </div>
-                        <input type="hidden" th:field="*{medicationID}" />
+                        <input type="hidden" th:field="*{medicationId}" />
+                        <input type="hidden" th:field="*{referenceId}" id="referenceId"/>
                     </div>
                 </div>
                 <div class="row">
@@ -64,7 +65,7 @@
             </form>
             <div class="row mt-5">
                 <div class="col-md-6 offset-md-3">
-                    <a th:href="|/user/medications/${userID}|">Return to Medication Manager</a>
+                    <a th:href="|/user/medications/${userId}|">Return to Medication Manager</a>
                 </div>
             </div>
             <script>
@@ -96,6 +97,7 @@
                         $('#genericName').val(medication.genericName);
                         $('#controlled').prop('checked', medication.controlled);
                         $('#bloodThinner').prop('checked', medication.bloodThinner);
+                        $('#referenceId').val(medication.referenceId);
                       });
                 });
             </script>

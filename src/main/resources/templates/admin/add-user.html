@@ -113,7 +113,7 @@
                                 <td>
                                     <select th:field="*{userAgentNo}">
                                         <option value="">None</option>
-                                        <option th:each="agent : ${agents}" th:value="${agent.userID}" th:text="${agent.userID}">Choose a User Agent</option>
+                                        <option th:each="agent : ${agents}" th:value="${agent.userId}" th:text="${agent.userId}">Choose a User Agent</option>
                                     </select>
                                 </td>
                             </tr>
@@ -184,7 +184,7 @@
                                         <li th:each="condition : ${conditions}">
                                             <input type="checkbox" name="conditions"
                                                    th:utext="'&nbsp;' + ${condition.conditionName}"
-                                                   th:value="${condition.conditionID}"
+                                                   th:value="${condition.conditionId}"
                                                    th:checked="${#sets.contains(user.conditions, condition)}"
                                                    th:name="conditions"
                                                    />
@@ -200,7 +200,7 @@
                                         <li th:each="medication : ${medications}">
                                             <input type="checkbox" name="medications"
                                                    th:utext="'&nbsp;' + ${medication.brandName} + ' / ' + ${medication.genericName}"
-                                                   th:value="${medication.medicationID}"
+                                                   th:value="${medication.medicationId}"
                                                    th:checked="${#sets.contains(user.medications, medication)}"
                                                    th:name="medications"
                                                    />

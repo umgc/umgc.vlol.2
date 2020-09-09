@@ -37,7 +37,7 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     @Min(value = 1, message = "Value must be greater than 1.")
-    private Long roleID;
+    private Long roleId;
 
     @Column(name = "role_title", length = 50, unique = true)
     @NotBlank(message = "Role title is required.")
@@ -62,12 +62,12 @@ public class Role implements Serializable {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.PERSIST)
     private Set<User> users;
 
-    public Long getRoleID() {
-        return roleID;
+    public Long getRoleId() {
+        return roleId;
     }
 
-    public void setRoleID(Long roleID) {
-        this.roleID = roleID;
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
     }
 
     public String getTitle() {

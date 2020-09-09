@@ -48,12 +48,12 @@ public class MedicationService {
         medicationRepository.save(medication);
     }
 
-    public Medication getMedication(Long medicationID) {
-        return medicationRepository.findById(medicationID).orElse(null);
+    public Medication getMedication(Long medicationId) {
+        return medicationRepository.findById(medicationId).orElse(null);
     }
 
-    public void deleteMedication(Long medicationID) {
-        medicationRepository.deleteById(medicationID);
+    public void deleteMedication(Long medicationId) {
+        medicationRepository.deleteById(medicationId);
     }
     public void truncateMedication() {
         medicationRepository.deleteAllInBatch();

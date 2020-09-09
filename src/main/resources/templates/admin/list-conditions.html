@@ -27,16 +27,16 @@
                         </thead>
                         <tbody>
                             <tr th:each="condition : ${conditionList}">
-                                <td th:text="${condition.conditionID}" class="align-middle">Condition ID</td>
+                                <td th:text="${condition.conditionId}" class="align-middle">Condition ID</td>
                                 <td th:text="${condition.conditionName}" class="align-middle">Condition Name</td>
                                 <td class="text-nowrap">
-                                    <a th:href="@{/view-condition/{id}(id=${condition.conditionID})}" class="btn btn-info">
+                                    <a th:href="@{/view-condition/{id}(id=${condition.conditionId})}" class="btn btn-info">
                                         <i class="far fa-eye"></i> View
                                     </a>
-                                    <a th:href="@{/edit-condition/{id}(id=${condition.conditionID})}" class="btn btn-warning">
+                                    <a th:href="@{/edit-condition/{id}(id=${condition.conditionId})}" class="btn btn-warning">
                                         <i class="far fa-edit"></i> Edit
                                     </a>
-                                    <a th:href="@{/delete-condition/{id}(id=${condition.conditionID})}" class="btn btn-danger"  onclick="return confirm('Are you sure you want to delete this item?')">
+                                    <a th:href="@{/delete-condition/{id}(id=${condition.conditionId})}" class="btn btn-danger"  onclick="return confirm('Are you sure you want to delete this item?')">
                                         <i class="far fa-trash-alt"></i> Delete
                                     </a>
                                 </td>

@@ -8,7 +8,7 @@
     <body>
         <div align="center" layout:fragment="content" class="container">
             <h1>Authorized User Manager</h1>
-            <a th:href="|/user/add-authorized-user/${userID}|">Add an Authorized User</a>
+            <a th:href="|/user/add-authorized-user/${userId}|">Add an Authorized User</a>
             <br/><br/>
             <table border="1" cellpadding="10">
                 <thead>
@@ -23,9 +23,9 @@
                         <td th:text="${authorizedUser.authorizedName}"></td>
                         <td th:text="${authorizedUser.authorizedEmail}"></td>
                         <td>
-                            <a th:href="|/user/edit-authorized-user/${userID}/${authorizedUser.authorizedUserId}|">Edit</a>
+                            <a th:href="|/user/edit-authorized-user/${userId}/${authorizedUser.authorizedUserId}|">Edit</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a th:href="|/user/delete-authorized-user/${userID}/${authorizedUser.authorizedUserId}|">Delete</a>
+                            <a th:href="|/user/delete-authorized-user/${userId}/${authorizedUser.authorizedUserId}|">Delete</a>
                         </td>
                     </tr>
                 </tbody>

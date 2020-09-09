@@ -46,8 +46,9 @@ ALTER TABLE allergy ADD CONSTRAINT allergy_pk PRIMARY KEY(allergy_id);
 ALTER TABLE allergy ADD CONSTRAINT alergy_uq_name UNIQUE(allergy_name);
 
 CREATE TABLE illness(
-    illness_id BIGINT NOT NULL COMMENT 'The unique ID for an illness.', 
-    illness_name VARCHAR(50) COMMENT 'The illness'' name.'
+    illness_id BIGINT auto_increment COMMENT 'The unique ID for an illness.', 
+    illness_name VARCHAR(128) COMMENT 'The illness'' name.',
+    ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT = 'The information table for illnesses.';
 
 ALTER TABLE illness ADD CONSTRAINT illness_pk PRIMARY KEY(illness_id);
@@ -59,7 +60,8 @@ CREATE TABLE medication(
     brand_name VARCHAR(256) COMMENT 'The medication''s brand name.',
     controlled BOOLEAN COMMENT 'Controlled substance alert flag',
     drug_action VARCHAR(1024) COMMENT 'The medication''s action on the body.',
-    generic_name VARCHAR(256) COMMENT 'The medication''s generic name.'
+    generic_name VARCHAR(256) COMMENT 'The medication''s generic name.',
+    ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT='The information table for medications.';
 
 ALTER TABLE medication ADD CONSTRAINT medication_pk PRIMARY KEY(medication_id);
@@ -145,8 +147,11 @@ ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_allergy_fk FOREIGN KEY(alle
 ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
 
 CREATE TABLE user_illness(
+    illness_id BIGINT auto_increment COMMENT 'The medication unique ID.',
     user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID.',
-    illness_id BIGINT NOT NULL COMMENT 'The unique ID for the patient''s illness.'
+    illness_name VARCHAR(128) COMMENT 'The illness'' name.',
+    ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
+    
 ); -- COMMENT = 'Information about the patient''s illnesses.';
 
 ALTER TABLE user_illness ADD CONSTRAINT user_illness_pk PRIMARY KEY(user_id, illness_id);
@@ -163,7 +168,8 @@ CREATE TABLE user_medication(
     drug_action VARCHAR(1024) COMMENT 'The medication''s action on the body.',
     generic_name VARCHAR(256) COMMENT 'The medication''s generic name.',
     dosage VARCHAR(32) NOT NULL COMMENT 'The amount of medication taken.',
-    frequency VARCHAR(32) NOT NULL COMMENT 'How often the medication is taken (once, twice daily, etc.)'
+    frequency VARCHAR(32) NOT NULL COMMENT 'How often the medication is taken (once, twice daily, etc.)',
+    ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT = 'The key table for the user-medication''s list.';
 
 ALTER TABLE user_medication ADD CONSTRAINT user_med_pk PRIMARY KEY(user_id, medication_id);

@@ -11,7 +11,7 @@
                 <h1 class="pt-4">Account</h1>
                 <div role="alert" class="text-danger" th:if="${msg}" th:utext="${msg}"></div>
                 <br />
-                <form action="#" th:action="|/user/account/${user.userID}|" th:object="${user}" method="post" data-parsley-validate="">
+                <form action="#" th:action="|/user/account/${user.userId}|" th:object="${user}" method="post" data-parsley-validate="">
                     <table class="table table-bordered dt-responsive display">
                         <tr>
                             <td><label for="firstName">First Name:</label></td>
@@ -86,11 +86,11 @@
                 </form>
                 <br />
                 <br />
-                <form action="#" th:action="|/user/delete/${user.userID}|" th:object="${user}" method="post" onsubmit="return confirm('Do you really want to delete your account and data?');">
+                <form action="#" th:action="|/user/delete/${user.userId}|" th:object="${user}" method="post" onsubmit="return confirm('Do you really want to delete your account and data?');">
                     <button type="submit" class="btn btn-danger"><i class="fas fa-minus-circle"></i> DELETE ACCOUNT</button>
                 </form>
                 <br />
-                <a th:href="|/menu/${user.userID}|" class="btn btn-primary btn-block">Return to Menu</a>
+                <a th:href="|/menu/${user.userId}|" class="btn btn-primary btn-block">Return to Menu</a>
             </div>
         </div>
     </body>

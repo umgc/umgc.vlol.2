@@ -14,6 +14,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -88,11 +89,12 @@ public class ICDDownloader {
 
                     ZipInputStream zis = new ZipInputStream((InputStream)zipResponse.body());
                     ZipEntry zipEntry = zis.getNextEntry();
+                    HashSet<String> conditionNameHasSeen = new HashSet<String>();
 
                     while (zipEntry != null) {
                         if(zipEntry.getName().endsWith("icd10cm_index_"+year+".xml")){
                             // TODO: Add back in to clear table on reload
-//                        conditionService.truncateConditions();
+                            conditionService.truncateConditions();
                             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                             Document doc = dBuilder.parse(zis);
@@ -110,13 +112,18 @@ public class ICDDownloader {
                                         if(titleTextNode.getLength() > 0 && codeTextNode.getLength() > 0){
                                             Condition c = new Condition();
                                             // Should add the ID of the ICD code
-//                                            c.setConditionID(codeTextNode.item(0).getTextContent());
-                                            c.setConditionName(titleTextNode.item(0).getTextContent().replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", ""));
-                                            session.save(c);
-                                            
-                                            if (this.count++ % 100 == 0) { //100, same as the JDBC batch size
-                                                session.flush();
-                                                session.clear();
+                                            String titleText = titleTextNode.item(0).getTextContent().replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+                                            String codeText = codeTextNode.item(0).getTextContent();
+                                            if(!conditionNameHasSeen.contains(titleText.toLowerCase())){
+                                                conditionNameHasSeen.add(titleText.toLowerCase());
+                                                c.setReferenceId(codeText);
+                                                c.setConditionName(titleText);
+                                                session.save(c);
+
+                                                if (this.count++ % 100 == 0) { //100, same as the JDBC batch size
+                                                    session.flush();
+                                                    session.clear();
+                                                }
                                             }
                                         }
                                     }
@@ -125,6 +132,7 @@ public class ICDDownloader {
                             // Stop if the file was found and extracted
                             break;
                         }
+                        // Check for next file
                         zipEntry = zis.getNextEntry();
                     }
                     // Stop iterating through years if valid year was found
