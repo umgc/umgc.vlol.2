@@ -10,7 +10,7 @@ VERSION:=1.0.$(shell git rev-list HEAD | wc -l)
 VLOL_JAR=VLOL-1.0.0.jar
 
 # Docker app vars
-APP_NAME=vlol
+APP_NAME=vlol.app
 APP_TAG=$(VERSION)
 APP_IMG=$(APP_NAME):$(APP_TAG)
 
@@ -18,7 +18,7 @@ APP_IMG=$(APP_NAME):$(APP_TAG)
 BUILD_ENV_NAME=vlol-build-env
 BUILD_ENV_TAG=latest
 BUILD_IMG=$(BUILD_ENV_NAME):$(BUILD_ENV_TAG)
-REMOTE_IMG=umgccontainerregistry.azurecr.io/$(APP_IMG)
+REMOTE_IMG=docker.io/umgccaps/$(APP_IMG)
 
 # Maven options
 MAVEN_OPTS:=-Dversion=$(VERSION)
@@ -30,7 +30,7 @@ ifdef SKIP_TESTS
 endif  
 
 # PHONY 
-.PHONY: all push build build-vlol start-vlol build-env start-env clean 
+.PHONY: all push build build-vlol start-vlol build-env start-env clean dev-deploy help azure-help
 
 	
 ##############################################################
@@ -116,6 +116,17 @@ clean:
 	@mvn $(MAVEN_OPTS) clean -f pom.xml
 	@rm -rf ./tomcat
 
+
+dev-deploy:
+	az group create --name devTestgroup --location eastus
+	az deployment group create --resource-group devTestgroup --template-file azure/deploy-template.json --parameter azure/deploy-parameters.json
+
+# This prints Azure setup make commands and usage
+azure-help:
+	@$(info Azure development deployment steps)
+	@$(info 1. az login           - Navigate to the url and enter the code from the CLI output)
+	@$(info 2. make dev-deploy    - This creates a container instances with the VLOL application deployed)
+	@echo
 
 # This prints make commands and usage
 help:

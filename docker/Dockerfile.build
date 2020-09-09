@@ -30,4 +30,5 @@ RUN cd /var/tmp && \
     tar xf apache-maven-3.6.3-bin.tar.gz -C /usr/lib                                                       && \
     ln -s /usr/lib/apache-maven-3.6.3/bin/mvn /usr/bin/mvn
 
-
+RUN mkdir repo
+WORKDIR /repo
