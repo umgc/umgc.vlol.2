@@ -8,11 +8,6 @@
     <body>
         <div align="center" layout:fragment="content" class="container">
             <h1>Medication Manager</h1>
-            <form method="get" action="search-medications">
-                <input type="text" name="keyword" />&nbsp;&nbsp;
-                <input type="submit" value="Search" />
-            </form>
-            <br />
             <a th:href="|/user/add-medication/${userId}|">Add a Medication</a>
             <br/><br/>
             <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap">

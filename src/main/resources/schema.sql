@@ -38,8 +38,9 @@ CREATE TABLE datasets(
 
 -- Create database tables statements.
 CREATE TABLE allergy(
-    allergy_id BIGINT NOT NULL COMMENT 'The unique ID for an allergy.', 
-    allergy_name VARCHAR(50) COMMENT 'The allergy''s name.'
+    allergy_id BIGINT auto_increment COMMENT 'The unique ID for an allergy.', 
+    allergy_name VARCHAR(256) COMMENT 'The allergy''s name.',
+    ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT='The information table for allergies.';
 
 ALTER TABLE allergy ADD CONSTRAINT allergy_pk PRIMARY KEY(allergy_id);
@@ -47,7 +48,7 @@ ALTER TABLE allergy ADD CONSTRAINT alergy_uq_name UNIQUE(allergy_name);
 
 CREATE TABLE illness(
     illness_id BIGINT auto_increment COMMENT 'The unique ID for an illness.', 
-    illness_name VARCHAR(128) COMMENT 'The illness'' name.',
+    illness_name VARCHAR(256) COMMENT 'The illness'' name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT = 'The information table for illnesses.';
 
@@ -124,7 +125,7 @@ CREATE TABLE user_info(
 ) ;
 
 ALTER TABLE user_info ADD CONSTRAINT user_info_pk PRIMARY KEY(info_id);
-ALTER TABLE user_info ADD CONSTRAINT user_info_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+ALTER TABLE user_info ADD CONSTRAINT user_info_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
 CREATE TABLE authorized_user (
     authorized_user_id BIGINT auto_increment COMMENT 'Id for table',
@@ -134,28 +135,29 @@ CREATE TABLE authorized_user (
 ); -- COMMENT='The database user role table';
 
 ALTER TABLE authorized_user ADD CONSTRAINT authorized_pk PRIMARY KEY(user_id, authorized_user_id);
-ALTER TABLE authorized_user ADD CONSTRAINT authorized_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+ALTER TABLE authorized_user ADD CONSTRAINT authorized_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 CREATE INDEX authorized_user_email_idx ON authorized_user(authorized_email);
 
 CREATE TABLE user_allergy(
+    allergy_id BIGINT auto_increment COMMENT 'The unique ID for an allergy.',
+    allergy_name VARCHAR(256) COMMENT 'The allergy''s name.',
     user_id BIGINT NOT NULL COMMENT 'The unique ID for a patient.', 
-    allergy_id BIGINT NOT NULL COMMENT 'The unique ID for an allergy.'
+    ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT = 'The information table for the patient''s allergies.';
 
 ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_pk PRIMARY KEY(user_id, allergy_id);
-ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_allergy_fk FOREIGN KEY(allergy_id) REFERENCES allergy(allergy_id);
-ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
 CREATE TABLE user_illness(
     illness_id BIGINT auto_increment COMMENT 'The medication unique ID.',
     user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID.',
-    illness_name VARCHAR(128) COMMENT 'The illness'' name.',
+    illness_name VARCHAR(256) COMMENT 'The illness'' name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
     
 ); -- COMMENT = 'Information about the patient''s illnesses.';
 
 ALTER TABLE user_illness ADD CONSTRAINT user_illness_pk PRIMARY KEY(user_id, illness_id);
-ALTER TABLE user_illness ADD CONSTRAINT user_illness_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+ALTER TABLE user_illness ADD CONSTRAINT user_illness_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 ALTER TABLE user_illness ADD CONSTRAINT user_illness_illness_fk FOREIGN KEY(illness_id) REFERENCES illness(illness_id);
 
 -- key table for user_med_list
@@ -173,7 +175,7 @@ CREATE TABLE user_medication(
 ); -- COMMENT = 'The key table for the user-medication''s list.';
 
 ALTER TABLE user_medication ADD CONSTRAINT user_med_pk PRIMARY KEY(user_id, medication_id);
-ALTER TABLE user_medication ADD CONSTRAINT user_med_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
+ALTER TABLE user_medication ADD CONSTRAINT user_med_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 ALTER TABLE user_medication ADD CONSTRAINT user_medication_uq UNIQUE(user_id, brand_name);
 
 CREATE TABLE persistent_logins (

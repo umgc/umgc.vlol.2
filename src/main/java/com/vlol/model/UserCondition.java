@@ -19,11 +19,11 @@ public class UserCondition implements Serializable {
     @Min(value = 1, message = "Value must be greater than 1.")
     private Long conditionId;
 
-    @Column(name = "illness_name", length = 128, unique = true)
+    @Column(name = "illness_name", length = 256, unique = true)
     @NotBlank(message = "Condition name is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 128, message = "Input exceeds size limits.")
+    @Size(max = 256, message = "Input exceeds size limits.")
     private String conditionName;
 
     @Column(name = "ref_id", length = 64)

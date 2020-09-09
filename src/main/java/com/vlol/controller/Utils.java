@@ -34,6 +34,10 @@ public class Utils {
             mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
         }
     }
+    public static Boolean isUser(User user) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return user.getEmail().toLowerCase().equals(auth.getName().toLowerCase());
+    }
     public static User getIfAuthorizedForUser(UserService userService){
         return getIfAuthorizedForUser(userService, null, false);
     }

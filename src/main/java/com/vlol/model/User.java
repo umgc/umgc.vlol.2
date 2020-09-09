@@ -65,25 +65,9 @@ public class User implements Serializable {
     @Size(max = 100, message = "Input exceeds size limits.")
     private String lastName;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_allergy",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "allergy_id"))
-    private Set<Allergy> allergies = new HashSet<>();
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<UserAllergy> allergies = new HashSet<>();
 
-
-//    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-//    @JoinTable(name = "authorized_user",
-//            joinColumns = @JoinColumn(name = "authorized_email"),
-//            inverseJoinColumns = @JoinColumn(name = "email"))
-//    private Set<User> authorizedUsers = new HashSet<>();
-
-//    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-//    @JoinTable(name = "authorized_user",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "authorized_user_id"))
-//    private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
-    
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<UserCondition> conditions = new HashSet<>();
 
@@ -201,11 +185,11 @@ public class User implements Serializable {
     }
 
 
-    public Set<Allergy> getAllergies() {
+    public Set<UserAllergy> getAllergies() {
         return allergies;
     }
 
-    public void setAllergies(Set<Allergy> allergies) {
+    public void setAllergies(Set<UserAllergy> allergies) {
         this.allergies = allergies;
     }
 

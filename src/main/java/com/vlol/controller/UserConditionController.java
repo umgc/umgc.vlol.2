@@ -100,8 +100,8 @@ public class UserConditionController {
         Utils.getUserName(userService, mav);
         // Check if the condition belongs to the user
         Boolean found = false;
-        for(UserCondition med : user.getConditions())
-            if(med.getConditionId().equals(conditionId))
+        for(UserCondition condition : user.getConditions())
+            if(condition.getConditionId().equals(conditionId))
                 found = true;
         if(!found)
             return new ModelAndView("redirect:/login");
@@ -119,8 +119,8 @@ public class UserConditionController {
             return "redirect:/login";
         // Check if the condition belongs to the user
         Boolean found = false;
-        for(UserCondition med : user.getConditions()){
-            if(med.getConditionId().equals(conditionId))
+        for(UserCondition condition : user.getConditions()){
+            if(condition.getConditionId().equals(conditionId))
                 found = true;
         }
         if(!found)

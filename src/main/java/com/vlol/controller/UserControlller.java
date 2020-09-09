@@ -19,16 +19,14 @@
 package com.vlol.controller;
 
 import com.vlol.Mailer;
-import com.vlol.model.Allergy;
-import com.vlol.model.Condition;
-import com.vlol.model.UserCondition;
 import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.model.UserAllergy;
+import com.vlol.model.UserCondition;
 import com.vlol.model.UserInfo;
 import com.vlol.model.UserMedication;
-import com.vlol.service.AllergyService;
-import com.vlol.service.ConditionService;
 import com.vlol.service.RoleService;
+import com.vlol.service.UserAllergyService;
 import com.vlol.service.UserConditionService;
 import com.vlol.service.UserMedicationService;
 import com.vlol.service.UserService;
@@ -51,7 +49,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.ui.Model;
 
 /**
  * User controller class.
@@ -68,7 +65,7 @@ public class UserControlller {
     private UserService userService;
 
     @Autowired
-    private AllergyService allergyService;
+    private UserAllergyService allergyService;
 
     @Autowired
     private UserConditionService conditionService;
@@ -79,7 +76,7 @@ public class UserControlller {
     @Autowired
     private RoleService roleService;
 
-    private Map<String, Allergy> allergyCache;
+    private Map<String, UserAllergy> allergyCache;
     private Map<String, UserCondition> conditionCache;
     private Map<String, UserMedication> medicationCache;
 
@@ -108,9 +105,9 @@ public class UserControlller {
         ModelAndView mav = new ModelAndView("admin/add-user");
         Utils.getUserName(userService, mav);
         mav.addObject("user", user);
-        List<Allergy> allergies = allergyService.getAllAllergies();
-        allergyCache = new HashMap<String, Allergy>();
-        for (Allergy allergy : allergies) {
+        List<UserAllergy> allergies = allergyService.getAllAllergies();
+        allergyCache = new HashMap<String, UserAllergy>();
+        for (UserAllergy allergy : allergies) {
             allergyCache.put(allergy.getIdAsString(), allergy);
         }
         mav.addObject("allergies", allergies);
@@ -237,9 +234,14 @@ public class UserControlller {
         User user = Utils.getIfUserOrAdmin(userService, id, true);
         if(user == null)
             return "redirect:/login";
-        medicationService.deleteByUserId(id);
         userService.delete(user);
-        return "redirect:/list-users";
+        if(Utils.isUser(user)){ // If the user deletes the account log them out
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            auth.setAuthenticated(false);
+            return "redirect:/login";
+        }else{ // If its the admin bring them back to the user page
+            return "redirect:/list-users";
+        }
     }
 
     @RequestMapping("/search-users")
@@ -269,9 +271,9 @@ public class UserControlller {
         }
         
         mav.addObject("user", user);
-        List<Allergy> allergies = allergyService.getAllAllergies();
-        allergyCache = new HashMap<String, Allergy>();
-        for (Allergy allergy : allergies) {
+        List<UserAllergy> allergies = allergyService.getAllAllergies();
+        allergyCache = new HashMap<String, UserAllergy>();
+        for (UserAllergy allergy : allergies) {
             allergyCache.put(allergy.getIdAsString(), allergy);
         }
         mav.addObject("allergies", allergies);
@@ -298,12 +300,12 @@ public class UserControlller {
         binder.registerCustomEditor(Set.class, "allergies", new CustomCollectionEditor(Set.class) {
             @Override
             protected Object convertElement(Object element) {
-                if (element instanceof Allergy) {
+                if (element instanceof UserAllergy) {
                     System.out.println("Converting from Allergy to Allergy: " + element);
                     return element;
                 }
                 if (element instanceof String) {
-                    Allergy allergy = allergyCache.get(element);
+                    UserAllergy allergy = allergyCache.get(element);
                     System.out.println("Looking up allergy for id " + element + ": " + allergy);
                     return allergy;
                 }
@@ -314,8 +316,8 @@ public class UserControlller {
         binder.registerCustomEditor(Set.class, "conditions", new CustomCollectionEditor(Set.class) {
             @Override
             protected Object convertElement(Object element) {
-                if (element instanceof Condition) {
-                    System.out.println("Converting from Condition to Condition: " + element);
+                if (element instanceof UserCondition) {
+                    System.out.println("Converting from UserCondition to UserCondition: " + element);
                     return element;
                 }
                 if (element instanceof String) {

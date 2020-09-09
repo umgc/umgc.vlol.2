@@ -1,5 +1,5 @@
 /**
- * Allergy service class.
+ * UserAllergy service class.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7
@@ -18,8 +18,8 @@
  */
 package com.vlol.service;
 
-import com.vlol.model.Allergy;
-import com.vlol.repository.AllergyRepository;
+import com.vlol.model.UserAllergy;
+import com.vlol.repository.UserAllergyRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,33 +27,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class AllergyService {
+public class UserAllergyService {
 
     @Autowired
-    private final AllergyRepository allergyRepository;
+    private final UserAllergyRepository allergyRepository;
 
     @Autowired
-    public AllergyService(AllergyRepository allergyRepository) {
+    public UserAllergyService(UserAllergyRepository allergyRepository) {
         this.allergyRepository = allergyRepository;
     }
 
-    public List<Allergy> getAllAllergies() {
+    public List<UserAllergy> getAllAllergies() {
         return allergyRepository.findAll();
     }
 
-    public void saveAllergy(Allergy allergy) {
+    public void saveAllergy(UserAllergy allergy) {
         allergyRepository.save(allergy);
     }
 
-    public Allergy getAllergy(Long allergyId) {
+    public UserAllergy getAllergy(Long allergyId) {
         return allergyRepository.findById(allergyId).orElse(null);
     }
 
     public void deleteAllergy(Long allergyId) {
         allergyRepository.deleteById(allergyId);
-    }
-
-    public List<Allergy> findAllergyByKeyword(String keyword) {
-        return allergyRepository.findAllergyByKeyword(keyword);
     }
 }

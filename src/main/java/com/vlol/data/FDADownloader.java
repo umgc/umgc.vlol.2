@@ -17,19 +17,20 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.persistence.EntityManager;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-import java.util.Arrays;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -144,6 +145,12 @@ public class FDADownloader {
                                     && (genericName == null || genericName.length() < 256)
                                     && (dosageForm == null || dosageForm.length() < 256)){
                                 Medication m = new Medication();
+                                if(brandName != null && brandName.toUpperCase().equals(brandName)){
+                                    brandName = convertToTitleCase(brandName);
+                                }
+                                if(genericName != null && genericName.toUpperCase().equals(genericName)){
+                                    genericName = convertToTitleCase(genericName);
+                                }
                                 brandNameSeen.add(brandName.toLowerCase());
                                 m.setControlled(type.equals("HUMAN PRESCRIPTION DRUG"));
                                 m.setGenericName(genericName);
@@ -178,5 +185,18 @@ public class FDADownloader {
             }
 
         }
+    }
+    public static String convertToTitleCase(String text) {
+        if (text == null || text.isEmpty()) {
+            return text;
+        }
+        return Arrays
+          .stream(text.split(" "))
+          .map(word -> word.isEmpty()
+            ? word
+            : Character.toTitleCase(word.charAt(0)) + word
+              .substring(1)
+              .toLowerCase())
+          .collect(Collectors.joining(" "));
     }
 }

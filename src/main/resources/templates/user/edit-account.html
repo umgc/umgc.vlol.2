@@ -37,14 +37,14 @@
                         <tr>
                             <td><label for="password">Password:</label></td>
                             <td>
-                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" />
+                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="6" />
                                 <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
                             </td>
                         </tr>   
                         <tr>
                             <td><label for="password2">Confirm Password:</label></td>
                             <td>
-                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-equalto="#password" />
+                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-equalto="#password" data-parsley-minlength="6" />
                             </td>
                         </tr>
 <!--                        Admin Section-->

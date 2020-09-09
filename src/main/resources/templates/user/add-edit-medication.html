@@ -27,11 +27,11 @@
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
                           <label for="brandName">Brand Name</label>
-                          <input type="text" class="form-control" id="brandName" th:field="*{brandName}" data-parsley-rfc3986=""/>
+                          <input type="text" class="form-control" id="brandName" th:field="*{brandName}" data-parsley-maxlength="256" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
                           <label for="genericName">Generic Name</label>
-                          <input type="text" class="form-control" id="genericName" th:field="*{genericName}" data-parsley-rfc3986=""/>
+                          <input type="text" class="form-control" id="genericName" th:field="*{genericName}" data-parsley-maxlength="256" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
                           <label for="drugAction">Drug Action</label>

@@ -168,7 +168,7 @@
                                         <li th:each="allergy : ${allergies}">
                                             <input type="checkbox" name="allergies"
                                                    th:utext="'&nbsp;' + ${allergy.allergyName}"
-                                                   th:value="${allergy.allergyID}"
+                                                   th:value="${allergy.allergyId}"
                                                    th:checked="${#sets.contains(user.allergies, allergy)}"
                                                    th:name="allergies"
                                                    />
