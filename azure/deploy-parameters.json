@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "containerName": {
-            "value": "test"
+            "value": "vlol"
         },
         "location": {
-            "value": "westus"
+            "value": "eastus"
         },
         "imageType": {
             "value": "Public"
@@ -49,7 +49,7 @@
             ]
         },
         "dnsNameLabel": {
-            "value": "test1"
+            "value": "dev-vlol"
         }
     }
 }
