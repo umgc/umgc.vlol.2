@@ -16,7 +16,7 @@ APP_IMG=$(APP_NAME):$(APP_TAG)
 
 # Docker build vars
 BUILD_ENV_NAME=vlol-build-env
-BUILD_ENV_TAG=$(VERSION)
+BUILD_ENV_TAG=latest
 BUILD_IMG=$(BUILD_ENV_NAME):$(BUILD_ENV_TAG)
 REMOTE_IMG=umgccontainerregistry.azurecr.io/$(APP_IMG)
 
