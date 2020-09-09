@@ -104,7 +104,7 @@ build-env:
 #
 ##############################################################
 start-env:
-	docker run -it -v $(PWD)/:/repo $(BUILD_IMG) bash
+	docker run -it -v $(PWD)/:/repo -v /var/run/docker.sock:/var/run/docker.sock -v /sys/fs/cgroup:/sys/fs/cgroup --privileged $(BUILD_IMG) bash
 
 
 ##############################################################
