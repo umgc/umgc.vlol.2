@@ -234,20 +234,6 @@
                                     <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
                                 </td>
                             </tr>
-                            <tr>             
-                                <td>Security Question:</td>
-                                <td>
-                                    <input type="text" th:field="*{securityQuestion}" maxlength="100" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Security Answer:</td>
-                                <td>
-                                    <input type="password" th:field="*{securityAnswer}" maxlength="50" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('securityAnswer')}" class="text-danger" th:errors="*{securityAnswer}"></div>
-                                </td>
-                            </tr>
                         </table>
                         <input type="hidden" th:field="*{isActive}" />
                         <input type="hidden" th:field="*{isLocked}" />

@@ -18,6 +18,7 @@
  */
 package com.vlol.controller;
 
+import com.vlol.Mailer;
 import com.vlol.model.Allergy;
 import com.vlol.model.Condition;
 import com.vlol.model.Role;
@@ -35,6 +36,7 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -46,6 +48,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.ui.Model;
 
 /**
  * User controller class.
@@ -55,6 +58,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class UserControlller {
 
+    @Autowired
+    private Environment env;
+    
     @Autowired
     private UserService userService;
 
@@ -140,6 +146,51 @@ public class UserControlller {
         return "redirect:/user/edit/"+user.getUserID();
     }
 
+    @RequestMapping(value={"/user/account", "/user/account/{id}"})
+    public ModelAndView viewAccountPage(@PathVariable(name = "id", required=false) Long id) {
+        ModelAndView mav = new ModelAndView("user/edit-account");
+        User user = Utils.getIfUserOrAdmin(userService, id, true);
+        if(user == null)
+            return new ModelAndView("redirect:/login");
+        Utils.getUserName(userService, mav);
+        mav.addObject("user", user);
+        return mav;
+    }
+    
+    @RequestMapping(value={"/user/account", "/user/account/{id}"}, method = RequestMethod.POST)
+    public String updateAccountPage(User user, @PathVariable(name = "id", required=false) Long id) {
+        ModelAndView mav = new ModelAndView("user/edit-account");
+        User oldUser = Utils.getIfUserOrAdmin(userService, id, true);
+        if(oldUser == null)
+            return "redirect:/login";
+        oldUser.setFirstName(user.getFirstName());
+        oldUser.setLastName(user.getLastName());
+        Boolean emailChange = false;
+        // If email change unverify the account
+        if(!user.getEmail().equals(oldUser.getEmail())){
+            oldUser.setIsVerified(false);
+            emailChange = true;
+            try{
+                new Mailer(env).verifyEmail(oldUser);
+            }catch(Exception e){
+                // Always return success
+            }
+        }
+        oldUser.setEmail(user.getEmail());
+        Boolean passwordChange = false;
+        if(!oldUser.getPassword().isBlank()){
+            oldUser.setPassword(user.getPassword());
+            passwordChange = true;
+        }
+        userService.updateUser(oldUser, passwordChange);
+        if(emailChange)
+            return "redirect:/login";
+        else if(id != null)
+            return "redirect:/user/account/"+id;
+        else
+            return "redirect:/user/account";
+    }
+    
     @RequestMapping("/user/edit/{id}")
     public ModelAndView viewEditUserPage(@PathVariable(name = "id") Long id) {
         ModelAndView mav = new ModelAndView("admin/edit-user");
@@ -173,6 +224,9 @@ public class UserControlller {
 
     @RequestMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable(name = "id") Long id) {
+        User user = Utils.getIfUserOrAdmin(userService, id, true);
+        if(user == null)
+            return "redirect:/login";
         userService.deleteUser(id);
         return "redirect:/list-users";
     }

@@ -56,6 +56,22 @@ public class Utils {
         }
         return null;
     }
+    public static User getIfUserOrAdmin(UserService userService, Long userId, Boolean editable){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser") {
+            // Check if user is admin or provider
+            if(isAdmin()){
+                return userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
+            }else{
+                ArrayList emails = new ArrayList<String>();
+                User user = userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
+                user.getAuthorizedEmails().forEach(ae->emails.add(ae.getAuthorizedEmail().toLowerCase()));
+                // Check if user is authorized for this user or if the user is itself
+                if(emails.contains(auth.getName()) || user.getEmail().equals(auth.getName())) return user;
+            }
+        }
+        return null;
+    }
     public static Boolean isAdmin(){
         ArrayList authorities = new ArrayList<String>();
         SecurityContextHolder.getContext().getAuthentication().getAuthorities().forEach((a)->{
