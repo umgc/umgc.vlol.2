@@ -120,13 +120,13 @@ public class Mailer  {
     public void verifyEmail(User user){
         Properties props = new Properties();
         props.setProperty("name", user.getFirstName());
-        props.setProperty("link", emailProps.getProperty("urlPath")+"verify-email?jwt="+Utils.createJWT(user, 1000L*60*60*24));
-        instance.sendMail(user.getEmail(), "Verify Email | "+emailProps.getProperty("appName"), "verify-email.html", props);
+        props.setProperty("link", instance.emailProps.getProperty("urlPath")+"verify-email?jwt="+Utils.createJWT(user, 1000L*60*60*24));
+        instance.sendMail(user.getEmail(), "Verify Email | "+instance.emailProps.getProperty("appName"), "verify-email.html", props);
     }
     public void resetPassword(User user){
         Properties props = new Properties();
         props.setProperty("name", user.getFirstName());
-        props.setProperty("link", emailProps.getProperty("urlPath")+"reset-password?jwt="+Utils.createJWT(user, 1000L*60*60*24));
-        instance.sendMail(user.getEmail(), "Reset Password | "+emailProps.getProperty("appName"), "reset-password.html", props);
+        props.setProperty("link", instance.emailProps.getProperty("urlPath")+"reset-password?jwt="+Utils.createJWT(user, 1000L*60*60*24));
+        instance.sendMail(user.getEmail(), "Reset Password | "+instance.emailProps.getProperty("appName"), "reset-password.html", props);
     }
 }
