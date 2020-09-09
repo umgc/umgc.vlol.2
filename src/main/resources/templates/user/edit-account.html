@@ -46,7 +46,40 @@
                             <td>
                                 <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-equalto="#password" />
                             </td>
-                        </tr>            
+                        </tr>
+<!--                        Admin Section-->
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="role">User Role:</label></td>
+                            <td>
+                                <select th:field="*{role}" id="role">
+                                    <option th:each="role : ${roles}" th:value="${{role}}" th:text="${role.title}">Choose a Role</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="isActive">Active</label></td>
+                            <td>
+                                <input type="checkbox" id="isActive" th:field="*{isActive}" th:value="${user}" />
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="isLocked">Locked Out</label></td>
+                            <td>
+                                <input type="checkbox" id="isLocked" th:field="*{isLocked}" th:value="${user}" />
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="isVerified">Verified</label></td>
+                            <td>
+                                <input type="checkbox" id="isVerified" th:field="*{isVerified}" th:value="${user}" />
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="adminComments">Administrator Comments:</label></td>
+                            <td>
+                                <textarea class="form-control" id="adminComments" th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" />
+                            </td>
+                        </tr>
                     </table>
                     <br />
                     <button type="submit" class="btn btn-success"><i class="fas fa-file-signature"></i> Update</button>

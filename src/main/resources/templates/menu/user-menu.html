@@ -16,7 +16,7 @@
                             <i class="fas fa-user-circle fa-9x" style="margin: 1rem"></i>
                             <div class="card-body">My Account</div>
                         </a>
-                        <a th:href="|/user/edit/${user.userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                        <a th:href="|/user/profile/${user.userID}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-id-badge fa-9x" style="margin: 1rem"></i>
                             <div class="card-body">My Profile</div>

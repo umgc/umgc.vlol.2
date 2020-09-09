@@ -21,12 +21,14 @@ package com.vlol.service;
 import com.vlol.model.Condition;
 import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.model.UserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vlol.repository.RoleRepository;
+import com.vlol.repository.UserInfoRepository;
 import com.vlol.repository.UserRepository;
 import java.util.Date;
 import java.util.List;
@@ -44,12 +46,14 @@ public class UserService {
     @Autowired
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final UserInfoRepository userInfoRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, RoleRepository roleRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserService(UserRepository userRepository, RoleRepository roleRepository, UserInfoRepository userInfoRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.userInfoRepository = userInfoRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -66,7 +70,9 @@ public class UserService {
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
-
+    public UserInfo updateUserInfo(UserInfo userInfo){
+        return userInfoRepository.save(userInfo);
+    }
     public User updateUser(User user) {
         return updateUser(user, false);
     }

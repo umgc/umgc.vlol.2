@@ -23,6 +23,7 @@ import com.vlol.model.Allergy;
 import com.vlol.model.Condition;
 import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.model.UserInfo;
 import com.vlol.model.UserMedication;
 import com.vlol.service.AllergyService;
 import com.vlol.service.ConditionService;
@@ -128,22 +129,12 @@ public class UserControlller {
         return mav;
     }
 
-    @RequestMapping(value = "/save-user", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-user", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
         if(!Utils.isAdmin())
             return "redirect:/login";
         userService.createUser(user);
         return "redirect:/list-users";
-    }
-
-    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
-    public String updateUser(@ModelAttribute("user") User user,
-            @ModelAttribute("allergies") User allergies,
-            @ModelAttribute("conditions") User conditions,
-            @ModelAttribute("medications") User medications,
-            @ModelAttribute("roles") User roles) {
-        userService.updateUser(user);
-        return "redirect:/user/edit/"+user.getUserID();
     }
 
     @RequestMapping(value={"/user/account", "/user/account/{id}"})
@@ -154,35 +145,57 @@ public class UserControlller {
             return new ModelAndView("redirect:/login");
         Utils.getUserName(userService, mav);
         mav.addObject("user", user);
+        List<Role> roles = roleService.getAllRoles();
+        mav.addObject("roles", roles);
         return mav;
     }
     
     @RequestMapping(value={"/user/account", "/user/account/{id}"}, method = RequestMethod.POST)
-    public String updateAccountPage(User user, @PathVariable(name = "id", required=false) Long id) {
+    public String updateAccountPage(User changedUser, @PathVariable(name = "id", required=false) Long id) {
         ModelAndView mav = new ModelAndView("user/edit-account");
-        User oldUser = Utils.getIfUserOrAdmin(userService, id, true);
-        if(oldUser == null)
+        User user = Utils.getIfUserOrAdmin(userService, id, true);
+        if(user == null)
             return "redirect:/login";
-        oldUser.setFirstName(user.getFirstName());
-        oldUser.setLastName(user.getLastName());
+        // Copy any fields that can change to the old user
+        user.setFirstName(changedUser.getFirstName());
+        user.setLastName(changedUser.getLastName());
         Boolean emailChange = false;
         // If email change unverify the account
-        if(!user.getEmail().equals(oldUser.getEmail())){
-            oldUser.setIsVerified(false);
+        if(!changedUser.getEmail().equals(user.getEmail())){
+            user.setIsVerified(false);
             emailChange = true;
-            try{
-                new Mailer(env).verifyEmail(oldUser);
-            }catch(Exception e){
-                // Always return success
-            }
         }
-        oldUser.setEmail(user.getEmail());
+        user.setEmail(changedUser.getEmail());
         Boolean passwordChange = false;
-        if(!oldUser.getPassword().isBlank()){
-            oldUser.setPassword(user.getPassword());
+        if(!user.getPassword().isBlank()){
+            user.setPassword(changedUser.getPassword());
             passwordChange = true;
         }
-        userService.updateUser(oldUser, passwordChange);
+        if(Utils.isAdmin()){
+            // If the admin unverified a previously verified account.
+            if(user.getIsVerified() && !changedUser.getIsVerified()){
+                try{
+                    new Mailer(env).verifyEmail(user);
+                }catch(Exception e){
+                    // Always return success
+                }
+            }
+            user.setAdminComments(changedUser.getAdminComments());
+            user.setIsActive(changedUser.getIsActive());
+            user.setIsLocked(changedUser.getIsLocked());
+            user.setIsVerified(changedUser.getIsVerified());
+            user.setRole(changedUser.getRole());
+        }else{
+            if(emailChange){
+                try{
+                    new Mailer(env).verifyEmail(user);
+                }catch(Exception e){
+                    // Always return success
+                }
+            }
+            
+        }
+        userService.updateUser(user, passwordChange);
         if(emailChange)
             return "redirect:/login";
         else if(id != null)
@@ -191,35 +204,30 @@ public class UserControlller {
             return "redirect:/user/account";
     }
     
-    @RequestMapping("/user/edit/{id}")
-    public ModelAndView viewEditUserPage(@PathVariable(name = "id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/edit-user");
+    @RequestMapping(value={"/user/profile", "/user/profile/{id}"})
+    public ModelAndView viewProfilePage(@PathVariable(name = "id", required=false) Long id) {
+        ModelAndView mav = new ModelAndView("user/edit-profile");
         User user = Utils.getIfAuthorizedForUser(userService, id, true);
         if(user == null)
             return new ModelAndView("redirect:/login");
         Utils.getUserName(userService, mav);
-        mav.addObject("user", user);
-        List<Allergy> allergies = allergyService.getAllAllergies();
-        allergyCache = new HashMap<String, Allergy>();
-        for (Allergy allergy : allergies) {
-            allergyCache.put(allergy.getIdAsString(), allergy);
-        }
-        mav.addObject("allergies", allergies);
-        List<Condition> conditions = conditionService.getAllConditions();
-        conditionCache = new HashMap<String, Condition>();
-        for (Condition condition : conditions) {
-            conditionCache.put(condition.getIdAsString(), condition);
-        }
-        mav.addObject("conditions", conditions);
-        List<UserMedication> medications = medicationService.getAllMedications();
-        medicationCache = new HashMap<String, UserMedication>();
-        for (UserMedication medication : medications) {
-            medicationCache.put(medication.getIdAsString(), medication);
-        }
-        mav.addObject("medications", medications);
-        List<Role> roles = roleService.getAllRoles();
-        mav.addObject("roles", roles);
+        mav.addObject("userInfo", user.getUserInfo());
+        mav.addObject("userID", user.getUserID());
         return mav;
+    }
+    @RequestMapping(value={"/user/profile", "/user/profile/{id}"}, method = RequestMethod.POST)
+    public String updateProfilePage(UserInfo changedUser, @PathVariable(name = "id", required=false) Long id) {
+        User user = Utils.getIfAuthorizedForUser(userService, id, true);
+        if(user == null)
+            return "redirect:/login";
+        // All fields come back from form except user and user info id
+        changedUser.setUser(user);
+        changedUser.setInfoID(user.getUserInfo().getInfoID());
+        userService.updateUserInfo(changedUser);
+        if(id != null)
+            return "redirect:/user/profile/"+id;
+        else
+            return "redirect:/user/profile";
     }
 
     @RequestMapping("/user/delete/{id}")

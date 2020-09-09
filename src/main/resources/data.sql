@@ -40,5 +40,5 @@ INSERT INTO user_info (user_id, dob, ssn, street_address, city, us_state, zipcod
 (4, '1885-09-02', '258369147', '1640 Riverside Drive', 'Hill Valley', 'CA', '95420', '9165554385', 'TRICARE', '258369147', true, 'DNR', 'George McFly', '9168423138', 'Dr. Brown', '9165551234', '', 'false');
 
 
-INSERT INTO authorized_user (user_id, authorized_email, authorized_name) VALUES
-(1, 'agent@vlol.gov', 'Dr Johnson');
+INSERT INTO authorized_user (authorized_user_id, user_id, authorized_email, authorized_name) VALUES
+(1, 1, 'agent@vlol.gov', 'Dr Johnson');

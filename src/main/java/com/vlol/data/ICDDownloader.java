@@ -5,46 +5,29 @@
  */
 package com.vlol.data;
 
-import com.google.gson.Gson;
 import com.vlol.model.Condition;
-import com.vlol.model.Medication;
 import com.vlol.service.ConditionService;
-import com.vlol.service.MedicationService;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Arrays;
 import java.util.Calendar;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.regex.Pattern;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import javax.persistence.EntityManager;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
-import org.springframework.data.jpa.provider.HibernateUtils;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.w3c.dom.Document;
-import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 /**
  *
  * @author marcuccm
@@ -108,6 +91,8 @@ public class ICDDownloader {
 
                     while (zipEntry != null) {
                         if(zipEntry.getName().endsWith("icd10cm_index_"+year+".xml")){
+                            // TODO: Add back in to clear table on reload
+//                        conditionService.truncateConditions();
                             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
                             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
                             Document doc = dBuilder.parse(zis);

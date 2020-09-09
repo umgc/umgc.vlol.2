@@ -122,7 +122,6 @@ CREATE TABLE user_info(
 ) ;
 
 ALTER TABLE user_info ADD CONSTRAINT user_info_pk PRIMARY KEY(info_id);
-ALTER TABLE user_info ADD CONSTRAINT user_info_uq_ssn UNIQUE(ssn);
 ALTER TABLE user_info ADD CONSTRAINT user_info_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id);
 
 CREATE TABLE authorized_user (
