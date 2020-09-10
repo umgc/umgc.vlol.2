@@ -27,7 +27,6 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-tomcat/
 
 ### VS Code ###
 .vscode/
@@ -35,3 +34,7 @@ tomcat/
 ### Tomcat logs ###
 tomcat/logs/
 bin/
+
+### Build itesm ###
+*.uuid
+

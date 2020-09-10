@@ -5,6 +5,7 @@ RUN apt-get update && \
 	apt-get --no-install-recommends -y install default-jre openjdk-11-jdk
 	
 
+ARG VERSION
 LABEL VERSION=$VERSION
 RUN mkdir /usr/src/vlol
 
