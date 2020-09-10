@@ -36,7 +36,7 @@ public class Medication implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medication_id")
     @Min(value = 1, message = "Value must be greater than 1.")
-    private Long medicationID;
+    private Long medicationId;
 
     @Column(name = "brand_name", length = 256, unique = true)
     // Check if text is valid per RFC 3986.
@@ -55,6 +55,12 @@ public class Medication implements Serializable {
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 1024, message = "Input exceeds size limits.")
     private String drugAction;
+    
+    @Column(name = "ref_id", length = 64)
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Size(max = 64, message = "Input exceeds size limits.")
+    private String referenceId;
 
     @Column(name = "controlled")
     @NotNull(message = "Value cannot be null.")
@@ -64,14 +70,22 @@ public class Medication implements Serializable {
     @NotNull(message = "Value cannot be null.")
     private Boolean bloodThinner = false;
 
-    public Long getMedicationID() {
-        return medicationID;
+    public Long getMedicationId() {
+        return medicationId;
     }
 
-    public void setMedicationID(Long medicationID) {
-        this.medicationID = medicationID;
+    public void setMedicationId(Long medicationId) {
+        this.medicationId = medicationId;
+    }
+    
+    public String getReferenceId() {
+        return referenceId;
     }
 
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+    }
+    
     public String getBrandName() {
         return brandName;
     }

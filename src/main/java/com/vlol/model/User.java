@@ -44,7 +44,7 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     @Min(value = 1, message = "Value must be greater than 1.")
-    private Long userID;
+    private Long userId;
 
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
@@ -65,30 +65,11 @@ public class User implements Serializable {
     @Size(max = 100, message = "Input exceeds size limits.")
     private String lastName;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_allergy",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "allergy_id"))
-    private Set<Allergy> allergies = new HashSet<>();
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<UserAllergy> allergies = new HashSet<>();
 
-
-//    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-//    @JoinTable(name = "authorized_user",
-//            joinColumns = @JoinColumn(name = "authorized_email"),
-//            inverseJoinColumns = @JoinColumn(name = "email"))
-//    private Set<User> authorizedUsers = new HashSet<>();
-
-//    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-//    @JoinTable(name = "authorized_user",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "authorized_user_id"))
-//    private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
-    
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_illness",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "illness_id"))
-    private Set<Condition> conditions = new HashSet<>();
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<UserCondition> conditions = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
@@ -106,29 +87,9 @@ public class User implements Serializable {
 
     @Column(name = "password", length = 72)
     @NotBlank(message = "Password is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     // bcrypt maximum password length is 71 characters + 1 byte null terminator
     @Size(min = 8, max = 72, message = "Input exceeds size limits.")
     private String password;
-
-    @Transient
-    private String passwordConfirm;
-
-    @Column(name = "security_question", length = 100)
-    @NotBlank(message = "Security question is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 100, message = "Input exceeds size limits.")
-    private String securityQuestion;
-
-    @Column(name = "security_answer", length = 72)
-    @NotBlank(message = "Security answer is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    // bcrypt maximum input length is 71 characters + 1 byte null terminator
-    @Size(max = 72, message = "Input exceeds size limits.")
-    private String securityAnswer;
 
     @Column(name = "date_created")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
@@ -153,6 +114,10 @@ public class User implements Serializable {
     @Column(name = "is_active")
     @NotNull(message = "Value cannot be null.")
     private Boolean isActive;
+    
+    @Column(name = "is_verified")
+    @NotNull(message = "Value cannot be null.")
+    private Boolean isVerified;
 
     @Column(name = "is_locked")
     @NotNull(message = "Value cannot be null.")
@@ -161,12 +126,12 @@ public class User implements Serializable {
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user", optional=true)
     private UserInfo userInfo;
 
-    public Long getUserID() {
-        return userID;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public Role getRole() {
@@ -220,19 +185,19 @@ public class User implements Serializable {
     }
 
 
-    public Set<Allergy> getAllergies() {
+    public Set<UserAllergy> getAllergies() {
         return allergies;
     }
 
-    public void setAllergies(Set<Allergy> allergies) {
+    public void setAllergies(Set<UserAllergy> allergies) {
         this.allergies = allergies;
     }
 
-    public Set<Condition> getConditions() {
+    public Set<UserCondition> getConditions() {
         return conditions;
     }
 
-    public void setConditions(Set<Condition> conditions) {
+    public void setConditions(Set<UserCondition> conditions) {
         this.conditions = conditions;
     }
 
@@ -268,30 +233,6 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public String getPasswordConfirm() {
-        return passwordConfirm;
-    }
-
-    public void setPasswordConfirm(String passwordConfirm) {
-        this.passwordConfirm = passwordConfirm;
-    }
-
-    public String getSecurityQuestion() {
-        return securityQuestion;
-    }
-
-    public void setSecurityQuestion(String securityQuestion) {
-        this.securityQuestion = securityQuestion;
-    }
-
-    public String getSecurityAnswer() {
-        return securityAnswer;
-    }
-
-    public void setSecurityAnswer(String securityAnswer) {
-        this.securityAnswer = securityAnswer;
-    }
-
     public Date getDateCreated() {
         return dateCreated;
     }
@@ -322,6 +263,13 @@ public class User implements Serializable {
 
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+    public Boolean getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
     }
 
     public Boolean getIsLocked() {

@@ -29,7 +29,7 @@
                         <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Full Search</button>
                     </form>
                     <hr />
-                    <form action="#" th:action="@{/save-user}" th:object="${user}" method="post">
+                    <form action="#" th:action="@{/create-user}" th:object="${user}" method="post">
                         <table id="list_table" class="table table-bordered dt-responsive display">
                             <tr>             
                                 <td>Last Name</td>
@@ -113,7 +113,7 @@
                                 <td>
                                     <select th:field="*{userAgentNo}">
                                         <option value="">None</option>
-                                        <option th:each="agent : ${agents}" th:value="${agent.userID}" th:text="${agent.userID}">Choose a User Agent</option>
+                                        <option th:each="agent : ${agents}" th:value="${agent.userId}" th:text="${agent.userId}">Choose a User Agent</option>
                                     </select>
                                 </td>
                             </tr>
@@ -168,7 +168,7 @@
                                         <li th:each="allergy : ${allergies}">
                                             <input type="checkbox" name="allergies"
                                                    th:utext="'&nbsp;' + ${allergy.allergyName}"
-                                                   th:value="${allergy.allergyID}"
+                                                   th:value="${allergy.allergyId}"
                                                    th:checked="${#sets.contains(user.allergies, allergy)}"
                                                    th:name="allergies"
                                                    />
@@ -184,7 +184,7 @@
                                         <li th:each="condition : ${conditions}">
                                             <input type="checkbox" name="conditions"
                                                    th:utext="'&nbsp;' + ${condition.conditionName}"
-                                                   th:value="${condition.conditionID}"
+                                                   th:value="${condition.conditionId}"
                                                    th:checked="${#sets.contains(user.conditions, condition)}"
                                                    th:name="conditions"
                                                    />
@@ -200,7 +200,7 @@
                                         <li th:each="medication : ${medications}">
                                             <input type="checkbox" name="medications"
                                                    th:utext="'&nbsp;' + ${medication.brandName} + ' / ' + ${medication.genericName}"
-                                                   th:value="${medication.medicationID}"
+                                                   th:value="${medication.medicationId}"
                                                    th:checked="${#sets.contains(user.medications, medication)}"
                                                    th:name="medications"
                                                    />
@@ -232,20 +232,6 @@
                                 <td>
                                     <input type="password" th:field="*{password}" maxlength="320" placeholder="Required" required="required" />
                                     <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
-                                </td>
-                            </tr>
-                            <tr>             
-                                <td>Security Question:</td>
-                                <td>
-                                    <input type="text" th:field="*{securityQuestion}" maxlength="100" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Security Answer:</td>
-                                <td>
-                                    <input type="password" th:field="*{securityAnswer}" maxlength="50" placeholder="Required" required="required" />
-                                    <div th:if="${#fields.hasErrors('securityAnswer')}" class="text-danger" th:errors="*{securityAnswer}"></div>
                                 </td>
                             </tr>
                         </table>

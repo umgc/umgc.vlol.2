@@ -35,40 +35,43 @@ public class Condition implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "illness_id")
     @Min(value = 1, message = "Value must be greater than 1.")
-    private Long conditionID;
+    private Long conditionId;
 
-    @Column(name = "illness_name", length = 50, unique = true)
+    @Column(name = "illness_name", length = 256, unique = true)
     @NotBlank(message = "Condition name is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 50, message = "Input exceeds size limits.")
+    @Size(max = 256, message = "Input exceeds size limits.")
     private String conditionName;
 
-    @ManyToMany(mappedBy = "conditions", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<User> users = new HashSet<>();
+    @Column(name = "ref_id", length = 64)
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Size(max = 64, message = "Input exceeds size limits.")
+    private String referenceId;
 
-    public Long getConditionID() {
-        return conditionID;
+    public Long getConditionId() {
+        return conditionId;
     }
 
-    public void setConditionID(Long conditionID) {
-        this.conditionID = conditionID;
+    public void setConditionId(Long conditionId) {
+        this.conditionId = conditionId;
+    }
+    
+    public String getReferenceId() {
+        return referenceId;
     }
 
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+    }
+    
     public String getConditionName() {
         return conditionName;
     }
 
     public void setConditionName(String conditionName) {
         this.conditionName = conditionName;
-    }
-
-    public Set<User> getUsers() {
-        return users;
-    }
-
-    public void setUsers(Set<User> users) {
-        this.users = users;
     }
 
     /**
@@ -91,7 +94,7 @@ public class Condition implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((conditionID == null) ? 0 : conditionID.hashCode());
+        result = prime * result + ((conditionId == null) ? 0 : conditionId.hashCode());
         return result;
     }
 
@@ -107,17 +110,17 @@ public class Condition implements Serializable {
             return false;
         }
         Condition other = (Condition) obj;
-        if (conditionID == null) {
-            if (other.conditionID != null) {
+        if (conditionId == null) {
+            if (other.conditionId != null) {
                 return false;
             }
-        } else if (!conditionID.equals(other.conditionID)) {
+        } else if (!conditionId.equals(other.conditionId)) {
             return false;
         }
         return true;
     }
 
     public String getIdAsString() {
-        return conditionID.toString();
+        return conditionId.toString();
     }
 }

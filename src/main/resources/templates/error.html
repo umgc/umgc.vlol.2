@@ -32,7 +32,7 @@
                     <div class="row">
                         <div class="col-lg-12 text-center">
                             <p>Something went wrong, but rest assured, we have logged it in and are working on it!</p>
-                            <p><b>Any questions, please contact us at <a href="mailto:rgarcia92@student.umuc.edu">rgarcia92@student.umuc.edu</a>.</b></p>
+                            <p><b>Any questions, please contact us at <a th:href="|mailto:${supportEmail}|" th:text="${supportEmail}"></a>.</b></p>
                         </div>
                     </div>
                     <div sec:authorize="isAuthenticated()">

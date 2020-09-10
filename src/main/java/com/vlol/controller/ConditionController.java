@@ -30,10 +30,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -47,77 +49,9 @@ public class ConditionController {
     @Autowired
     private ConditionService conditionService;
     
-    @Autowired
-    private UserService userService;
-
-    @RequestMapping(value = "/list-conditions", method = RequestMethod.GET)
-    public ModelAndView viewConditionList() {
-        ModelAndView mav = new ModelAndView("admin/list-conditions");
-        Utils.getUserName(userService, mav);
-        List<Condition> conditionList = conditionService.getAllConditions();
-        mav.addObject("conditionList", conditionList);
-        return mav;
-    }
-
-    @RequestMapping(value = "/add-condition", method = RequestMethod.GET)
-    public ModelAndView viewAddConditionPage() {
-        ModelAndView mav = new ModelAndView("admin/add-condition");
-        Utils.getUserName(userService, mav);
-        Condition condition = new Condition();
-        mav.addObject("condition", condition);
-        return mav;
-    }
-
-    @RequestMapping(value = "/save-condition", method = RequestMethod.POST)
-    public String saveCondition(@Valid Condition condition, BindingResult bindingResult, Model model) {
-        //check for errors
-        if (bindingResult.hasErrors()) {
-            return "admin/add-condition";
-        }
-        conditionService.saveCondition(condition);
-        return "redirect:/list-conditions";
-    }
-
-    @RequestMapping(value = "/update-condition", method = RequestMethod.POST)
-    public String updateCondition(@Valid Condition condition, BindingResult bindingResult, Model model) {
-        //check for errors
-        if (bindingResult.hasErrors()) {
-            return "admin/edit-condition";
-        }
-        conditionService.saveCondition(condition);
-        return "redirect:/list-conditions";
-    }
-
-    @RequestMapping("/edit-condition/{id}")
-    public ModelAndView viewEditConditionPage(@PathVariable(name = "id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/edit-condition");
-        Utils.getUserName(userService, mav);
-        Condition condition = conditionService.getCondition(id);
-        mav.addObject("condition", condition);
-        return mav;
-    }
-
-    @RequestMapping("/delete-condition/{id}")
-    public String deleteCondition(@PathVariable(name = "id") Long id) {
-        conditionService.deleteCondition(id);
-        return "redirect:/list-conditions";
-    }
-
-    @RequestMapping("/search-conditions")
-    public ModelAndView findConditionByKeyword(@RequestParam String keyword) {
-        ModelAndView mav = new ModelAndView("admin/search-conditions");
-        Utils.getUserName(userService, mav);
-        List<Condition> result = conditionService.findConditionByKeyword(keyword);
-        mav.addObject("result", result);
-        return mav;
-    }
-
-    @RequestMapping("/view-condition/{id}")
-    public ModelAndView viewConditionPage(@PathVariable(name = "id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/view-condition");
-        Utils.getUserName(userService, mav);
-        Condition condition = conditionService.getCondition(id);
-        mav.addObject("condition", condition);
-        return mav;
+    @GetMapping("/search-conditions")
+    public @ResponseBody List<Condition> findConditionByKeyword(@RequestParam String keyword) {
+        List<Condition> meds =  conditionService.findConditionByKeyword(keyword);
+        return meds.subList(0, Math.min(20, meds.size()));
     }
 }

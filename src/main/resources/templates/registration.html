@@ -27,60 +27,48 @@
                 <br />
                 <div role="alert" class="text-danger" th:if="${msg}" th:utext="${msg}"></div>
                 <br />
-                <form action="#" th:action="@{/registration}" th:object="${user}" method="post">
+                <form action="#" th:action="@{/registration}" th:object="${user}" method="post" data-parsley-validate="">
                     <table class="table table-bordered dt-responsive display">
-                        <tr>             
-                            <td>Last Name</td>
-                            <td class="w-100">
-                                <input type="text" th:field="*{lastName}" id="lastName" maxlength="100" placeholder="Required" required="required" />
-                                <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
-                            </td>
-                        </tr>
-                        <tr>             
-                            <td>First Name:</td>
+                        <tr>
+                            <td><label for="firstName">First Name:</label></td>
                             <td>
-                                <input type="text" th:field="*{firstName}" id="firstName" maxlength="50" placeholder="Required" required="required" />
+                                <input type="text" class="form-control" th:field="*{firstName}" id="firstName" maxlength="50" placeholder="Required" required="required" autofocus="true" data-parsley-rfc3986="" />
                                 <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></div>
                             </td>
                         </tr>
-                        <tr>             
-                            <td>Email:</td>
-                            <td>
-                                <input type="email" th:field="*{email}" id="email" maxlength="320" placeholder="Required" required="required" />
-                                <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
-                            </td>
-                        </tr>
-                        <tr>             
-                            <td>Password:</td>
-                            <td>
-                                <input type="password" th:field="*{password}" id="password" maxlength="320" placeholder="Required" required="required" />
-                                <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
-                            </td>
-                        </tr>
-                        <tr>             
-                            <td>Security Question:</td>
-                            <td>
-                                <input type="text" th:field="*{securityQuestion}" maxlength="100" placeholder="Required" required="required" />
-                                <div th:if="${#fields.hasErrors('securityQuestion')}" class="text-danger" th:errors="*{securityQuestion}"></div>
+                        <tr>
+                            <td><label for="lastName">Last Name:</label></td>
+                            <td class="w-100">
+                                <input type="text" class="form-control" th:field="*{lastName}" id="lastName" maxlength="100" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
                             </td>
                         </tr>
                         <tr>
-                            <td>Security Answer:</td>
+                            <td><label for="email">Email:</label></td>
                             <td>
-                                <input type="password" th:field="*{securityAnswer}" maxlength="50" placeholder="Required" required="required" />
-                                <div th:if="${#fields.hasErrors('securityAnswer')}" class="text-danger" th:errors="*{securityAnswer}"></div>
+                                <input type="email" class="form-control" th:field="*{email}" id="email" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
                             </td>
                         </tr>
+                        <tr>
+                            <td><label for="password">Password:</label></td>
+                            <td>
+                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="6" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td><label for="password2">Confirm Password:</label></td>
+                            <td>
+                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-minlength="6" placeholder="Required" required="required" data-parsley-equalto="#password" />
+                            </td>
+                        </tr>            
                     </table>
-                    <input type="hidden" th:field="*{isActive}" />
-                    <input type="hidden" th:field="*{isLocked}" />
-                    <input type="hidden" th:field="*{dateCreated}" />
-                    <input type="hidden" th:field="*{lastLoginDate}" />
                     <br />
                     <button type="submit" class="btn btn-success"><i class="fas fa-file-signature"></i> Register</button>
                 </form>
                 <br />
-                <a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>
+                <a href="/login" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Login Page</a>
             </div>
         </div>
     </body>

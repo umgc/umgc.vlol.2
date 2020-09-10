@@ -12,7 +12,7 @@
                     <h1 th:text="(${authorizedUser.authorizedUserId}!=null?'Edit':'Add')+ ' an Authorized User'"></h1>
                 </div>
             </div>
-            <form action="#" th:object="${authorizedUser}" th:action="'/user/save-authorized-user/'+${userID}" method="post" data-parsley-validate="">
+            <form action="#" th:object="${authorizedUser}" th:action="'/user/save-authorized-user/'+${userId}" method="post" data-parsley-validate="">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
@@ -34,7 +34,7 @@
             </form>
             <div class="row mt-5">
                 <div class="col-md-6 offset-md-3">
-                    <a th:href="|/user/authorized-user/${userID}|">Return to Medication Manager</a>
+                    <a th:href="|/user/authorized-user/${userId}|">Return to Medication Manager</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title>Forgot Password</title>
+    </head>
+    <body>
+        <div layout:fragment="content" class="container">
+            <div class="col-md-4 text-center mx-auto">
+                <br />
+                <div th:if="${param.success}">
+                    <div class="alert alert-success" role="alert">
+                        Account Verified
+                    </div>
+                    <br />
+                    <a th:href="@{/login}" class="btn btn-primary btn-block"><i class="fas fa-file-signature"></i> Return to Login</a>
+                </div>
+                <form class="form-signin" th:action="@{/forgot-password}" method="post"  th:if="${param.success==null}" data-parsley-validate="">
+                    <div class="alert alert-danger" role="alert" th:if="${param.error}">
+                        Email could not be verified
+                    </div>
+                    <div th:if="${param.erroremail}">
+                        <div class="alert alert-danger" role="alert">
+                            Verification email could not be sent. Please try again later.
+                        </div>
+                    </div>
+                    <br/>
+                    <label for="email" class="sr-only">Email address</label>
+                    <span class="add-on"><i class="icon-envelope"></i></span>
+                    <input type="email" id="email" class="form-control" name="email" placeholder="Email address" required="required" autofocus="autofocus" autocomplete="off" />
+
+                    <br/>
+                    <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Re-Send Verification Email</button>
+                    <br />
+                    <a th:href="@{/login}" class="btn btn-primary btn-block"><i class="fas fa-file-signature"></i> Return to Login</a>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

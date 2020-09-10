@@ -35,24 +35,27 @@ public class Allergy implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "allergy_id")
     @Min(value = 1, message = "Value must be greater than 1.")
-    private Long allergyID;
+    private Long allergyId;
 
-    @Column(name = "allergy_name", length = 50, unique = true)
+    @Column(name = "allergy_name", length = 256, unique = true)
     @NotBlank(message = "Allergy name is required.")
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 50, message = "Input exceeds size limits.")
+    @Size(max = 256, message = "Input exceeds size limits.")
     private String allergyName;
 
-    @ManyToMany(mappedBy = "allergies", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Set<User> users = new HashSet<>();
+    @Column(name = "ref_id", length = 64)
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Size(max = 64, message = "Input exceeds size limits.")
+    private String referenceId;
 
-    public Long getAllergyID() {
-        return allergyID;
+    public Long getAllergyId() {
+        return allergyId;
     }
 
-    public void setAllergyID(Long allergyID) {
-        this.allergyID = allergyID;
+    public void setAllergyId(Long allergyId) {
+        this.allergyId = allergyId;
     }
 
     public String getAllergyName() {
@@ -62,13 +65,13 @@ public class Allergy implements Serializable {
     public void setAllergyName(String allergyName) {
         this.allergyName = allergyName;
     }
-
-    public Set<User> getUsers() {
-        return users;
+    
+    public String getReferenceId() {
+        return referenceId;
     }
 
-    public void setUsers(Set<User> users) {
-        this.users = users;
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
     }
 
     /**
@@ -91,7 +94,7 @@ public class Allergy implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((allergyID == null) ? 0 : allergyID.hashCode());
+        result = prime * result + ((allergyId == null) ? 0 : allergyId.hashCode());
         return result;
     }
 
@@ -107,17 +110,17 @@ public class Allergy implements Serializable {
             return false;
         }
         Allergy other = (Allergy) obj;
-        if (allergyID == null) {
-            if (other.allergyID != null) {
+        if (allergyId == null) {
+            if (other.allergyId != null) {
                 return false;
             }
-        } else if (!allergyID.equals(other.allergyID)) {
+        } else if (!allergyId.equals(other.allergyId)) {
             return false;
         }
         return true;
     }
 
     public String getIdAsString() {
-        return allergyID.toString();
+        return allergyId.toString();
     }
 }

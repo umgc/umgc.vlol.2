@@ -34,7 +34,7 @@ public class RoleFormatter implements Formatter<Role> {
 
     @Override
     public String print(Role object, Locale locale) {
-        return (object != null ? object.getRoleID().toString() : "");
+        return (object != null ? object.getRoleId().toString() : "");
     }
 
     @Override

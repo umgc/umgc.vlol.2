@@ -54,7 +54,7 @@ public class MedicationTest {
     @BeforeEach
     public void setUp() {
         // Populate the Medication object before each test
-        medication.setMedicationID(1l);
+        medication.setMedicationId(1l);
         medication.setBrandName("Abilify");
         medication.setGenericName("Aripiprazole");
         medication.setDrugAction("Antipsychotic");
@@ -70,13 +70,13 @@ public class MedicationTest {
     }
 
     /**
-     * Passing test for the getMedicationID method, of class Medication.
+     * Passing test for the getMedicationId method, of class Medication.
      */
     @Test
-    public void testGetMedicationID() {
-        System.out.println("getMedicationID Test (Passing value)");
+    public void testGetMedicationId() {
+        System.out.println("getMedicationId Test (Passing value)");
         Long expResult = 1l;
-        Long result = medication.getMedicationID();
+        Long result = medication.getMedicationId();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Medication>> violations = validator.validate(medication);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -88,13 +88,13 @@ public class MedicationTest {
     }
 
     /**
-     * Passing test for the setMedicationID method, of class Medication.
+     * Passing test for the setMedicationId method, of class Medication.
      */
     @Test
-    public void testSetMedicationID() {
-        System.out.println("setMedicationID Test (Passing value)");
-        Long medicationID = 1l;
-        medication.setMedicationID(medicationID);
+    public void testSetMedicationId() {
+        System.out.println("setMedicationId Test (Passing value)");
+        Long medicationId = 1l;
+        medication.setMedicationId(medicationId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Medication>> violations = validator.validate(medication);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -106,13 +106,13 @@ public class MedicationTest {
     }
 
     /**
-     * Negative value test for the setMedicationID method, of class Medication.
+     * Negative value test for the setMedicationId method, of class Medication.
      */
     @Test
-    public void testSetMedicationIDNegative() {
-        System.out.println("setMedicationID Test (Negative value)");
-        Long medicationID = -1l;
-        medication.setMedicationID(medicationID);
+    public void testSetMedicationIdNegative() {
+        System.out.println("setMedicationId Test (Negative value)");
+        Long medicationId = -1l;
+        medication.setMedicationId(medicationId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Medication>> violations = validator.validate(medication);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -124,14 +124,14 @@ public class MedicationTest {
     }
 
     /**
-     * Out of Range value test for the setMedicationID method, of class
+     * Out of Range value test for the setMedicationId method, of class
      * Medication.
      */
     @Test
-    public void testSetMedicationIDOutOfRange() {
-        System.out.println("setMedicationID Test (Out of Range value)");
-        Long medicationID = Long.MAX_VALUE + 1;
-        medication.setMedicationID(medicationID);
+    public void testSetMedicationIdOutOfRange() {
+        System.out.println("setMedicationId Test (Out of Range value)");
+        Long medicationId = Long.MAX_VALUE + 1;
+        medication.setMedicationId(medicationId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Medication>> violations = validator.validate(medication);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";

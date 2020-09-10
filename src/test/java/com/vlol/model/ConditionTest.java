@@ -53,7 +53,7 @@ public class ConditionTest {
     @BeforeEach
     public void setUp() {
         // Populate the Condition object before each test
-        condition.setConditionID(1l);
+        condition.setConditionId(1l);
         condition.setConditionName("Asthma");
         // Setup validation of each method's validation annotations
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -65,13 +65,13 @@ public class ConditionTest {
     }
 
     /**
-     * Passing test for the getConditionID method, of class Condition.
+     * Passing test for the getConditionId method, of class Condition.
      */
     @Test
-    public void testGetConditionID() {
-        System.out.println("getConditionID Test (Passing value)");
+    public void testGetConditionId() {
+        System.out.println("getConditionId Test (Passing value)");
         Long expResult = 1l;
-        Long result = condition.getConditionID();
+        Long result = condition.getConditionId();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Condition>> violations = validator.validate(condition);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -83,13 +83,13 @@ public class ConditionTest {
     }
 
     /**
-     * Passing test for the setConditionID method, of class Condition.
+     * Passing test for the setConditionId method, of class Condition.
      */
     @Test
-    public void testSetConditionID() {
-        System.out.println("setConditionID Test (Passing value)");
-        Long conditionID = 1l;
-        condition.setConditionID(conditionID);
+    public void testSetConditionId() {
+        System.out.println("setConditionId Test (Passing value)");
+        Long conditionId = 1l;
+        condition.setConditionId(conditionId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Condition>> violations = validator.validate(condition);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -101,13 +101,13 @@ public class ConditionTest {
     }
 
     /**
-     * Negative value test for the setConditionID method, of class Condition.
+     * Negative value test for the setConditionId method, of class Condition.
      */
     @Test
-    public void testSetConditionIDNegative() {
-        System.out.println("setConditionID Test (Negative value)");
-        Long conditionID = -1l;
-        condition.setConditionID(conditionID);
+    public void testSetConditionIdNegative() {
+        System.out.println("setConditionId Test (Negative value)");
+        Long conditionId = -1l;
+        condition.setConditionId(conditionId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Condition>> violations = validator.validate(condition);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -119,13 +119,13 @@ public class ConditionTest {
     }
 
     /**
-     * Out of Range value test for the setConditionID method, of class Condition.
+     * Out of Range value test for the setConditionId method, of class Condition.
      */
     @Test
-    public void testSetConditionIDOutOfRange() {
-        System.out.println("setConditionID Test (Out of Range value)");
-        Long conditionID = Long.MAX_VALUE + 1;
-        condition.setConditionID(conditionID);
+    public void testSetConditionIdOutOfRange() {
+        System.out.println("setConditionId Test (Out of Range value)");
+        Long conditionId = Long.MAX_VALUE + 1;
+        condition.setConditionId(conditionId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Condition>> violations = validator.validate(condition);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -214,7 +214,7 @@ public class ConditionTest {
     @Test
     public void testSetConditionNameOverflow() {
         System.out.println("setConditionName Test (Overflow value)");
-        String conditionName = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String conditionName = ".".repeat(320);
         condition.setConditionName(conditionName);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Condition>> violations = validator.validate(condition);

@@ -31,7 +31,7 @@
                                 </div>
                             </li>
                             <li class="nav-item">
-                                <div sec:authorize="isAuthenticated()">
+                                <div sec:authorize="isAuthenticated()" th:if="${userRealName!=null}">
                                     <span class="nav-link text-dark" th:text="|${userRealName} is logged in.|"></span>
                                 </div>
                             </li>
@@ -90,7 +90,9 @@
             $(document).ready(function () {
                 $('#list_table').DataTable({
                     responsive: true,
-                    dom: 'Bfrtip',
+                    dom: 'Bfrp'+($('#list_table.no-paging').length?'':'ti'),
+                    ordering: $('#list_table.no-ordering').length?false:true,
+                    paging: $('#list_table.no-paging').length?false:true,
                     buttons: [
                         {extend: 'copy', className: 'btn btn-secondary' },
                         {extend: 'csv', className: 'btn btn-secondary' },

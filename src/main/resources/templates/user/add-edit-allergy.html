@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title th:text="(${allergy.allergyId}!=null?'Edit':'Add')+ ' a Allergy'"></title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <h1 th:text="(${allergy.allergyId}!=null?'Edit':'Add')+ ' a Allergy'"></h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <div class="form-group">
+                        <div><label for="drug">Drug Search</label></div>
+                        <input class="form-control typeaheaddrug" type="search" id="drug" placeholder="Search"/>
+                    </div>
+                </div>
+            </div>
+            <form action="#" th:object="${allergy}" th:action="'/user/save-allergy/'+${userId}" method="post" data-parsley-validate="">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="form-group">
+                          <label for="allergyName">Allergy Name</label>
+                          <input type="search" class="form-control typeahead" id="allergyName" th:field="*{allergyName}" placeholder="Enter your allergy"  data-parsley-maxlength="256" data-parsley-rfc3986=""/>
+                        </div>
+                        <input type="hidden" th:field="*{allergyId}" />
+                        <input type="hidden" th:field="*{referenceId}" id="referenceId"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    <a th:href="|/user/allergies/${userId}|">Return to Allergy Manager</a>
+                </div>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", ()=>{
+                    $('.typeahead').typeahead({
+                        minLength: 1
+                      },
+                    {
+                        name: 'allergy',
+                        display: 'value',
+                        async: true,
+                        limit: Infinity,
+                        source: function (allergy, syncResults, asyncResults) {
+                            // let's do a custom ajax call
+                            fetch("/search-allergies?keyword="+allergy).then(res=>res.json()).then((data)=>{
+                                const ret = data.map((d)=>{
+                                    return {...d,value:d.allergyName}
+                                });
+                                asyncResults(ret);
+                            }).catch(()=>asyncResults([]));
+                        }
+                    });
+                    $('.typeahead').bind('typeahead:select', function(ev, allergy) {
+                        $('#allergyName').val(allergy.allergyName);
+                        $('#referenceId').val(allergy.referenceId);
+                      });
+                    $('.typeaheaddrug').typeahead({
+                        minLength: 1
+                      },
+                    {
+                        name: 'medication',
+                        display: 'value',
+                        async: true,
+                        limit: Infinity,
+                        source: function (medication, syncResults, asyncResults) {
+                            // let's do a custom ajax call
+                            fetch("/search-medications?keyword="+medication).then(res=>res.json()).then((data)=>{
+                                const ret = data.map((d)=>{
+                                    const value = d.brandName && d.brandName !== d.genericName
+                                    ? d.brandName+"\n("+d.genericName+")"
+                                    : d.genericName;
+                                    return {...d,value:value}
+                                });
+                                asyncResults(ret);
+                            }).catch(()=>asyncResults([]));
+                        }
+                    });
+                    $('.typeaheaddrug').bind('typeahead:select', function(ev, medication) {
+                        $('#allergyName').val(medication.value);
+                        $('#referenceId').val(medication.referenceId);
+                      });
+                });
+            </script>
+        </div>
+    </body>
+</html>

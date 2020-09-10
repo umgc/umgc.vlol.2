@@ -18,12 +18,14 @@
  */
 package com.vlol.service;
 
+import com.vlol.data.ICDDownloader;
 import com.vlol.model.Condition;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.vlol.repository.ConditionRepository;
+import javax.persistence.EntityManager;
 
 @Service
 @Transactional
@@ -33,8 +35,9 @@ public class ConditionService {
     private final ConditionRepository conditionRepository;
 
     @Autowired
-    public ConditionService(ConditionRepository conditionRepository) {
+    public ConditionService(ConditionRepository conditionRepository, EntityManager em) {
         this.conditionRepository = conditionRepository;
+        new ICDDownloader(this, em);
     }
 
     public List<Condition> getAllConditions() {
@@ -45,13 +48,18 @@ public class ConditionService {
         conditionRepository.save(condition);
     }
 
-    public Condition getCondition(Long conditionID) {
-        return conditionRepository.findById(conditionID).orElse(null);
+    public Condition getCondition(Long conditionId) {
+        return conditionRepository.findById(conditionId).orElse(null);
     }
 
-    public void deleteCondition(Long conditionID) {
-        conditionRepository.deleteById(conditionID);
+    public void deleteCondition(Long conditionId) {
+        conditionRepository.deleteById(conditionId);
     }
+
+    public void truncateConditions() {
+        conditionRepository.deleteAllInBatch();
+    }
+    
 
     public List<Condition> findConditionByKeyword(String keyword) {
         return conditionRepository.findConditionByKeyword(keyword);

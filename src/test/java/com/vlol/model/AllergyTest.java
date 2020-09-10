@@ -54,7 +54,7 @@ public class AllergyTest {
     @BeforeEach
     public void setUp() {
         // Populate the Allergy object before each test
-        allergy.setAllergyID(1l);
+        allergy.setAllergyId(1l);
         allergy.setAllergyName("Latex");
         // Setup validation of each method's validation annotations
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
@@ -66,13 +66,13 @@ public class AllergyTest {
     }
 
     /**
-     * Passing test for the getAllergyID method, of class Allergy.
+     * Passing test for the getAllergyId method, of class Allergy.
      */
     @Test
-    public void testGetAllergyID() {
-        System.out.println("getAllergyID Test (Passing value)");
+    public void testGetAllergyId() {
+        System.out.println("getAllergyId Test (Passing value)");
         Long expResult = 1l;
-        Long result = allergy.getAllergyID();
+        Long result = allergy.getAllergyId();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -84,13 +84,13 @@ public class AllergyTest {
     }
 
     /**
-     * Passing test for the setAllergyID method, of class Allergy.
+     * Passing test for the setAllergyId method, of class Allergy.
      */
     @Test
-    public void testSetAllergyID() {
-        System.out.println("setAllergyID Test (Passing value)");
-        Long allergyID = 1l;
-        allergy.setAllergyID(allergyID);
+    public void testSetAllergyId() {
+        System.out.println("setAllergyId Test (Passing value)");
+        Long allergyId = 1l;
+        allergy.setAllergyId(allergyId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -102,13 +102,13 @@ public class AllergyTest {
     }
 
     /**
-     * Negative value test for the setAllergyID method, of class Allergy.
+     * Negative value test for the setAllergyId method, of class Allergy.
      */
     @Test
-    public void testSetAllergyIDNegative() {
-        System.out.println("setAllergyID Test (Negative value)");
-        Long allergyID = -1l;
-        allergy.setAllergyID(allergyID);
+    public void testSetAllergyIdNegative() {
+        System.out.println("setAllergyId Test (Negative value)");
+        Long allergyId = -1l;
+        allergy.setAllergyId(allergyId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -120,13 +120,13 @@ public class AllergyTest {
     }
 
     /**
-     * Out of Range value test for the setAllergyID method, of class Allergy.
+     * Out of Range value test for the setAllergyId method, of class Allergy.
      */
     @Test
-    public void testSetAllergyIDOutOfRange() {
-        System.out.println("setAllergyID Test (Out of Range value)");
-        Long allergyID = Long.MAX_VALUE + 1;
-        allergy.setAllergyID(allergyID);
+    public void testSetAllergyIdOutOfRange() {
+        System.out.println("setAllergyId Test (Out of Range value)");
+        Long allergyId = Long.MAX_VALUE + 1;
+        allergy.setAllergyId(allergyId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -215,7 +215,7 @@ public class AllergyTest {
     @Test
     public void testSetAllergyNameOverflow() {
         System.out.println("setAllergyName Test (Overflow value)");
-        String allergyName = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        String allergyName = ".".repeat(257);
         allergy.setAllergyName(allergyName);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Allergy>> violations = validator.validate(allergy);

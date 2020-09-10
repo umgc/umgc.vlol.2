@@ -93,7 +93,8 @@ build-vlol: target/$(VLOL_JAR)
 #
 ##############################################################
 start-vlol:
-	docker run --rm --name $(APP_NAME) -p 5000:5000 $(APP_IMG)
+	docker run --rm --name $(APP_NAME) -p 5000:5000 --mount source=h2data,target=/data $(APP_IMG)
+
 
 
 ##############################################################
@@ -147,7 +148,7 @@ dev-deploy:
 
 
 ##############################################################
-#	make dev-deploy:
+#	make stop-deploy:
 #		This stops the Azure container instances.
 #
 ##############################################################
@@ -171,7 +172,7 @@ help:
 	@$(info )
 	@$(info Azure development deployment steps)
 	@$(info 1. make build-env:     Only needed if user has not previously done so)
-	@$(info 2. make start-env:     Only needed if user has not previously done so)
+	@$(info 2. make start-env:     Starts the build-env Docker context)
 	@$(info 1. az login            Navigate to the url and enter the code from the CLI output)
 	@$(info 2. make dev-deploy     This creates a container instances with the VLOL application deployed)
 	@$(info )

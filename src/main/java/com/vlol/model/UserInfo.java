@@ -36,7 +36,7 @@ public class UserInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "info_id")
     @Min(value = 1, message = "Value must be greater than 1.")
-    private Long infoID;
+    private Long infoId;
 
     @OneToOne
     @JoinColumn(name = "user_id")
@@ -49,8 +49,8 @@ public class UserInfo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date DOB;
     
-    @Column(name = "Is_Deceased")
-    private Boolean IsDeceased; 
+    @Column(name = "is_deceased")
+    private Boolean isDeceased = false; 
 
     @Column(name = "ssn", length = 9, unique = true)
     // Check if SSN is valid per the SSA.
@@ -144,12 +144,12 @@ public class UserInfo implements Serializable {
 
 
 
-    public Long getInfoID() {
-        return infoID;
+    public Long getInfoId() {
+        return infoId;
     }
 
-    public void setInfoID(Long infoID) {
-        this.infoID = infoID;
+    public void setInfoId(Long infoId) {
+        this.infoId = infoId;
     }
 
     public User getUser() {
@@ -169,11 +169,11 @@ public class UserInfo implements Serializable {
     }
     
      public Boolean getIsDeceased(){
-        return IsDeceased; 
+        return isDeceased; 
     }
     
-    public void setIsDeceased(Boolean IsDeceased){
-        this.IsDeceased = IsDeceased; 
+    public void setIsDeceased(Boolean isDeceased){
+        this.isDeceased = isDeceased; 
     }
 
     public String getSSN() {
@@ -301,7 +301,7 @@ public class UserInfo implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((infoID == null) ? 0 : infoID.hashCode());
+        result = prime * result + ((infoId == null) ? 0 : infoId.hashCode());
         return result;
     }
 
@@ -317,17 +317,17 @@ public class UserInfo implements Serializable {
             return false;
         }
         UserInfo other = (UserInfo) obj;
-        if (infoID == null) {
-            if (other.infoID != null) {
+        if (infoId == null) {
+            if (other.infoId != null) {
                 return false;
             }
-        } else if (!infoID.equals(other.infoID)) {
+        } else if (!infoId.equals(other.infoId)) {
             return false;
         }
         return true;
     }
     
     public String getIdAsString() {
-        return infoID.toString();
+        return infoId.toString();
     }
 }

@@ -1,21 +1,3 @@
-/**
- * Medication Class.
- *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
- *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
- *
- * @category  vlol
- * @package model
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
- * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
- */
 package com.vlol.model;
 
 import java.io.Serializable;
@@ -34,7 +16,7 @@ public class UserMedication implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medication_id")
     @Min(value = 1, message = "Value must be greater than 1.")
-    private Long medicationID;
+    private Long medicationId;
 
     @Column(name = "brand_name", length = 256)
     // Check if text is valid per RFC 3986.
@@ -79,6 +61,12 @@ public class UserMedication implements Serializable {
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 32, message = "Input exceeds size limits.")
     private String frequency;
+    
+    @Column(name = "ref_id", length = 64)
+    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Size(max = 64, message = "Input exceeds size limits.")
+    private String referenceId;
 
     public String getDosage() {
         return dosage;
@@ -91,16 +79,24 @@ public class UserMedication implements Serializable {
     public String getFrequency() {
         return frequency;
     }
+    
+    public String getReferenceId() {
+        return referenceId;
+    }
+
+    public void setReferenceId(String referenceId) {
+        this.referenceId = referenceId;
+    }
 
     public void setFrequency(String frequency) {
         this.frequency = frequency;
     }
-    public Long getMedicationID() {
-        return medicationID;
+    public Long getMedicationId() {
+        return medicationId;
     }
 
-    public void setMedicationID(Long medicationID) {
-        this.medicationID = medicationID;
+    public void setMedicationId(Long medicationId) {
+        this.medicationId = medicationId;
     }
 
     public String getBrandName() {
@@ -159,13 +155,13 @@ public class UserMedication implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + ((medicationID == null) ? 0 : medicationID.hashCode());
+        result = prime * result + ((medicationId == null) ? 0 : medicationId.hashCode());
         return result;
     }
 
     @Override
     public boolean equals(Object obj) {
-        System.out.println("equals"+medicationID);
+        System.out.println("equals"+medicationId);
         if (this == obj) {
             return true;
         }
@@ -176,18 +172,18 @@ public class UserMedication implements Serializable {
             return false;
         }
         UserMedication other = (UserMedication) obj;
-        if (medicationID == null) {
-            if (other.medicationID != null) {
+        if (medicationId == null) {
+            if (other.medicationId != null) {
                 return false;
             }
-        } else if (!medicationID.equals(other.medicationID)) {
+        } else if (!medicationId.equals(other.medicationId)) {
             return false;
         }
         return true;
     }
     
     public String getIdAsString() {
-        System.out.println("getIdAsString"+medicationID);
-        return medicationID.toString();
+        System.out.println("getIdAsString"+medicationId);
+        return medicationId.toString();
     }
 }

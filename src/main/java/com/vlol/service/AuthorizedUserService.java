@@ -50,7 +50,7 @@ public class AuthorizedUserService {
         return authorizedUserRepository.findById(authorizedUserId).get();
     }
 
-    public void deleteAuthorizedUser(Long medicationID) {
-        authorizedUserRepository.deleteByPK(medicationID);
+    public void deleteAuthorizedUser(Long medicationId) {
+        authorizedUserRepository.deleteByPK(medicationId);
     }
 }

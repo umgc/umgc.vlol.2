@@ -18,14 +18,16 @@
  */
 package com.vlol.controller;
 
-import com.vlol.model.Allergy;
-import com.vlol.model.Condition;
+import com.vlol.Mailer;
 import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.model.UserAllergy;
+import com.vlol.model.UserCondition;
+import com.vlol.model.UserInfo;
 import com.vlol.model.UserMedication;
-import com.vlol.service.AllergyService;
-import com.vlol.service.ConditionService;
 import com.vlol.service.RoleService;
+import com.vlol.service.UserAllergyService;
+import com.vlol.service.UserConditionService;
 import com.vlol.service.UserMedicationService;
 import com.vlol.service.UserService;
 import java.security.Principal;
@@ -35,6 +37,7 @@ import java.util.Map;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomCollectionEditor;
+import org.springframework.core.env.Environment;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -56,13 +59,16 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserControlller {
 
     @Autowired
+    private Environment env;
+    
+    @Autowired
     private UserService userService;
 
     @Autowired
-    private AllergyService allergyService;
+    private UserAllergyService allergyService;
 
     @Autowired
-    private ConditionService conditionService;
+    private UserConditionService conditionService;
 
     @Autowired
     private UserMedicationService medicationService;
@@ -70,8 +76,8 @@ public class UserControlller {
     @Autowired
     private RoleService roleService;
 
-    private Map<String, Allergy> allergyCache;
-    private Map<String, Condition> conditionCache;
+    private Map<String, UserAllergy> allergyCache;
+    private Map<String, UserCondition> conditionCache;
     private Map<String, UserMedication> medicationCache;
 
     @RequestMapping("/list-users")
@@ -99,15 +105,15 @@ public class UserControlller {
         ModelAndView mav = new ModelAndView("admin/add-user");
         Utils.getUserName(userService, mav);
         mav.addObject("user", user);
-        List<Allergy> allergies = allergyService.getAllAllergies();
-        allergyCache = new HashMap<String, Allergy>();
-        for (Allergy allergy : allergies) {
+        List<UserAllergy> allergies = allergyService.getAllAllergies();
+        allergyCache = new HashMap<String, UserAllergy>();
+        for (UserAllergy allergy : allergies) {
             allergyCache.put(allergy.getIdAsString(), allergy);
         }
         mav.addObject("allergies", allergies);
-        List<Condition> conditions = conditionService.getAllConditions();
-        conditionCache = new HashMap<String, Condition>();
-        for (Condition condition : conditions) {
+        List<UserCondition> conditions = conditionService.getAllConditions();
+        conditionCache = new HashMap<String, UserCondition>();
+        for (UserCondition condition : conditions) {
             conditionCache.put(condition.getIdAsString(), condition);
         }
         mav.addObject("conditions", conditions);
@@ -122,59 +128,120 @@ public class UserControlller {
         return mav;
     }
 
-    @RequestMapping(value = "/save-user", method = RequestMethod.POST)
+    @RequestMapping(value = "/create-user", method = RequestMethod.POST)
     public String saveUser(@ModelAttribute("user") User user) {
         if(!Utils.isAdmin())
             return "redirect:/login";
-        userService.saveUser(user);
+        userService.createUser(user);
         return "redirect:/list-users";
     }
 
-    @RequestMapping(value = "/user/update", method = RequestMethod.POST)
-    public String updateUser(@ModelAttribute("user") User user,
-            @ModelAttribute("allergies") User allergies,
-            @ModelAttribute("conditions") User conditions,
-            @ModelAttribute("medications") User medications,
-            @ModelAttribute("roles") User roles) {
-        userService.updateUser(user);
-        return "redirect:/user/edit/"+user.getUserID();
-    }
-
-    @RequestMapping("/user/edit/{id}")
-    public ModelAndView viewEditUserPage(@PathVariable(name = "id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/edit-user");
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    @RequestMapping(value={"/user/account", "/user/account/{id}"})
+    public ModelAndView viewAccountPage(@PathVariable(name = "id", required=false) Long id) {
+        ModelAndView mav = new ModelAndView("user/edit-account");
+        User user = Utils.getIfUserOrAdmin(userService, id, true);
         if(user == null)
             return new ModelAndView("redirect:/login");
         Utils.getUserName(userService, mav);
         mav.addObject("user", user);
-        List<Allergy> allergies = allergyService.getAllAllergies();
-        allergyCache = new HashMap<String, Allergy>();
-        for (Allergy allergy : allergies) {
-            allergyCache.put(allergy.getIdAsString(), allergy);
-        }
-        mav.addObject("allergies", allergies);
-        List<Condition> conditions = conditionService.getAllConditions();
-        conditionCache = new HashMap<String, Condition>();
-        for (Condition condition : conditions) {
-            conditionCache.put(condition.getIdAsString(), condition);
-        }
-        mav.addObject("conditions", conditions);
-        List<UserMedication> medications = medicationService.getAllMedications();
-        medicationCache = new HashMap<String, UserMedication>();
-        for (UserMedication medication : medications) {
-            medicationCache.put(medication.getIdAsString(), medication);
-        }
-        mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
         return mav;
     }
+    
+    @RequestMapping(value={"/user/account", "/user/account/{id}"}, method = RequestMethod.POST)
+    public String updateAccountPage(User changedUser, @PathVariable(name = "id", required=false) Long id) {
+        ModelAndView mav = new ModelAndView("user/edit-account");
+        User user = Utils.getIfUserOrAdmin(userService, id, true);
+        if(user == null)
+            return "redirect:/login";
+        // Copy any fields that can change to the old user
+        user.setFirstName(changedUser.getFirstName());
+        user.setLastName(changedUser.getLastName());
+        Boolean emailChange = false;
+        // If email change unverify the account
+        if(!changedUser.getEmail().equals(user.getEmail())){
+            user.setIsVerified(false);
+            emailChange = true;
+        }
+        user.setEmail(changedUser.getEmail());
+        Boolean passwordChange = false;
+        if(!user.getPassword().isBlank()){
+            user.setPassword(changedUser.getPassword());
+            passwordChange = true;
+        }
+        if(Utils.isAdmin()){
+            // If the admin unverified a previously verified account.
+            if(user.getIsVerified() && !changedUser.getIsVerified()){
+                try{
+                    new Mailer(env).verifyEmail(user);
+                }catch(Exception e){
+                    // Always return success
+                }
+            }
+            user.setAdminComments(changedUser.getAdminComments());
+            user.setIsActive(changedUser.getIsActive());
+            user.setIsLocked(changedUser.getIsLocked());
+            user.setIsVerified(changedUser.getIsVerified());
+            user.setRole(changedUser.getRole());
+        }else{
+            if(emailChange){
+                try{
+                    new Mailer(env).verifyEmail(user);
+                }catch(Exception e){
+                    // Always return success
+                }
+            }
+            
+        }
+        userService.updateUser(user, passwordChange);
+        if(emailChange)
+            return "redirect:/login";
+        else if(id != null)
+            return "redirect:/user/account/"+id;
+        else
+            return "redirect:/user/account";
+    }
+    
+    @RequestMapping(value={"/user/profile", "/user/profile/{id}"})
+    public ModelAndView viewProfilePage(@PathVariable(name = "id", required=false) Long id) {
+        ModelAndView mav = new ModelAndView("user/edit-profile");
+        User user = Utils.getIfAuthorizedForUser(userService, id, true);
+        if(user == null)
+            return new ModelAndView("redirect:/login");
+        Utils.getUserName(userService, mav);
+        mav.addObject("userInfo", user.getUserInfo());
+        mav.addObject("userId", user.getUserId());
+        return mav;
+    }
+    @RequestMapping(value={"/user/profile", "/user/profile/{id}"}, method = RequestMethod.POST)
+    public String updateProfilePage(UserInfo changedUser, @PathVariable(name = "id", required=false) Long id) {
+        User user = Utils.getIfAuthorizedForUser(userService, id, true);
+        if(user == null)
+            return "redirect:/login";
+        // All fields come back from form except user and user info id
+        changedUser.setUser(user);
+        changedUser.setInfoId(user.getUserInfo().getInfoId());
+        userService.updateUserInfo(changedUser);
+        if(id != null)
+            return "redirect:/user/profile/"+id;
+        else
+            return "redirect:/user/profile";
+    }
 
     @RequestMapping("/user/delete/{id}")
     public String deleteUser(@PathVariable(name = "id") Long id) {
-        userService.deleteUser(id);
-        return "redirect:/list-users";
+        User user = Utils.getIfUserOrAdmin(userService, id, true);
+        if(user == null)
+            return "redirect:/login";
+        userService.delete(user);
+        if(Utils.isUser(user)){ // If the user deletes the account log them out
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            auth.setAuthenticated(false);
+            return "redirect:/login";
+        }else{ // If its the admin bring them back to the user page
+            return "redirect:/list-users";
+        }
     }
 
     @RequestMapping("/search-users")
@@ -204,15 +271,15 @@ public class UserControlller {
         }
         
         mav.addObject("user", user);
-        List<Allergy> allergies = allergyService.getAllAllergies();
-        allergyCache = new HashMap<String, Allergy>();
-        for (Allergy allergy : allergies) {
+        List<UserAllergy> allergies = allergyService.getAllAllergies();
+        allergyCache = new HashMap<String, UserAllergy>();
+        for (UserAllergy allergy : allergies) {
             allergyCache.put(allergy.getIdAsString(), allergy);
         }
         mav.addObject("allergies", allergies);
-        List<Condition> conditions = conditionService.getAllConditions();
-        conditionCache = new HashMap<String, Condition>();
-        for (Condition condition : conditions) {
+        List<UserCondition> conditions = conditionService.getAllConditions();
+        conditionCache = new HashMap<String, UserCondition>();
+        for (UserCondition condition : conditions) {
             conditionCache.put(condition.getIdAsString(), condition);
         }
         mav.addObject("conditions", conditions);
@@ -233,12 +300,12 @@ public class UserControlller {
         binder.registerCustomEditor(Set.class, "allergies", new CustomCollectionEditor(Set.class) {
             @Override
             protected Object convertElement(Object element) {
-                if (element instanceof Allergy) {
+                if (element instanceof UserAllergy) {
                     System.out.println("Converting from Allergy to Allergy: " + element);
                     return element;
                 }
                 if (element instanceof String) {
-                    Allergy allergy = allergyCache.get(element);
+                    UserAllergy allergy = allergyCache.get(element);
                     System.out.println("Looking up allergy for id " + element + ": " + allergy);
                     return allergy;
                 }
@@ -249,12 +316,12 @@ public class UserControlller {
         binder.registerCustomEditor(Set.class, "conditions", new CustomCollectionEditor(Set.class) {
             @Override
             protected Object convertElement(Object element) {
-                if (element instanceof Condition) {
-                    System.out.println("Converting from Condition to Condition: " + element);
+                if (element instanceof UserCondition) {
+                    System.out.println("Converting from UserCondition to UserCondition: " + element);
                     return element;
                 }
                 if (element instanceof String) {
-                    Condition condition = conditionCache.get(element);
+                    UserCondition condition = conditionCache.get(element);
                     System.out.println("Looking up condition for id " + element + ": " + condition);
                     return condition;
                 }

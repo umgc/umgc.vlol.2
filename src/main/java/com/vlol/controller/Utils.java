@@ -6,13 +6,15 @@
 package com.vlol.controller;
 
 import com.auth0.jwt.JWT;
+import com.auth0.jwt.JWTCreator;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.vlol.model.User;
 import com.vlol.service.UserService;
-import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Date;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +34,10 @@ public class Utils {
             mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
         }
     }
+    public static Boolean isUser(User user) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return user.getEmail().toLowerCase().equals(auth.getName().toLowerCase());
+    }
     public static User getIfAuthorizedForUser(UserService userService){
         return getIfAuthorizedForUser(userService, null, false);
     }
@@ -43,6 +49,22 @@ public class Utils {
         if (auth.getPrincipal() != "anonymousUser") {
             // Check if user is admin or provider
             if(isAdmin() || (isProvider() && !editable)){
+                return userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
+            }else{
+                ArrayList emails = new ArrayList<String>();
+                User user = userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
+                user.getAuthorizedEmails().forEach(ae->emails.add(ae.getAuthorizedEmail().toLowerCase()));
+                // Check if user is authorized for this user or if the user is itself
+                if(emails.contains(auth.getName()) || user.getEmail().equals(auth.getName())) return user;
+            }
+        }
+        return null;
+    }
+    public static User getIfUserOrAdmin(UserService userService, Long userId, Boolean editable){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getPrincipal() != "anonymousUser") {
+            // Check if user is admin or provider
+            if(isAdmin()){
                 return userId!=null?userService.getUser(userId):userService.findUserByEmail(auth.getName());
             }else{
                 ArrayList emails = new ArrayList<String>();
@@ -76,13 +98,19 @@ public class Utils {
         return authorities.contains("participant");
     }
     public static String createJWT(User user){
-        return JWT.create()
-                .withClaim("userId", user.getUserID())
+        return createJWT(user, null);
+    }
+    public static String createJWT(User user, Long expiry){
+        JWTCreator.Builder jwtBuilder = JWT.create()
+                .withClaim("userId", user.getUserId());
+        if(expiry != null)
+            jwtBuilder = jwtBuilder.withExpiresAt(new Date(System.currentTimeMillis() + expiry));
+        return jwtBuilder
                 .sign(algorithm);
     }
     public static Boolean verifyJWT(User user, String jwt){
         JWTVerifier verifier = JWT.require(algorithm)
-            .withClaim("userId", user.getUserID())
+            .withClaim("userId", user.getUserId())
             .build();
         try {
             verifier.verify(jwt);
@@ -91,5 +119,15 @@ public class Utils {
             
         }
         return false;
+    }
+    public static User verifyJWT(UserService userService, String jwt){
+        JWTVerifier verifier = JWT.require(algorithm)
+            .build();
+        try {
+            return userService.getUser(verifier.verify(jwt).getClaim("userId").as(Long.class));
+        } catch(JWTVerificationException e) {
+            
+        }
+        return null;
     }
 }

@@ -60,7 +60,7 @@ public class AuthorizedUserController {
         User user = Utils.getIfAuthorizedForUser(userService, id, true);
         if(user == null)
             return new ModelAndView("redirect:/login");
-        model.addAttribute("userID", user.getUserID());
+        model.addAttribute("userId", user.getUserId());
         model.addAttribute("authorizedUserList", user.getAuthorizedEmails());
         return mav;
     }
@@ -90,7 +90,7 @@ public class AuthorizedUserController {
         AuthorizedUser authorizedUser = new AuthorizedUser();
         authorizedUser.setUser(user);
         model.addAttribute("authorizedUser", authorizedUser);
-        model.addAttribute("userID", user.getUserID());
+        model.addAttribute("userId", user.getUserId());
         return mav;
     }
     @RequestMapping(value = {"/user/edit-authorized-user/{authorizedUserId}", "/user/edit-authorized-user/{id}/{authorizedUserId}"})
@@ -110,7 +110,7 @@ public class AuthorizedUserController {
             return new ModelAndView("redirect:/login");
         AuthorizedUser authorizedUser = authorizedUserService.getAuthorizedUser(authorizedUserId);
         model.addAttribute("authorizedUser", authorizedUser);
-        model.addAttribute("userID", user.getUserID());
+        model.addAttribute("userId", user.getUserId());
         return mav;
     }
 

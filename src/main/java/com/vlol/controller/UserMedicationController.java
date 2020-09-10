@@ -18,26 +18,19 @@
  */
 package com.vlol.controller;
 
-import com.vlol.model.UserMedication;
 import com.vlol.model.User;
+import com.vlol.model.UserMedication;
 import com.vlol.service.UserMedicationService;
 import com.vlol.service.UserService;
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -60,7 +53,7 @@ public class UserMedicationController {
         User user = Utils.getIfAuthorizedForUser(userService, id, true);
         if(user == null)
             return new ModelAndView("redirect:/login");
-        model.addAttribute("userID", user.getUserID());
+        model.addAttribute("userId", user.getUserId());
         model.addAttribute("medicationList", user.getMedications());
         return mav;
     }
@@ -88,7 +81,7 @@ public class UserMedicationController {
         UserMedication medication = new UserMedication();
         medication.setUser(user);
         model.addAttribute("medication", medication);
-        model.addAttribute("userID", user.getUserID());
+        model.addAttribute("userId", user.getUserId());
         return mav;
     }
     @RequestMapping(value = {"/user/edit-medication/{medicationId}", "/user/edit-medication/{id}/{medicationId}"})
@@ -102,13 +95,13 @@ public class UserMedicationController {
         // Check if the medication belongs to the user
         Boolean found = false;
         for(UserMedication med : user.getMedications())
-            if(med.getMedicationID().equals(medicationId))
+            if(med.getMedicationId().equals(medicationId))
                 found = true;
         if(!found)
             return new ModelAndView("redirect:/login");
         UserMedication medication = medicationService.getMedication(medicationId);
         model.addAttribute("medication", medication);
-        model.addAttribute("userID", user.getUserID());
+        model.addAttribute("userId", user.getUserId());
         return mav;
     }
 
@@ -121,7 +114,7 @@ public class UserMedicationController {
         // Check if the medication belongs to the user
         Boolean found = false;
         for(UserMedication med : user.getMedications()){
-            if(med.getMedicationID().equals(medicationId))
+            if(med.getMedicationId().equals(medicationId))
                 found = true;
         }
         if(!found)

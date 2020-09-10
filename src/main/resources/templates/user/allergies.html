@@ -1,55 +1,38 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      layout:decorate="~{layouts/site-master}"
+      layout:decorate="~{layouts/datatable-master}"
       lang="en">
     <head>
-        <title>Edit Allergies</title>
-        <style>
-            td {
-                text-align: left;
-                vertical-align: top;
-                white-space: nowrap;
-            }
-            input:not([type="checkbox"]) {
-                width: 100%;
-            }
-            textarea {
-                resize: none;
-                width: 100%;
-            }
-        </style>
+        <title>Allergy Manager</title>
     </head>
     <body>
-        <div layout:fragment="content" class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1>Edit Allergies</h1>
-                    <form action="#" th:action="@{/user/update/}+${user.userID}" th:object="${user}" method="post">
-                        <div>Allergies:</div>
-                        <div class="text-wrap">
-                            <p><b>Note</b> - If an allergy is not listed, check 'Other' and enter any missing allergies in the User Comments section.</p>
-                            <ul style="column-count: 2; list-style: none; padding-left: 0;">
-                                <li th:each="allergy : ${allergies}">
-                                    <input type="checkbox" name="allergies"
-                                           th:utext="'&nbsp;' + ${allergy.allergyName}"
-                                           th:value="${allergy.allergyID}"
-                                           th:checked="${#sets.contains(user.allergies, allergy)}"
-                                           th:name="allergies"
-                                           />
-                                </li>
-                            </ul>
-                        </div>
-                        <button type="submit" class="btn btn-info">Save</button>
-                    </form>
-                    <br />
-                    <div sec:authorize="hasAnyAuthority('admin', 'provider')">
-                        <a href="/list-users" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to User's Menu</a>
-                    </div>
-                    <br />
-                    <a href="/menu" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Menu</a>
-                    <br />
-                </div>
-            </div>
+        <div align="center" layout:fragment="content" class="container">
+            <h1>Allergy Manager</h1>
+            <a th:href="|/user/add-allergy/${userId}|">Add a Allergy</a>
+            <br/><br/>
+            <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap">
+                <thead>
+                    <tr>
+                        <th data-priority="1">Allergy Name</th>
+                        <th data-priority="50" sec:authorize="hasAnyAuthority('admin', 'provider')">Reference Id</th>
+                        <th data-priority="99">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="allergy : ${allergyList}">
+                        <td th:text="${allergy.allergyName}"></td>
+                        <td th:text="${allergy.referenceId}" sec:authorize="hasAnyAuthority('admin', 'provider')"></td>
+                        <td>
+                            <a th:href="|/user/edit-allergy/${userId}/${allergy.allergyId}|" class="btn btn-info">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/user/delete-allergy/${userId}/${allergy.allergyId}|" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a th:href="|/menu/${userId}|">Return to Menu</a>
         </div>
+        <div th:replace="./fragments/footer :: 'footer'" />
     </body>
 </html>

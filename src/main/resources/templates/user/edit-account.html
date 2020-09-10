@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title>Account</title>
+    </head>
+    <body>
+        <div layout:fragment="content" class="container">
+            <div align="center">
+                <h1 class="pt-4">Account</h1>
+                <div role="alert" class="text-danger" th:if="${msg}" th:utext="${msg}"></div>
+                <br />
+                <form action="#" th:action="|/user/account/${user.userId}|" th:object="${user}" method="post" data-parsley-validate="">
+                    <table class="table table-bordered dt-responsive display">
+                        <tr>
+                            <td><label for="firstName">First Name:</label></td>
+                            <td>
+                                <input type="text" class="form-control" th:field="*{firstName}" id="firstName" maxlength="50" placeholder="Required" required="required" autofocus="true" data-parsley-rfc3986="" />
+                                <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="lastName">Last Name:</label></td>
+                            <td class="w-100">
+                                <input type="text" class="form-control" th:field="*{lastName}" id="lastName" maxlength="100" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="email">Email:</label></td>
+                            <td>
+                                <input type="email" class="form-control" th:field="*{email}" id="email" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="password">Password:</label></td>
+                            <td>
+                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="6" />
+                                <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td><label for="password2">Confirm Password:</label></td>
+                            <td>
+                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-equalto="#password" data-parsley-minlength="6" />
+                            </td>
+                        </tr>
+<!--                        Admin Section-->
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="role">User Role:</label></td>
+                            <td>
+                                <select th:field="*{role}" id="role">
+                                    <option th:each="role : ${roles}" th:value="${{role}}" th:text="${role.title}">Choose a Role</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="isActive">Active</label></td>
+                            <td>
+                                <input type="checkbox" id="isActive" th:field="*{isActive}" th:value="${user}" />
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="isLocked">Locked Out</label></td>
+                            <td>
+                                <input type="checkbox" id="isLocked" th:field="*{isLocked}" th:value="${user}" />
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="isVerified">Verified</label></td>
+                            <td>
+                                <input type="checkbox" id="isVerified" th:field="*{isVerified}" th:value="${user}" />
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="adminComments">Administrator Comments:</label></td>
+                            <td>
+                                <textarea class="form-control" id="adminComments" th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" />
+                            </td>
+                        </tr>
+                    </table>
+                    <br />
+                    <button type="submit" class="btn btn-success"><i class="fas fa-file-signature"></i> Update</button>
+                </form>
+                <br />
+                <br />
+                <form action="#" th:action="|/user/delete/${user.userId}|" th:object="${user}" method="post" onsubmit="return confirm('Do you really want to delete your account and data?');">
+                    <button type="submit" class="btn btn-danger"><i class="fas fa-minus-circle"></i> DELETE ACCOUNT</button>
+                </form>
+                <br />
+                <a th:href="|/menu/${user.userId}|" class="btn btn-primary btn-block">Return to Menu</a>
+            </div>
+        </div>
+    </body>
+</html>

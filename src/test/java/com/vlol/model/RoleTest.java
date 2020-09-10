@@ -54,7 +54,7 @@ public class RoleTest {
     @BeforeEach
     public void setUp() {
         // Populate the Role object before each test
-        role.setRoleID(1l);
+        role.setRoleId(1l);
         role.setTitle("participant");
         role.setDescription("Program Participant (Profile Access Only)");
         role.setAccessLevel(1);
@@ -68,13 +68,13 @@ public class RoleTest {
     }
 
     /**
-     * Passing test for the getRoleID method, of class Role.
+     * Passing test for the getRoleId method, of class Role.
      */
     @Test
-    public void testGetRoleID() {
-        System.out.println("getRoleID Test (Passing value)");
+    public void testGetRoleId() {
+        System.out.println("getRoleId Test (Passing value)");
         Long expResult = 1l;
-        Long result = role.getRoleID();
+        Long result = role.getRoleId();
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Role>> violations = validator.validate(role);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -86,13 +86,13 @@ public class RoleTest {
     }
 
     /**
-     * Passing test for the setRoleID method, of class Role.
+     * Passing test for the setRoleId method, of class Role.
      */
     @Test
-    public void testSetRoleID() {
-        System.out.println("setRoleID Test (Passing value)");
-        Long roleID = 1l;
-        role.setRoleID(roleID);
+    public void testSetRoleId() {
+        System.out.println("setRoleId Test (Passing value)");
+        Long roleId = 1l;
+        role.setRoleId(roleId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Role>> violations = validator.validate(role);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -104,13 +104,13 @@ public class RoleTest {
     }
 
     /**
-     * Negative value test for the setRoleID method, of class Role.
+     * Negative value test for the setRoleId method, of class Role.
      */
     @Test
-    public void testSetRoleIDNegative() {
-        System.out.println("setRoleID Test (Negative value)");
-        Long roleID = -1l;
-        role.setRoleID(roleID);
+    public void testSetRoleIdNegative() {
+        System.out.println("setRoleId Test (Negative value)");
+        Long roleId = -1l;
+        role.setRoleId(roleId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Role>> violations = validator.validate(role);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -122,13 +122,13 @@ public class RoleTest {
     }
 
     /**
-     * Out of Range value test for the setRoleID method, of class Role.
+     * Out of Range value test for the setRoleId method, of class Role.
      */
     @Test
-    public void testSetRoleIDOutOfRange() {
-        System.out.println("setRoleID Test (Out of Range value)");
-        Long roleID = Long.MAX_VALUE + 1;
-        role.setRoleID(roleID);
+    public void testSetRoleIdOutOfRange() {
+        System.out.println("setRoleId Test (Out of Range value)");
+        Long roleId = Long.MAX_VALUE + 1;
+        role.setRoleId(roleId);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Role>> violations = validator.validate(role);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";

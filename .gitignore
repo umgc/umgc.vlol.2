@@ -4,6 +4,7 @@ target/
 !**/src/main/**
 !**/src/test/**
 
+
 ### STS ###
 .apt_generated
 .classpath
@@ -26,9 +27,14 @@ target/
 /nbdist/
 /.nb-gradle/
 build/
-tomcat/
 
 ### VS Code ###
 .vscode/
 
+### Tomcat logs ###
+tomcat/logs/
+bin/
+
+### Build itesm ###
 *.uuid
+/data

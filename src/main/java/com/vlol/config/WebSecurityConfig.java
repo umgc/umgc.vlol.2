@@ -18,6 +18,7 @@
  */
 package com.vlol.config;
 
+import com.vlol.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -30,6 +31,7 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointR
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -49,6 +51,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private DataSource dataSource;
+    
+    @Autowired
+    UserService userService;
 
     private final String USERS_QUERY = "select email, password, is_active from appuser where email=?";
     private final String ROLES_QUERY = "select u.email, r.role_title from appuser u inner join approle r on (u.role_id=r.role_id) where u.email=?";
@@ -58,13 +63,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth.jdbcAuthentication()
                 .usersByUsernameQuery(USERS_QUERY)
                 .authoritiesByUsernameQuery(ROLES_QUERY)
-                .dataSource(dataSource)
-                .passwordEncoder(bCryptPasswordEncoder);
+                .dataSource(dataSource);
     }
 
     @Bean
     public AuthenticationManager customAuthenticationManager() throws Exception {
         return authenticationManager();
+    }
+    
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+        return new LoginSuccessHandler(userService);
     }
 
     @Override
@@ -80,6 +89,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/contact").permitAll()
                 .antMatchers("/error").permitAll()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/forgot-password").permitAll()
+                .antMatchers("/reset-password").permitAll()
+                .antMatchers("/verify-email").permitAll()
                 .antMatchers("/registration").permitAll()
                 .antMatchers("/console/**").permitAll()
                 .antMatchers("/qr-capture").permitAll()
@@ -99,6 +111,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .defaultSuccessUrl("/menu")
                     .usernameParameter("email")
                     .passwordParameter("password")
+                    .successHandler(authenticationSuccessHandler())
                     .permitAll()
                     .and()
                 .logout()

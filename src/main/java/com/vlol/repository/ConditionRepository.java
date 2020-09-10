@@ -28,6 +28,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ConditionRepository extends JpaRepository<Condition, Long> {
 
-    @Query(value = "SELECT c FROM Condition c WHERE lower(c.conditionName) LIKE lower(concat('%', :keyword, '%'))")
+    @Query(value = "SELECT c FROM Condition c WHERE lower(c.conditionName) LIKE lower(concat('%', :keyword, '%'))"
+            + " ORDER BY CASE WHEN lower(c.conditionName) LIKE lower(concat(:keyword, '%')) THEN 1 ELSE 2 END")
     public List<Condition> findConditionByKeyword(@Param("keyword") String keyword);
 }

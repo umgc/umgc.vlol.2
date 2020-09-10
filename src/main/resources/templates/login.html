@@ -15,22 +15,31 @@
                     <div class="alert alert-danger" role="alert" th:if="${param.error}">
                         The email or password is incorrect!
                     </div>
+                    <div class="alert alert-success" role="alert" th:if="${param.passwordchanged}">
+                        Password Successfully Changed!
+                    </div>
                     <h1>Please log in</h1>
                     <br />
+
                     <label for="email" class="sr-only">Email address</label>
                     <span class="add-on"><i class="icon-envelope"></i></span>
                     <input type="email" id="email" class="form-control" name="email" placeholder="Email address" required="required" autofocus="autofocus" autocomplete="off" />
                     <br />
+                    
                     <label for="password" class="sr-only">Password</label>
                     <span class="add-on"><i class="icon-key"></i></span>
-                    <input type="password" id="password" class="form-control" name="password" placeholder="Password" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" required="required" autocomplete="off" />
+                    <input type="password" id="password" class="form-control" name="password" placeholder="Password" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" required="required" autocomplete="off" />                    
+                    <div class="text-right"><a th:href="@{/forgot-password}">Forgot Password</a></div>
                     <br />
+                    
                     <div class="checkbox">
                         <input type="checkbox" value="remember-me" /> Remember me
                     </div>
                     <br />
+                    
                     <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Log in</button>
                     <br />
+                    
                     <a th:href="@{/registration}" class="btn btn-primary btn-block"><i class="fas fa-file-signature"></i> Create a Letter of Life Account</a>
                     <!--<br />-->
                     <!--<a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>-->
