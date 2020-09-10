@@ -76,6 +76,9 @@ public class VlolController {
 
     @Value("${spring.application.name}")
     String appName;
+    
+    @Value("${mail.smtp.supportEmail}")
+    String supportEmail;
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
     public ModelAndView viewLoginForm() {
@@ -288,6 +291,7 @@ public class VlolController {
         ModelAndView mav = new ModelAndView();
         Utils.getUserName(userService, mav);
         mav.setViewName("contact");
+        mav.addObject("supportEmail", supportEmail);
         return mav;
     }
 
@@ -304,6 +308,7 @@ public class VlolController {
         ModelAndView mav = new ModelAndView();
         Utils.getUserName(userService, mav);
         mav.setViewName("error");
+        mav.addObject("supportEmail", supportEmail);
         return mav;
     }
 }

@@ -16,7 +16,7 @@
                 <div class="col-md-9">
                     <h1 class="pt-4">Contact Us</h1>
                     <br />
-                    <p><b>Any questions, please contact the VLOL Project at <a href="mailto:rgarcia92@student.umuc.edu">rgarcia92@student.umuc.edu</a>.</b></p>
+                    <p><b>Any questions, please contact the VLOL Project at <a th:href="|mailto:${supportEmail}|" th:text="${supportEmail}"></a>.</b></p>
                     <hr>
                         <a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>
                 </div>
