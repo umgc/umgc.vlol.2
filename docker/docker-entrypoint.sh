@@ -6,6 +6,7 @@ if [ -z "${ENVIRONMENT}" ]; then
 else
 	if [ "${ENVIRONMENT}" == "PROD" ]; then
 		echo "spring.datasource.data=" >> /usr/src/vlol/application.override.properties
+    fi
 fi
 
 if [ -z "${DBURL}" ]; then
@@ -13,16 +14,19 @@ if [ -z "${DBURL}" ]; then
 else
 	echo "spring.datasource.url=${DBURL}" >> /usr/src/vlol/application.override.properties 
 fi
+
 if [ -z "${DBUSERNAME}" ]; then
     echo "DBUSERNAME environment variable not found. Setting to embedded db default."
 else
 	echo "spring.datasource.username=${DBUSERNAME}" >> /usr/src/vlol/application.override.properties 
 fi
+
 if [ -z "${DBPASSWORD}" ]; then
     echo "DBPASSWORD environment variable not found. Setting to embedded db default."
 else
 	echo "spring.datasource.password=${DBPASSWORD}" >> /usr/src/vlol/application.override.properties 
 fi
+
 if [ -z "${DBDIALECT}" ]; then
     echo "DBDIALECT environment variable not found. Setting to embedded db."
     echo "See https://docs.jboss.org/hibernate/orm/3.5/javadocs/org/hibernate/dialect/Dialect.html for available dialects"
@@ -36,6 +40,7 @@ if [ -z "${SMTP_HOST}" ]; then
 else
 	echo "mail.smtp.host=${SMTP_HOST}" >> /usr/src/vlol/application.override.properties 
 fi
+
 if [ -z "${SMTP_PORT}" ]; then
     echo "SMTP_PORT environment variable not found. Defaulting to port 465"
 	echo "mail.smtp.port=465" >> /usr/src/vlol/application.override.properties 

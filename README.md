@@ -55,6 +55,68 @@ This folder contains the code generated to satisfy the business problem and meet
 ---
 
 ## User Guide
+Prerequisites: 
+GNU Make version 3.82
+Docker version 19.03.12
+
+This repo leverages Docker as a developer environment to bootstrap system requirements into a full application build. Under the docker folder is a Dockerfile Dockerfile.build that creates a Docker image that container all necessary packages and dependencies for building, testing, and deploying the Virtual Letter of Life application. 
+>- Note: users may decide to use a local environment if they choose to install the required dependencies locally.
+
+At any time user may run `$ make help` to display usefully make commands.
+##### Development Build:
+1) First build the Docker build environment image.
+    ```bash
+    $ make build-env
+    ```
+    This will produce the Docker image `vlol-build-env:latest`
+    ```bash
+    $ docker images
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    vlol-build-env      latest              febd35d3c354        16 seconds ago      1.46GB
+    ```
+2) Next build the application.
+    ```bash
+    $ make all | make all SKIP_TESTS=y
+    ```
+    This will build the application Java jar by starting the Docker build-env image with the local repo volume mapping into the container context then running the make command to build the application. Optionally users may include the `SKIP_TESTS=y` CLI to skip unit tests.
+    ```bash
+    [INFO] ------------------------------------------------------------------------
+    [INFO] BUILD SUCCESS
+    [INFO] ------------------------------------------------------------------------
+    [INFO] Total time:  37.400 s
+    [INFO] Finished at: 2020-09-10T19:33:56Z
+    [INFO] ------------------------------------------------------------------------
+    ```
+3) Next build the application Docker image.
+    ``` bash
+    $ make build-vlol
+    ``` 
+    This will build the application Docker image.
+    ```bash
+    $ docker images
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    vlol.app            1.0.146             399d4e207440        4 seconds ago       712MB
+    ```
+
+##### Development Testing:
+After building the application Docker image user can run a local instance of the application via `make` commands.
+1) Start the application
+    ```bash
+    $ make start-vlol
+    ```
+    This start the Docker container application
+    ```bash
+    $ docker ps
+    CONTAINER ID   IMAGE         COMMAND     CREATED      STATUS          PORTS             NAMES
+    b4267ea10757  vlol.app:1.0.146  "..." 56 seconds ago Up 55 seconds  0.0.0.0:5000->5000/tcp   vlol.app
+    ```
+2) Open a browser and navigate to `localhost:5000` it may take a few seconds for the application to fully start.
+    
+
+##### Development Publish Docker image:
+*** TBD ***
+##### Development Deployment:
+*** TBD ***
 
 ---
 
