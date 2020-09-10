@@ -18,10 +18,15 @@ APP_IMG=$(APP_NAME):$(APP_TAG)
 BUILD_ENV_NAME=vlol-build-env
 BUILD_ENV_TAG=latest
 BUILD_IMG=$(BUILD_ENV_NAME):$(BUILD_ENV_TAG)
-REMOTE_IMG=docker.io/umgccaps/$(APP_IMG)
+REMOTE_IMG:=docker.io/umgccaps/$(APP_IMG)
 
 # Maven options
 MAVEN_OPTS:=-Dversion=$(VERSION)
+
+# Unique ID used for devel Azure deployments
+UUID_FILENAME:=user.uuid
+UUID:=$(shell cat $(UUID_FILENAME) 2> /dev/null || (uuidgen | sed s/'-'/''/g | head -c 10 \
+         | tr A-Z a-z > $(UUID_FILENAME) && cat $(UUID_FILENAME)))
 
 # Skip test flag
 # make all SKIP_TESTS=y <- doest not run unit tests
@@ -29,20 +34,22 @@ ifdef SKIP_TESTS
 	MAVEN_OPTS:=$(MAVEN_OPTS) -Dmaven.test.skip=true
 endif  
 
+
 # PHONY 
-.PHONY: all push build build-vlol start-vlol build-env start-env clean dev-deploy help azure-help
+.PHONY: all push build build-vlol start-vlol build-env start-env clean dev-deploy stop-deploy help
 
 	
 ##############################################################
 #	make all:
-#		This recipe starts the volo-build-env with repo volumed
+#		This recipe starts the vlol-build-env with repo volumed
 #		mapped into the container can creates the vlol-app jar
 #		then exits. This is useful so that developer do not 
 #		need to modify environments.
 #
 ##############################################################
 all:
-	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) -c 'cd /repo && make target/$(VLOL_JAR) VERSION=$(VERSION)'
+	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
+		-c 'cd /repo && make target/$(VLOL_JAR) VERSION=$(VERSION)'
 
 ##############################################################
 #	make push:
@@ -51,7 +58,7 @@ all:
 #
 ##############################################################
 push:
-	docker tag $(BUILD_IMG) $(REMOTE_IMG)
+	docker tag $(APP_IMG) $(REMOTE_IMG)
 	docker push $(REMOTE_IMG)
 
 
@@ -75,7 +82,8 @@ target/$(VLOL_JAR):
 ##############################################################
 build-vlol: target/$(VLOL_JAR)
 	cp target/$(VLOL_JAR) ./$(VLOL_JAR)
-	docker build -f ./docker/Dockerfile.app --build-arg VERSION=$(VERSION) --build-arg VLOL_APP=$(VLOL_JAR) -t $(APP_IMG) .
+	docker build -f ./docker/Dockerfile.app --build-arg VERSION=$(VERSION) \
+		--build-arg VLOL_APP=$(VLOL_JAR) -t $(APP_IMG) .
 	rm -rf ./$(VLOL_JAR)
 
 
@@ -104,7 +112,8 @@ build-env:
 #
 ##############################################################
 start-env:
-	docker run -it -v $(PWD)/:/repo -v /var/run/docker.sock:/var/run/docker.sock -v /sys/fs/cgroup:/sys/fs/cgroup --privileged $(BUILD_IMG) bash
+	docker run -it -v $(PWD)/:/repo -v /var/run/docker.sock:/var/run/docker.sock \
+		-v /sys/fs/cgroup:/sys/fs/cgroup --privileged $(BUILD_IMG) bash
 
 
 ##############################################################
@@ -117,16 +126,34 @@ clean:
 	@rm -rf ./tomcat
 
 
-dev-deploy:
-	az group create --name devTestgroup --location eastus
-	az deployment group create --resource-group devTestgroup --template-file azure/deploy-template.json --parameter azure/deploy-parameters.json
+##############################################################
+#	make dev-deploy:
+#		This deploys a given VLOL application to an Azure 
+#		container instances. This need to be done within the
+#		build-env Docker container unless user have azure-cli 
+#		installed
+#			Optional CLI: REMOTE_IMG=<docker-hub-image>
+#
+##############################################################
+dev-deploy: 
+	@az group create --name devTestGroup --location eastus
+	@az deployment group create --resource-group devTestGroup \
+			--template-file azure/deploy-template.json \
+			--parameter azure/deploy-parameters.json \
+			--parameter imageName=$(REMOTE_IMG) \
+			--parameter dnsNameLabel=$(UUID) 
+	@$(info $(REMOTE_IMG) deployed to $(UUID).eastus.azurecontainer.io)
+	@$(info This may take a few minutes to respond)
 
-# This prints Azure setup make commands and usage
-azure-help:
-	@$(info Azure development deployment steps)
-	@$(info 1. az login           - Navigate to the url and enter the code from the CLI output)
-	@$(info 2. make dev-deploy    - This creates a container instances with the VLOL application deployed)
-	@echo
+
+##############################################################
+#	make dev-deploy:
+#		This stops the Azure container instances.
+#
+##############################################################
+stop-deploy:
+	@az group delete --name devTestGroup
+
 
 # This prints make commands and usage
 help:
@@ -142,8 +169,15 @@ help:
 	@$(info 3. make start-vlol:   Starts the VLOL Docker image.)
 	@$(info -----------------------------------------------------------------------------------------------------------)
 	@$(info )
+	@$(info Azure development deployment steps)
+	@$(info 1. make build-env:     Only needed if user has not previously done so)
+	@$(info 2. make start-env:     Only needed if user has not previously done so)
+	@$(info 1. az login            Navigate to the url and enter the code from the CLI output)
+	@$(info 2. make dev-deploy     This creates a container instances with the VLOL application deployed)
+	@$(info )
 	@$(info Optional CLI)
 	@$(info SKIP_TESTS=y/n        Skips running unit tests)
+	@$(info REMOTE_IMG=y/n        Overrides Docker image to deploy to Azure container instances)
 	@$(info )
 	@$(info Available Make commands)
 	@cat Makefile | sed -n -e '/####/,/#####/ p' | grep -v '###' | sed -e 's/#//g' | grep -v Makefile|grep -v help
