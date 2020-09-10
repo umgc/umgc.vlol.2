@@ -49,8 +49,8 @@ public class UserInfo implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date DOB;
     
-    @Column(name = "Is_Deceased")
-    private Boolean IsDeceased; 
+    @Column(name = "is_deceased")
+    private Boolean isDeceased = false; 
 
     @Column(name = "ssn", length = 9, unique = true)
     // Check if SSN is valid per the SSA.
@@ -169,11 +169,11 @@ public class UserInfo implements Serializable {
     }
     
      public Boolean getIsDeceased(){
-        return IsDeceased; 
+        return isDeceased; 
     }
     
-    public void setIsDeceased(Boolean IsDeceased){
-        this.IsDeceased = IsDeceased; 
+    public void setIsDeceased(Boolean isDeceased){
+        this.isDeceased = isDeceased; 
     }
 
     public String getSSN() {

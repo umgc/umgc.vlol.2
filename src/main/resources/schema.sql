@@ -120,7 +120,7 @@ CREATE TABLE user_info(
     user_agent_id BIGINT COMMENT 'The User ID of the user''s agent.',
     user_comments VARCHAR(300) COMMENT 'User additional comments.',
     zipcode VARCHAR(5) COMMENT 'The user''s zip code number.',
-    is_deceased BOOLEAN
+    is_deceased BOOLEAN DEFAULT false
     --COMMENT 'The database user profile table'
 ) ;
 

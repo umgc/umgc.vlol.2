@@ -4,20 +4,6 @@
       lag="en">
     <head>
         <title>View a User</title>
-        <style>
-            td {
-                text-align: left;
-                vertical-align: top;
-                white-space: nowrap;
-            }
-            input:not([type="checkbox"]) {
-                width: 100%;
-            }
-            textarea {
-                resize: none;
-                width: 100%;
-            }
-        </style>
     </head>
     <body>
         <div layout:fragment="content" class="container">
@@ -35,18 +21,14 @@
                         <a href="/add-user" class="btn btn-success"><i class="fas fa-plus"></i> Add a User</a>
                     </span>
                     <hr />
-                    <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap">
+                    <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap no-ordering no-paging">
                         <thead>
                             <tr>
-                                <th data-priority="1" class="disabled-sorting">Item</th>
+                                <th data-priority="1" class="disabled-sorting">Field</th>
                                 <th data-priority="1" class="disabled-sorting">Value</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="text-nowrap">ID:</td>
-                                <td class="w-100" th:text="${user.userId}">ID</td>
-                            </tr>
                             <tr>             
                                 <td class="text-nowrap">Last Name:</td>
                                 <td th:text="${user.lastName}">Last Name</td>
@@ -109,7 +91,7 @@
                             </tr>
                             <tr>
                                 <td class="text-nowrap">Advance Directive?</td>
-                                <td><input type="checkbox" th:field="*{user.userInfo.advDirective}" th:value="${user}" disabled="disabled" /></td>
+                                <td th:text="${user.userInfo.advDirective?'Yes':'No'}"></td>
                             </tr>
                             <tr>             
                                 <td class="text-nowrap">Advance Directive Type:</td>
@@ -174,6 +156,10 @@
                                 <td colspan="2">
                                     <hr />
                                 </td>
+                            </tr>
+                            <tr>
+                                <td class="text-nowrap">Deceased:</td>
+                                <td th:text="${user.userInfo.isDeceased?'Yes':'No'}"></td>
                             </tr>
                             <tr sec:authorize="hasAnyAuthority('admin')">             
                                 <td class="text-nowrap">Email:</td>

@@ -82,6 +82,7 @@ public class UserInfoTest {
         userInfo.setDoctorName("Emmett Brown");
         userInfo.setDoctorPhone("4105555555");
         userInfo.setUserComments("I usually use 2 lpm O2.");
+        userInfo.setIsDeceased(Boolean.FALSE);
         // Setup validation of each method's validation annotations
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -1528,12 +1529,7 @@ public class UserInfoTest {
     @Test
     public void testSetUserCommentsOverflow() {
         System.out.println("setUserComments Test (Overflow value)");
-        String userComments = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-                + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        String userComments = ".".repeat(301);
         userInfo.setUserComments(userComments);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
@@ -1545,4 +1541,57 @@ public class UserInfoTest {
         assertFalse(violations.isEmpty());
     }
 
+    /**
+     * Passing test for the getIsDeceased method, of class User.
+     */
+    @Test
+    public void testGetIsDeceased() {
+        System.out.println("getIsDeceased Test (Passing value)");
+        Boolean expResult = Boolean.FALSE;
+        Boolean result = userInfo.getIsDeceased();
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Passing test for the setIsDeceased method, of class User.
+     */
+    @Test
+    public void testSetIsDeceased() {
+        System.out.println("setIsDeceased Test (Passing value)");
+        Boolean isDeceased = Boolean.TRUE;
+        userInfo.setIsDeceased(isDeceased);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
+
+    /**
+     * Null value test for the setIsDeceased method, of class User.
+     */
+    @Test
+    public void testSetIsDeceasedNull() {
+        System.out.println("setIsDeceased Test (Null value)");
+        Boolean isDeceased = null;
+        userInfo.setIsDeceased(isDeceased);
+        // Check for and print any violations of validation annotations
+        Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);
+        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+        if (!violations.isEmpty()) {
+            System.out.println("Violation caught: " + message);
+        }
+        // Test method
+        assertTrue(violations.isEmpty());
+    }
 }

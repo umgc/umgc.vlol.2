@@ -90,7 +90,9 @@
             $(document).ready(function () {
                 $('#list_table').DataTable({
                     responsive: true,
-                    dom: 'Bfrtip',
+                    dom: 'Bfrp'+($('#list_table.no-paging').length?'':'ti'),
+                    ordering: $('#list_table.no-ordering').length?false:true,
+                    paging: $('#list_table.no-paging').length?false:true,
                     buttons: [
                         {extend: 'copy', className: 'btn btn-secondary' },
                         {extend: 'csv', className: 'btn btn-secondary' },
