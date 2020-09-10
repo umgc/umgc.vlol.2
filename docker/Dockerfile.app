@@ -1,5 +1,6 @@
 FROM openjdk:11
 
+ARG VERSION
 LABEL VERSION=$VERSION
 RUN mkdir /usr/src/vlol
 

@@ -30,3 +30,5 @@ tomcat/
 
 ### VS Code ###
 .vscode/
+
+*.uuid
