@@ -11,10 +11,7 @@
  *
  * @category  vlol
  * @package controller
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
  */
 package com.vlol.controller;
 
@@ -53,7 +50,6 @@ import org.springframework.web.servlet.ModelAndView;
 /**
  * User controller class.
  *
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  */
 @Controller
 public class UserControlller {

@@ -11,10 +11,7 @@
  *
  * @category  com
  * @package VLOL
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
  */
 package com.vlol;
 
@@ -24,7 +21,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * Application entry class.
  *
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  */
 @SpringBootApplication
 public class VlolApplication {

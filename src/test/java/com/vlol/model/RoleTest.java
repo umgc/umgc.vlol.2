@@ -14,8 +14,6 @@
  * @author Rob Garcia <rgarcia92@student.umgc.edu> and Mohammed Allibalogun
  * <mohammed.allibalogun@gmail.com>
  * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
  */
 package com.vlol.model;
 

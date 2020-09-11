@@ -11,10 +11,7 @@
  *
  * @category  vlol
  * @package config
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
  */
 package com.vlol.config;
 
@@ -40,7 +37,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
  * Extension and customization of Spring Boot's built-in
  * WebSecurityConfigurerAdapter class.
  *
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  */
 @Configuration
 @EnableWebSecurity
