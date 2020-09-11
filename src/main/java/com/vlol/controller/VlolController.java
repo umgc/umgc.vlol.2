@@ -247,13 +247,13 @@ public class VlolController {
             }
         }else{
             user = Utils.getIfAuthorizedForUser(userService, id, false);
-            if(Utils.isAdmin() || Utils.isProvider()){
-                if(!Utils.isUser(user))
+            if(Utils.isAdmin() || Utils.isProvider()){ // if admin or provider check if self
+                if(!Utils.isUser(user)) // if not show user menu
                     mav.setViewName("menu/user-menu");
                 else
                     mav.setViewName("menu/admin-menu");
-            } else
-                mav.setViewName("menu/admin-menu");
+            } else // Otherwise show user menu
+                mav.setViewName("menu/user-menu");
         }
         if(user == null) return new ModelAndView("redirect:/login");
         mav.addObject("userId", user.getUserId());

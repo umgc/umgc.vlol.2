@@ -124,7 +124,7 @@ public class User implements Serializable {
     private Boolean isLocked;
     
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user", optional=true)
-    private UserInfo userInfo;
+    private UserInfo userInfo = new UserInfo(this);
 
     public Long getUserId() {
         return userId;

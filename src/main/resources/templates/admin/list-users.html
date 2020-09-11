@@ -27,10 +27,10 @@
                                 <th data-priority="1">User ID</th>
                                 <th data-priority="1">User Last Name</th>
                                 <th data-priority="1">User First Name</th>
-                                <th data-priority="99">User Role</th>
+                                <th data-priority="99" sec:authorize="hasAnyAuthority('admin', 'provider')">User Role</th>
                                 <th data-priority="99">User Email</th>
-                                <th data-priority="99">Last Login</th>
-                                <th data-priority="99">Active?</th>
+                                <th data-priority="99" sec:authorize="hasAnyAuthority('admin', 'provider')">Last Login</th>
+                                <th data-priority="99" sec:authorize="hasAnyAuthority('admin', 'provider')">Active?</th>
                                 <th data-priority="50" class="disabled-sorting">Actions</th>
                             </tr>
                         </thead>
@@ -39,10 +39,10 @@
                                 <td th:text="${user.userId}" class="align-middle">User ID</td>
                                 <td th:text="${user.lastName}" class="align-middle">User Last Name</td>
                                 <td th:text="${user.firstName}" class="align-middle">User First Name</td>
-                                <td th:text="${user.role.title}" class="align-middle">User Role</td>
+                                <td th:text="${user.role.title}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">User Role</td>
                                 <td th:text="${user.email}" class="align-middle">User Email</td>
-                                <td th:text="${user.lastLoginDate}" class="align-middle">Last Login</td>
-                                <td th:text="${user.isActive}" class="align-middle">Active?</td>
+                                <td th:text="${user.lastLoginDate}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">Last Login</td>
+                                <td th:text="${user.isActive}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">Active?</td>
                                 <td class="text-nowrap">
                                     <a th:href="@{/user/view/{id}(id=${user.userId})}" class="btn btn-info">
                                         <i class="far fa-eye"></i> View

@@ -106,7 +106,7 @@ CREATE TABLE user_info(
     dob DATE COMMENT 'The user''s date of birth.',
     ssn VARCHAR(9) COMMENT 'The user''s social security number.', 
     adv_dir_type VARCHAR(64) COMMENT 'Advance directive type.',
-    adv_directive BOOLEAN COMMENT 'Does the user have an advance directive?',
+    adv_directive BOOLEAN DEFAULT false COMMENT 'Does the user have an advance directive?',
     city VARCHAR(64) COMMENT 'The user''s city of residence.',
     doctor_name VARCHAR(100) COMMENT 'The user''s primary care physician.',
     doctor_phone VARCHAR(32) COMMENT 'The primary care physician''s phone number.',
@@ -125,6 +125,7 @@ CREATE TABLE user_info(
 ) ;
 
 ALTER TABLE user_info ADD CONSTRAINT user_info_pk PRIMARY KEY(info_id);
+ALTER TABLE user_info ADD CONSTRAINT user_info_uq_user_id UNIQUE(user_id);
 ALTER TABLE user_info ADD CONSTRAINT user_info_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
 CREATE TABLE authorized_user (
@@ -146,6 +147,7 @@ CREATE TABLE user_allergy(
 ); -- COMMENT = 'The information table for the patient''s allergies.';
 
 ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_pk PRIMARY KEY(user_id, allergy_id);
+ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_uq_name UNIQUE(user_id, allergy_name);
 ALTER TABLE user_allergy ADD CONSTRAINT user_allergy_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
 CREATE TABLE user_illness(
@@ -157,8 +159,8 @@ CREATE TABLE user_illness(
 ); -- COMMENT = 'Information about the patient''s illnesses.';
 
 ALTER TABLE user_illness ADD CONSTRAINT user_illness_pk PRIMARY KEY(user_id, illness_id);
+ALTER TABLE user_illness ADD CONSTRAINT user_illness_uq_name UNIQUE(user_id, illness_name);
 ALTER TABLE user_illness ADD CONSTRAINT user_illness_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
-ALTER TABLE user_illness ADD CONSTRAINT user_illness_illness_fk FOREIGN KEY(illness_id) REFERENCES illness(illness_id);
 
 -- key table for user_med_list
 CREATE TABLE user_medication(

@@ -104,7 +104,7 @@ public class UserInfo implements Serializable {
 
     @Column(name = "adv_directive")
     @NotNull(message = "Value cannot be null.")
-    private Boolean advDirective;
+    private Boolean advDirective = false;
 
     @Column(name = "adv_dir_type", length = 64)
     // Check if text is valid per RFC 3986.
@@ -143,6 +143,11 @@ public class UserInfo implements Serializable {
     private String userComments;
 
 
+    public UserInfo(User user){
+        this.user = user;
+    }
+    public UserInfo(){
+    }
 
     public Long getInfoId() {
         return infoId;
