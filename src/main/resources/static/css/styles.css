@@ -66,6 +66,17 @@ footer {
     margin: 1rem;
     min-width: 12rem !important;
 }
+.menu-button{
+    font-size: 9em;
+}
+@media only screen and (max-width: 600px) {
+    .menu-card {
+        flex-direction: row;
+    }
+    .menu-button{
+        font-size: 3em;
+    }
+}
 .tt-menu{
     width: 422px;
     margin: 12px 0;
