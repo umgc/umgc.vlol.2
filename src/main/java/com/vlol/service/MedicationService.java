@@ -52,6 +52,7 @@ public class MedicationService {
     public void deleteMedication(Long medicationId) {
         medicationRepository.deleteById(medicationId);
     }
+    
     public void truncateMedication() {
         medicationRepository.deleteAllInBatch();
     }
