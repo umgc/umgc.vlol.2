@@ -34,7 +34,7 @@ public class QRCodeService {
         //System.out.print("test" + dns);
         QRCodeWriter barcodeWriter = new QRCodeWriter();
         String jwtToken = Utils.createJWT(userService.getUser(Long.parseLong(barcodeText)));
-        BitMatrix bitMatrix = barcodeWriter.encode(dns+"user/view/"+barcodeText+"?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 200, 200);
+        BitMatrix bitMatrix = barcodeWriter.encode(dns+"user/view/"+barcodeText+"?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 400, 400);
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
     }
 }
