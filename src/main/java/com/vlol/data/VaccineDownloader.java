@@ -121,7 +121,6 @@ public class VaccineDownloader {
                                 session.clear();
                             }
                         }
-                        
                     }
                 }
                 session.flush();

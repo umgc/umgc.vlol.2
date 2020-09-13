@@ -50,6 +50,6 @@ public class UserConditionService {
     }
 
     public void deleteCondition(Long conditionId) {
-        userConditionRepository.deleteById(conditionId);
+        userConditionRepository.deleteByPK(conditionId);
     }
 }

@@ -47,6 +47,6 @@ public class UserVaccineService {
     }
 
     public void deleteVaccine(Long vaccineId) {
-        vaccineRepository.deleteById(vaccineId);
+        vaccineRepository.deleteByPK(vaccineId);
     }
 }

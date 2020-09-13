@@ -47,6 +47,6 @@ public class UserAllergyService {
     }
 
     public void deleteAllergy(Long allergyId) {
-        allergyRepository.deleteById(allergyId);
+        allergyRepository.deleteByPK(allergyId);
     }
 }
