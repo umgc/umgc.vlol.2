@@ -25,6 +25,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AllergyRepository extends JpaRepository<Allergy, Long> {
 
-    @Query(value = "SELECT a FROM Allergy a WHERE lower(a.allergyName) LIKE lower(concat('%', :keyword, '%'))")
+    @Query(value = "SELECT a FROM Allergy a WHERE lower(a.allergyName) LIKE lower(concat(:keyword, '%'))"
+            + " OR lower(a.allergyName) LIKE lower(concat('% ', :keyword, '%'))"
+            + " ORDER BY CASE WHEN lower(a.allergyName) LIKE lower(concat(:keyword, '%')) THEN 1 ELSE 2 END")
     public List<Allergy> findAllergyByKeyword(@Param("keyword") String keyword);
 }
