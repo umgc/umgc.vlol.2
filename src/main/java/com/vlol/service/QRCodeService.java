@@ -12,6 +12,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.vlol.controller.Utils;
 import java.awt.image.BufferedImage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 
 
 import org.springframework.stereotype.Service;
@@ -25,10 +26,15 @@ public class QRCodeService {
     
     @Autowired
     UserService userService;
+    
+    @Autowired
+    private Environment env;
     public BufferedImage generateQRCodeImage(String barcodeText) throws Exception {
+        String dns = env.getProperty("mail.smtp.urlPath");
+        //System.out.print("test" + dns);
         QRCodeWriter barcodeWriter = new QRCodeWriter();
         String jwtToken = Utils.createJWT(userService.getUser(Long.parseLong(barcodeText)));
-        BitMatrix bitMatrix = barcodeWriter.encode(barcodeText+"?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 200, 200);
+        BitMatrix bitMatrix = barcodeWriter.encode(dns+"user/view/"+barcodeText+"?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 200, 200);
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
     }
 }
