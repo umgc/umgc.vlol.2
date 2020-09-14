@@ -104,21 +104,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><label for="advDirective">Advance Directive</label></td>
-                                <td class="text-wrap">
-                                    <div>Check this box if the user has an advance directive (e.g., DNR, MOLST, etc.):</div>
-                                    <input type="checkbox" class="form-control" th:field="*{advDirective}" id="advDirective" th:value="${user}" />
-                                    <div th:if="${#fields.hasErrors('advDirective')}" class="text-danger" th:errors="*{advDirective}"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label for="advDirType">Advance Directive Type</label></td>
-                                <td>
-                                    <input type="text" class="form-control" th:field="*{advDirType}" id="advDirType" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('advDirType')}" class="text-danger" th:errors="*{advDirType}"></div>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td><label for="isDeceased">Is Deceased</label></td>
                                 <td class="text-wrap">
                                     <input type="checkbox" class="form-control" th:field="*{isDeceased}" id="isDeceased" th:value="${user}" />

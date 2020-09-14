@@ -41,6 +41,11 @@
                             <i class="fas fa-disease menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Conditions</div>
                         </a>
+                        <a th:href="|/user/advance-directives/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-paste menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">Advance Directives</div>
+                        </a>
                         <a th:href="|/user/authorized-user/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-user-shield menu-button" style="margin: 1rem"></i>

@@ -116,8 +116,6 @@ CREATE TABLE user_info(
     user_id BIGINT COMMENT 'The user'' s unique ID foreign key.',
     dob DATE COMMENT 'The user''s date of birth.',
     ssn VARCHAR(9) COMMENT 'The user''s social security number.', 
-    adv_dir_type VARCHAR(64) COMMENT 'Advance directive type.',
-    adv_directive BOOLEAN DEFAULT false COMMENT 'Does the user have an advance directive?',
     city VARCHAR(64) COMMENT 'The user''s city of residence.',
     doctor_name VARCHAR(100) COMMENT 'The user''s primary care physician.',
     doctor_phone VARCHAR(32) COMMENT 'The primary care physician''s phone number.',
@@ -139,12 +137,24 @@ ALTER TABLE user_info ADD CONSTRAINT user_info_pk PRIMARY KEY(info_id);
 ALTER TABLE user_info ADD CONSTRAINT user_info_uq_user_id UNIQUE(user_id);
 ALTER TABLE user_info ADD CONSTRAINT user_info_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
+CREATE TABLE advance_directive (
+    advance_directive_id BIGINT auto_increment COMMENT 'Id for table',
+    user_id BIGINT NOT NULL COMMENT 'The unique ID for a user.',
+    advance_directive_file BLOB COMMENT 'The compressed file.',
+    advance_directive_content_type VARCHAR(128) COMMENT 'The advance directive type.',
+    advance_directive_filename VARCHAR(256) COMMENT 'The advance directive type.',
+    advance_directive_type VARCHAR(64) NOT NULL COMMENT 'The advance directive type.'
+); -- COMMENT='Table for storing advance directive files and their type';
+
+ALTER TABLE advance_directive ADD CONSTRAINT advance_directive_pk PRIMARY KEY(user_id, advance_directive_id);
+ALTER TABLE advance_directive ADD CONSTRAINT advance_directive_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
+
 CREATE TABLE authorized_user (
     authorized_user_id BIGINT auto_increment COMMENT 'Id for table',
     user_id BIGINT NOT NULL COMMENT 'The unique ID for a user.',
     authorized_email VARCHAR(320) NOT NULL COMMENT 'The authorized user''s email address.',
     authorized_name VARCHAR(128) NOT NULL COMMENT 'The authorized user''s name.'
-); -- COMMENT='The database user role table';
+); -- COMMENT='Stores users authorized to modify another's account';
 
 ALTER TABLE authorized_user ADD CONSTRAINT authorized_pk PRIMARY KEY(user_id, authorized_user_id);
 ALTER TABLE authorized_user ADD CONSTRAINT authorized_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;

@@ -99,16 +99,6 @@ public class UserInfo implements Serializable {
     @Size(max = 50, message = "Input exceeds size limits.")
     private String insPolicyNo;
 
-    @Column(name = "adv_directive")
-    @NotNull(message = "Value cannot be null.")
-    private Boolean advDirective = false;
-
-    @Column(name = "adv_dir_type", length = 64)
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 50, message = "Input exceeds size limits.")
-    private String advDirType;
-
     @Column(name = "poc_name", length = 100)
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
@@ -241,22 +231,6 @@ public class UserInfo implements Serializable {
 
     public void setInsPolicyNo(String insPolicyNo) {
         this.insPolicyNo = insPolicyNo;
-    }
-
-    public Boolean getAdvDirective() {
-        return advDirective;
-    }
-
-    public void setAdvDirective(Boolean advDirective) {
-        this.advDirective = advDirective;
-    }
-
-    public String getAdvDirType() {
-        return advDirType;
-    }
-
-    public void setAdvDirType(String advDirType) {
-        this.advDirType = advDirType;
     }
 
     public String getPocName() {

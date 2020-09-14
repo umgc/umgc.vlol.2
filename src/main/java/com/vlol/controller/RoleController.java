@@ -52,50 +52,6 @@ public class RoleController {
         return mav;
     }
 
-    @RequestMapping(value = "/add-role", method = RequestMethod.GET)
-    public ModelAndView viewAddRolePage() {
-        ModelAndView mav = new ModelAndView("admin/add-role");
-        Utils.getUserName(userService, mav);
-        Role role = new Role();
-        mav.addObject("role", role);
-        return mav;
-    }
-
-    @RequestMapping(value = "/save-role", method = RequestMethod.POST)
-    public String saveRole(@Valid Role role, BindingResult bindingResult, Model model) {
-        //check for errors
-        if (bindingResult.hasErrors()) {
-            return "admin/add-role";
-        }
-        roleService.saveRole(role);
-        return "redirect:/list-roles";
-    }
-
-    @RequestMapping(value = "/update-role", method = RequestMethod.POST)
-    public String updateRole(@Valid Role role, BindingResult bindingResult, Model model) {
-        //check for errors
-        if (bindingResult.hasErrors()) {
-            return "admin/edit-role";
-        }
-        roleService.saveRole(role);
-        return "redirect:/list-roles";
-    }
-
-    @RequestMapping("/edit-role/{id}")
-    public ModelAndView viewEditRolePage(@PathVariable(name = "id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/edit-role");
-        Utils.getUserName(userService, mav);
-        Role role = roleService.getRole(id);
-        mav.addObject("role", role);
-        return mav;
-    }
-
-    @RequestMapping("/delete-role/{id}")
-    public String deleteRole(@PathVariable(name = "id") Long id) {
-        roleService.deleteRole(id);
-        return "redirect:/list-roles";
-    }
-
     @RequestMapping("/search-roles")
     public ModelAndView findRoleByKeyword(@RequestParam String keyword) {
         ModelAndView mav = new ModelAndView("admin/search-roles");

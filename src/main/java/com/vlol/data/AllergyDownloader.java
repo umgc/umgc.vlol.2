@@ -78,7 +78,6 @@ public class AllergyDownloader {
                 // TODO: Add back in to clear table on reload
                 if(dataList.size() > 0) allergyService.truncateAllergies();
                 
-                        System.out.println(dataList);
                 while(dataList.size() > 0){
                     dataList.forEach((obj)->{
                         Allergy c = new Allergy();

@@ -102,7 +102,6 @@ public class FDADownloader {
                     
                     System.out.println("Start "+part.get("file")+" download ~25mb"); 
                     ZipInputStream zis = new ZipInputStream((InputStream)zipResponse.body());
-                    System.out.println("Done"); 
                     ZipEntry zipEntry = zis.getNextEntry();
                     while (zipEntry != null) {
                         List<Map> res = (List)new Gson().fromJson(new BufferedReader(new InputStreamReader(zis)), Map.class).get("results");
