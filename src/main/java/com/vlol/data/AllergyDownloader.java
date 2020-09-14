@@ -63,7 +63,7 @@ public class AllergyDownloader {
             // Check if data was updated in the last 7 days
             try{                
                 Boolean shouldUpdate = (Boolean)_em.createNativeQuery("SELECT last_updated <= curdate() - 7 FROM datasets WHERE name = 'mesh-al'").getSingleResult();
-//                if(!shouldUpdate) return;
+                if(!shouldUpdate) return;
                 _em.createNativeQuery("UPDATE datasets SET last_updated=curdate() WHERE name = 'mesh-al'").executeUpdate();
             }catch(javax.persistence.NoResultException e){
                 _em.createNativeQuery("INSERT INTO datasets (name, last_updated) VALUES('mesh-al', curdate())").executeUpdate();
@@ -82,7 +82,6 @@ public class AllergyDownloader {
                 while(dataList.size() > 0){
                     dataList.forEach((obj)->{
                         Allergy c = new Allergy();
-                        System.out.println(obj);
                         String allergyName = (String)((Map)obj.get("label")).get("value");
                         String allergyId = (String)((Map)obj.get("id")).get("value");
                         if(allergyName != null) allergyName = allergyName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
