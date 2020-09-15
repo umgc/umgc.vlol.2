@@ -1,5 +1,5 @@
 /**
- * Extension and customization of Spring Boot's built-in WebSecurityConfigurerAdapter class.
+ * Extension and customization of Spring Boot's built-in AuthenticationFailureHandler class.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7
@@ -16,55 +16,47 @@
 package com.vlol.config;
 
 import com.vlol.controller.Utils;
-import com.vlol.model.User;
 import com.vlol.service.LoginAttemptService;
-import com.vlol.service.UserService;
-
 import java.io.IOException;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-        
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.DefaultRedirectStrategy;
 import org.springframework.security.web.RedirectStrategy;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
-public class LoginSuccessHandler implements AuthenticationSuccessHandler {
+public class LoginFailureHandler implements AuthenticationFailureHandler {
     protected final Log logger = LogFactory.getLog(this.getClass());
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
-    private UserService userService;
 
     @Autowired
     private LoginAttemptService loginAttemptService;
 
-    public LoginSuccessHandler(UserService userService) {
+    public LoginFailureHandler() {
         super();
-        this.userService = userService;
     }
-
+    
     @Override
-    public void onAuthenticationSuccess(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
-        handle(request, response, authentication);
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException ae) throws IOException, ServletException {
+        handle(request, response, ae);
     }
 
-    protected void handle(final HttpServletRequest request, final HttpServletResponse response, final Authentication authentication) throws IOException {
-        User user = userService.userLogin(authentication.getName());
+    protected void handle(final HttpServletRequest request, final HttpServletResponse response, final AuthenticationException ae) throws IOException {
         if (response.isCommitted()) {
             return;
         }
-
         String ip = Utils.getClientIP(request);
-        loginAttemptService.loginSucceeded(ip);
-
-        if(!user.getIsVerified())
-            redirectStrategy.sendRedirect(request, response, "/verify-email?error=true");
-        else
-            redirectStrategy.sendRedirect(request, response, "/menu");
+        loginAttemptService.loginFailed(ip);
+        if (loginAttemptService.isBlocked(ip)) {
+            redirectStrategy.sendRedirect(request, response, "/login?blocked=true");
+        }
+        else {
+            redirectStrategy.sendRedirect(request, response, "/login?error=true");
+        }
     }
-
 }

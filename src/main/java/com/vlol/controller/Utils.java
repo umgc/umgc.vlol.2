@@ -15,6 +15,7 @@ import com.vlol.model.User;
 import com.vlol.service.UserService;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
@@ -129,5 +130,13 @@ public class Utils {
             
         }
         return null;
+    }
+
+    public static String getClientIP(HttpServletRequest request) {
+        String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
     }
 }

@@ -18,6 +18,9 @@
                     <div class="alert alert-success" role="alert" th:if="${param.passwordchanged}">
                         Password Successfully Changed!
                     </div>
+                    <div class="alert alert-danger" role="alert" th:if="${param.blocked}">
+                        Too many failed login attempts.  Please try again in 30 minutes.
+                    </div>
                     <h1>Please log in</h1>
                     <br />
 
