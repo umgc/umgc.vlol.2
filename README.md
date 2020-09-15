@@ -33,7 +33,7 @@ The Salisbury Fire Department's **Business Problem** and **Desired Outcomes** ar
 
 >*"We are searching for a system that will allow emergency medical services (EMS) to retrieve the medical information contained in a patient's ["Letter of Life"](https://salisbury.md/departments/fire/letter-of-life) at any location.*
 >
->*"In an emergency, the Letter of Life provides responders with a list of pertinent medical conditions and illnesses when the patient cannot provide this information on their own. We recommend all residents, especially the elderly and those suffering from chronic medical conditions, to complete a "Letter of Life" and place it in a location easily accessible by EMS personnel, such as on a refrigerator or by the entry door to the residence. However, when an emergency occurs outside the home, EMS personnel cannot access this list, which is why we are searching for an easily accessible, cloud-based version of the letter.*
+>*"In an emergency, the Letter of Life provides responders with a list of pertinent medical conditions and medications when the patient cannot provide this information on their own. We recommend all residents, especially the elderly and those suffering from chronic medical conditions, to complete a "Letter of Life" and place it in a location easily accessible by EMS personnel, such as on a refrigerator or by the entry door to the residence. However, when an emergency occurs outside the home, EMS personnel cannot access this list, which is why we are searching for an easily accessible, cloud-based version of the letter.*
 >
 >*"Our desired outcomes are:*
 >

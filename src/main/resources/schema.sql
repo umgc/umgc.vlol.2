@@ -18,11 +18,11 @@
 */
 -- DROP ALL OBJECTS;
 -- DROP TABLE IF EXISTS datasets;
--- DROP TABLE IF EXISTS user_illness;
+-- DROP TABLE IF EXISTS user_condition;
 -- DROP TABLE IF EXISTS user_medication;
 -- DROP TABLE IF EXISTS user_allergy;
 -- DROP TABLE IF EXISTS user_vaccine;
--- DROP TABLE IF EXISTS illness;
+-- DROP TABLE IF EXISTS condition;
 -- DROP TABLE IF EXISTS medication;
 -- DROP TABLE IF EXISTS allergy;
 -- DROP TABLE IF EXISTS vaccine;
@@ -57,14 +57,14 @@ CREATE TABLE vaccine(
 ALTER TABLE vaccine ADD CONSTRAINT vaccine_pk PRIMARY KEY(vaccine_id);
 ALTER TABLE vaccine ADD CONSTRAINT vaccine_uq_name UNIQUE(vaccine_name);
 
-CREATE TABLE illness(
-    illness_id BIGINT auto_increment COMMENT 'The unique ID for an illness.', 
-    illness_name VARCHAR(256) COMMENT 'The illness'' name.',
+CREATE TABLE condition(
+    condition_id BIGINT auto_increment COMMENT 'The unique ID for an condition.', 
+    condition_name VARCHAR(256) COMMENT 'The condition'' name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
-); -- COMMENT = 'The information table for illnesses.';
+); -- COMMENT = 'The information table for conditiones.';
 
-ALTER TABLE illness ADD CONSTRAINT illness_pk PRIMARY KEY(illness_id);
-ALTER TABLE illness ADD CONSTRAINT illness_uq_name UNIQUE(illness_name);
+ALTER TABLE condition ADD CONSTRAINT condition_pk PRIMARY KEY(condition_id);
+ALTER TABLE condition ADD CONSTRAINT condition_uq_name UNIQUE(condition_name);
 
 CREATE TABLE medication(
     medication_id BIGINT auto_increment COMMENT 'The unique ID for a medication.',
@@ -182,17 +182,17 @@ ALTER TABLE user_vaccine ADD CONSTRAINT user_vaccine_pk PRIMARY KEY(user_id, vac
 ALTER TABLE user_vaccine ADD CONSTRAINT user_vaccine_uq_name UNIQUE(user_id, vaccine_name);
 ALTER TABLE user_vaccine ADD CONSTRAINT user_vaccine_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
-CREATE TABLE user_illness(
-    illness_id BIGINT auto_increment COMMENT 'The medication unique ID.',
+CREATE TABLE user_condition(
+    condition_id BIGINT auto_increment COMMENT 'The medication unique ID.',
     user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID.',
-    illness_name VARCHAR(256) COMMENT 'The illness'' name.',
+    condition_name VARCHAR(256) COMMENT 'The condition'' name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
     
-); -- COMMENT = 'Information about the patient''s illnesses.';
+); -- COMMENT = 'Information about the patient''s conditiones.';
 
-ALTER TABLE user_illness ADD CONSTRAINT user_illness_pk PRIMARY KEY(user_id, illness_id);
-ALTER TABLE user_illness ADD CONSTRAINT user_illness_uq_name UNIQUE(user_id, illness_name);
-ALTER TABLE user_illness ADD CONSTRAINT user_illness_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
+ALTER TABLE user_condition ADD CONSTRAINT user_condition_pk PRIMARY KEY(user_id, condition_id);
+ALTER TABLE user_condition ADD CONSTRAINT user_condition_uq_name UNIQUE(user_id, condition_name);
+ALTER TABLE user_condition ADD CONSTRAINT user_condition_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
 -- key table for user_med_list
 CREATE TABLE user_medication(
