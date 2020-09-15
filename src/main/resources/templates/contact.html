@@ -15,8 +15,47 @@
                 </div>
                 <div class="col-md-9">
                     <h1 class="pt-4">Contact Us</h1>
-                    <br />
-                    <p><b>Any questions, please contact the VLOL Project at <a th:href="|mailto:${supportEmail}|" th:text="${supportEmail}"></a>.</b></p>
+                    <form action="#" th:action="@{/contact}" th:object="${contact}" method="post" data-parsley-validate="">
+                        <table class="table table-bordered dt-responsive display">
+                            <tr>
+                                <td><label for="firstName">First Name:</label></td>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{firstName}" id="firstName" maxlength="50" placeholder="Required" required="required" autofocus="true" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="lastName">Last Name:</label></td>
+                                <td class="w-100">
+                                    <input type="text" class="form-control" th:field="*{lastName}" id="lastName" maxlength="100" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="email">Email:</label></td>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{email}" id="email" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td><label for="reason">Reason</label></td>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{reason}" id="reason" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('reason')}" class="text-danger" th:errors="*{reason}"></div>
+                                </td>
+                            </tr>
+                             <tr>
+                                <td><label for="description">Description</label></td>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{description}" id="description" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></div>
+                                </td>
+                            </tr>
+                        </table>
+                        <br />
+                        <button type="submit" class="btn btn-success"><i class="fas fa-file-signature"></i> Submit</button>
+                    </form>
                     <hr>
                         <a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>
                 </div>
