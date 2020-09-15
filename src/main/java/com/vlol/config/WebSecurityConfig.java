@@ -32,6 +32,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -126,7 +127,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .tokenRepository(persistentTokenRepository())
                     .tokenValiditySeconds(60 * 60)
                     .and()
-                .exceptionHandling().accessDeniedPage("/access_denied");
+                .exceptionHandling().accessDeniedPage("/access_denied").and()
+                .addFilterBefore(new FailedLoginAttemptFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override
