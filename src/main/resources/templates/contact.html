@@ -48,7 +48,7 @@
                              <tr>
                                 <td><label for="description">Description</label></td>
                                 <td>
-                                    <input type="text" class="form-control" th:field="*{description}" id="description" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                    <textarea type="text" rows="10" cols="30" class="form-control" th:field="*{description}" id="description" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
                                     <div th:if="${#fields.hasErrors('description')}" class="text-danger" th:errors="*{description}"></div>
                                 </td>
                             </tr>
