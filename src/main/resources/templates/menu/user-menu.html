@@ -26,6 +26,11 @@
                             <i class="fas fa-allergies menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Allergies</div>
                         </a>
+                        <a th:href="|/user/vaccines/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-syringe menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">Vaccines</div>
+                        </a>
                         <a th:href="|/user/medications/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-tablets menu-button" style="margin: 1rem"></i>
@@ -35,6 +40,11 @@
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-disease menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Conditions</div>
+                        </a>
+                        <a th:href="|/user/advance-directives/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-paste menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">Advance Directives</div>
                         </a>
                         <a th:href="|/user/authorized-user/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">

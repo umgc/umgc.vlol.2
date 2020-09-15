@@ -1,5 +1,5 @@
 /**
- * UserAllergy service class.
+ * UserVaccine service class.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7
@@ -15,8 +15,8 @@
  */
 package com.vlol.service;
 
-import com.vlol.model.UserAllergy;
-import com.vlol.repository.UserAllergyRepository;
+import com.vlol.model.UserVaccine;
+import com.vlol.repository.UserVaccineRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,29 +24,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class UserAllergyService {
+public class UserVaccineService {
 
     @Autowired
-    private final UserAllergyRepository allergyRepository;
+    private final UserVaccineRepository vaccineRepository;
 
     @Autowired
-    public UserAllergyService(UserAllergyRepository allergyRepository) {
-        this.allergyRepository = allergyRepository;
+    public UserVaccineService(UserVaccineRepository vaccineRepository) {
+        this.vaccineRepository = vaccineRepository;
     }
 
-    public List<UserAllergy> getAllAllergies() {
-        return allergyRepository.findAll();
+    public List<UserVaccine> getAllVaccines() {
+        return vaccineRepository.findAll();
     }
 
-    public void saveAllergy(UserAllergy allergy) {
-        allergyRepository.save(allergy);
+    public void saveVaccine(UserVaccine vaccine) {
+        vaccineRepository.save(vaccine);
     }
 
-    public UserAllergy getAllergy(Long allergyId) {
-        return allergyRepository.findById(allergyId).orElse(null);
+    public UserVaccine getVaccine(Long vaccineId) {
+        return vaccineRepository.findById(vaccineId).orElse(null);
     }
 
-    public void deleteAllergy(Long allergyId) {
-        allergyRepository.deleteByPK(allergyId);
+    public void deleteVaccine(Long vaccineId) {
+        vaccineRepository.deleteByPK(vaccineId);
     }
 }

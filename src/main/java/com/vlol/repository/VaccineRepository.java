@@ -1,5 +1,5 @@
 /**
- * Allergy Repository Interface.
+ * Vaccine Repository Interface.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7
@@ -15,7 +15,7 @@
  */
 package com.vlol.repository;
 
-import com.vlol.model.Allergy;
+import com.vlol.model.Vaccine;
 import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,10 +23,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface AllergyRepository extends JpaRepository<Allergy, Long> {
+public interface VaccineRepository extends JpaRepository<Vaccine, Long> {
 
-    @Query(value = "SELECT a FROM Allergy a WHERE lower(a.allergyName) LIKE lower(concat(:keyword, '%'))"
-            + " OR lower(a.allergyName) LIKE lower(concat('% ', :keyword, '%'))"
-            + " ORDER BY CASE WHEN lower(a.allergyName) LIKE lower(concat(:keyword, '%')) THEN 1 ELSE 2 END")
-    public List<Allergy> findAllergyByKeyword(@Param("keyword") String keyword);
+    @Query(value = "SELECT a FROM Vaccine a WHERE lower(a.vaccineName) LIKE lower(concat('%', :keyword, '%'))")
+    public List<Vaccine> findVaccineByKeyword(@Param("keyword") String keyword);
 }

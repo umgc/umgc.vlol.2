@@ -32,9 +32,8 @@ public class UserConditionService {
     private final UserConditionRepository userConditionRepository;
 
     @Autowired
-    public UserConditionService(UserConditionRepository conditionRepository, EntityManager em) {
+    public UserConditionService(UserConditionRepository conditionRepository) {
         this.userConditionRepository = conditionRepository;
-//        new ICDDownloader(this, em);
     }
 
     public List<UserCondition> getAllConditions() {
@@ -50,6 +49,6 @@ public class UserConditionService {
     }
 
     public void deleteCondition(Long conditionId) {
-        userConditionRepository.deleteById(conditionId);
+        userConditionRepository.deleteByPK(conditionId);
     }
 }

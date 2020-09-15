@@ -16,14 +16,11 @@
 package com.vlol.controller;
 
 import com.vlol.model.Role;
-import com.vlol.model.User;
 import com.vlol.service.RoleService;
 import com.vlol.service.UserService;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -53,50 +50,6 @@ public class RoleController {
         List<Role> roleList = roleService.getAllRoles();
         mav.addObject("roleList", roleList);
         return mav;
-    }
-
-    @RequestMapping(value = "/add-role", method = RequestMethod.GET)
-    public ModelAndView viewAddRolePage() {
-        ModelAndView mav = new ModelAndView("admin/add-role");
-        Utils.getUserName(userService, mav);
-        Role role = new Role();
-        mav.addObject("role", role);
-        return mav;
-    }
-
-    @RequestMapping(value = "/save-role", method = RequestMethod.POST)
-    public String saveRole(@Valid Role role, BindingResult bindingResult, Model model) {
-        //check for errors
-        if (bindingResult.hasErrors()) {
-            return "admin/add-role";
-        }
-        roleService.saveRole(role);
-        return "redirect:/list-roles";
-    }
-
-    @RequestMapping(value = "/update-role", method = RequestMethod.POST)
-    public String updateRole(@Valid Role role, BindingResult bindingResult, Model model) {
-        //check for errors
-        if (bindingResult.hasErrors()) {
-            return "admin/edit-role";
-        }
-        roleService.saveRole(role);
-        return "redirect:/list-roles";
-    }
-
-    @RequestMapping("/edit-role/{id}")
-    public ModelAndView viewEditRolePage(@PathVariable(name = "id") Long id) {
-        ModelAndView mav = new ModelAndView("admin/edit-role");
-        Utils.getUserName(userService, mav);
-        Role role = roleService.getRole(id);
-        mav.addObject("role", role);
-        return mav;
-    }
-
-    @RequestMapping("/delete-role/{id}")
-    public String deleteRole(@PathVariable(name = "id") Long id) {
-        roleService.deleteRole(id);
-        return "redirect:/list-roles";
     }
 
     @RequestMapping("/search-roles")

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/datatable-master}"
+      lang="en">
+    <head>
+        <title>Advance Directive Manager</title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <h1>Advance Directive Manager</h1>
+            <a th:href="|/user/add-advance-directive/${userId}|">Add an Advance Directive</a>
+            <br/><br/>
+            <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap">
+                <thead>
+                    <tr>
+                        <th data-priority="1">Advance Directive Type</th>
+                        <th data-priority="99">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="advanceDirective : ${advanceDirectiveList}">
+                        <td th:text="${advanceDirective.advanceDirectiveType}"></td>
+                        <td>
+                            <a th:href="|/user/get-advance-directive/${userId}/${advanceDirective.advanceDirectiveId}|" class="btn btn-info">View</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/user/edit-advance-directive/${userId}/${advanceDirective.advanceDirectiveId}|" class="btn btn-info">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/user/delete-advance-directive/${userId}/${advanceDirective.advanceDirectiveId}|" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a th:href="|/menu/${userId}|">Return to Menu</a>
+        </div>
+        <div th:replace="./fragments/footer :: 'footer'" />
+    </body>
+</html>

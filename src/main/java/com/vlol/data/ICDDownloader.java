@@ -84,6 +84,8 @@ public class ICDDownloader {
             Integer nextYear = Calendar.getInstance().get(Calendar.YEAR)+1;
             for(Integer year = nextYear;year >= nextYear - 3; year--){
                 try {
+                    System.out.println("Start https://www.cms.gov/files/zip/"+year+
+                            "-code-tables-and-index.zip download ~20mb"); 
                     HttpResponse zipResponse = download("https://www.cms.gov/files/zip/"+year+
                             "-code-tables-and-index.zip", HttpResponse.BodyHandlers.ofInputStream());
 

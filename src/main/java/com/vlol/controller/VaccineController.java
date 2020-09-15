@@ -1,5 +1,5 @@
 /**
- * Medical condition controller class.
+ * Vaccine controller class.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7
@@ -15,8 +15,8 @@
  */
 package com.vlol.controller;
 
-import com.vlol.model.Condition;
-import com.vlol.service.ConditionService;
+import com.vlol.model.Vaccine;
+import com.vlol.service.VaccineService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,18 +25,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * Medical condition controller class.
+ * Vaccine controller class.
  *
  */
 @Controller
-public class ConditionController {
+public class VaccineController {
 
     @Autowired
-    private ConditionService conditionService;
+    private VaccineService vaccineService;
     
-    @GetMapping("/search-conditions")
-    public @ResponseBody List<Condition> findConditionByKeyword(@RequestParam String keyword) {
-        List<Condition> meds =  conditionService.findConditionByKeyword(keyword);
+    @GetMapping("/search-vaccines")
+    public @ResponseBody List<Vaccine> findVaccineByKeyword(@RequestParam String keyword) {
+        List<Vaccine> meds =  vaccineService.findVaccineByKeyword(keyword);
         return meds.subList(0, Math.min(20, meds.size()));
     }
 }

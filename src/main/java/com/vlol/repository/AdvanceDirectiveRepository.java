@@ -1,5 +1,5 @@
 /**
- * Allergy Repository Interface.
+ * AdvanceDirective Repository Interface.
  *
  * Java Runtime Environment (JRE) version used: 11.0.7
  * Java Development Kit (JDK) version used: 11.0.7
@@ -11,22 +11,27 @@
  *
  * @category  vlol
  * @package repository
- * @license https://opensource.org/licenses/MIT The MIT License
  */
 package com.vlol.repository;
 
-import com.vlol.model.Allergy;
-import java.util.List;
+import com.vlol.model.AdvanceDirective;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface AllergyRepository extends JpaRepository<Allergy, Long> {
+public interface AdvanceDirectiveRepository extends JpaRepository<AdvanceDirective, Long> {
 
-    @Query(value = "SELECT a FROM Allergy a WHERE lower(a.allergyName) LIKE lower(concat(:keyword, '%'))"
-            + " OR lower(a.allergyName) LIKE lower(concat('% ', :keyword, '%'))"
-            + " ORDER BY CASE WHEN lower(a.allergyName) LIKE lower(concat(:keyword, '%')) THEN 1 ELSE 2 END")
-    public List<Allergy> findAllergyByKeyword(@Param("keyword") String keyword);
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM AdvanceDirective m WHERE m.id = :id")
+    public void deleteByPK(@Param("id") Long id);
+    
+    @Transactional
+    @Modifying
+    @Query(value = "DELETE FROM User_AdvanceDirective m WHERE m.user_id = :id", nativeQuery=true)
+    public void deleteByUserId(@Param("id") Long id);
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title th:text="(${vaccine.vaccineId}!=null?'Edit':'Add')+ ' a Vaccine'"></title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <h1 th:text="(${vaccine.vaccineId}!=null?'Edit':'Add')+ ' a Vaccine'"></h1>
+                </div>
+            </div>
+            <form action="#" th:object="${vaccine}" th:action="'/user/save-vaccine/'+${userId}" method="post" data-parsley-validate="">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="form-group">
+                          <label for="vaccineName">Vaccine Name</label>
+                          <input type="search" class="form-control typeahead" id="vaccineName" th:field="*{vaccineName}" placeholder="Enter your vaccine"  data-parsley-maxlength="256" data-parsley-rfc3986=""/>
+                        </div>
+                        <input type="hidden" th:field="*{vaccineId}" />
+                        <input type="hidden" th:field="*{referenceId}" id="referenceId"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    <a th:href="|/user/vaccines/${userId}|">Return to Vaccine Manager</a>
+                </div>
+            </div>
+            <script>
+                document.addEventListener("DOMContentLoaded", ()=>{
+                    $('.typeahead').typeahead({
+                        minLength: 1
+                      },
+                    {
+                        name: 'vaccine',
+                        display: 'value',
+                        async: true,
+                        limit: Infinity,
+                        source: function (vaccine, syncResults, asyncResults) {
+                            // let's do a custom ajax call
+                            fetch("/search-vaccines?keyword="+vaccine).then(res=>res.json()).then((data)=>{
+                                const ret = data.map((d)=>{
+                                    return {...d,value:d.vaccineName}
+                                });
+                                asyncResults(ret);
+                            }).catch(()=>asyncResults([]));
+                        }
+                    });
+                    $('.typeahead').bind('typeahead:select', function(ev, vaccine) {
+                        $('#vaccineName').val(vaccine.vaccineName);
+                        $('#referenceId').val(vaccine.referenceId);
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>

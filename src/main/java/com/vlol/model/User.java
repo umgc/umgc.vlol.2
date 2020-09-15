@@ -73,6 +73,12 @@ public class User implements Serializable {
     
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
     private Set<UserMedication> medications = new HashSet<>();
+    
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<UserVaccine> vaccines = new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+    private Set<AdvanceDirective> advanceDirectives = new HashSet<>();
 
     @Column(name = "email", length = 320, unique = true)
     @NotBlank(message = "Email is required.")
@@ -181,7 +187,22 @@ public class User implements Serializable {
         this.authorizedEmails = authorizedEmails;
     }
 
+    public Set<AdvanceDirective> getAdvanceDirectives() {
+        return advanceDirectives;
+    }
 
+    public void setAdvanceDirectivess(Set<AdvanceDirective> advanceDirectives) {
+        this.advanceDirectives = advanceDirectives;
+    }
+
+    public Set<UserVaccine> getVaccines() {
+        return vaccines;
+    }
+
+    public void setVaccines(Set<UserVaccine> vaccines) {
+        this.vaccines = vaccines;
+    }
+    
     public Set<UserAllergy> getAllergies() {
         return allergies;
     }

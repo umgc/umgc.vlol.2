@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/datatable-master}"
+      lang="en">
+    <head>
+        <title>Vaccine Manager</title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <h1>Vaccine Manager</h1>
+            <a th:href="|/user/add-vaccine/${userId}|">Add a Vaccine</a>
+            <br/><br/>
+            <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap">
+                <thead>
+                    <tr>
+                        <th data-priority="1">Vaccine Name</th>
+                        <th data-priority="50" sec:authorize="hasAnyAuthority('admin', 'provider')">Reference Id</th>
+                        <th data-priority="99">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="vaccine : ${vaccineList}">
+                        <td th:text="${vaccine.vaccineName}"></td>
+                        <td th:text="${vaccine.referenceId}" sec:authorize="hasAnyAuthority('admin', 'provider')"></td>
+                        <td>
+                            <a th:href="|/user/edit-vaccine/${userId}/${vaccine.vaccineId}|" class="btn btn-info">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/user/delete-vaccine/${userId}/${vaccine.vaccineId}|" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a th:href="|/menu/${userId}|">Return to Menu</a>
+        </div>
+        <div th:replace="./fragments/footer :: 'footer'" />
+    </body>
+</html>
