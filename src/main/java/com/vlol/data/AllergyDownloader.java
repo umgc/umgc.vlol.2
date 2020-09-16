@@ -6,8 +6,8 @@
 package com.vlol.data;
 
 import com.google.gson.Gson;
-import com.vlol.model.Condition;
-import com.vlol.service.ConditionService;
+import com.vlol.model.Allergy;
+import com.vlol.service.AllergyService;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -26,22 +26,18 @@ import org.hibernate.Transaction;
  *
  * @author marcuccm
  */
-public class MeshDownloader {
+public class AllergyDownloader {
     Integer limit = 1000;
-    /**
-     * Alternate query with id, preferred name, alternate name
-     * PREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0APREFIX%20meshv%3A%20%3Chttp%3A%2F%2Fid.nlm.nih.gov%2Fmesh%2Fvocab%23%3E%0ASELECT%20DISTINCT%20%3Fid%20%3Fpreferred%20%3Falt%0AFROM%20%3Chttp%3A%2F%2Fid.nlm.nih.gov%2Fmesh%3E%0AWHERE%20%7B%0A%3Fd%20a%20meshv%3ADescriptor%20.%0A%3Fd%20meshv%3Aidentifier%20%3Fid%20.%0A%3Fd%20meshv%3ApreferredTerm%20%3Fpt%20.%0A%3Fpt%20meshv%3AprefLabel%20%3Fpreferred%20.%0AOPTIONAL%7B%3Fpt%20meshv%3AaltLabel%20%3Falt%20.%7D%0A%3Fd%20meshv%3AtreeNumber%20%3Ftn%0AFILTER(REGEX(%3Ftn,%22C%22))%0A%7D%0AORDER%20BY%20%3Fpreferred
-     */
-    String query = "https://id.nlm.nih.gov/mesh/sparql?query=PREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX%20meshv%3A%20%3Chttp%3A%2F%2Fid.nlm.nih.gov%2Fmesh%2Fvocab%23%3E%0D%0ASELECT%20DISTINCT%20%3Fname%0D%0AFROM%20%3Chttp%3A%2F%2Fid.nlm.nih.gov%2Fmesh%3E%0D%0AWHERE%20%7B%0D%0A%3Fd%20a%20meshv%3ADescriptor%20.%0D%0A%3Fd%20rdfs%3Alabel%20%3Fname%20.%0D%0A%3Fd%20meshv%3AtreeNumber%20%3Ftn%0D%0AFILTER(REGEX(%3Ftn,%22C%22))%0D%0A%7D%0D%0AORDER%20BY%20%3Fname%0D%0A%20%0D%0A&format=JSON&inference=true&limit="+limit;
+    String query = "https://id.nlm.nih.gov/mesh/sparql?query=PREFIX%20rdfs%3A%20%3Chttp%3A%2F%2Fwww.w3.org%2F2000%2F01%2Frdf-schema%23%3E%0D%0APREFIX%20meshv%3A%20%3Chttp%3A%2F%2Fid.nlm.nih.gov%2Fmesh%2Fvocab%23%3E%0D%0APREFIX%20mesh%3A%20%3Chttp%3A%2F%2Fid.nlm.nih.gov%2Fmesh%2F%3E%0D%0A%0D%0ASELECT%20DISTINCT%20%3Fid%20%3Flabel%0D%0AFROM%20%3Chttp%3A%2F%2Fid.nlm.nih.gov%2Fmesh%3E%0D%0AWHERE%20%7B%0D%0A%20%20mesh%3AD006967%20meshv%3AtreeNumber%20%3FtreeNum%20.%0D%0A%20%20%3FchildTreeNum%20meshv%3AparentTreeNumber%2B%20%3FtreeNum%20.%0D%0A%20%20%3Fdescriptor%20meshv%3AtreeNumber%20%3FchildTreeNum%20.%0D%0A%20%20%3Fdescriptor%20meshv%3Aidentifier%20%3Fid%20.%0D%0A%20%20%3Fdescriptor%20rdfs%3Alabel%20%3Flabel%20.%0D%0A%20%20FILTER%20(%3Fid%20NOT%20IN%20(%27D004342%27%2C%20%27D063926%27%2C%20%27D003875%27%2C%20%27D006968%27%2C%20%27D006969%27%2C%20%27D018876%27%2C%20%27D007105%27))%0D%0A%7D%0D%0AORDER%20BY%20%3Flabel%0D%0A%0D%0A&format=JSON&inference=false&limit="+limit;
            
-    private ConditionService conditionService;
+    private AllergyService allergyService;
     private EntityManager em;
     
     private final ScheduledExecutorService scheduler;
-    public MeshDownloader(ConditionService conditionService, EntityManager em) {
+    public AllergyDownloader(AllergyService allergyService, EntityManager em) {
         this.em = em;
         
-        this.conditionService = conditionService;
+        this.allergyService = allergyService;
         scheduler = Executors.newScheduledThreadPool(1);
         Runnable download = new Download();
         scheduler.schedule(download, 1, TimeUnit.DAYS);
@@ -66,11 +62,11 @@ public class MeshDownloader {
             
             // Check if data was updated in the last 7 days
             try{                
-                Boolean shouldUpdate = (Boolean)_em.createNativeQuery("SELECT last_updated <= curdate() - 7 FROM datasets WHERE name = 'mesh'").getSingleResult();
+                Boolean shouldUpdate = (Boolean)_em.createNativeQuery("SELECT last_updated <= curdate() - 7 FROM datasets WHERE name = 'mesh-al'").getSingleResult();
                 if(!shouldUpdate) return;
-                _em.createNativeQuery("UPDATE datasets SET last_updated=curdate() WHERE name = 'mesh'").executeUpdate();
+                _em.createNativeQuery("UPDATE datasets SET last_updated=curdate() WHERE name = 'mesh-al'").executeUpdate();
             }catch(javax.persistence.NoResultException e){
-                _em.createNativeQuery("INSERT INTO datasets (name, last_updated) VALUES('mesh', curdate())").executeUpdate();
+                _em.createNativeQuery("INSERT INTO datasets (name, last_updated) VALUES('mesh-al', curdate())").executeUpdate();
             }
             session.flush();
             session.clear();
@@ -80,14 +76,16 @@ public class MeshDownloader {
                 HttpResponse response = download(query+"&offset="+offset, HttpResponse.BodyHandlers.ofString());
                 List<Map> dataList = (List<Map>)((Map)new Gson().fromJson(response.body().toString(), Map.class).get("results")).get("bindings");
                 // TODO: Add back in to clear table on reload
-                if(dataList.size() > 0) conditionService.truncateConditions();
+                if(dataList.size() > 0) allergyService.truncateAllergies();
                 
                 while(dataList.size() > 0){
                     dataList.forEach((obj)->{
-                        Condition c = new Condition();
-                        String conditionName = (String)((Map)obj.get("name")).get("value");
-                        if(conditionName != null) conditionName = conditionName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
-                        c.setConditionName(conditionName);
+                        Allergy c = new Allergy();
+                        String allergyName = (String)((Map)obj.get("label")).get("value");
+                        String allergyId = (String)((Map)obj.get("id")).get("value");
+                        if(allergyName != null) allergyName = allergyName.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
+                        c.setAllergyName(allergyName);
+                        c.setReferenceId(allergyId);
                         session.save(c);
 
                         if (this.count++ % 100 == 0) { //100, same as the JDBC batch size

@@ -15,9 +15,11 @@
  */
 package com.vlol.service;
 
+import com.vlol.data.AllergyDownloader;
 import com.vlol.model.Allergy;
 import com.vlol.repository.AllergyRepository;
 import java.util.List;
+import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,8 +32,9 @@ public class AllergyService {
     private final AllergyRepository allergyRepository;
 
     @Autowired
-    public AllergyService(AllergyRepository allergyRepository) {
+    public AllergyService(AllergyRepository allergyRepository, EntityManager em) {
         this.allergyRepository = allergyRepository;
+        new AllergyDownloader(this, em);
     }
 
     public List<Allergy> getAllAllergies() {
@@ -48,6 +51,9 @@ public class AllergyService {
 
     public void deleteAllergy(Long allergyId) {
         allergyRepository.deleteById(allergyId);
+    }
+    public void truncateAllergies() {
+        allergyRepository.deleteAllInBatch();
     }
 
     public List<Allergy> findAllergyByKeyword(String keyword) {

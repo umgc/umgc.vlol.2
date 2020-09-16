@@ -72,10 +72,6 @@ public class UserControlller {
     @Autowired
     private RoleService roleService;
 
-    private Map<String, UserAllergy> allergyCache;
-    private Map<String, UserCondition> conditionCache;
-    private Map<String, UserMedication> medicationCache;
-
     @RequestMapping("/list-users")
     public ModelAndView viewUserList(Principal principal) {
         ModelAndView mav = new ModelAndView("admin/list-users");
@@ -101,24 +97,6 @@ public class UserControlller {
         ModelAndView mav = new ModelAndView("admin/add-user");
         Utils.getUserName(userService, mav);
         mav.addObject("user", user);
-        List<UserAllergy> allergies = allergyService.getAllAllergies();
-        allergyCache = new HashMap<String, UserAllergy>();
-        for (UserAllergy allergy : allergies) {
-            allergyCache.put(allergy.getIdAsString(), allergy);
-        }
-        mav.addObject("allergies", allergies);
-        List<UserCondition> conditions = conditionService.getAllConditions();
-        conditionCache = new HashMap<String, UserCondition>();
-        for (UserCondition condition : conditions) {
-            conditionCache.put(condition.getIdAsString(), condition);
-        }
-        mav.addObject("conditions", conditions);
-        List<UserMedication> medications = medicationService.getAllMedications();
-        medicationCache = new HashMap<String, UserMedication>();
-        for (UserMedication medication : medications) {
-            medicationCache.put(medication.getIdAsString(), medication);
-        }
-        mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
         return mav;
@@ -270,79 +248,9 @@ public class UserControlller {
         }
         
         mav.addObject("user", user);
-        List<UserAllergy> allergies = allergyService.getAllAllergies();
-        allergyCache = new HashMap<String, UserAllergy>();
-        for (UserAllergy allergy : allergies) {
-            allergyCache.put(allergy.getIdAsString(), allergy);
-        }
-        mav.addObject("allergies", allergies);
-        List<UserCondition> conditions = conditionService.getAllConditions();
-        conditionCache = new HashMap<String, UserCondition>();
-        for (UserCondition condition : conditions) {
-            conditionCache.put(condition.getIdAsString(), condition);
-        }
-        mav.addObject("conditions", conditions);
-        List<UserMedication> medications = medicationService.getAllMedications();
-        medicationCache = new HashMap<String, UserMedication>();
-        for (UserMedication medication : medications) {
-            medicationCache.put(medication.getIdAsString(), medication);
-        }
-        mav.addObject("medications", medications);
         List<Role> roles = roleService.getAllRoles();
         mav.addObject("roles", roles);
 
         return mav;
-    }
-
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) throws Exception {
-        binder.registerCustomEditor(Set.class, "allergies", new CustomCollectionEditor(Set.class) {
-            @Override
-            protected Object convertElement(Object element) {
-                if (element instanceof UserAllergy) {
-                    System.out.println("Converting from Allergy to Allergy: " + element);
-                    return element;
-                }
-                if (element instanceof String) {
-                    UserAllergy allergy = allergyCache.get(element);
-                    System.out.println("Looking up allergy for id " + element + ": " + allergy);
-                    return allergy;
-                }
-                System.out.println("Don't know what to do with: " + element);
-                return null;
-            }
-        });
-        binder.registerCustomEditor(Set.class, "conditions", new CustomCollectionEditor(Set.class) {
-            @Override
-            protected Object convertElement(Object element) {
-                if (element instanceof UserCondition) {
-                    System.out.println("Converting from UserCondition to UserCondition: " + element);
-                    return element;
-                }
-                if (element instanceof String) {
-                    UserCondition condition = conditionCache.get(element);
-                    System.out.println("Looking up condition for id " + element + ": " + condition);
-                    return condition;
-                }
-                System.out.println("Don't know what to do with: " + element);
-                return null;
-            }
-        });
-        binder.registerCustomEditor(Set.class, "medications", new CustomCollectionEditor(Set.class) {
-            @Override
-            protected Object convertElement(Object element) {
-                if (element instanceof UserMedication) {
-                    System.out.println("Converting from UserMedication to UserMedication: " + element);
-                    return element;
-                }
-                if (element instanceof String) {
-                    UserMedication medication = medicationCache.get(element);
-                    System.out.println("Looking up medication for id " + element + ": " + medication);
-                    return medication;
-                }
-                System.out.println("Don't know what to do with: " + element);
-                return null;
-            }
-        });
     }
 }

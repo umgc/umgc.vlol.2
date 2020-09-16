@@ -18,11 +18,11 @@
 */
 -- DROP ALL OBJECTS;
 -- DROP TABLE IF EXISTS datasets;
--- DROP TABLE IF EXISTS user_illness;
+-- DROP TABLE IF EXISTS user_condition;
 -- DROP TABLE IF EXISTS user_medication;
 -- DROP TABLE IF EXISTS user_allergy;
 -- DROP TABLE IF EXISTS user_vaccine;
--- DROP TABLE IF EXISTS illness;
+-- DROP TABLE IF EXISTS condition;
 -- DROP TABLE IF EXISTS medication;
 -- DROP TABLE IF EXISTS allergy;
 -- DROP TABLE IF EXISTS vaccine;
@@ -57,14 +57,14 @@ CREATE TABLE vaccine(
 ALTER TABLE vaccine ADD CONSTRAINT vaccine_pk PRIMARY KEY(vaccine_id);
 ALTER TABLE vaccine ADD CONSTRAINT vaccine_uq_name UNIQUE(vaccine_name);
 
-CREATE TABLE illness(
-    illness_id BIGINT auto_increment COMMENT 'The unique ID for an illness.', 
-    illness_name VARCHAR(256) COMMENT 'The illness'' name.',
+CREATE TABLE condition(
+    condition_id BIGINT auto_increment COMMENT 'The unique ID for an condition.', 
+    condition_name VARCHAR(256) COMMENT 'The condition'' name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
-); -- COMMENT = 'The information table for illnesses.';
+); -- COMMENT = 'The information table for conditiones.';
 
-ALTER TABLE illness ADD CONSTRAINT illness_pk PRIMARY KEY(illness_id);
-ALTER TABLE illness ADD CONSTRAINT illness_uq_name UNIQUE(illness_name);
+ALTER TABLE condition ADD CONSTRAINT condition_pk PRIMARY KEY(condition_id);
+ALTER TABLE condition ADD CONSTRAINT condition_uq_name UNIQUE(condition_name);
 
 CREATE TABLE medication(
     medication_id BIGINT auto_increment COMMENT 'The unique ID for a medication.',
@@ -116,8 +116,6 @@ CREATE TABLE user_info(
     user_id BIGINT COMMENT 'The user'' s unique ID foreign key.',
     dob DATE COMMENT 'The user''s date of birth.',
     ssn VARCHAR(9) COMMENT 'The user''s social security number.', 
-    adv_dir_type VARCHAR(64) COMMENT 'Advance directive type.',
-    adv_directive BOOLEAN DEFAULT false COMMENT 'Does the user have an advance directive?',
     city VARCHAR(64) COMMENT 'The user''s city of residence.',
     doctor_name VARCHAR(100) COMMENT 'The user''s primary care physician.',
     doctor_phone VARCHAR(32) COMMENT 'The primary care physician''s phone number.',
@@ -139,12 +137,24 @@ ALTER TABLE user_info ADD CONSTRAINT user_info_pk PRIMARY KEY(info_id);
 ALTER TABLE user_info ADD CONSTRAINT user_info_uq_user_id UNIQUE(user_id);
 ALTER TABLE user_info ADD CONSTRAINT user_info_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
+CREATE TABLE advance_directive (
+    advance_directive_id BIGINT auto_increment COMMENT 'Id for table',
+    user_id BIGINT NOT NULL COMMENT 'The unique ID for a user.',
+    advance_directive_file BLOB COMMENT 'The compressed file.',
+    advance_directive_content_type VARCHAR(128) COMMENT 'The advance directive type.',
+    advance_directive_filename VARCHAR(256) COMMENT 'The advance directive type.',
+    advance_directive_type VARCHAR(64) NOT NULL COMMENT 'The advance directive type.'
+); -- COMMENT='Table for storing advance directive files and their type';
+
+ALTER TABLE advance_directive ADD CONSTRAINT advance_directive_pk PRIMARY KEY(user_id, advance_directive_id);
+ALTER TABLE advance_directive ADD CONSTRAINT advance_directive_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
+
 CREATE TABLE authorized_user (
     authorized_user_id BIGINT auto_increment COMMENT 'Id for table',
     user_id BIGINT NOT NULL COMMENT 'The unique ID for a user.',
     authorized_email VARCHAR(320) NOT NULL COMMENT 'The authorized user''s email address.',
     authorized_name VARCHAR(128) NOT NULL COMMENT 'The authorized user''s name.'
-); -- COMMENT='The database user role table';
+); -- COMMENT='Stores users authorized to modify another's account';
 
 ALTER TABLE authorized_user ADD CONSTRAINT authorized_pk PRIMARY KEY(user_id, authorized_user_id);
 ALTER TABLE authorized_user ADD CONSTRAINT authorized_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
@@ -172,17 +182,17 @@ ALTER TABLE user_vaccine ADD CONSTRAINT user_vaccine_pk PRIMARY KEY(user_id, vac
 ALTER TABLE user_vaccine ADD CONSTRAINT user_vaccine_uq_name UNIQUE(user_id, vaccine_name);
 ALTER TABLE user_vaccine ADD CONSTRAINT user_vaccine_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
-CREATE TABLE user_illness(
-    illness_id BIGINT auto_increment COMMENT 'The medication unique ID.',
+CREATE TABLE user_condition(
+    condition_id BIGINT auto_increment COMMENT 'The medication unique ID.',
     user_id BIGINT NOT NULL COMMENT 'The patient''s unique ID.',
-    illness_name VARCHAR(256) COMMENT 'The illness'' name.',
+    condition_name VARCHAR(256) COMMENT 'The condition'' name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
     
-); -- COMMENT = 'Information about the patient''s illnesses.';
+); -- COMMENT = 'Information about the patient''s conditiones.';
 
-ALTER TABLE user_illness ADD CONSTRAINT user_illness_pk PRIMARY KEY(user_id, illness_id);
-ALTER TABLE user_illness ADD CONSTRAINT user_illness_uq_name UNIQUE(user_id, illness_name);
-ALTER TABLE user_illness ADD CONSTRAINT user_illness_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
+ALTER TABLE user_condition ADD CONSTRAINT user_condition_pk PRIMARY KEY(user_id, condition_id);
+ALTER TABLE user_condition ADD CONSTRAINT user_condition_uq_name UNIQUE(user_id, condition_name);
+ALTER TABLE user_condition ADD CONSTRAINT user_condition_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
 -- key table for user_med_list
 CREATE TABLE user_medication(

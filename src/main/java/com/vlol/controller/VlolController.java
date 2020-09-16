@@ -16,6 +16,7 @@
 package com.vlol.controller;
 
 import com.vlol.Mailer;
+import com.vlol.model.Contact;
 import com.vlol.model.Role;
 import com.vlol.model.User;
 import com.vlol.repository.RoleRepository;
@@ -27,6 +28,7 @@ import com.vlol.service.UserService;
 import java.security.Principal;
 import java.util.Date;
 import java.util.Map;
+import java.util.Properties;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -288,7 +290,20 @@ public class VlolController {
         ModelAndView mav = new ModelAndView();
         Utils.getUserName(userService, mav);
         mav.setViewName("contact");
-        mav.addObject("supportEmail", supportEmail);
+        mav.addObject("contact", new Contact());
+        return mav;
+    }
+    
+    @RequestMapping(value = {"/contact"}, method = RequestMethod.POST)
+    public ModelAndView sentRequestContact(@Valid Contact contact, BindingResult bindingResult) {
+        ModelAndView mav = new ModelAndView();
+            try{
+                new Mailer(env).sendContact(contact);
+            }catch(Exception e){
+                // Always return success
+            }
+            mav.setViewName("contact");
+            mav.addObject("contact", new Contact());
         return mav;
     }
 

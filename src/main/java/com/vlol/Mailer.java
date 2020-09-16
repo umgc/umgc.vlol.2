@@ -6,6 +6,7 @@
 package com.vlol;
 
 import com.vlol.controller.Utils;
+import com.vlol.model.Contact;
 import com.vlol.model.User;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
+import org.springframework.ui.Model;
 
 /**
  *
@@ -75,7 +77,7 @@ public class Mailer  {
             instance = this;
         }
     }
-    private void sendMail(String to, String subject, String templateName, Properties props){
+    public void sendMail(String to, String subject, String templateName, Properties props){
         try{
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(emailProps.getProperty("noReplyEmail")));
@@ -128,5 +130,18 @@ public class Mailer  {
         props.setProperty("name", user.getFirstName());
         props.setProperty("link", instance.emailProps.getProperty("urlPath")+"reset-password?jwt="+Utils.createJWT(user, 1000L*60*60*24));
         instance.sendMail(user.getEmail(), "Reset Password | "+instance.emailProps.getProperty("appName"), "reset-password.html", props);
+    }
+    
+    public void sendContact(Contact contact){
+        String name = contact.getFirstName() + " " + contact.getLastName();
+        String email = contact.getEmail();
+        String reason = contact.getReason();
+        String description = contact.getDescription();
+        Properties props = new Properties();
+        props.setProperty("name", name);
+        props.setProperty("reason", reason);
+        props.setProperty("description", description);
+        props.setProperty("email", email);
+        instance.sendMail(instance.emailProps.getProperty("supportEmail"), "Contact Request | "+instance.emailProps.getProperty("appName"), "contact-admin.html", props);
     }
 }

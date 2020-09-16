@@ -34,7 +34,7 @@ public class UserVaccineService {
         this.vaccineRepository = vaccineRepository;
     }
 
-    public List<UserVaccine> getAllAllergies() {
+    public List<UserVaccine> getAllVaccines() {
         return vaccineRepository.findAll();
     }
 

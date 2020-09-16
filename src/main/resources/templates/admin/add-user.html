@@ -146,21 +146,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>Advance Directive?</td>
-                                <td class="text-wrap">
-                                    <div>Check this box if you have an advance directive (e.g., DNR, MOLST, etc.):</div>
-                                    <input type="checkbox" th:field="*{advDirective}" th:value="${user}" />
-                                    <div th:if="${#fields.hasErrors('advDirective')}" class="text-danger" th:errors="*{advDirective}"></div>
-                                </td>
-                            </tr>
-                            <tr>             
-                                <td>Advance Directive Type:</td>
-                                <td>
-                                    <input type="text" th:field="*{advDirType}" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('advDirType')}" class="text-danger" th:errors="*{advDirType}"></div>
-                                </td>
-                            </tr>
-                            <tr>
                                 <td>Allergies:</td>
                                 <td class="text-wrap">
                                     <p><b>Note</b> - If an allergy is not listed, check 'Other' and enter any missing allergies in the User Comments section.</p>

@@ -90,26 +90,12 @@
                                 <td th:text="${user.userInfo.insPolicyNo}">Insurance Policy Number:</td>
                             </tr>
                             <tr>
-                                <td class="text-nowrap">Advance Directive?</td>
-                                <td th:text="${user.userInfo.advDirective?'Yes':'No'}"></td>
-                            </tr>
-                            <tr>             
-                                <td class="text-nowrap">Advance Directive Type:</td>
-                                <td th:text="${user.userInfo.advDirType} != '' ? ${user.userInfo.advDirType} : 'None.'">Advance Directive Type:</td>
-                            </tr>
-                            <tr>
                                 <td class="text-nowrap">Allergies:</td>
                                 <td class="text-wrap">
                                     <p><b>Note</b> - Check for additional allergies in the Comments section.</p>
                                     <ul style="column-count: 2; list-style: none; padding-left: 0;">
-                                        <li th:each="allergy : ${allergies}">
-                                            <input type="checkbox" name="allergies"
-                                                   th:utext="'&nbsp;' + ${allergy.allergyName}"
-                                                   th:value="${allergy.allergyId}"
-                                                   th:checked="${#sets.contains(user.allergies, allergy)}"
-                                                   th:name="allergies"
-                                                   disabled="disabled"
-                                                   />
+                                        <li th:each="allergy : ${user.allergies}">
+                                            <div th:text="${allergy.allergyName}"></div>
                                         </li>
                                     </ul>
                                 </td>
@@ -119,14 +105,8 @@
                                 <td class="text-wrap">
                                     <p><b>Note</b> - Check for additional conditions in the Comments section.</p>
                                     <ul style="column-count: 2; list-style: none; padding-left: 0;">
-                                        <li th:each="condition : ${conditions}">
-                                            <input type="checkbox" name="conditions"
-                                                   th:utext="'&nbsp;' + ${condition.conditionName}"
-                                                   th:value="${condition.conditionId}"
-                                                   th:checked="${#sets.contains(user.conditions, condition)}"
-                                                   th:name="conditions"
-                                                   disabled="disabled"
-                                                   />
+                                        <li th:each="condition : ${user.conditions}" >
+                                            <div th:text="${condition.conditionName}"></div>
                                         </li>
                                     </ul>
                                 </td>
@@ -136,14 +116,30 @@
                                 <td class="text-wrap">
                                     <p><b>Note</b> - Check for additional medications in the Comments section.</p>
                                     <ul style="column-count: 2; list-style: none; padding-left: 0;">
-                                        <li th:each="medication : ${medications}">
-                                            <input type="checkbox" name="medications"
-                                                   th:utext="'&nbsp;' + ${medication.brandName} + ' / ' + ${medication.genericName}"
-                                                   th:value="${medication.medicationId}"
-                                                   th:checked="${#sets.contains(user.medications, medication)}"
-                                                   th:name="medications"
-                                                   disabled="disabled"
-                                                   />
+                                        <li th:each="medication : ${user.medications}">
+                                            <div th:text="${medication.brandName}"></div>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-nowrap">Advanced Directives:</td>
+                                <td class="text-wrap">
+                                    <p><b>Note</b> - Check for additional advance directives in the Comments section.</p>
+                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                        <li th:each="advanceDirective : ${user.advanceDirectives}">
+                                            <a th:href="|/user/get-advance-directive/${user.userId}/${advanceDirective.advanceDirectiveId}|" target="_blank" th:text="${advanceDirective.advanceDirectiveType}"></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-nowrap">Vaccines:</td>
+                                <td class="text-wrap">
+                                    <p><b>Note</b> - Check for additional medications in the Comments section.</p>
+                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                        <li th:each="vaccine : ${user.vaccines}">
+                                            <div th:text="${vaccine.vaccineName}"></div>
                                         </li>
                                     </ul>
                                 </td>
