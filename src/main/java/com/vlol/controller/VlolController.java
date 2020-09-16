@@ -80,6 +80,7 @@ public class VlolController {
     public ModelAndView viewLoginForm() {
         ModelAndView mav = new ModelAndView();
         mav.setViewName("login");
+        mav.addObject("blockdurationmins", env.getProperty("server.vlol.failedlogin.blockdurationmins"));
         return mav;
     }
     /**

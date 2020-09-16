@@ -132,6 +132,7 @@ public class Utils {
         return null;
     }
 
+    // Attempts to get original client IP in event of forwarding
     public static String getClientIP(HttpServletRequest request) {
         String xfHeader = request.getHeader("X-Forwarded-For");
         if (xfHeader == null) {
