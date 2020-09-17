@@ -50,13 +50,20 @@ public class LoginFailureHandler implements AuthenticationFailureHandler {
         if (response.isCommitted()) {
             return;
         }
-        String ip = Utils.getClientIP(request);
-        loginAttemptService.loginFailed(ip);
-        if (loginAttemptService.isBlocked(ip)) {
-            redirectStrategy.sendRedirect(request, response, "/login?blocked=true");
+        loginAttemptService.loginFailed(request);
+        if (loginAttemptService.isAccountLocked(request)) {
+            redirectStrategy.sendRedirect(request, response, "/login?locked=true");
         }
         else {
             redirectStrategy.sendRedirect(request, response, "/login?error=true");
         }
+//        String ip = Utils.getClientIP(request);
+//        loginAttemptService.loginFailed(ip);
+//        if (loginAttemptService.isBlocked(ip)) {
+//            redirectStrategy.sendRedirect(request, response, "/login?blocked=true");
+//        }
+//        else {
+//            redirectStrategy.sendRedirect(request, response, "/login?error=true");
+//        }
     }
 }

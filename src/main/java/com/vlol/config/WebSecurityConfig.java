@@ -128,7 +128,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .tokenValiditySeconds(60 * 60)
                     .and()
                 .exceptionHandling().accessDeniedPage("/access_denied").and()
-                .addFilterBefore(new FailedLoginAttemptFilter(), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new LoginAttemptFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 
     @Override

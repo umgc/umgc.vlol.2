@@ -31,7 +31,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-public class FailedLoginAttemptFilter extends GenericFilterBean {
+public class LoginAttemptFilter extends GenericFilterBean {
 
     private LoginAttemptService loginAttemptService;
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
@@ -47,16 +47,22 @@ public class FailedLoginAttemptFilter extends GenericFilterBean {
         }
 
         HttpServletRequest rq = (HttpServletRequest)request;
-        String ip = Utils.getClientIP(rq);
-        if(loginAttemptService.isBlocked(ip) && rq.getMethod().equals("POST") && rq.getRequestURI().equals("/login")) {
-            loginAttemptService.loginFailed(ip);
-            // User is attempting to log in while their IP is blocked,
-            //  so display an error message and skip authentication
-            redirectStrategy.sendRedirect(rq, (HttpServletResponse)response, "/login?blocked=true");
+        if (loginAttemptService.isAccountLocked(rq) && rq.getMethod().equalsIgnoreCase("POST") && rq.getRequestURI().equals("/login")) {
+            loginAttemptService.loginFailed(rq);
+            redirectStrategy.sendRedirect(rq, (HttpServletResponse)response, "/login?locked=true");
         }
         else {
             chain.doFilter(request, response);
         }
+//        String ip = Utils.getClientIP(rq);
+//        if(loginAttemptService.isBlocked(ip) && rq.getMethod().equals("POST") && rq.getRequestURI().equals("/login")) {
+//            loginAttemptService.loginFailed(ip);
+//            // User is attempting to log in while their IP is blocked,
+//            //  so display an error message and skip authentication
+//            redirectStrategy.sendRedirect(rq, (HttpServletResponse)response, "/login?blocked=true");
+//        }
+//        else {
+//        }
     }
     
 }

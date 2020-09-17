@@ -58,8 +58,8 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
             return;
         }
 
-        String ip = Utils.getClientIP(request);
-        loginAttemptService.loginSucceeded(ip);
+//        String ip = Utils.getClientIP(request);
+        loginAttemptService.loginSucceeded(request);
 
         if(!user.getIsVerified())
             redirectStrategy.sendRedirect(request, response, "/verify-email?error=true");

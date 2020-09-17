@@ -125,6 +125,17 @@ public class User implements Serializable {
     @Column(name = "is_locked")
     @NotNull(message = "Value cannot be null.")
     private Boolean isLocked;
+
+    @Column(name = "login_attempt")
+    @NotNull(message = "Value cannot be null.")
+    private int loginAttempt;
+
+    @Column(name = "last_login_attempt")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
+    @PastOrPresent(message = "Last failed login attempt date cannot be in the future.")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastLoginAttempt;
+    
     
     @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user", optional=true)
     private UserInfo userInfo = new UserInfo(this);
@@ -296,5 +307,25 @@ public class User implements Serializable {
 
     public void setIsLocked(Boolean isLocked) {
         this.isLocked = isLocked;
+    }
+
+    public int getLoginAttempt() {
+        return loginAttempt;
+    }
+
+    public void setLoginAttempt(int loginAttempt) {
+        this.loginAttempt = loginAttempt;
+    }
+
+    public void incrementLoginAttept() {
+        this.setLoginAttempt(loginAttempt + 1);
+    }
+
+    public Date getLastLoginAttempt() {
+        return lastLoginAttempt;
+    }
+
+    public void setLastLoginAttempt(Date lastLoginAttempt) {
+        this.lastLoginAttempt = lastLoginAttempt;
     }
 }
