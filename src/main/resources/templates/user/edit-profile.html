@@ -15,14 +15,14 @@
                             <tr>
                                 <td><label for="DOB">Date of Birth</label></td>
                                 <td>
-                                    <input type="date" class="form-control" th:field="*{DOB}" id="DOB" data-parsley-dob="" />
+                                    <input type="date" class="form-control" th:field="*{DOB}" id="DOB" />
                                     <div th:if="${#fields.hasErrors('DOB')}" class="text-danger" th:errors="*{DOB}"></div>
                                 </td>
                             </tr>
                             <tr>
                                 <td><label for="SSN">Social Security Number (SSN)</label></td>
                                 <td>
-                                    <input type="number" class="form-control" th:field="*{SSN}" id="SSN" maxlength="9" data-parsley-social="" />
+                                    <input type="number" class="form-control" th:field="*{SSN}" id="SSN" maxlength="9" data-parsley-social=""/>
                                     <div th:if="${#fields.hasErrors('SSN')}" class="text-danger" th:errors="*{SSN}"></div>
                                 </td>
                             </tr>
@@ -57,7 +57,7 @@
                             <tr>
                                 <td><label for="phone">Phone Number</label></td>
                                 <td>
-                                    <input type="tel" class="form-control" th:field="*{phone}" id="phone" maxlength="10" />
+                                    <input type="tel" class="form-control" th:field="*{phone}" id="phone" maxlength="10" data-parsley-phone="" />
                                     <div th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></div>
                                 </td>
                             </tr>
@@ -71,7 +71,7 @@
                             <tr>
                                 <td><label for="pocPhone">Point of Contact Phone Number</label></td>
                                 <td>
-                                    <input type="tel" class="form-control" th:field="*{pocPhone}" id="pocPhone" maxlength="10" />
+                                    <input type="tel" class="form-control" th:field="*{pocPhone}" id="pocPhone" maxlength="10" data-parsley-phone="" />
                                     <div th:if="${#fields.hasErrors('pocPhone')}" class="text-danger" th:errors="*{pocPhone}"></div>
                                 </td>
                             </tr>
