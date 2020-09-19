@@ -8,20 +8,20 @@ window.Parsley.addValidator('rfc3986', {
 });
 
 window.Parsley.addValidator('social', {
-  validateMultiple: function(value) {
-    return value && value.match(/^\d{3}-?\d{2}-?\d{4}$/g) || false
+  validateNumber: function(value) {
+    return value && value.match(/^\d{9}$/) || false
   },
   messages: {
-    en: 'Invalid input'
+    en: 'Invalid ssn'
   }
 });
 
-window.Parsley.addValidator('dob', {
-  validateMultiple: function(value) {
-    return value && value.match(/(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d/) || false
+window.Parsley.addValidator('phone', {
+  validateString: function(value) {
+   return value && value.match(/^\(?(\d{3})\)?[- ]?(\d{3})[- ]?(\d{4})$/) || false
   },
   messages: {
-    en: 'Input contains illegal characters'
+    en: 'Invalid phone number'
   }
 });
 
