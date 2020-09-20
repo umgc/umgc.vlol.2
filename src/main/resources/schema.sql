@@ -82,10 +82,8 @@ ALTER TABLE medication ADD CONSTRAINT medication_uq_brand_name UNIQUE(brand_name
 
 CREATE TABLE approle (
     role_id BIGINT NOT NULL COMMENT 'The user''s role unique ID.',
-    role_level INTEGER NOT NULL COMMENT 'The user''s role level.',
     role_title VARCHAR(32) NOT NULL COMMENT 'The title for this database user''s role',
-    role_description VARCHAR(512) COMMENT 'The description for this database user''s role',
-    CHECK (role_level <= 20)
+    role_description VARCHAR(512) COMMENT 'The description for this database user''s role'
 ); -- COMMENT='The database user role table';
 
 ALTER TABLE approle ADD CONSTRAINT approle_pk PRIMARY KEY(role_id);
@@ -223,7 +221,7 @@ CREATE TABLE persistent_logins (
 );
 
 
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (1, 1, 'participant', 'Program Participant');
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (2, 5, 'provider', 'Medical Services Provider');
-INSERT INTO approle (role_id, role_level, role_title, role_description) VALUES (3, 10, 'admin', 'System Administrator');
+INSERT INTO approle (role_id, role_title, role_description) VALUES (1, 'participant', 'Program Participant');
+INSERT INTO approle (role_id, role_title, role_description) VALUES (2, 'provider', 'Medical Services Provider');
+INSERT INTO approle (role_id, role_title, role_description) VALUES (3, 'admin', 'System Administrator');
 

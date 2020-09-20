@@ -22,7 +22,6 @@
                             <tr>
                                 <th data-priority="1">Role ID</th>
                                 <th data-priority="1">Role Title</th>
-                                <th data-priority="99">Role Access Level</th>
                                 <th data-priority="99">Role Description</th>
                                 <th data-priority="99" class="disabled-sorting">Actions</th>
                             </tr>
@@ -31,7 +30,6 @@
                             <tr th:each="role : ${roleList}">
                                 <td th:text="${role.roleId}" class="align-middle">Role ID</td>
                                 <td th:text="${role.title}" class="align-middle">Role Title</td>
-                                <td th:text="${role.accessLevel}" class="align-middle">Role Access Level</td>
                                 <td th:text="${role.description}" class="align-middle">Role Description</td>
                                 <td class="text-nowrap">
                                     <a th:href="@{/view-role/{id}(id=${role.roleId})}" class="btn btn-info">

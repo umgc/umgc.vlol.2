@@ -55,7 +55,6 @@ public class RoleTest {
         role.setRoleId(1l);
         role.setTitle("participant");
         role.setDescription("Program Participant (Profile Access Only)");
-        role.setAccessLevel(1);
         // Setup validation of each method's validation annotations
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         validator = factory.getValidator();
@@ -294,96 +293,6 @@ public class RoleTest {
                 + "cdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABCD\n"
                 + "EFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnop";
         role.setDescription(description);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Role>> violations = validator.validate(role);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Passing test for the getAccessLevel method, of class Role.
-     */
-    @Test
-    public void testGetAccessLevel() {
-        System.out.println("getAccessLevel Test (Passing value)");
-        Integer expResult = 1;
-        Integer result = role.getAccessLevel();
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Role>> violations = validator.validate(role);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Passing test for the setAccessLevel method, of class Role.
-     */
-    @Test
-    public void testSetAccessLevel() {
-        System.out.println("setAccessLevel Test (Passing value)");
-        Integer accessLevel = 1;
-        role.setAccessLevel(accessLevel);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Role>> violations = validator.validate(role);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertTrue(violations.isEmpty());
-    }
-
-    /**
-     * Negative value test for the setAccessLevel method, of class Role.
-     */
-    @Test
-    public void testSetAccessLevelNegative() {
-        System.out.println("setAccessLevel Test (Negative value)");
-        Integer accessLevel = -1;
-        role.setAccessLevel(accessLevel);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Role>> violations = validator.validate(role);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Null value test for the setAccessLevel method, of class Role.
-     */
-    @Test
-    public void testSetAccessLevelNull() {
-        System.out.println("setAccessLevel Test (Null value)");
-        Integer accessLevel = null;
-        role.setAccessLevel(accessLevel);
-        // Check for and print any violations of validation annotations
-        Set<ConstraintViolation<Role>> violations = validator.validate(role);
-        String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
-        if (!violations.isEmpty()) {
-            System.out.println("Violation caught: " + message);
-        }
-        // Test method
-        assertFalse(violations.isEmpty());
-    }
-
-    /**
-     * Out of Range value test for the setAccessLevel method, of class Role.
-     */
-    @Test
-    public void testSetAccessLevelOutOfRange() {
-        System.out.println("setAccessLevel Test (Out of Range value)");
-        Integer accessLevel = Integer.MAX_VALUE + 1;
-        role.setAccessLevel(accessLevel);
         // Check for and print any violations of validation annotations
         Set<ConstraintViolation<Role>> violations = validator.validate(role);
         String message = violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";

@@ -51,53 +51,63 @@ public class UserInfo implements Serializable {
 
     @Column(name = "ssn", length = 9, unique = true)
     // Check if SSN is valid per the SSA.
-    @Pattern(regexp = "^((?!000)(?!666)(?:[0-6]\\d{2}|7[0-2][0-9]|73[0-3]|7[5-6][0-9]|77[0-2]))((?!00)\\d{2})((?!0000)\\d{4})$", message = "Invalid SSN.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(min = 9, max = 9, message = "Input exceeds size limits.")
+    @Pattern(regexp = "^$|((?!000)(?!666)(?:[0-6]\\d{2}|7[0-2][0-9]|73[0-3]|7[5-6][0-9]|77[0-2]))((?!00)\\d{2})((?!0000)(\\d{4}))$", message = "Invalid SSN.")
+//    // Check if text is valid per RFC 3986.
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~: \\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Size(max = 9, message = "Input exceeds size limits.")
     private String SSN;
 
     @Column(name = "street_address", length = 100)
     // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._ ~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 100, message = "Input exceeds size limits.")
     private String streetAddress;
 
     @Column(name = "city", length = 64)
     // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._ ~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 50, message = "Input exceeds size limits.")
     private String city;
 
     @Column(name = "us_state", length = 2)
     // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._ ~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 2, message = "Input exceeds size limits.")
     private String state;
 
     @Column(name = "zipcode", length = 5)
-    // Check if US ZIP Code is valid.
-    @Pattern(regexp = "^(?!00000)\\d{5}$", message = "Input contains illegal characters.")
-    @Size(min = 5, max = 5, message = "Input exceeds size limits.")
+     //Check if US ZIP Code is valid.
+    @Pattern(regexp = "^(\\d{5})?$", message = "Input contains illegal characters.")
+    @Size(max = 5, message = "Input exceeds size limits.")
     private String zipCode;
 
     @Column(name = "phone", length = 10)
     // Check if phone number is valid.
-    @Pattern(regexp = "^\\d{5,32}$", message = "Invalid phone number.")
-    @Size(min = 5, max = 32, message = "Input exceeds size limits.")
+    @Pattern(regexp = "^(\\d{5,32})?$", message = "Invalid phone number.")
+    @Size(max = 32, message = "Input exceeds size limits.")
     private String phone;
 
     @Column(name = "ins_company", length = 64)
     // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._ ~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 50, message = "Input exceeds size limits.")
     private String insCompany;
 
     @Column(name = "ins_policy_no", length = 64)
     // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._ ~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 50, message = "Input exceeds size limits.")
     private String insPolicyNo;
+
+//    @Column(name = "adv_directive")
+//    @NotNull(message = "Value cannot be null.")
+//    private Boolean advDirective = false;
+//
+//    @Column(name = "adv_dir_type", length = 64)
+//    // Check if text is valid per RFC 3986.
+//    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
+//    @Size(max = 50, message = "Input exceeds size limits.")
+//    private String advDirType;
 
     @Column(name = "poc_name", length = 100)
     // Check if text is valid per RFC 3986.
@@ -108,7 +118,7 @@ public class UserInfo implements Serializable {
     @Column(name = "poc_phone", length = 32)
     // Check if phone number is valid.
     @Size(max = 32, message = "Input exceeds size limits.")
-    @Pattern(regexp = "^[\\d\\+\\-\\.\\(\\)\\/\\s]*$", message = "Invalid phone number.")
+    @Pattern(regexp = "^$|[\\d\\+\\-\\. \\(\\)\\/\\s]*$", message = "Invalid phone number.")
     private String pocPhone;
     
     @Column(name = "doctor_name", length = 100)
@@ -120,7 +130,7 @@ public class UserInfo implements Serializable {
     @Column(name = "doctor_phone", length = 32)
     // Check if phone number is valid.
     @Size(max = 32, message = "Input exceeds size limits.")
-    @Pattern(regexp = "^[\\d\\+\\-\\.\\(\\)\\/\\s]*$", message = "Invalid phone number.")
+    @Pattern(regexp = "^$|[\\d\\+\\-\\. \\(\\)\\/\\s]*$", message = "Invalid phone number.")
     private String doctorPhone;
 
     @Column(name = "user_comments", length = 300)
@@ -232,6 +242,22 @@ public class UserInfo implements Serializable {
     public void setInsPolicyNo(String insPolicyNo) {
         this.insPolicyNo = insPolicyNo;
     }
+
+//    public Boolean getAdvDirective() {
+//        return advDirective;
+//    }
+//
+//    public void setAdvDirective(Boolean advDirective) {
+//        this.advDirective = advDirective;
+//    }
+//
+//    public String getAdvDirType() {
+//        return advDirType;
+//    }
+//
+//    public void setAdvDirType(String advDirType) {
+//        this.advDirType = advDirType;
+//    }
 
     public String getPocName() {
         return pocName;

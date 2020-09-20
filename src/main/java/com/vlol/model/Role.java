@@ -43,13 +43,6 @@ public class Role implements Serializable {
     @Size(max = 50, message = "Input exceeds size limits.")
     private String title;
 
-    @Column(name = "role_level")
-    @Max(value = 20, message = "Access level must be between 1 and 20.")
-    @Min(value = 1, message = "Access level must be between 1 and 20.")
-    @NotNull(message = "Value cannot be null.")
-    @Positive(message = "Access level must be between 1 and 20.")
-    private Integer accessLevel;
-
     @Column(name = "role_description", length = 300)
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
@@ -73,14 +66,6 @@ public class Role implements Serializable {
 
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    public Integer getAccessLevel() {
-        return accessLevel;
-    }
-
-    public void setAccessLevel(Integer accessLevel) {
-        this.accessLevel = accessLevel;
     }
 
     public String getDescription() {
