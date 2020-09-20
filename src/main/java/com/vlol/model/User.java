@@ -317,7 +317,7 @@ public class User implements Serializable {
         this.loginAttempt = loginAttempt;
     }
 
-    public void incrementLoginAttept() {
+    public void incrementLoginAttempt() {
         this.setLoginAttempt(loginAttempt + 1);
     }
 

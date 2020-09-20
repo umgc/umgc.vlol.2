@@ -143,6 +143,7 @@ public class UserControlller {
         if(!user.getPassword().isBlank()){
             user.setPassword(changedUser.getPassword());
             passwordChange = true;
+            user.setIsLocked(false);
         }
         if(Utils.isAdmin()){
             // If the admin unverified a previously verified account.

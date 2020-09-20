@@ -16,25 +16,16 @@
 
 package com.vlol.service;
 
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
-import org.springframework.stereotype.Service;
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
+import com.vlol.Mailer;
 import com.vlol.model.User;
-import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.concurrent.TimeUnit;
 import java.util.Date;
-import java.util.Map;
-import java.util.Scanner;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Service;
 
 @Service
 public class LoginAttemptService {
@@ -53,21 +44,9 @@ public class LoginAttemptService {
         super();
 
         this.MAX_ATTEMPT = Integer.parseInt(env.getProperty("server.vlol.failedlogin.maxattempts"));
-//        this.BLOCK_DURATION_MINS = Integer.parseInt(env.getProperty("server.vlol.failedlogin.blockdurationmins"));
-//
-//        attemptsCache = CacheBuilder.newBuilder().expireAfterWrite(this.BLOCK_DURATION_MINS, TimeUnit.MINUTES).build(new CacheLoader<String,Integer>() {
-//            @Override
-//            public Integer load(final String ip) {
-//                return 0;
-//            }
-//        });
     }
 
     public void loginSucceeded(HttpServletRequest request) {
-        // Get user
-        // Reset login_attempt
-        // Write current date/time to last_login_date
-        // Save user
         User user = userFromRequest(request);
         if (user != null) {
             user.setLoginAttempt(0);
@@ -75,33 +54,29 @@ public class LoginAttemptService {
             userService.updateUser(user);
         }
         else {
-            // TODO: Throw exception?
+            throw new RuntimeException("System logged in null user; this should never happen.");
         }
     }
 
     public void loginFailed(HttpServletRequest request) {
-//        int attempts = 0;
-//        try {
-//            attempts = attemptsCache.get(ip);
-//        } catch (final ExecutionException e) {
-//            attempts = 0;
-//        }
-//        attempts++;
-//        attemptsCache.put(ip, attempts);
-
-        // Get user
-        // increment login_attempt
-        // write login attempt timestamp
-        // Check if user is blocked
-        // save user
         User user = userFromRequest(request);
         if (user != null) {
-            user.incrementLoginAttept();
-            user.setLastLoginAttempt(nowAsDate());
+            Date now = nowAsDate();
+            int attemptExpiryDays = Integer.parseInt(env.getProperty("server.vlol.failedlogin.attemptexpirydays"));
+            if ((now.getTime() - user.getLastLoginAttempt().getTime()) >= TimeUnit.DAYS.toMillis(attemptExpiryDays)) {
+                // Failed login attempt expiry period has passed, so reset the counter
+                user.setLoginAttempt(0);
+            }
+            user.incrementLoginAttempt();
+            user.setLastLoginAttempt(now);
 
             if (user.getLoginAttempt() >= MAX_ATTEMPT) {
                 user.setIsLocked(true);
-                // TODO: Dispatch email to account holder
+                try {
+                    new Mailer(env).unlockAccount(user);
+                } catch(Exception e) {
+                    // Always return success
+                }
             }
             userService.updateUser(user);
         }
@@ -112,28 +87,6 @@ public class LoginAttemptService {
         if (user != null) {
             return user.getIsLocked();
         }
-        return false;
-    }
-    
-    public boolean isBlocked(HttpServletRequest request) {
-//        try {
-//            return attemptsCache.get(ip) >= MAX_ATTEMPT;
-//        } catch (final ExecutionException e) {
-//            return false;
-//        }
-        // Get user
-        // compare login_attempt to max_attempt
-        // get difference between timestamp and now
-        // compare difference to block_duration_mins
-        // return true or false
-//        User user = userFromRequest(request);
-//        long diffInMs = Math.abs(nowAsDate().getTime() - user.getLastLoginAttempt().getTime());
-//        long blockDurationInMs = TimeUnit.MILLISECONDS.convert(BLOCK_DURATION_MINS, TimeUnit.MINUTES);
-//
-//        if (diffInMs < blockDurationInMs) {
-//            return true;
-//        }
-//
         return false;
     }
 

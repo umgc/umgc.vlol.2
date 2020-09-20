@@ -131,6 +131,13 @@ public class Mailer  {
         props.setProperty("link", instance.emailProps.getProperty("urlPath")+"reset-password?jwt="+Utils.createJWT(user, 1000L*60*60*24));
         instance.sendMail(user.getEmail(), "Reset Password | "+instance.emailProps.getProperty("appName"), "reset-password.html", props);
     }
+
+    public void unlockAccount(User user) {
+        Properties props = new Properties();
+        props.setProperty("name", user.getFirstName());
+        props.setProperty("link", instance.emailProps.getProperty("urlPath")+"reset-password?jwt="+Utils.createJWT(user, 1000L*60*60*24));
+        instance.sendMail(user.getEmail(), "Locked Account | "+instance.emailProps.getProperty("appName"), "unlock-account.html", props);
+    }
     
     public void sendContact(Contact contact){
         String name = contact.getFirstName() + " " + contact.getLastName();
