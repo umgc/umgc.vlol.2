@@ -28,7 +28,17 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     failTaskOnFailedTests: true
 
+
+- task: SonarQubePrepare@4
+  inputs:
+    SonarQube: 'azure-sonarqube'
+    scannerMode: 'Other'
+
 - task: SonarQubeAnalyze@4
+
+- task: SonarQubePublish@4
+  inputs:
+    pollingTimeoutSec: '300'
 
 - task: CmdLine@2
   inputs:
