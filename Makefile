@@ -36,7 +36,7 @@ endif
 
 
 # PHONY 
-.PHONY: all push build build-vlol start-vlol build-env start-env clean dev-deploy stop-deploy help
+.PHONY: all sonar push build build-vlol start-vlol build-env start-env clean dev-deploy stop-deploy help
 
 	
 ##############################################################
@@ -50,6 +50,10 @@ endif
 all:
 	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
 		-c 'cd /repo && make target/$(VLOL_JAR) VERSION=$(VERSION)'
+
+sonar:
+	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
+		-c 'cd /repo && mvn sonar:sonar'
 
 ##############################################################
 #	make push:
