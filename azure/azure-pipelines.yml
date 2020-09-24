@@ -27,7 +27,9 @@ steps:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     failTaskOnFailedTests: true
-    
+
+- task: SonarQubeAnalyze@4
+
 - task: CmdLine@2
   inputs:
     script: 'make build-vlol'
