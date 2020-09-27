@@ -28,26 +28,20 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     failTaskOnFailedTests: true
 
-
-- task: SonarQubePrepare@4
-  inputs:
-    SonarQube: 'azure-sonarqube'
-    scannerMode: 'Other'
-
-- task: SonarQubeAnalyze@4
-
-- task: SonarQubePublish@4
-  inputs:
-    pollingTimeoutSec: '300'
-
-- task: CmdLine@2
-  inputs:
-    script: 'make build-vlol'
-
 - task: CmdLine@2
   condition: and(succeeded(), eq(variables.isMain, true))
   inputs:
     script: 'docker login $(Host) -u $(Username) -p $(Password)'
+
+- task: CmdLine@2
+  inputs:
+    script: 'make sonar' 
+- task: SonarQubePublish@4
+  inputs:
+    pollingTimeoutSec: '300'
+- task: CmdLine@2
+  inputs:
+    script: 'make build-vlol'
 
 - task: CmdLine@2
   condition: and(succeeded(), eq(variables.isMain, true))
