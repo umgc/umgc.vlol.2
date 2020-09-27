@@ -15,6 +15,8 @@
  */
 package com.vlol.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Set;
@@ -34,6 +36,7 @@ public class Role implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "role_id")
     @Min(value = 1, message = "Value must be greater than 1.")
+    @JsonIgnore
     private Long roleId;
 
     @Column(name = "role_title", length = 50, unique = true)
@@ -50,6 +53,8 @@ public class Role implements Serializable {
     private String description;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "role", cascade = CascadeType.PERSIST)
+//    @JsonBackReference
+    @JsonIgnore
     private Set<User> users;
 
     public Long getRoleId() {

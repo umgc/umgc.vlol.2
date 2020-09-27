@@ -116,8 +116,4 @@ public class Vaccine implements Serializable {
         }
         return true;
     }
-
-    public String getIdAsString() {
-        return vaccineId.toString();
-    }
 }

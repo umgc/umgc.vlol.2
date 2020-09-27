@@ -116,8 +116,4 @@ public class Allergy implements Serializable {
         }
         return true;
     }
-
-    public String getIdAsString() {
-        return allergyId.toString();
-    }
 }

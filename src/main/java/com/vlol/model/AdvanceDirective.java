@@ -15,6 +15,8 @@
  */
 package com.vlol.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -35,6 +37,7 @@ public class AdvanceDirective implements Serializable {
     @Lob
     @Column(name = "advance_directive_file", columnDefinition="BLOB")
     @NotNull(message = "File is required.")
+    @JsonIgnore
     private byte[] advanceDirectiveFile;
 
     @Column(name = "advance_directive_type", length = 64)
@@ -57,6 +60,8 @@ public class AdvanceDirective implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
+//    @JsonBackReference
     private User user;
     
     public Long getAdvanceDirectiveId() {
@@ -150,9 +155,5 @@ public class AdvanceDirective implements Serializable {
             return false;
         }
         return true;
-    }
-
-    public String getIdAsString() {
-        return advanceDirectiveId.toString();
     }
 }

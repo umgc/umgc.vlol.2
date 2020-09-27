@@ -1,5 +1,7 @@
 package com.vlol.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.util.HashSet;
 import javax.persistence.*;
@@ -17,6 +19,7 @@ public class UserCondition implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "condition_id")
     @Min(value = 1, message = "Value must be greater than 1.")
+    @JsonIgnore
     private Long conditionId;
 
     @Column(name = "condition_name", length = 256, unique = true)
@@ -34,6 +37,8 @@ public class UserCondition implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
+//    @JsonBackReference
     private User user;
 
     public Long getConditionId() {
@@ -112,9 +117,5 @@ public class UserCondition implements Serializable {
             return false;
         }
         return true;
-    }
-
-    public String getIdAsString() {
-        return conditionId.toString();
     }
 }
