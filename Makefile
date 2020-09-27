@@ -52,8 +52,6 @@ all:
 		-c 'cd /repo && make target/$(VLOL_JAR) VERSION=$(VERSION)'
 
 sonar:
-	docker pull sonarqube:latest
-	docker run -d --name sonarqube -p 9000:9000 sonarqube || true
 	docker run --network=host -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
 		-c 'cd /repo && mvn sonar:sonar'
 
@@ -100,7 +98,6 @@ build-vlol: target/$(VLOL_JAR)
 ##############################################################
 start-vlol:
 	docker run --rm --name $(APP_NAME) -p 5000:5000 --mount source=h2data,target=/data $(APP_IMG)
-
 
 
 ##############################################################
