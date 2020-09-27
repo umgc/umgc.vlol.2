@@ -54,15 +54,5 @@ public class LoginAttemptFilter extends GenericFilterBean {
         else {
             chain.doFilter(request, response);
         }
-//        String ip = Utils.getClientIP(rq);
-//        if(loginAttemptService.isBlocked(ip) && rq.getMethod().equals("POST") && rq.getRequestURI().equals("/login")) {
-//            loginAttemptService.loginFailed(ip);
-//            // User is attempting to log in while their IP is blocked,
-//            //  so display an error message and skip authentication
-//            redirectStrategy.sendRedirect(rq, (HttpServletResponse)response, "/login?blocked=true");
-//        }
-//        else {
-//        }
     }
-    
 }
