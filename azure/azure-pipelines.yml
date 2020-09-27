@@ -36,9 +36,9 @@ steps:
 - task: SonarQubePrepare@4
   inputs:
     SonarQube: 'azure-sonarqube'
-    scannerMode: 'CLI'
-    configMode: 'file'
-    
+    scannerMode: 'Other'
+
+
 - task: CmdLine@2
   inputs:
     script: 'make sonar' 
