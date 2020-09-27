@@ -15,6 +15,8 @@
  */
 package com.vlol.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -46,6 +48,7 @@ public class User implements Serializable {
     @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id", nullable = false)
     @Valid
+    @JsonIgnore
     private Role role;
 
     @Column(name = "first_name", length = 50)
@@ -92,6 +95,7 @@ public class User implements Serializable {
     @NotBlank(message = "Password is required.")
     // bcrypt maximum password length is 71 characters + 1 byte null terminator
     @Size(min = 8, max = 72, message = "Input exceeds size limits.")
+    @JsonIgnore
     private String password;
 
     @Column(name = "date_created")
@@ -106,34 +110,41 @@ public class User implements Serializable {
     @NotNull(message = "Last login date is required.")
     @PastOrPresent(message = "Last login date cannot be in the future.")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonIgnore
     private Date lastLoginDate;
 
     @Column(name = "admin_comments", length = 300)
     // Check if text is valid per RFC 3986.
     @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
     @Size(max = 300, message = "Input exceeds size limits.")
+    @JsonIgnore
     private String adminComments;
 
     @Column(name = "is_active")
     @NotNull(message = "Value cannot be null.")
+    @JsonIgnore
     private Boolean isActive;
     
     @Column(name = "is_verified")
     @NotNull(message = "Value cannot be null.")
+    @JsonIgnore
     private Boolean isVerified;
 
     @Column(name = "is_locked")
     @NotNull(message = "Value cannot be null.")
+    @JsonIgnore
     private Boolean isLocked;
 
     @Column(name = "login_attempt")
     @NotNull(message = "Value cannot be null.")
+    @JsonIgnore
     private int loginAttempt;
 
     @Column(name = "last_login_attempt")
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
     @PastOrPresent(message = "Last failed login attempt date cannot be in the future.")
     @Temporal(TemporalType.TIMESTAMP)
+    @JsonIgnore
     private Date lastLoginAttempt;
     
     

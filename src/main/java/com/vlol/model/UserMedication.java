@@ -1,5 +1,7 @@
 package com.vlol.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
@@ -16,6 +18,7 @@ public class UserMedication implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "medication_id")
     @Min(value = 1, message = "Value must be greater than 1.")
+    @JsonIgnore
     private Long medicationId;
 
     @Column(name = "brand_name", length = 256)
@@ -42,6 +45,8 @@ public class UserMedication implements Serializable {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
+    @JsonIgnore
+//    @JsonBackReference
     private User user;
     
     @Column(name = "blood_thinner")
@@ -180,10 +185,5 @@ public class UserMedication implements Serializable {
             return false;
         }
         return true;
-    }
-    
-    public String getIdAsString() {
-        System.out.println("getIdAsString"+medicationId);
-        return medicationId.toString();
     }
 }

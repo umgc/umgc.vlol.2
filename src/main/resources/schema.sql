@@ -34,14 +34,22 @@
 
 CREATE TABLE datasets(
     name VARCHAR(64) NOT NULL COMMENT 'The unique ID for the dataset.', 
-    last_updated DATE COMMENT 'The dataset''s last updated date'
+    last_updated DATE COMMENT 'The dataset''s last updated date.',
     --COMMENT 'The information table for databases.'
+    PRIMARY KEY(name)
 );
 
--- Create database tables statements.
+CREATE TABLE api_keys(
+    api_key VARCHAR(36) NOT NULL COMMENT 'The unique api key.', 
+    create_date DATE DEFAULT CURRENT_DATE COMMENT 'The key''s entry date.',
+    user_ref VARCHAR(256) NOT NULL COMMENT 'The user who will be using the key.', 
+    --COMMENT 'The information table for api keys.'
+    PRIMARY KEY(api_key)
+);
+
 CREATE TABLE allergy(
     allergy_id BIGINT auto_increment COMMENT 'The unique ID for an allergy.', 
-    allergy_name VARCHAR(256) COMMENT 'The allergy''s name.',
+    allergy_name VARCHAR(256) NOT NULL COMMENT 'The allergy''s name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT='The information table for allergies.';
 
@@ -50,7 +58,7 @@ ALTER TABLE allergy ADD CONSTRAINT alergy_uq_name UNIQUE(allergy_name);
 
 CREATE TABLE vaccine(
     vaccine_id BIGINT auto_increment COMMENT 'The unique ID for an vaccine.', 
-    vaccine_name VARCHAR(256) COMMENT 'The vaccine''s name.',
+    vaccine_name VARCHAR(256) NOT NULL COMMENT 'The vaccine''s name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT='The information table for allergies.';
 
@@ -59,7 +67,7 @@ ALTER TABLE vaccine ADD CONSTRAINT vaccine_uq_name UNIQUE(vaccine_name);
 
 CREATE TABLE condition(
     condition_id BIGINT auto_increment COMMENT 'The unique ID for an condition.', 
-    condition_name VARCHAR(256) COMMENT 'The condition'' name.',
+    condition_name VARCHAR(256) NOT NULL COMMENT 'The condition'' name.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT = 'The information table for conditiones.';
 
@@ -69,7 +77,7 @@ ALTER TABLE condition ADD CONSTRAINT condition_uq_name UNIQUE(condition_name);
 CREATE TABLE medication(
     medication_id BIGINT auto_increment COMMENT 'The unique ID for a medication.',
     blood_thinner BOOLEAN COMMENT 'Blood thinner alert flag',
-    brand_name VARCHAR(256) COMMENT 'The medication''s brand name.',
+    brand_name VARCHAR(256) NOT NULL COMMENT 'The medication''s brand name.',
     controlled BOOLEAN COMMENT 'Controlled substance alert flag',
     drug_action VARCHAR(1024) COMMENT 'The medication''s action on the body.',
     generic_name VARCHAR(256) COMMENT 'The medication''s generic name.',
@@ -113,7 +121,7 @@ ALTER TABLE appuser ADD CONSTRAINT appuser_approle_fk FOREIGN KEY(role_id) REFER
 
 CREATE TABLE user_info(
     info_id BIGINT auto_increment COMMENT 'The unique ID for a user.',
-    user_id BIGINT COMMENT 'The user'' s unique ID foreign key.',
+    user_id BIGINT NOT NULL COMMENT 'The user'' s unique ID foreign key.',
     dob DATE COMMENT 'The user''s date of birth.',
     ssn VARCHAR(9) COMMENT 'The user''s social security number.', 
     city VARCHAR(64) COMMENT 'The user''s city of residence.',

@@ -13,3 +13,6 @@ INSERT INTO user_info (user_id, dob, ssn, street_address, city, us_state, zipcod
 
 INSERT INTO authorized_user (authorized_user_id, user_id, authorized_email, authorized_name) VALUES
 (1, 1, 'agent@vlol.gov', 'Dr Johnson');
+
+INSERT INTO api_keys (api_key, user_ref) VALUES
+('test', 'For test integration');

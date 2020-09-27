@@ -15,6 +15,8 @@
  */
 package com.vlol.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.util.Date;
@@ -33,11 +35,14 @@ public class UserInfo implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "info_id")
     @Min(value = 1, message = "Value must be greater than 1.")
+    @JsonIgnore
     private Long infoId;
 
     @OneToOne
     @JoinColumn(name = "user_id")
     @NotNull(message = "Value cannot be null.")
+    @JsonIgnore
+//    @JsonBackReference
     private User user;
     
     @Column(name = "dob")
@@ -327,9 +332,5 @@ public class UserInfo implements Serializable {
             return false;
         }
         return true;
-    }
-    
-    public String getIdAsString() {
-        return infoId.toString();
     }
 }

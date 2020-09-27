@@ -289,7 +289,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -650,7 +650,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
@@ -740,7 +740,7 @@ public class UserInfoTest {
             System.out.println("Violation caught: " + message);
         }
         // Test method
-        assertFalse(violations.isEmpty());
+        assertTrue(violations.isEmpty());
     }
 
     /**
