@@ -141,3 +141,6 @@ textarea.parsley-error {
 #list_table{
     width: 100% !important;
 }
+.dt-button{
+    margin-bottom: 5px;
+}

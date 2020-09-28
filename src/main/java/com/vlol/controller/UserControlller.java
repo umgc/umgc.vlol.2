@@ -221,7 +221,7 @@ public class UserControlller {
 
     @RequestMapping("/search-users")
     public ModelAndView findUserByKeyword(@RequestParam String keyword) {
-        if(!Utils.isAdmin() || !Utils.isProvider()){
+        if(!Utils.isAdmin() && !Utils.isProvider()){
             return new ModelAndView("redirect:/login");
         }
         List<User> result = userService.findUserByKeyword(keyword);

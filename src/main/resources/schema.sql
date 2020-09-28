@@ -41,7 +41,7 @@ CREATE TABLE datasets(
 
 CREATE TABLE api_keys(
     api_key VARCHAR(36) NOT NULL COMMENT 'The unique api key.', 
-    create_date DATE DEFAULT CURRENT_DATE COMMENT 'The key''s entry date.',
+    create_date DATE DEFAULT CURRENT_TIMESTAMP COMMENT 'The key''s entry date.',
     user_ref VARCHAR(256) NOT NULL COMMENT 'The user who will be using the key.', 
     --COMMENT 'The information table for api keys.'
     PRIMARY KEY(api_key)
