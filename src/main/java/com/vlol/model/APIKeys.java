@@ -42,14 +42,14 @@ public class APIKeys implements Serializable {
     @Past(message = "Date must be in the past.")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Temporal(TemporalType.DATE)
-    private Date createDate;
+    private Date createDate = new Date();
     
 
-    public String getAPIKey() {
+    public String getApiKey() {
         return apiKey;
     }
 
-    public void setAPIKey(String apiKey) {
+    public void setApiKey(String apiKey) {
         this.apiKey = apiKey;
     }
 

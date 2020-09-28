@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/datatable-master}"
+      lang="en">
+    <head>
+        <title>API Key Manager</title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <h1>API Key Manager</h1>
+            <a th:href="|/admin/add-api-key|">Add an API Key</a>
+            <br/><br/>
+            <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap">
+                <thead>
+                    <tr>
+                        <th data-priority="1">User Reference</th>
+                        <th data-priority="1">API Key</th>
+                        <th data-priority="1">Create Date</th>
+                        <th data-priority="99">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="apiKey : ${apiKeysList}">
+                        <td th:text="${apiKey.userRef}"></td>
+                        <td th:text="${apiKey.apiKey}"></td>
+                        <td th:text="${apiKey.createDate}"></td>
+                        <td>
+                            <a th:href="|/admin/edit-api-key/${apiKey.apiKey}|" class="btn btn-info">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/admin/delete-api-key/${apiKey.apiKey}|" class="btn btn-danger" th:itemName="${apiKey.userRef}" onclick="return confirm('Are you sure you want to delete &quot;'+this.getAttribute('itemName')+'&quot;?')">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a th:href="|/menu/${userId}|">Return to Menu</a>
+        </div>
+        <div th:replace="./fragments/footer :: 'footer'" />
+    </body>
+</html>

@@ -27,18 +27,18 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     public User findUserByEmail(String email);
 
-    @Query(value = "SELECT u FROM User u, UserInfo ui"
+    @Query(value = "SELECT u FROM User u"
             +" WHERE lower(u.firstName) LIKE lower(concat('%', :keyword, '%'))"
             + " OR lower(u.lastName) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.SSN) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.streetAddress) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.city) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.state) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.zipCode) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.phone) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.insCompany) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.insPolicyNo) LIKE lower(concat('%', :keyword, '%'))"
-            + " OR lower(ui.doctorName) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.SSN) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.streetAddress) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.city) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.state) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.zipCode) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.phone) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.insCompany) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.insPolicyNo) LIKE lower(concat('%', :keyword, '%'))"
+            + " OR lower(u.userInfo.doctorName) LIKE lower(concat('%', :keyword, '%'))"
             + " OR lower(u.email) LIKE lower(concat('%', :keyword, '%'))"
     )
     public List<User> findUserByKeyword(@Param("keyword") String keyword);

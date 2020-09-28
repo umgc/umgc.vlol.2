@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.vlol.repository.APIKeysRepository;
+import java.util.List;
 
 @Service
 @Transactional
@@ -33,7 +34,7 @@ public class APIKeysService {
         this.apiKeyRepository = apiKeyRepository;
     }
 
-    public void saveAdvanceDirective(APIKeys apiKey) {
+    public void saveApiKey(APIKeys apiKey) {
         apiKeyRepository.save(apiKey);
     }
 
@@ -41,6 +42,9 @@ public class APIKeysService {
         if(apiKey != null)
             apiKey = apiKey.replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", "");
         return apiKeyRepository.findById(apiKey).orElse(null);
+    }
+    public List<APIKeys> getAllAPIKeys() {
+        return apiKeyRepository.findAll();
     }
 
     public void deleteAPIKey(String apiKey) {

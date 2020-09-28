@@ -90,7 +90,7 @@
             $(document).ready(function () {
                 $('#list_table').DataTable({
                     responsive: true,
-                    dom: 'Bfrp'+($('#list_table.no-paging').length?'':'ti'),
+                    dom: 'B'+($('#list_table.no-search').length?'':'f')+'rt<"bottom"p'+($('#list_table.no-paging').length?'':'i')+'>',
                     ordering: $('#list_table.no-ordering').length?false:true,
                     paging: $('#list_table.no-paging').length?false:true,
                     buttons: [
