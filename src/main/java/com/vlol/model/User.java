@@ -1,35 +1,30 @@
 /**
  * User Class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package model
  * @license https://opensource.org/licenses/MIT The MIT License
  */
 package com.vlol.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
+import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -39,304 +34,314 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "appuser")
 public class User implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    @Min(value = 1, message = "Value must be greater than 1.")
-    private Long userId;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Column(name = "user_id")
+  @Min(value = 1, message = "Value must be greater than 1.")
+  private Long userId;
 
-    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-    @JoinColumn(name = "role_id", nullable = false)
-    @Valid
-    @JsonIgnore
-    private Role role;
+  @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+  @JoinColumn(name = "role_id", nullable = false)
+  @Valid
+  @JsonIgnore
+  private Role role;
 
-    @Column(name = "first_name", length = 50)
-    @NotBlank(message = "First name is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 50, message = "Input exceeds size limits.")
-    private String firstName;
+  @Column(name = "first_name", length = 50)
+  @NotBlank(message = "First name is required.")
+  // Check if text is valid per RFC 3986.
+  @Pattern(
+      regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$",
+      message = "Input contains illegal characters.")
+  @Size(max = 50, message = "Input exceeds size limits.")
+  private String firstName;
 
-    @Column(name = "last_name", length = 100)
-    @NotBlank(message = "Last name is required.")
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 100, message = "Input exceeds size limits.")
-    private String lastName;
+  @Column(name = "last_name", length = 100)
+  @NotBlank(message = "Last name is required.")
+  // Check if text is valid per RFC 3986.
+  @Pattern(
+      regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$",
+      message = "Input contains illegal characters.")
+  @Size(max = 100, message = "Input exceeds size limits.")
+  private String lastName;
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<UserAllergy> allergies = new HashSet<>();
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+  private Set<UserAllergy> allergies = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<UserCondition> conditions = new HashSet<>();
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+  private Set<UserCondition> conditions = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
-    
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<UserMedication> medications = new HashSet<>();
-    
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<UserVaccine> vaccines = new HashSet<>();
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+  private Set<AuthorizedUser> authorizedEmails = new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
-    private Set<AdvanceDirective> advanceDirectives = new HashSet<>();
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+  private Set<UserMedication> medications = new HashSet<>();
 
-    @Column(name = "email", length = 320, unique = true)
-    @NotBlank(message = "Email is required.")
-    // Check if text is valid per RFC 3986.
-    @Email(message = "Invalid email address.")
-    // Check if length is valid per RFC 3986.
-    @Size(min = 5, max = 320, message = "Input exceeds size limits.")
-    private String email;
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+  private Set<UserVaccine> vaccines = new HashSet<>();
 
-    @Column(name = "password", length = 72)
-    @NotBlank(message = "Password is required.")
-    // bcrypt maximum password length is 71 characters + 1 byte null terminator
-    @Size(min = 8, max = 72, message = "Input exceeds size limits.")
-    @JsonIgnore
-    private String password;
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+  private Set<AdvanceDirective> advanceDirectives = new HashSet<>();
 
-    @Column(name = "date_created")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
-    @NotNull(message = "Date account created is required.")
-    @PastOrPresent(message = "Date account created cannot be in the future.")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreated;
+  @Column(name = "email", length = 320, unique = true)
+  @NotBlank(message = "Email is required.")
+  // Check if text is valid per RFC 3986.
+  @Email(message = "Invalid email address.")
+  // Check if length is valid per RFC 3986.
+  @Size(min = 5, max = 320, message = "Input exceeds size limits.")
+  private String email;
 
-    @Column(name = "last_login_date")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
-    @NotNull(message = "Last login date is required.")
-    @PastOrPresent(message = "Last login date cannot be in the future.")
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonIgnore
-    private Date lastLoginDate;
+  @Column(name = "password", length = 72)
+  @NotBlank(message = "Password is required.")
+  // bcrypt maximum password length is 71 characters + 1 byte null terminator
+  @Size(min = 8, max = 72, message = "Input exceeds size limits.")
+  @JsonIgnore
+  private String password;
 
-    @Column(name = "admin_comments", length = 300)
-    // Check if text is valid per RFC 3986.
-    @Pattern(regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$", message = "Input contains illegal characters.")
-    @Size(max = 300, message = "Input exceeds size limits.")
-    @JsonIgnore
-    private String adminComments;
+  @Column(name = "date_created")
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
+  @NotNull(message = "Date account created is required.")
+  @PastOrPresent(message = "Date account created cannot be in the future.")
+  @Temporal(TemporalType.TIMESTAMP)
+  private Date dateCreated;
 
-    @Column(name = "is_active")
-    @NotNull(message = "Value cannot be null.")
-    @JsonIgnore
-    private Boolean isActive;
-    
-    @Column(name = "is_verified")
-    @NotNull(message = "Value cannot be null.")
-    @JsonIgnore
-    private Boolean isVerified;
+  @Column(name = "last_login_date")
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
+  @NotNull(message = "Last login date is required.")
+  @PastOrPresent(message = "Last login date cannot be in the future.")
+  @Temporal(TemporalType.TIMESTAMP)
+  @JsonIgnore
+  private Date lastLoginDate;
 
-    @Column(name = "is_locked")
-    @NotNull(message = "Value cannot be null.")
-    @JsonIgnore
-    private Boolean isLocked;
+  @Column(name = "admin_comments", length = 300)
+  // Check if text is valid per RFC 3986.
+  @Pattern(
+      regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$",
+      message = "Input contains illegal characters.")
+  @Size(max = 300, message = "Input exceeds size limits.")
+  @JsonIgnore
+  private String adminComments;
 
-    @Column(name = "login_attempt")
-    @NotNull(message = "Value cannot be null.")
-    @JsonIgnore
-    private int loginAttempt;
+  @Column(name = "is_active")
+  @NotNull(message = "Value cannot be null.")
+  @JsonIgnore
+  private Boolean isActive;
 
-    @Column(name = "last_login_attempt")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
-    @PastOrPresent(message = "Last failed login attempt date cannot be in the future.")
-    @Temporal(TemporalType.TIMESTAMP)
-    @JsonIgnore
-    private Date lastLoginAttempt;
-    
-    
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, mappedBy = "user", optional=true)
-    private UserInfo userInfo = new UserInfo(this);
+  @Column(name = "is_verified")
+  @NotNull(message = "Value cannot be null.")
+  @JsonIgnore
+  private Boolean isVerified;
 
-    public Long getUserId() {
-        return userId;
-    }
+  @Column(name = "is_locked")
+  @NotNull(message = "Value cannot be null.")
+  @JsonIgnore
+  private Boolean isLocked;
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
+  @Column(name = "login_attempt")
+  @NotNull(message = "Value cannot be null.")
+  @JsonIgnore
+  private int loginAttempt;
 
-    public Role getRole() {
-        return role;
-    }
+  @Column(name = "last_login_attempt")
+  @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
+  @PastOrPresent(message = "Last failed login attempt date cannot be in the future.")
+  @Temporal(TemporalType.TIMESTAMP)
+  @JsonIgnore
+  private Date lastLoginAttempt;
 
-    public void setRole(Role role) {
-        this.role = role;
-    }
+  @OneToOne(
+      cascade = CascadeType.PERSIST,
+      fetch = FetchType.LAZY,
+      mappedBy = "user",
+      optional = true)
+  private UserInfo userInfo = new UserInfo(this);
 
-    /**
-     * Gets the validated first name of the user.
-     *
-     * @return the first name attribute.
-     */
-    public String getFirstName() {
-        return firstName;
-    }
+  public Long getUserId() {
+    return userId;
+  }
 
-    /**
-     * Sets the user's first name attribute if valid.
-     *
-     * @param firstName the first name value submitted by the user.
-     */
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+  public void setUserId(Long userId) {
+    this.userId = userId;
+  }
 
-    public String getLastName() {
-        return lastName;
-    }
+  public Role getRole() {
+    return role;
+  }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-    
-//    public Set<User> getAuthorizedUsers() {
-//        return authorizedUsers;
-//    }
-//
-//    public void setAuthorizedUsers(Set<User> authorizedUsers) {
-//        this.authorizedUsers = authorizedUsers;
-//    }
+  public void setRole(Role role) {
+    this.role = role;
+  }
 
-    public Set<AuthorizedUser> getAuthorizedEmails() {
-        return authorizedEmails;
-    }
+  /**
+   * Gets the validated first name of the user.
+   *
+   * @return the first name attribute.
+   */
+  public String getFirstName() {
+    return firstName;
+  }
 
-    public void setAuthorizedEmails(Set<AuthorizedUser> authorizedEmails) {
-        this.authorizedEmails = authorizedEmails;
-    }
+  /**
+   * Sets the user's first name attribute if valid.
+   *
+   * @param firstName the first name value submitted by the user.
+   */
+  public void setFirstName(String firstName) {
+    this.firstName = firstName;
+  }
 
-    public Set<AdvanceDirective> getAdvanceDirectives() {
-        return advanceDirectives;
-    }
+  public String getLastName() {
+    return lastName;
+  }
 
-    public void setAdvanceDirectivess(Set<AdvanceDirective> advanceDirectives) {
-        this.advanceDirectives = advanceDirectives;
-    }
+  public void setLastName(String lastName) {
+    this.lastName = lastName;
+  }
 
-    public Set<UserVaccine> getVaccines() {
-        return vaccines;
-    }
+  //    public Set<User> getAuthorizedUsers() {
+  //        return authorizedUsers;
+  //    }
+  //
+  //    public void setAuthorizedUsers(Set<User> authorizedUsers) {
+  //        this.authorizedUsers = authorizedUsers;
+  //    }
 
-    public void setVaccines(Set<UserVaccine> vaccines) {
-        this.vaccines = vaccines;
-    }
-    
-    public Set<UserAllergy> getAllergies() {
-        return allergies;
-    }
+  public Set<AuthorizedUser> getAuthorizedEmails() {
+    return authorizedEmails;
+  }
 
-    public void setAllergies(Set<UserAllergy> allergies) {
-        this.allergies = allergies;
-    }
+  public void setAuthorizedEmails(Set<AuthorizedUser> authorizedEmails) {
+    this.authorizedEmails = authorizedEmails;
+  }
 
-    public Set<UserCondition> getConditions() {
-        return conditions;
-    }
+  public Set<AdvanceDirective> getAdvanceDirectives() {
+    return advanceDirectives;
+  }
 
-    public void setConditions(Set<UserCondition> conditions) {
-        this.conditions = conditions;
-    }
+  public void setAdvanceDirectivess(Set<AdvanceDirective> advanceDirectives) {
+    this.advanceDirectives = advanceDirectives;
+  }
 
-    public Set<UserMedication> getMedications() {
-        return medications;
-    }
+  public Set<UserVaccine> getVaccines() {
+    return vaccines;
+  }
 
-    public void setMedications(Set<UserMedication> medications) {
-        this.medications = medications;
-    }
+  public void setVaccines(Set<UserVaccine> vaccines) {
+    this.vaccines = vaccines;
+  }
 
-    public UserInfo getUserInfo() {
-        return userInfo;
-    }
+  public Set<UserAllergy> getAllergies() {
+    return allergies;
+  }
 
-    public void setUserInfo(UserInfo userInfo) {
-        this.userInfo = userInfo;
-    }
+  public void setAllergies(Set<UserAllergy> allergies) {
+    this.allergies = allergies;
+  }
 
-    public String getEmail() {
-        return email;
-    }
+  public Set<UserCondition> getConditions() {
+    return conditions;
+  }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+  public void setConditions(Set<UserCondition> conditions) {
+    this.conditions = conditions;
+  }
 
-    public String getPassword() {
-        return password;
-    }
+  public Set<UserMedication> getMedications() {
+    return medications;
+  }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+  public void setMedications(Set<UserMedication> medications) {
+    this.medications = medications;
+  }
 
-    public Date getDateCreated() {
-        return dateCreated;
-    }
+  public UserInfo getUserInfo() {
+    return userInfo;
+  }
 
-    public void setDateCreated(Date dateCreated) {
-        this.dateCreated = dateCreated;
-    }
+  public void setUserInfo(UserInfo userInfo) {
+    this.userInfo = userInfo;
+  }
 
-    public Date getLastLoginDate() {
-        return lastLoginDate;
-    }
+  public String getEmail() {
+    return email;
+  }
 
-    public void setLastLoginDate(Date lastLoginDate) {
-        this.lastLoginDate = lastLoginDate;
-    }
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
-    public String getAdminComments() {
-        return adminComments;
-    }
+  public String getPassword() {
+    return password;
+  }
 
-    public void setAdminComments(String adminComments) {
-        this.adminComments = adminComments;
-    }
+  public void setPassword(String password) {
+    this.password = password;
+  }
 
-    public Boolean getIsActive() {
-        return isActive;
-    }
+  public Date getDateCreated() {
+    return dateCreated;
+  }
 
-    public void setIsActive(Boolean isActive) {
-        this.isActive = isActive;
-    }
-    public Boolean getIsVerified() {
-        return isVerified;
-    }
+  public void setDateCreated(Date dateCreated) {
+    this.dateCreated = dateCreated;
+  }
 
-    public void setIsVerified(Boolean isVerified) {
-        this.isVerified = isVerified;
-    }
+  public Date getLastLoginDate() {
+    return lastLoginDate;
+  }
 
-    public Boolean getIsLocked() {
-        return isLocked;
-    }
+  public void setLastLoginDate(Date lastLoginDate) {
+    this.lastLoginDate = lastLoginDate;
+  }
 
-    public void setIsLocked(Boolean isLocked) {
-        this.isLocked = isLocked;
-    }
+  public String getAdminComments() {
+    return adminComments;
+  }
 
-    public int getLoginAttempt() {
-        return loginAttempt;
-    }
+  public void setAdminComments(String adminComments) {
+    this.adminComments = adminComments;
+  }
 
-    public void setLoginAttempt(int loginAttempt) {
-        this.loginAttempt = loginAttempt;
-    }
+  public Boolean getIsActive() {
+    return isActive;
+  }
 
-    public void incrementLoginAttempt() {
-        this.setLoginAttempt(loginAttempt + 1);
-    }
+  public void setIsActive(Boolean isActive) {
+    this.isActive = isActive;
+  }
 
-    public Date getLastLoginAttempt() {
-        return lastLoginAttempt;
-    }
+  public Boolean getIsVerified() {
+    return isVerified;
+  }
 
-    public void setLastLoginAttempt(Date lastLoginAttempt) {
-        this.lastLoginAttempt = lastLoginAttempt;
-    }
+  public void setIsVerified(Boolean isVerified) {
+    this.isVerified = isVerified;
+  }
+
+  public Boolean getIsLocked() {
+    return isLocked;
+  }
+
+  public void setIsLocked(Boolean isLocked) {
+    this.isLocked = isLocked;
+  }
+
+  public int getLoginAttempt() {
+    return loginAttempt;
+  }
+
+  public void setLoginAttempt(int loginAttempt) {
+    this.loginAttempt = loginAttempt;
+  }
+
+  public void incrementLoginAttempt() {
+    this.setLoginAttempt(loginAttempt + 1);
+  }
+
+  public Date getLastLoginAttempt() {
+    return lastLoginAttempt;
+  }
+
+  public void setLastLoginAttempt(Date lastLoginAttempt) {
+    this.lastLoginAttempt = lastLoginAttempt;
+  }
 }

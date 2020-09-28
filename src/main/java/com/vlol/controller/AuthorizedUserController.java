@@ -1,15 +1,14 @@
 /**
  * Medication controller class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package controller
  * @license https://opensource.org/licenses/MIT The MIT License
  */
@@ -38,90 +37,100 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AuthorizedUserController {
 
-    @Autowired
-    private AuthorizedUserService authorizedUserService;
-    @Autowired
-    private UserService userService;
+  @Autowired private AuthorizedUserService authorizedUserService;
+  @Autowired private UserService userService;
 
-    @RequestMapping( value = {"/user/authorized-user", "/user/authorized-user/{id}"})
-    public ModelAndView viewAuthorizedUserList(@PathVariable(name = "id", required=false) Long id, Model model, Principal principal) {
-        ModelAndView mav = new ModelAndView("user/authorized-user");
-        Utils.getUserName(userService, mav);
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
-        if(user == null)
-            return new ModelAndView("redirect:/login");
-        model.addAttribute("userId", user.getUserId());
-        model.addAttribute("authorizedUserList", user.getAuthorizedEmails());
-        return mav;
-    }
+  @RequestMapping(value = {"/user/authorized-user", "/user/authorized-user/{id}"})
+  public ModelAndView viewAuthorizedUserList(
+      @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
+    ModelAndView mav = new ModelAndView("user/authorized-user");
+    Utils.getUserName(userService, mav);
+    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    if (user == null) return new ModelAndView("redirect:/login");
+    model.addAttribute("userId", user.getUserId());
+    model.addAttribute("authorizedUserList", user.getAuthorizedEmails());
+    return mav;
+  }
 
-    @RequestMapping(value = {"/user/save-authorized-user", "/user/save-authorized-user/{id}"}, method = RequestMethod.POST)
-    public String saveAuthorizedUser(@PathVariable(name = "id", required=false) Long id, @Valid AuthorizedUser authorizedUser, BindingResult bindingResult, Model model) {
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
-        if(user == null)
-            return "redirect:/login";
-        authorizedUser.setUser(user);
-        // Lower Case the email for better matching
-        authorizedUser.setAuthorizedEmail(authorizedUser.getAuthorizedEmail().toLowerCase());
-        if (bindingResult.hasErrors()) {
-            return "redirect:/user/add-authorized-user";
-        }
-        authorizedUserService.saveAuthorizedUser(authorizedUser);
-        return "redirect:/user/authorized-user";
+  @RequestMapping(
+      value = {"/user/save-authorized-user", "/user/save-authorized-user/{id}"},
+      method = RequestMethod.POST)
+  public String saveAuthorizedUser(
+      @PathVariable(name = "id", required = false) Long id,
+      @Valid AuthorizedUser authorizedUser,
+      BindingResult bindingResult,
+      Model model) {
+    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    if (user == null) return "redirect:/login";
+    authorizedUser.setUser(user);
+    // Lower Case the email for better matching
+    authorizedUser.setAuthorizedEmail(authorizedUser.getAuthorizedEmail().toLowerCase());
+    if (bindingResult.hasErrors()) {
+      return "redirect:/user/add-authorized-user";
     }
-    
-    @RequestMapping(value = {"/user/add-authorized-user", "/user/add-authorized-user/{id}"})
-    public ModelAndView viewAddConditionPage(@PathVariable(name = "id", required=false) Long id, Model model) {
-        User user = Utils.getIfAuthorizedForUser(userService, id, false);
-        if(user == null) return new ModelAndView("redirect:/login");
-        
-        ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
-        Utils.getUserName(userService, mav);
-        AuthorizedUser authorizedUser = new AuthorizedUser();
-        authorizedUser.setUser(user);
-        model.addAttribute("authorizedUser", authorizedUser);
-        model.addAttribute("userId", user.getUserId());
-        return mav;
-    }
-    @RequestMapping(value = {"/user/edit-authorized-user/{authorizedUserId}", "/user/edit-authorized-user/{id}/{authorizedUserId}"})
-    public ModelAndView viewEditAuthorizedUserPage(@PathVariable(name = "id", required=false) Long id, @PathVariable(name = "authorizedUserId") Long authorizedUserId, Model model) {
-        // Check if this user can edit the requested user
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
-        if(user == null)
-            return new ModelAndView("redirect:/login");
-        ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
-        Utils.getUserName(userService, mav);
-        // Check if the authorizedUser belongs to the user
-        Boolean found = false;
-        for(AuthorizedUser au : user.getAuthorizedEmails())
-            if(au.getAuthorizedUserId().equals(authorizedUserId))
-                found = true;
-        if(!found)
-            return new ModelAndView("redirect:/login");
-        AuthorizedUser authorizedUser = authorizedUserService.getAuthorizedUser(authorizedUserId);
-        model.addAttribute("authorizedUser", authorizedUser);
-        model.addAttribute("userId", user.getUserId());
-        return mav;
-    }
+    authorizedUserService.saveAuthorizedUser(authorizedUser);
+    return "redirect:/user/authorized-user";
+  }
 
-    @RequestMapping(value = {"/user/delete-authorized-user/{authorizedUserId}", "/user/delete-authorized-user/{id}/{authorizedUserId}"})
-    public String deleteAuthorizedUser(@PathVariable(name = "id", required=false) Long id, @PathVariable(name = "authorizedUserId") Long authorizedUserId) {
-        // Check if this user can edit the requested user
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
-        if(user == null)
-            return "redirect:/login";
-        // Check if the authorizedUser belongs to the user
-        Boolean found = false;
-        for(AuthorizedUser au : user.getAuthorizedEmails()){
-            if(au.getAuthorizedUserId().equals(authorizedUserId))
-                found = true;
-        }
-        if(!found)
-            return "redirect:/login";
-        authorizedUserService.deleteAuthorizedUser(authorizedUserId);
-        if(id==null)
-            return "redirect:/user/authorized-user";
-        else
-            return "redirect:/user/authorized-user/"+id;
+  @RequestMapping(value = {"/user/add-authorized-user", "/user/add-authorized-user/{id}"})
+  public ModelAndView viewAddConditionPage(
+      @PathVariable(name = "id", required = false) Long id, Model model) {
+    User user = Utils.getIfAuthorizedForUser(userService, id, false);
+    if (user == null) return new ModelAndView("redirect:/login");
+
+    ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
+    Utils.getUserName(userService, mav);
+    AuthorizedUser authorizedUser = new AuthorizedUser();
+    authorizedUser.setUser(user);
+    model.addAttribute("authorizedUser", authorizedUser);
+    model.addAttribute("userId", user.getUserId());
+    return mav;
+  }
+
+  @RequestMapping(
+      value = {
+        "/user/edit-authorized-user/{authorizedUserId}",
+        "/user/edit-authorized-user/{id}/{authorizedUserId}"
+      })
+  public ModelAndView viewEditAuthorizedUserPage(
+      @PathVariable(name = "id", required = false) Long id,
+      @PathVariable(name = "authorizedUserId") Long authorizedUserId,
+      Model model) {
+    // Check if this user can edit the requested user
+    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    if (user == null) return new ModelAndView("redirect:/login");
+    ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
+    Utils.getUserName(userService, mav);
+    // Check if the authorizedUser belongs to the user
+    Boolean found = false;
+    for (AuthorizedUser au : user.getAuthorizedEmails())
+      if (au.getAuthorizedUserId().equals(authorizedUserId)) found = true;
+    if (!found) return new ModelAndView("redirect:/login");
+    AuthorizedUser authorizedUser = authorizedUserService.getAuthorizedUser(authorizedUserId);
+    model.addAttribute("authorizedUser", authorizedUser);
+    model.addAttribute("userId", user.getUserId());
+    return mav;
+  }
+
+  @RequestMapping(
+      value = {
+        "/user/delete-authorized-user/{authorizedUserId}",
+        "/user/delete-authorized-user/{id}/{authorizedUserId}"
+      })
+  public String deleteAuthorizedUser(
+      @PathVariable(name = "id", required = false) Long id,
+      @PathVariable(name = "authorizedUserId") Long authorizedUserId) {
+    // Check if this user can edit the requested user
+    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    if (user == null) return "redirect:/login";
+    // Check if the authorizedUser belongs to the user
+    Boolean found = false;
+    for (AuthorizedUser au : user.getAuthorizedEmails()) {
+      if (au.getAuthorizedUserId().equals(authorizedUserId)) found = true;
     }
+    if (!found) return "redirect:/login";
+    authorizedUserService.deleteAuthorizedUser(authorizedUserId);
+    if (id == null) return "redirect:/user/authorized-user";
+    else return "redirect:/user/authorized-user/" + id;
+  }
 }

@@ -1,15 +1,14 @@
 /**
  * Vaccine Repository Interface.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package repository
  * @license https://opensource.org/licenses/MIT The MIT License
  */
@@ -25,6 +24,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface VaccineRepository extends JpaRepository<Vaccine, Long> {
 
-    @Query(value = "SELECT a FROM Vaccine a WHERE lower(a.vaccineName) LIKE lower(concat('%', :keyword, '%'))")
-    public List<Vaccine> findVaccineByKeyword(@Param("keyword") String keyword);
+  @Query(
+      value =
+          "SELECT a FROM Vaccine a WHERE lower(a.vaccineName) LIKE lower(concat('%', :keyword, '%'))")
+  public List<Vaccine> findVaccineByKeyword(@Param("keyword") String keyword);
 }

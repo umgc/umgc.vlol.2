@@ -13,28 +13,24 @@ import com.vlol.controller.Utils;
 import java.awt.image.BufferedImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-
-
 import org.springframework.stereotype.Service;
 
-/**
- *
- * @author panhavornhok
- */
+/** @author panhavornhok */
 @Service
 public class QRCodeService {
-    
-    @Autowired
-    UserService userService;
-    
-    @Autowired
-    private Environment env;
-    public BufferedImage generateQRCodeImage(String barcodeText) throws Exception {
-        String dns = env.getProperty("mail.smtp.urlPath");
-        //System.out.print("test" + dns);
-        QRCodeWriter barcodeWriter = new QRCodeWriter();
-        String jwtToken = Utils.createJWT(userService.getUser(Long.parseLong(barcodeText)));
-        BitMatrix bitMatrix = barcodeWriter.encode(dns+"user/view/"+barcodeText+"?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 400, 400);
-        return MatrixToImageWriter.toBufferedImage(bitMatrix);
-    }
+
+  @Autowired UserService userService;
+
+  @Autowired private Environment env;
+
+  public BufferedImage generateQRCodeImage(String barcodeText) throws Exception {
+    String dns = env.getProperty("mail.smtp.urlPath");
+    // System.out.print("test" + dns);
+    QRCodeWriter barcodeWriter = new QRCodeWriter();
+    String jwtToken = Utils.createJWT(userService.getUser(Long.parseLong(barcodeText)));
+    BitMatrix bitMatrix =
+        barcodeWriter.encode(
+            dns + "user/view/" + barcodeText + "?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 400, 400);
+    return MatrixToImageWriter.toBufferedImage(bitMatrix);
+  }
 }

@@ -122,6 +122,11 @@
             <version>16.0.1</version>
             <type>jar</type>
         </dependency>
+        <dependency>
+            <groupId>com.google.googlejavaformat</groupId>
+            <artifactId>google-java-format</artifactId>
+            <version>1.9</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -144,6 +149,20 @@
                     <forkCount>1</forkCount>
                     <reuseForks>true</reuseForks>
                     <runOrder>alphabetical</runOrder>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.4.1</version>
+                
+                <configuration>
+                    <java>
+                        <googleJavaFormat>
+                            <version>1.7</version> <!-- optional -->
+                            <style>GOOGLE</style>  <!-- or AOSP (optional) -->
+                        </googleJavaFormat>
+                    </java>
                 </configuration>
             </plugin>
         </plugins>

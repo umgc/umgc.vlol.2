@@ -11,8 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository("userInfoRepository")
 public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
-    @Transactional
-    @Modifying
-    @Query(value = "DELETE FROM user_info m WHERE m.user_id = :id", nativeQuery=true)
-    public void deleteByUserId(@Param("id") Long id);
+  @Transactional
+  @Modifying
+  @Query(value = "DELETE FROM user_info m WHERE m.user_id = :id", nativeQuery = true)
+  public void deleteByUserId(@Param("id") Long id);
 }
