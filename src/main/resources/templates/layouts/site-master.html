@@ -16,17 +16,17 @@
         <header>
             <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
                 <div class="container">
-                    <a class="navbar-brand" href="/">
+                    <a class="navbar-brand" href="/" tabindex="1">
                         <img src="/img/vlol_icon.png" width="30" height="30" alt="" />
                     </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation" tabindex="2">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <div sec:authorize="isAnonymous()">
-                                    <a class="nav-link text-dark" id="register" th:href="@{/registration}">Register</a>
+                                    <a class="nav-link text-dark" id="register" th:href="@{/registration}" tabindex="10">Register</a>
                                 </div>
                             </li>
                             <li class="nav-item">
@@ -36,26 +36,26 @@
                             </li>
                             <li class="nav-item">
                                 <div sec:authorize="isAuthenticated()">
-                                    <a class="nav-link text-light btn btn-info" id="login" th:href="@{/logout}">Logout</a>
+                                    <a class="nav-link text-light btn btn-info" id="logout" th:href="@{/logout}" tabindex="12">Logout</a>
                                 </div>
                                 <div sec:authorize="isAnonymous()">
-                                    <a class="nav-link text-dark" id="login" th:href="@{/login}">Login</a>
+                                    <a class="nav-link text-dark" id="login" th:href="@{/login}" tabindex="11">Login</a>
                                 </div>
                             </li>
                         </ul>
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/">Home</a>
+                                <a class="nav-link text-dark" href="/" tabindex="6">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/about">About</a>
+                                <a class="nav-link text-dark" href="/about" tabindex="7">About</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" href="/contact">Contact</a>
+                                <a class="nav-link text-dark" href="/contact" tabindex="8">Contact</a>
                             </li>
                             <li class="vertical-divider" sec:authorize="isAuthenticated()"></li>
                             <li class="nav-item" sec:authorize="isAuthenticated()">
-                                <a class="nav-link text-dark" href="/menu">Menu</a>
+                                <a class="nav-link text-dark" href="/menu" tabindex="9">Menu</a>
                             </li>
                         </ul>
                     </div>
@@ -84,6 +84,31 @@
             var fullYear = date.getFullYear();
             if (fullYear !== 2020) {
                 document.getElementById("currentYear").innerHTML = " - " + fullYear;
+            }
+        </script>
+        <script type="text/javascript">
+            window.onload = function() {
+                setTabIndices();
+            };
+
+            window.onresize = function() {
+                setTabIndices();
+            }
+
+            function setTabIndices() {
+                var registerTabIndex = 10;
+                var loginTabIndex = 11;
+                var logoutTabIndex = 12;
+
+                // If the navbar toggler is visible, then we need to change the tab order
+                if ($(".navbar-toggler").is(":visible")) {
+                    registerTabIndex = 3;
+                    loginTabIndex = 4;
+                    logoutTabIndex = 5;
+                }
+                document.getElementById("register").setAttribute("tabindex", registerTabIndex);
+                document.getElementById("login").setAttribute("tabindex", loginTabIndex);
+                document.getElementById("logout").setAttribute("tabindex", logoutTabIndex);
             }
         </script>
     </body>
