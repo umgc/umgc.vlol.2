@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/datatable-master}"
+      lang="en">
+    <head>
+        <title>QR Code</title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <h1>Virtual Letter of Life</h1>
+            <br />
+            <div role="alert" class="text-danger" th:if="${error}">There was an error while generating your QR Code. Contact support if this continues to happen.</div>
+            
+            <img th:src="|data:image/jpeg;base64,${qrImage}|"/>
+            <div class="row mb-2"><button type="button" onclick="window.print()" class="btn btn-primary hide-print">Print</button></div>
+            <div class="row mb-2"><a th:href="|/menu/${userId}|" class="btn btn-primary hide-print"><i class="fas fa-arrow-left"></i> Return to Menu</a></div>
+            <div class="show-print" style="font-family: monospace;max-width: 800px;text-align: left;">
+                <hr/>
+                You may cut off this section however please leave the title and qr code together so that EMS knows what this QR code is in reference to.<br/>
+                If you have advance directives and have not uploaded them please attach them to the back of this page.<br/>
+                This code should be printed and placed on a fridge or some other visible place in your home and in your wallet.<br/>
+                PLEASE REMEMBER, this code is a direct link to your profile for anyone with access to the code. Place it in a SECURE and VISIBLE location.
+            </div>
+        </div>
+        <div th:replace="./fragments/footer :: 'footer'" />
+    </body>
+</html>
