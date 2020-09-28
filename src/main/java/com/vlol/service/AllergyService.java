@@ -1,15 +1,14 @@
 /**
  * Allergy service class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package service
  * @license https://opensource.org/licenses/MIT The MIT License
  */
@@ -28,35 +27,35 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AllergyService {
 
-    @Autowired
-    private final AllergyRepository allergyRepository;
+  @Autowired private final AllergyRepository allergyRepository;
 
-    @Autowired
-    public AllergyService(AllergyRepository allergyRepository, EntityManager em) {
-        this.allergyRepository = allergyRepository;
-        new AllergyDownloader(this, em);
-    }
+  @Autowired
+  public AllergyService(AllergyRepository allergyRepository, EntityManager em) {
+    this.allergyRepository = allergyRepository;
+    new AllergyDownloader(this, em);
+  }
 
-    public List<Allergy> getAllAllergies() {
-        return allergyRepository.findAll();
-    }
+  public List<Allergy> getAllAllergies() {
+    return allergyRepository.findAll();
+  }
 
-    public void saveAllergy(Allergy allergy) {
-        allergyRepository.save(allergy);
-    }
+  public void saveAllergy(Allergy allergy) {
+    allergyRepository.save(allergy);
+  }
 
-    public Allergy getAllergy(Long allergyId) {
-        return allergyRepository.findById(allergyId).orElse(null);
-    }
+  public Allergy getAllergy(Long allergyId) {
+    return allergyRepository.findById(allergyId).orElse(null);
+  }
 
-    public void deleteAllergy(Long allergyId) {
-        allergyRepository.deleteById(allergyId);
-    }
-    public void truncateAllergies() {
-        allergyRepository.deleteAllInBatch();
-    }
+  public void deleteAllergy(Long allergyId) {
+    allergyRepository.deleteById(allergyId);
+  }
 
-    public List<Allergy> findAllergyByKeyword(String keyword) {
-        return allergyRepository.findAllergyByKeyword(keyword);
-    }
+  public void truncateAllergies() {
+    allergyRepository.deleteAllInBatch();
+  }
+
+  public List<Allergy> findAllergyByKeyword(String keyword) {
+    return allergyRepository.findAllergyByKeyword(keyword);
+  }
 }

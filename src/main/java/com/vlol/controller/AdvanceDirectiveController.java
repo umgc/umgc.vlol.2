@@ -1,15 +1,14 @@
 /**
  * Medical advanceDirective controller class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package controller
  */
 package com.vlol.controller;
@@ -39,138 +38,160 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Medical advanceDirective controller class.
- */
+/** Medical advanceDirective controller class. */
 @Controller
 public class AdvanceDirectiveController {
-    @Autowired
-    private UserService userService;
-    
-    @Autowired
-    private AdvanceDirectiveService advanceDirectiveService;
-    
-    @RequestMapping( value = {"/user/advance-directives", "/user/advance-directives/{id}"})
-    public ModelAndView viewAdvanceDirectiveList(@PathVariable(name = "id", required=false) Long id, Model model, Principal principal) {
-        ModelAndView mav = new ModelAndView("user/advance-directives");
-        Utils.getUserName(userService, mav);
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
-        if(user == null)
-            return new ModelAndView("redirect:/login");
-        model.addAttribute("userId", user.getUserId());
-        model.addAttribute("advanceDirectiveList", user.getAdvanceDirectives());
-        return mav;
-    }
+  @Autowired private UserService userService;
 
-    @GetMapping(value = {"/user/get-advance-directive/{advanceDirectiveId}", "/user/get-advance-directive/{id}/{advanceDirectiveId}"})
-    @ResponseBody
-    public void getAdvanceDirective(HttpServletResponse response, @PathVariable(name = "id", required=false) Long id, @PathVariable(name = "advanceDirectiveId") Long advanceDirectiveId) throws IOException {
-        try{
-            User user = Utils.getIfAuthorizedForUser(userService, id, false);
-            AdvanceDirective ad = advanceDirectiveService.getAdvanceDirective(advanceDirectiveId);
-            if(!ad.getUser().getUserId().equals(user.getUserId())){
-                response.sendError(403);
-                return;
-            }
-            InputStream is = new ByteArrayInputStream(ad.getAdvanceDirectiveFile());
-            response.setContentType(ad.getAdvanceDirectiveContentType());
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + ad.getAdvanceDirectiveFilename() + "\"");
-            response.setHeader(HttpHeaders.CONTENT_ENCODING, "deflate");
-            IOUtils.copy(is, response.getOutputStream());
-        }catch(Exception e){
-            response.sendRedirect("/user/advance-directive?uploaderror");
-        }
-    }
+  @Autowired private AdvanceDirectiveService advanceDirectiveService;
 
-    @PostMapping("/user/save-advance-directive/{id}")
-    public String handleAdvanceDirectiveUpload(@RequestParam("advanceDirectiveFile") MultipartFile advanceDirectiveFile, @RequestParam(name="advanceDirectiveId", required=false) Long advanceDirectiveId, @RequestParam("advanceDirectiveType") String advanceDirectiveType, @PathVariable(name = "id", required=false) Long id) {
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
-        
-        // Compress the bytes
-        try{
-            AdvanceDirective ad = new AdvanceDirective();
-            if(advanceDirectiveFile.getBytes().length == 0 && advanceDirectiveId != null){
-                AdvanceDirective oldAd = advanceDirectiveService.getAdvanceDirective(advanceDirectiveId);
-                ad.setAdvanceDirectiveContentType(oldAd.getAdvanceDirectiveContentType());
-                ad.setAdvanceDirectiveFilename(oldAd.getAdvanceDirectiveFilename());
-                ad.setAdvanceDirectiveFile(oldAd.getAdvanceDirectiveFile());
-            }else{
-                ByteBuffer output = ByteBuffer.allocate(advanceDirectiveFile.getBytes().length);
+  @RequestMapping(value = {"/user/advance-directives", "/user/advance-directives/{id}"})
+  public ModelAndView viewAdvanceDirectiveList(
+      @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
+    ModelAndView mav = new ModelAndView("user/advance-directives");
+    Utils.getUserName(userService, mav);
+    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    if (user == null) return new ModelAndView("redirect:/login");
+    model.addAttribute("userId", user.getUserId());
+    model.addAttribute("advanceDirectiveList", user.getAdvanceDirectives());
+    return mav;
+  }
 
-                Deflater compresser = new Deflater();
-                compresser.setInput(advanceDirectiveFile.getBytes());
-                compresser.finish();
-                int compressedDataLength = compresser.deflate(output);
-                compresser.end();
-                byte[] outputDest = new byte[compressedDataLength];
-                output.flip().get(outputDest, 0, compressedDataLength);
-                ad.setAdvanceDirectiveContentType(advanceDirectiveFile.getContentType());
-                ad.setAdvanceDirectiveFilename(advanceDirectiveFile.getOriginalFilename().replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", ""));
-                ad.setAdvanceDirectiveFile(outputDest);
-            }
-            ad.setAdvanceDirectiveId(advanceDirectiveId);
-            ad.setAdvanceDirectiveType(advanceDirectiveType);
-            
-            ad.setUser(user);
-            advanceDirectiveService.saveAdvanceDirective(ad);
-            return "redirect:/user/advance-directives/"+id;
-        }catch(Exception e){
-            e.printStackTrace();
-            return "redirect:/user/add-advance-directive/"+id+"?error";
-        }
+  @GetMapping(
+      value = {
+        "/user/get-advance-directive/{advanceDirectiveId}",
+        "/user/get-advance-directive/{id}/{advanceDirectiveId}"
+      })
+  @ResponseBody
+  public void getAdvanceDirective(
+      HttpServletResponse response,
+      @PathVariable(name = "id", required = false) Long id,
+      @PathVariable(name = "advanceDirectiveId") Long advanceDirectiveId)
+      throws IOException {
+    try {
+      User user = Utils.getIfAuthorizedForUser(userService, id, false);
+      AdvanceDirective ad = advanceDirectiveService.getAdvanceDirective(advanceDirectiveId);
+      if (!ad.getUser().getUserId().equals(user.getUserId())) {
+        response.sendError(403);
+        return;
+      }
+      InputStream is = new ByteArrayInputStream(ad.getAdvanceDirectiveFile());
+      response.setContentType(ad.getAdvanceDirectiveContentType());
+      response.setHeader(
+          HttpHeaders.CONTENT_DISPOSITION,
+          "attachment; filename=\"" + ad.getAdvanceDirectiveFilename() + "\"");
+      response.setHeader(HttpHeaders.CONTENT_ENCODING, "deflate");
+      IOUtils.copy(is, response.getOutputStream());
+    } catch (Exception e) {
+      response.sendRedirect("/user/advance-directive?uploaderror");
     }
-    @RequestMapping(value = {"/user/add-advance-directive", "/user/add-advance-directive/{id}"})
-    public ModelAndView viewAddAdvanceDirectivePage(@PathVariable(name = "id", required=false) Long id, Model model) {
-        User user = Utils.getIfAuthorizedForUser(userService, id, false);
-        if(user == null) return new ModelAndView("redirect:/login");
-        
-        ModelAndView mav = new ModelAndView("user/add-edit-advance-directive");
-        Utils.getUserName(userService, mav);
-        AdvanceDirective advanceDirective = new AdvanceDirective();
-        advanceDirective.setUser(user);
-        model.addAttribute("advanceDirective", advanceDirective);
-        model.addAttribute("userId", user.getUserId());
-        return mav;
-    }
-    @RequestMapping(value = {"/user/edit-advance-directive/{advanceDirectiveId}", "/user/edit-advance-directive/{id}/{advanceDirectiveId}"})
-    public ModelAndView viewEditAdvanceDirectivePage(@PathVariable(name = "id", required=false) Long id, @PathVariable(name = "advanceDirectiveId") Long advanceDirectiveId, Model model) {
-        // Check if this user can edit the requested user
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
-        if(user == null)
-            return new ModelAndView("redirect:/login");
-        ModelAndView mav = new ModelAndView("user/add-edit-advance-directive");
-        Utils.getUserName(userService, mav);
-        // Check if the advanceDirective belongs to the user
-        Boolean found = false;
-        for(AdvanceDirective advanceDirective : user.getAdvanceDirectives())
-            if(advanceDirective.getAdvanceDirectiveId().equals(advanceDirectiveId))
-                found = true;
-        if(!found)
-            return new ModelAndView("redirect:/login");
-        AdvanceDirective advanceDirective = advanceDirectiveService.getAdvanceDirective(advanceDirectiveId);
-        model.addAttribute("advanceDirective", advanceDirective);
-        model.addAttribute("userId", user.getUserId());
-        return mav;
-    }
+  }
 
-    @RequestMapping(value = {"/user/delete-advance-directive/{advanceDirectiveId}", "/user/delete-advance-directive/{id}/{advanceDirectiveId}"})
-    public String deleteAdvanceDirective(@PathVariable(name = "id", required=false) Long id, @PathVariable(name = "advanceDirectiveId") Long advanceDirectiveId) {
-        // Check if this user can edit the requested user
-        User user = Utils.getIfAuthorizedForUser(userService, id, true);
-        if(user == null)
-            return "redirect:/login";
-        // Check if the advanceDirective belongs to the user
-        Boolean found = false;
-        for(AdvanceDirective advanceDirective : user.getAdvanceDirectives()){
-            if(advanceDirective.getAdvanceDirectiveId().equals(advanceDirectiveId))
-                found = true;
-        }
-        if(!found)
-            return "redirect:/login";
-        advanceDirectiveService.deleteAdvanceDirective(advanceDirectiveId);
-        if(id==null)
-            return "redirect:/user/advance-directives";
-        else
-            return "redirect:/user/advance-directives/"+id;
+  @PostMapping("/user/save-advance-directive/{id}")
+  public String handleAdvanceDirectiveUpload(
+      @RequestParam("advanceDirectiveFile") MultipartFile advanceDirectiveFile,
+      @RequestParam(name = "advanceDirectiveId", required = false) Long advanceDirectiveId,
+      @RequestParam("advanceDirectiveType") String advanceDirectiveType,
+      @PathVariable(name = "id", required = false) Long id) {
+    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+
+    // Compress the bytes
+    try {
+      AdvanceDirective ad = new AdvanceDirective();
+      if (advanceDirectiveFile.getBytes().length == 0 && advanceDirectiveId != null) {
+        AdvanceDirective oldAd = advanceDirectiveService.getAdvanceDirective(advanceDirectiveId);
+        ad.setAdvanceDirectiveContentType(oldAd.getAdvanceDirectiveContentType());
+        ad.setAdvanceDirectiveFilename(oldAd.getAdvanceDirectiveFilename());
+        ad.setAdvanceDirectiveFile(oldAd.getAdvanceDirectiveFile());
+      } else {
+        ByteBuffer output = ByteBuffer.allocate(advanceDirectiveFile.getBytes().length);
+
+        Deflater compresser = new Deflater();
+        compresser.setInput(advanceDirectiveFile.getBytes());
+        compresser.finish();
+        int compressedDataLength = compresser.deflate(output);
+        compresser.end();
+        byte[] outputDest = new byte[compressedDataLength];
+        output.flip().get(outputDest, 0, compressedDataLength);
+        ad.setAdvanceDirectiveContentType(advanceDirectiveFile.getContentType());
+        ad.setAdvanceDirectiveFilename(
+            advanceDirectiveFile
+                .getOriginalFilename()
+                .replaceAll("[^A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]", ""));
+        ad.setAdvanceDirectiveFile(outputDest);
+      }
+      ad.setAdvanceDirectiveId(advanceDirectiveId);
+      ad.setAdvanceDirectiveType(advanceDirectiveType);
+
+      ad.setUser(user);
+      advanceDirectiveService.saveAdvanceDirective(ad);
+      return "redirect:/user/advance-directives/" + id;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return "redirect:/user/add-advance-directive/" + id + "?error";
     }
+  }
+
+  @RequestMapping(value = {"/user/add-advance-directive", "/user/add-advance-directive/{id}"})
+  public ModelAndView viewAddAdvanceDirectivePage(
+      @PathVariable(name = "id", required = false) Long id, Model model) {
+    User user = Utils.getIfAuthorizedForUser(userService, id, false);
+    if (user == null) return new ModelAndView("redirect:/login");
+
+    ModelAndView mav = new ModelAndView("user/add-edit-advance-directive");
+    Utils.getUserName(userService, mav);
+    AdvanceDirective advanceDirective = new AdvanceDirective();
+    advanceDirective.setUser(user);
+    model.addAttribute("advanceDirective", advanceDirective);
+    model.addAttribute("userId", user.getUserId());
+    return mav;
+  }
+
+  @RequestMapping(
+      value = {
+        "/user/edit-advance-directive/{advanceDirectiveId}",
+        "/user/edit-advance-directive/{id}/{advanceDirectiveId}"
+      })
+  public ModelAndView viewEditAdvanceDirectivePage(
+      @PathVariable(name = "id", required = false) Long id,
+      @PathVariable(name = "advanceDirectiveId") Long advanceDirectiveId,
+      Model model) {
+    // Check if this user can edit the requested user
+    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    if (user == null) return new ModelAndView("redirect:/login");
+    ModelAndView mav = new ModelAndView("user/add-edit-advance-directive");
+    Utils.getUserName(userService, mav);
+    // Check if the advanceDirective belongs to the user
+    Boolean found = false;
+    for (AdvanceDirective advanceDirective : user.getAdvanceDirectives())
+      if (advanceDirective.getAdvanceDirectiveId().equals(advanceDirectiveId)) found = true;
+    if (!found) return new ModelAndView("redirect:/login");
+    AdvanceDirective advanceDirective =
+        advanceDirectiveService.getAdvanceDirective(advanceDirectiveId);
+    model.addAttribute("advanceDirective", advanceDirective);
+    model.addAttribute("userId", user.getUserId());
+    return mav;
+  }
+
+  @RequestMapping(
+      value = {
+        "/user/delete-advance-directive/{advanceDirectiveId}",
+        "/user/delete-advance-directive/{id}/{advanceDirectiveId}"
+      })
+  public String deleteAdvanceDirective(
+      @PathVariable(name = "id", required = false) Long id,
+      @PathVariable(name = "advanceDirectiveId") Long advanceDirectiveId) {
+    // Check if this user can edit the requested user
+    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    if (user == null) return "redirect:/login";
+    // Check if the advanceDirective belongs to the user
+    Boolean found = false;
+    for (AdvanceDirective advanceDirective : user.getAdvanceDirectives()) {
+      if (advanceDirective.getAdvanceDirectiveId().equals(advanceDirectiveId)) found = true;
+    }
+    if (!found) return "redirect:/login";
+    advanceDirectiveService.deleteAdvanceDirective(advanceDirectiveId);
+    if (id == null) return "redirect:/user/advance-directives";
+    else return "redirect:/user/advance-directives/" + id;
+  }
 }

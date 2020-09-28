@@ -1,15 +1,14 @@
 /**
  * AdvanceDirective service class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package service
  * @license https://opensource.org/licenses/MIT The MIT License
  */
@@ -25,23 +24,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class AdvanceDirectiveService {
 
-    @Autowired
-    private final AdvanceDirectiveRepository advanceDirectiveRepository;
+  @Autowired private final AdvanceDirectiveRepository advanceDirectiveRepository;
 
-    @Autowired
-    public AdvanceDirectiveService(AdvanceDirectiveRepository advanceDirectiveRepository) {
-        this.advanceDirectiveRepository = advanceDirectiveRepository;
-    }
+  @Autowired
+  public AdvanceDirectiveService(AdvanceDirectiveRepository advanceDirectiveRepository) {
+    this.advanceDirectiveRepository = advanceDirectiveRepository;
+  }
 
-    public void saveAdvanceDirective(AdvanceDirective advanceDirective) {
-        advanceDirectiveRepository.save(advanceDirective);
-    }
+  public void saveAdvanceDirective(AdvanceDirective advanceDirective) {
+    advanceDirectiveRepository.save(advanceDirective);
+  }
 
-    public AdvanceDirective getAdvanceDirective(Long advanceDirectiveId) {
-        return advanceDirectiveRepository.findById(advanceDirectiveId).orElse(null);
-    }
+  public AdvanceDirective getAdvanceDirective(Long advanceDirectiveId) {
+    return advanceDirectiveRepository.findById(advanceDirectiveId).orElse(null);
+  }
 
-    public void deleteAdvanceDirective(Long advanceDirectiveId) {
-        advanceDirectiveRepository.deleteByPK(advanceDirectiveId);
-    }
+  public void deleteAdvanceDirective(Long advanceDirectiveId) {
+    advanceDirectiveRepository.deleteByPK(advanceDirectiveId);
+  }
 }

@@ -1,15 +1,14 @@
 /**
  * Extension and customization of Spring Boot's built-in WebMvcConfigurer class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package config
  * @license https://opensource.org/licenses/MIT The MIT License
  */
@@ -36,50 +35,44 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    /**
-     * Instantiates the BCryptPasswordEncoder.
-     *
-     * @return The bCryptPasswordEncoder object.
-     */
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  /**
+   * Instantiates the BCryptPasswordEncoder.
+   *
+   * @return The bCryptPasswordEncoder object.
+   */
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(
-                "/webjars/**",
-                "/img/**",
-                "/css/**",
-                "/js/**",
-                "/DataTables/**")
-                .addResourceLocations(
-                        "classpath:/META-INF/resources/webjars/",
-                        "classpath:/static/img/",
-                        "classpath:/static/css/",
-                        "classpath:/static/js/",
-                        "classpath:/static/DataTables/");
-    }
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry
+        .addResourceHandler("/webjars/**", "/img/**", "/css/**", "/js/**", "/DataTables/**")
+        .addResourceLocations(
+            "classpath:/META-INF/resources/webjars/",
+            "classpath:/static/img/",
+            "classpath:/static/css/",
+            "classpath:/static/js/",
+            "classpath:/static/DataTables/");
+  }
 
-    /**
-     * Instantiates a servlet to allow access to the h2 database console
-     * (https://[website]/console)
-     *
-     * @return A new ServletRegistrationBean object.
-     */
-    @Bean
-    ServletRegistrationBean h2servletRegistration() {
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-        registrationBean.addUrlMappings("/console/*");
-        return registrationBean;
-    }
+  /**
+   * Instantiates a servlet to allow access to the h2 database console (https://[website]/console)
+   *
+   * @return A new ServletRegistrationBean object.
+   */
+  @Bean
+  ServletRegistrationBean h2servletRegistration() {
+    ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
+    registrationBean.addUrlMappings("/console/*");
+    return registrationBean;
+  }
 
-    @Autowired
-    private RoleFormatter roleFormatter;
+  @Autowired private RoleFormatter roleFormatter;
 
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addFormatter(roleFormatter);
-    }
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addFormatter(roleFormatter);
+  }
 }
