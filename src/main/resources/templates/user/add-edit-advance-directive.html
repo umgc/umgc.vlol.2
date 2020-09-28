@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title th:text="(${advanceDirective.advanceDirectiveId}!=null?'Edit':'Add')+ ' an Advance Directive'"></title>
+        <title th:text="'VLOL | ' + (${advanceDirective.advanceDirectiveId}!=null?'Edit':'Add')+ ' an Advance Directive'"></title>
     </head>
     <body>
         <div align="center" layout:fragment="content" class="container">

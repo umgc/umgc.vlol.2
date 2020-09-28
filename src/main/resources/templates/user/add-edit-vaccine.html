@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title th:text="(${vaccine.vaccineId}!=null?'Edit':'Add')+ ' a Vaccine'"></title>
+        <title th:text="'VLOL | ' + (${vaccine.vaccineId}!=null?'Edit':'Add')+ ' a Vaccine'"></title>
     </head>
     <body>
         <div align="center" layout:fragment="content" class="container">

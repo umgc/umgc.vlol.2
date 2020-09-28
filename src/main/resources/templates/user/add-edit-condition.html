@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title th:text="(${condition.conditionId}!=null?'Edit':'Add')+ ' a Condition'"></title>
+        <title th:text="'VLOL | ' + (${condition.conditionId}!=null?'Edit':'Add')+ ' a Condition'"></title>
     </head>
     <body>
         <div align="center" layout:fragment="content" class="container">
