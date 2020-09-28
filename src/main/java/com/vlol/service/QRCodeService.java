@@ -23,14 +23,13 @@ public class QRCodeService {
 
   @Autowired private Environment env;
 
-  public BufferedImage generateQRCodeImage(String barcodeText) throws Exception {
+  public BufferedImage generateQRCodeImage(Long userId) throws Exception {
     String dns = env.getProperty("mail.smtp.urlPath");
-    // System.out.print("test" + dns);
     QRCodeWriter barcodeWriter = new QRCodeWriter();
-    String jwtToken = Utils.createJWT(userService.getUser(Long.parseLong(barcodeText)));
+    String jwtToken = Utils.createJWT(userService.getUser(userId));
     BitMatrix bitMatrix =
         barcodeWriter.encode(
-            dns + "user/view/" + barcodeText + "?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 400, 400);
+            dns + "user/view/" + userId + "?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 400, 400);
     return MatrixToImageWriter.toBufferedImage(bitMatrix);
   }
 }

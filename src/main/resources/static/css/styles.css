@@ -144,3 +144,14 @@ textarea.parsley-error {
 .dt-button{
     margin-bottom: 5px;
 }
+.show-print{
+    display: none;
+}
+@media print {
+    .hide-print{
+        display: none;
+    }
+    .show-print{
+        display: block;
+    }
+}

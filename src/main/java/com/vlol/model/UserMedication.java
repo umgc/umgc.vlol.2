@@ -179,7 +179,6 @@ public class UserMedication implements Serializable {
 
   @Override
   public boolean equals(Object obj) {
-    System.out.println("equals" + medicationId);
     if (this == obj) {
       return true;
     }
