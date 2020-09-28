@@ -8,7 +8,7 @@ window.Parsley.addValidator('rfc3986', {
 });
 
 window.Parsley.addValidator('social', {
-  validateNumber: function(value) {
+  validateString: function(value) {
     return value && value.match(/^\d{9}$/) || false
   },
   messages: {
