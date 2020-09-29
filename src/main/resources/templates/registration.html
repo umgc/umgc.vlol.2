@@ -53,14 +53,14 @@
                         <tr>
                             <td><label for="password">Password:</label></td>
                             <td>
-                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="6" placeholder="Required" required="required" />
+                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" />
                                 <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
                             </td>
                         </tr>   
                         <tr>
                             <td><label for="password2">Confirm Password:</label></td>
                             <td>
-                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-minlength="6" placeholder="Required" required="required" data-parsley-equalto="#password" />
+                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" data-parsley-equalto="#password" />
                             </td>
                         </tr>            
                     </table>

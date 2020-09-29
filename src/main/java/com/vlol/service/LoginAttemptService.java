@@ -59,8 +59,9 @@ public class LoginAttemptService {
       Date now = nowAsDate();
       int attemptExpiryDays =
           Integer.parseInt(env.getProperty("server.vlol.failedlogin.attemptexpirydays"));
-      if ((now.getTime() - user.getLastLoginAttempt().getTime())
-          >= TimeUnit.DAYS.toMillis(attemptExpiryDays)) {
+      Date lastAttempt = user.getLastLoginAttempt();
+      if (lastAttempt != null
+          && (now.getTime() - lastAttempt.getTime() >= TimeUnit.DAYS.toMillis(attemptExpiryDays))) {
         // Failed login attempt expiry period has passed, so reset the counter
         user.setLoginAttempt(0);
       }
