@@ -35,6 +35,7 @@ build/
 tomcat/logs/
 bin/
 
-### Build itesm ###
+### Build items ###
 *.uuid
+*.jar
 /data

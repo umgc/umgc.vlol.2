@@ -1,8 +1,8 @@
 FROM ubuntu:20.10
 USER root
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && \
-	apt-get --no-install-recommends -y install default-jre openjdk-11-jdk
+RUN apt-get update
+RUN	apt-get --no-install-recommends -y install default-jre openjdk-11-jdk
 	
 
 ARG VERSION

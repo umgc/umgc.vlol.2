@@ -16,10 +16,6 @@ variables:
 steps:
 - task: CmdLine@2
   inputs:
-    script: 'make build-env' 
-
-- task: CmdLine@2
-  inputs:
     script: 'make all' 
 
 - task: PublishTestResults@2
@@ -29,28 +25,14 @@ steps:
     failTaskOnFailedTests: true
 
 - task: CmdLine@2
+  inputs:
+    script: 'make image'
+
+- task: CmdLine@2
   condition: and(succeeded(), eq(variables.isMain, true))
   inputs:
     script: 'docker login $(Host) -u $(Username) -p $(Password)'
-
-- task: SonarQubePrepare@4
-  inputs:
-    SonarQube: 'azure-sonarqube'
-    scannerMode: 'CLI'
-    configMode: 'file'
     
-- task: CmdLine@2
-  inputs:
-    script: 'make sonar' 
-
-- task: SonarQubePublish@4
-
-  inputs:
-    pollingTimeoutSec: '300'
-- task: CmdLine@2
-  inputs:
-    script: 'make build-vlol'
-
 - task: CmdLine@2
   condition: and(succeeded(), eq(variables.isMain, true))
   inputs:
