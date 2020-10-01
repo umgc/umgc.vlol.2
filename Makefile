@@ -120,7 +120,8 @@ deploy:
 #
 ##############################################################
 stop-deploy:
-	@az group delete --name devTestGroup
+	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
+		-c 'cd /repo && az login && az group delete --name devTestGroup --yes'
 
 
 # This prints make commands and usage
