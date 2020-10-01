@@ -18,12 +18,12 @@
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
                           <label for="advanceDirectiveType">Advance Directive Type</label>
-                          <input class="form-control typeahead" id="advanceDirectiveType" th:field="*{advanceDirectiveType}" placeholder="Enter the type"  data-parsley-maxlength="64" data-parsley-rfc3986=""/>
+                          <input class="form-control typeahead" id="advanceDirectiveType" th:field="*{advanceDirectiveType}" placeholder="Enter the type"  data-parsley-maxlength="64" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <div class="form-group">
                           <label for="advanceDirectiveFile">Advance Directive File</label>
                           <div role="alert" class="text-info" th:if="*{advanceDirectiveFilename}" th:text="'Current File: '+*{advanceDirectiveFilename}"></div>
-                          <input type="file" class="form-control typeahead" id="advanceDirectiveFile" th:field="*{advanceDirectiveFile}" placeholder="Enter your Advance Directive" data-parsley-max-file-size-mb="5"/>
+                          <input type="file" class="form-control typeahead" id="advanceDirectiveFile" th:field="*{advanceDirectiveFile}" placeholder="Enter your Advance Directive" data-parsley-max-file-size-mb="5" data-parsley-required/>
                         </div>
                         
                         <input type="hidden" th:field="*{advanceDirectiveId}" />
