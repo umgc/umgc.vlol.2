@@ -39,6 +39,7 @@ public class AdvanceDirective implements Serializable {
   private byte[] advanceDirectiveFile;
 
   @Column(name = "advance_directive_type", length = 64)
+  @NotNull(message = "Type is required.")
   // Check if text is valid per RFC 3986.
   @Pattern(
       regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$",
