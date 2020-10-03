@@ -18,10 +18,10 @@
             "value": "Linux"
         },
         "numberCpuCores": {
-            "value": "1"
+            "value": "2"
         },
         "memory": {
-            "value": "1.5"
+            "value": "6"
         },
         "restartPolicy": {
             "value": "OnFailure"

@@ -64,21 +64,11 @@ This repo leverages Docker as a developer environment to bootstrap system requir
 
 At any time user may run `$ make help` to display usefully make commands.
 ##### Development Build:
-1) First build the Docker build environment image.
-    ```bash
-    $ make build-env
-    ```
-    This will produce the Docker image `vlol-build-env:latest`
-    ```bash
-    $ docker images
-    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-    vlol-build-env      latest              febd35d3c354        16 seconds ago      1.46GB
-    ```
-2) Next build the application.
+1) To build the application.
     ```bash
     $ make all | make all SKIP_TESTS=y
     ```
-    This will build the application Java jar by starting the Docker build-env image with the local repo volume mapping into the container context then running the make command to build the application. Optionally users may include the `SKIP_TESTS=y` CLI to skip unit tests.
+    This will build the application Java jar by starting a Docker build image with the local repo volume mapping into the container context then running the make command to build the application. Optionally users may include the `SKIP_TESTS=y` CLI to skip unit tests.
     ```bash
     [INFO] ------------------------------------------------------------------------
     [INFO] BUILD SUCCESS
@@ -87,7 +77,7 @@ At any time user may run `$ make help` to display usefully make commands.
     [INFO] Finished at: 2020-09-10T19:33:56Z
     [INFO] ------------------------------------------------------------------------
     ```
-3) Next build the application Docker image.
+2) Next build the application Docker image.
     ``` bash
     $ make build-vlol
     ``` 
@@ -102,7 +92,7 @@ At any time user may run `$ make help` to display usefully make commands.
 After building the application Docker image user can run a local instance of the application via `make` commands.
 1) Start the application
     ```bash
-    $ make start-vlol
+    $ make start
     ```
     This start the Docker container application
     ```bash
