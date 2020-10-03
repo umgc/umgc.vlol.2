@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -34,12 +35,12 @@ public class AdvanceDirective implements Serializable {
 
   @Lob
   @Column(name = "advance_directive_file", columnDefinition = "BLOB")
-  @NotNull(message = "File is required.")
+  @NotBlank(message = "File is required.")
   @JsonIgnore
   private byte[] advanceDirectiveFile;
 
   @Column(name = "advance_directive_type", length = 64)
-  @NotNull(message = "Type is required.")
+  @NotBlank(message = "Type is required.")
   // Check if text is valid per RFC 3986.
   @Pattern(
       regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$",
