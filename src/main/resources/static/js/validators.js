@@ -37,3 +37,11 @@ window.Parsley.addValidator('maxFileSizeMb', {
   }
 });
 
+window.Parsley.addValidator('email', {
+  validateString: function(value) {
+    return value && value.match(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/) || false
+  },
+  messages: {
+    en: 'Invalid email'
+  }
+});
