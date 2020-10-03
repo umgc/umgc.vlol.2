@@ -17,7 +17,7 @@
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
                           <label for="conditionName">Condition Name</label>
-                          <input type="search" class="form-control typeahead" id="conditionName" th:field="*{conditionName}" placeholder="Search" data-parsley-maxlength="256" data-parsley-rfc3986=""/>
+                          <input type="search" class="form-control typeahead" id="conditionName" th:field="*{conditionName}" placeholder="Search" data-parsley-maxlength="256" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <input type="hidden" th:field="*{conditionId}" />
                         <input type="hidden" th:field="*{referenceId}" id="referenceId"/>
