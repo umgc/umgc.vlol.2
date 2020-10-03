@@ -34,7 +34,7 @@
                             <tr>
                                 <td><label for="email">Email:</label></td>
                                 <td>
-                                    <input type="text" class="form-control" th:field="*{email}" id="email" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                    <input type="text" class="form-control" th:field="*{email}" id="email" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" data-parsley-email="" />
                                     <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
                                 </td>
                             </tr>
