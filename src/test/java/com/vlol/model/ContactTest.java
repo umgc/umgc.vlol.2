@@ -5,13 +5,13 @@
  */
 package com.vlol.model;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,28 +27,28 @@ public class ContactTest {
     // Instantiate the vaccine object
     this.contact = new Contact();
   }
+
   @BeforeAll
   public static void setUpClass() {}
-  
-  @BeforeEach 
-  public void setUp (){
+
+  @BeforeEach
+  public void setUp() {
     // Populate the contact object before each test
-  contact.setFirstName("John");
-  contact.setLastName("Doe");
-  contact.setDescription("participant");
-  contact.setEmail("jdoe@vlol.com");
-  contact.setReason("abcdefghijklmnopqrstuvwxyz0123456789");
-  // Setup validation of each method's validation annotations
+    contact.setFirstName("John");
+    contact.setLastName("Doe");
+    contact.setDescription("participant");
+    contact.setEmail("jdoe@vlol.com");
+    contact.setReason("abcdefghijklmnopqrstuvwxyz0123456789");
+    // Setup validation of each method's validation annotations
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     validator = factory.getValidator();
   }
-
 
   @AfterAll
   public static void tearDownClass() {}
 
   /** Test of getFirstName method, of class Contact. */
-   /** Passing test for the getFirstName method, of class Contact. */
+  /** Passing test for the getFirstName method, of class Contact. */
   @Test
   public void testGetFirstName() {
     System.out.println("getFirstName Test (Passing value)");
@@ -150,7 +150,6 @@ public class ContactTest {
     assertTrue(violations.isEmpty());
   }
 
-
   /** Passing test for the getEmail method, of class Contact. */
   @Test
   public void testGetEmail() {
@@ -203,7 +202,7 @@ public class ContactTest {
   }
 
   /*Tests the setDescription method of the Contact class*/
-  
+
   @Test
   public void testSetDescription() {
     System.out.println("setDescription Test (Passing value)");
@@ -236,7 +235,7 @@ public class ContactTest {
     // Test method
     assertTrue(violations.isEmpty());
   }
-  
+
   /** Blank value test for the setReason method, of class Contact. */
   @Test
   public void testSetReasonBlank() {
@@ -254,9 +253,7 @@ public class ContactTest {
     assertTrue(violations.isEmpty());
   }
 
-
-
-  public void testGetDescription()  {
+  public void testGetDescription() {
     System.out.println("getDescription Test (Passing value)");
     String expResult = "participant";
     String result = contact.getDescription();
@@ -270,6 +267,7 @@ public class ContactTest {
     // Test method
     assertEquals(expResult, result);
   }
+
   public void testGetReason() {
     System.out.println("getReason Test (Passing value)");
     String expResult = "abcdefghijklmnopqrstuvwxyz0123456789";
@@ -284,5 +282,4 @@ public class ContactTest {
     // Test method
     assertEquals(expResult, result);
   }
-  }
-      
+}

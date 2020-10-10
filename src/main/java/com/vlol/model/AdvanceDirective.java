@@ -35,7 +35,7 @@ public class AdvanceDirective implements Serializable {
 
   @Lob
   @Column(name = "advance_directive_file", columnDefinition = "BLOB")
-  @NotBlank(message = "File is required.")
+  @NotNull(message = "File is required.")
   @JsonIgnore
   private byte[] advanceDirectiveFile;
 

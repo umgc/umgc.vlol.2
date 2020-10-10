@@ -57,9 +57,9 @@
                             </td>
                         </tr>
                         <tr sec:authorize="hasAnyAuthority('admin')">
-                            <td><label for="isActive">Active</label></td>
+                            <td><label for="isAccountVerified">Active</label></td>
                             <td>
-                                <input type="checkbox" id="isActive" th:field="*{isActive}" th:value="${user}" />
+                                <input type="checkbox" id="isAccountVerified" th:field="*{isAccountVerified}" th:value="${user}" />
                             </td>
                         </tr>
                         <tr sec:authorize="hasAnyAuthority('admin')">
@@ -69,9 +69,9 @@
                             </td>
                         </tr>
                         <tr sec:authorize="hasAnyAuthority('admin')">
-                            <td><label for="isVerified">Verified</label></td>
+                            <td><label for="isEmailVerified">Verified</label></td>
                             <td>
-                                <input type="checkbox" id="isVerified" th:field="*{isVerified}" th:value="${user}" />
+                                <input type="checkbox" id="isEmailVerified" th:field="*{isEmailVerified}" th:value="${user}" />
                             </td>
                         </tr>
                         <tr sec:authorize="hasAnyAuthority('admin')">

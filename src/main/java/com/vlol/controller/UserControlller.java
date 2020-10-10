@@ -112,7 +112,7 @@ public class UserControlller {
     Boolean emailChange = false;
     // If email change unverify the account
     if (!changedUser.getEmail().equals(user.getEmail())) {
-      user.setIsVerified(false);
+      user.setIsEmailVerified(false);
       emailChange = true;
     }
     user.setEmail(changedUser.getEmail());
@@ -124,7 +124,7 @@ public class UserControlller {
     }
     if (Utils.isAdmin()) {
       // If the admin unverified a previously verified account.
-      if (user.getIsVerified() && !changedUser.getIsVerified()) {
+      if (user.getIsEmailVerified() && !changedUser.getIsEmailVerified()) {
         try {
           new Mailer(env).verifyEmail(user);
         } catch (Exception e) {
@@ -132,9 +132,9 @@ public class UserControlller {
         }
       }
       user.setAdminComments(changedUser.getAdminComments());
-      user.setIsActive(changedUser.getIsActive());
+      user.setIsAccountVerified(changedUser.getIsAccountVerified());
       user.setIsLocked(changedUser.getIsLocked());
-      user.setIsVerified(changedUser.getIsVerified());
+      user.setIsEmailVerified(changedUser.getIsEmailVerified());
       user.setRole(changedUser.getRole());
     } else {
       if (emailChange) {

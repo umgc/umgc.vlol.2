@@ -5,10 +5,10 @@
  */
 package com.vlol.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
@@ -30,18 +30,18 @@ public class APIKeysTest {
     // Instantiate the allergy object
     this.apikeys = new APIKeys();
   }
+
   @BeforeAll
   public static void setUpClass() {}
-  
+
   @BeforeEach
   public void setUp() throws ParseException {
     // Populate the allergy object before each test
-  apikeys.setApiKey("10");
-  apikeys.setCreateDate(
-        new SimpleDateFormat("yyyy-MM-dd").parse("1955-11-05"));
-  apikeys.setUserRef("admin@vlol.gov");
-  
-   // Setup validation of each method's validation annotations
+    apikeys.setApiKey("10");
+    apikeys.setCreateDate(new SimpleDateFormat("yyyy-MM-dd").parse("1955-11-05"));
+    apikeys.setUserRef("admin@vlol.gov");
+
+    // Setup validation of each method's validation annotations
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     validator = factory.getValidator();
   }
@@ -49,7 +49,7 @@ public class APIKeysTest {
   @AfterAll
   public static void tearDownClass() {}
 
- /** Test of setAPIKeys method, of class APIKeys. */
+  /** Test of setAPIKeys method, of class APIKeys. */
   @Test
   public void testSetAPIKeys() {
     System.out.println("setAPIKeys Test (Passing value)");
@@ -96,7 +96,7 @@ public class APIKeysTest {
     assertTrue(violations.isEmpty());
   }
 
- /** Test of getAPIKey method, of class APIKeys. */
+  /** Test of getAPIKey method, of class APIKeys. */
   @Test
   public void testGetAPIKey() {
     System.out.println("getAPIKey (Passing value)");
@@ -112,7 +112,7 @@ public class APIKeysTest {
     // Test method
     assertEquals(expResult, result);
   }
-    /** Test of setUserRef method, of class APIKeys. */
+  /** Test of setUserRef method, of class APIKeys. */
   @Test
   public void testSetUserRef() {
     System.out.println("setUserRef Test (Passing value)");
@@ -131,7 +131,7 @@ public class APIKeysTest {
   public void testSetUserRefBlank() {
     System.out.println("setUserRef Test (Blank value)");
     String email = "";
-     apikeys.setUserRef(email);
+    apikeys.setUserRef(email);
     // Check for and print any violations of validation annotations
     Set<ConstraintViolation<APIKeys>> violations = validator.validate(apikeys);
     String message =
@@ -165,7 +165,7 @@ public class APIKeysTest {
     System.out.println("getUserRef (Passing value)");
     String expResult = "admin@vlol.gov";
     String result = apikeys.getUserRef();
-   // Check for and print any violations of validation annotations
+    // Check for and print any violations of validation annotations
     Set<ConstraintViolation<APIKeys>> violations = validator.validate(apikeys);
     String message =
         violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -176,10 +176,11 @@ public class APIKeysTest {
     assertEquals(expResult, result);
   }
 
- 
-
-  /** Test of getCreateDate method, of class APIKeys.
-   * @throws java.text.ParseException */
+  /**
+   * Test of getCreateDate method, of class APIKeys.
+   *
+   * @throws java.text.ParseException
+   */
   @Test
   public void testGetCreateDate() throws ParseException {
     System.out.println("getCreateDate Test (Passing value)");
@@ -196,7 +197,9 @@ public class APIKeysTest {
     assertEquals(expResult, result);
   }
 
-  /** Test of setCreateDate method, of class APIKeys. 
+  /**
+   * Test of setCreateDate method, of class APIKeys.
+   *
    * @throws java.text.ParseException
    */
   @Test
@@ -257,7 +260,7 @@ public class APIKeysTest {
     System.out.println("toString");
     String expResult = "10";
     String result = apikeys.toString();
-   // Check for and print any violations of validation annotations
+    // Check for and print any violations of validation annotations
     Set<ConstraintViolation<APIKeys>> violations = validator.validate(apikeys);
     String message =
         violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -284,5 +287,5 @@ public class APIKeysTest {
     }
     // Test method
     assertEquals(expResult, result);
-}
+  }
 }

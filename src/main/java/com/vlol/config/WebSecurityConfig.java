@@ -110,7 +110,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
   public class WebSecurityAdapter extends WebSecurityConfigurerAdapter {
 
     private final String USERS_QUERY =
-        "select email, password, is_active from appuser where email=?";
+        "select email, password, is_account_verified from appuser where email=?";
     private final String ROLES_QUERY =
         "select u.email, r.role_title from appuser u inner join approle r on (u.role_id=r.role_id) where u.email=?";
 

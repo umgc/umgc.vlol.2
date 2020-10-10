@@ -170,8 +170,8 @@ public class VlolController {
       method = RequestMethod.POST)
   public ModelAndView createUser(@Valid User user, BindingResult bindingResult) {
     ModelAndView mav = new ModelAndView();
-    user.setIsActive(Boolean.TRUE);
-    user.setIsVerified(Boolean.FALSE);
+    user.setIsAccountVerified(Boolean.TRUE);
+    user.setIsEmailVerified(Boolean.FALSE);
     user.setIsLocked(Boolean.FALSE);
     Date date = new Date();
     user.setLastLoginDate(date);
@@ -214,7 +214,7 @@ public class VlolController {
       if (user == null) {
         return new ModelAndView("redirect:/verify-email?error");
       }
-      user.setIsVerified(true); // Verify email
+      user.setIsEmailVerified(true); // Verify email
       userService.updateUser(user);
       return new ModelAndView("redirect:/verify-email?success");
     }
@@ -252,7 +252,7 @@ public class VlolController {
     Utils.getUserName(userService, mav);
     if (id == null) {
       user = Utils.getIfAuthorizedForUser(userService);
-      if (!user.getIsVerified()) {
+      if (!user.getIsEmailVerified()) {
         return new ModelAndView("redirect:/verify-email");
       } else if (Utils.isAdmin() || Utils.isProvider()) {
         mav.setViewName("menu/admin-menu");
