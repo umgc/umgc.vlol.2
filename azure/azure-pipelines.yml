@@ -24,23 +24,10 @@ steps:
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
     failTaskOnFailedTests: true
 
-
-- task: SonarCloudPrepare@1
+- task: CmdLine@2
   inputs:
-    SonarCloud: 'SonarCloud'
-    organization: 'umgc-capstone'
-    scannerMode: 'Other'
-    extraProperties: |
-      # Additional properties that will be passed to the scanner,
-      # Put one key=value per line, example:
-      # sonar.exclusions=**/*.bin
-      sonar.projectKey=umgccapstone_umgc.vlol.2
-      sonar.projectName=umgc.vlol.2
+    script: 'make sonar SONAR_TOKEN=$(sonar_token)'
 
-- task: SonarCloudAnalyze@1
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
 - task: CmdLine@2
   inputs:
     script: 'make image'
