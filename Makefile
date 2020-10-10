@@ -54,9 +54,7 @@ target/$(VLOL_JAR):
 
 sonar:
 	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
-		-c 'cd /repo &&	mvn sonar:sonar -Dsonar.projectKey=vlol \
-		-Dsonar.organization=umgc -Dsonar.host.url=https://sonarcloud.io \
-		-Dsonar.login=$(SONAR_TOKEN)'
+		-c 'cd /repo &&	mvn verify sonar:sonar'
 	
 ##############################################################
 #	make image:
