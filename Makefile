@@ -54,7 +54,7 @@ target/$(VLOL_JAR):
 
 sonar:
 	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
-		-c 'cd /repo &&	mvn verify sonar:sonar SONAR_TOKEN=$(SONAR_TOKEN)'
+		-c 'cd /repo &&	mvn verify sonar:sonar'
 	
 ##############################################################
 #	make image:
