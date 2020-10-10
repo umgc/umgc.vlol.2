@@ -26,7 +26,7 @@ steps:
 
 - task: CmdLine@2
   inputs:
-    script: 'make sonar'
+    script: 'make sonar SONAR_TOKEN=$(SONAR_TOKEN)'
 
 - task: CmdLine@2
   inputs:
