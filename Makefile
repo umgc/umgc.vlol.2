@@ -8,6 +8,7 @@ SKIP_TESTS:=
 # Version vars
 VERSION:=1.0.$(shell git rev-list HEAD | wc -l)
 VLOL_JAR=VLOL-1.0.0.jar
+BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 # Docker vars
 APP_NAME=vlol.app
@@ -54,7 +55,7 @@ target/$(VLOL_JAR):
 
 sonar:
 	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
-		-c 'cd /repo &&	mvn verify sonar:sonar'
+		-c 'cd /repo &&	mvn verify sonar:sonar -Dsonar.branch.name=$(BRANCH)'
 	
 ##############################################################
 #	make image:
