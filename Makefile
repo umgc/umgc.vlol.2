@@ -18,7 +18,7 @@ BUILD_IMG=docker.io/umgccaps/advance-development-factory:latest
 
 # Maven options
 MAVEN_OPTS:=-Dversion=$(VERSION)
-SONAR_TOKEN:=611d24fcc1183dd4416c03ccaaff09633e261cc2
+SONAR_TOKEN:=
 
 # Unique ID used for devel Azure deployments
 UUID_FILENAME:=user.uuid
