@@ -37,6 +37,10 @@ steps:
       sonar.projectKey=umgccapstone_umgc.vlol.2
       sonar.projectName=umgc.vlol.2
 
+- task: SonarCloudAnalyze@1
+- task: SonarCloudPublish@1
+  inputs:
+    pollingTimeoutSec: '300'
 - task: CmdLine@2
   inputs:
     script: 'make image'
