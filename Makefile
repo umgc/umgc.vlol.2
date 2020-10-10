@@ -18,6 +18,7 @@ BUILD_IMG=docker.io/umgccaps/advance-development-factory:latest
 
 # Maven options
 MAVEN_OPTS:=-Dversion=$(VERSION)
+SONAR_TOKEN:=611d24fcc1183dd4416c03ccaaff09633e261cc2
 
 # Unique ID used for devel Azure deployments
 UUID_FILENAME:=user.uuid
@@ -51,7 +52,12 @@ all:
 target/$(VLOL_JAR):	
 	mvn $(MAVEN_OPTS) package -f pom.xml
 
-
+sonar:
+	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
+		-c 'cd /repo &&	mvn sonar:sonar -Dsonar.projectKey=vlol \
+		-Dsonar.organization=umgc -Dsonar.host.url=https://sonarcloud.io \
+		-Dsonar.login=$(SONAR_TOKEN)'
+	
 ##############################################################
 #	make image:
 #		This recipe create the vlol Docker image
