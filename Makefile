@@ -19,7 +19,6 @@ BUILD_IMG=docker.io/umgccaps/advance-development-factory:latest
 
 # Maven options
 MAVEN_OPTS:=-Dversion=$(VERSION)
-SONAR_TOKEN:=
 
 # Unique ID used for devel Azure deployments
 UUID_FILENAME:=user.uuid
@@ -34,7 +33,7 @@ endif
 
 
 # PHONY 
-.PHONY: all image start push clean deploy stop-deploy
+.PHONY: all image sonar start push clean deploy stop-deploy
 
 	
 ##############################################################
@@ -53,6 +52,7 @@ all:
 target/$(VLOL_JAR):	
 	mvn $(MAVEN_OPTS) package -f pom.xml
 
+# This internal targe runs the sonar analysis
 sonar:
 	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
 		-c 'cd /repo &&	mvn verify sonar:sonar -Dsonar.branch.name=$(BRANCH)'
