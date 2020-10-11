@@ -1,10 +1,9 @@
 ![Test/Code Coverage VLOL](https://github.com/umgc/fire.department/workflows/Test/Code%20Coverage%20VLOL/badge.svg?branch=master)
 ![Deploy Vlol](https://github.com/umgc/fire.department/workflows/Deploy%20Vlol/badge.svg?branch=master)
-![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=umgc-city-vlol&metric=coverage)
+![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=umgccapstone_umgc.vlol.2&metric=coverage)
+![Sonarcloud Quality](https://sonarcloud.io/api/project_badges/quality_gate?project=umgccapstone_umgc.vlol.2)
 
-![Sonarcloud Quality](https://sonarcloud.io/api/project_badges/quality_gate?project=umgc-city-vlol)
-
-For Code Coverage Report view [Sonar Dashboard](https://sonarcloud.io/dashboard?id=umgc-city-vlol)
+For Code Coverage Report view [Sonar Dashboard](https://sonarcloud.io/dashboard?id=umgccapstone_umgc.vlol.2)
 
 # Team 3 Capstone Project
 

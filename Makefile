@@ -8,6 +8,7 @@ SKIP_TESTS:=
 # Version vars
 VERSION:=1.0.$(shell git rev-list HEAD | wc -l)
 VLOL_JAR=VLOL-1.0.0.jar
+BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 # Docker vars
 APP_NAME=vlol.app
@@ -32,7 +33,7 @@ endif
 
 
 # PHONY 
-.PHONY: all image start push clean deploy stop-deploy
+.PHONY: all image sonar start push clean deploy stop-deploy
 
 	
 ##############################################################
@@ -51,7 +52,11 @@ all:
 target/$(VLOL_JAR):	
 	mvn $(MAVEN_OPTS) package -f pom.xml
 
-
+# This internal targe runs the sonar analysis
+sonar:
+	docker run -v $(PWD)/:/repo --entrypoint '/bin/bash' $(BUILD_IMG) \
+		-c 'cd /repo &&	mvn verify sonar:sonar -Dsonar.branch.name=$(BRANCH)'
+	
 ##############################################################
 #	make image:
 #		This recipe create the vlol Docker image
