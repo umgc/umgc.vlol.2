@@ -92,6 +92,6 @@ public class QRController {
 			mav.addObject("error", true);
 		}
 
-		return mav;
+		return new ModelAndView( "redirect:/user/qr-code/" + id );
 	}
 }
