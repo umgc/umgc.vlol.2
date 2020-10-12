@@ -125,12 +125,12 @@ public class User implements Serializable {
   @JsonIgnore
   private String adminComments;
 
-  @Column(name = "is_active")
+  @Column(name = "is_account_verified")
   @NotNull(message = "Value cannot be null.")
   @JsonIgnore
   private Boolean isAccountVerified;
 
-  @Column(name = "is_verified")
+  @Column(name = "is_email_verified")
   @NotNull(message = "Value cannot be null.")
   @JsonIgnore
   private Boolean isEmailVerified;
