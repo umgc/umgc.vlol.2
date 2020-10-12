@@ -96,6 +96,10 @@ public class User implements Serializable {
   @Size(min = 8, max = 72, message = "Input exceeds size limits.")
   @JsonIgnore
   private String password;
+  
+  @Column(name = "qr_code", length = 12)
+  @JsonIgnore
+  private Long qrCode;
 
   @Column(name = "date_created")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
@@ -344,4 +348,14 @@ public class User implements Serializable {
   public void setLastLoginAttempt(Date lastLoginAttempt) {
     this.lastLoginAttempt = lastLoginAttempt;
   }
+
+  public Long getQrCode() {
+	return qrCode;
+  }
+
+  public void setQrCode(Long qrCode) {
+	this.qrCode = qrCode;
+  }
+  
+  
 }

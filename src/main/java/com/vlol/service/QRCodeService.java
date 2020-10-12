@@ -5,6 +5,7 @@
  */
 package com.vlol.service;
 
+import com.beust.jcommander.Strings;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
@@ -23,10 +24,11 @@ public class QRCodeService {
 
   @Autowired private Environment env;
 
-  public BufferedImage generateQRCodeImage(Long userId) throws Exception {
+  public BufferedImage generateQRCodeImage(Long userId, Long randomID) throws Exception {
     String dns = env.getProperty("mail.smtp.urlPath");
     QRCodeWriter barcodeWriter = new QRCodeWriter();
     String jwtToken = Utils.createJWT(userService.getUser(userId));
+    jwtToken += String.valueOf(randomID);
     BitMatrix bitMatrix =
         barcodeWriter.encode(
             dns + "user/view/" + userId + "?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 400, 400);

@@ -54,7 +54,7 @@
                         <a th:href="|/user/qr-code/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
                             <i class="fas fa-qrcode menu-button" style="margin: 1rem"></i>
-                            <div class="card-body">Get QR Code</div>
+                            <div class="card-body">My QR Code</div>
                         </a>
                         <a href="/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()" th:if="${hasAuthorizingUsers}">

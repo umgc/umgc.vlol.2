@@ -112,7 +112,8 @@ CREATE TABLE appuser(
     password VARCHAR(72) NOT NULL COMMENT 'The generated hash value of the user''s password.',
     role_id BIGINT NOT NULL COMMENT 'The role id of the user.',
     first_name VARCHAR(32) NOT NULL COMMENT 'The user''s first name.',
-    last_name VARCHAR(100) NOT NULL COMMENT 'The user''s last name.'
+    last_name VARCHAR(100) NOT NULL COMMENT 'The user''s last name.',
+    qr_code VARCHAR(32) COMMENT 'The use''s random number for qr code.'
     --COMMENT 'The database user profile table'
 ) ;
 
