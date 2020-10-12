@@ -171,7 +171,7 @@
                             </tr>
                             <tr sec:authorize="hasAnyAuthority('admin')">
                                 <td class="text-nowrap">Active?</td>
-                                <td th:text="${user.isActive}">Active?</td>
+                                <td th:text="${user.isAccountVerified}">Active?</td>
                             </tr>
                         </tbody>
                     </table>

@@ -42,7 +42,7 @@
                                 <td th:text="${user.role.title}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">User Role</td>
                                 <td th:text="${user.email}" class="align-middle">User Email</td>
                                 <td th:text="${user.lastLoginDate}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">Last Login</td>
-                                <td th:text="${user.isActive}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">Active?</td>
+                                <td th:text="${user.isAccountVerified}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">Active?</td>
                                 <td class="text-nowrap">
                                     <a th:href="@{/user/view/{id}(id=${user.userId})}" class="btn btn-info">
                                         <i class="far fa-eye"></i> View

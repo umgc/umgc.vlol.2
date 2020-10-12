@@ -63,7 +63,7 @@ public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     //        String ip = Utils.getClientIP(request);
     loginAttemptService.loginSucceeded(request);
 
-    if (!user.getIsVerified())
+    if (!user.getIsEmailVerified())
       redirectStrategy.sendRedirect(request, response, "/verify-email?error=true");
     else redirectStrategy.sendRedirect(request, response, "/menu");
   }

@@ -5,245 +5,204 @@
  */
 package com.vlol.model;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-/**
- *
- * @author kimbe
- */
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
+import javax.validation.ValidatorFactory;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+/** @author kimbe */
 public class AdvanceDirectiveTest {
-    
-    public AdvanceDirectiveTest() {
-    }
-    
-    @BeforeAll
-    public static void setUpClass() {
-    }
-    
-    @AfterAll
-    public static void tearDownClass() {
-    }
 
-    /**
-     * Test of getAdvanceDirectiveId method, of class AdvanceDirective.
-     */
-    @Test
-    public void testGetAdvanceDirectiveId() {
-        System.out.println("getAdvanceDirectiveId");
-        AdvanceDirective instance = new AdvanceDirective();
-        Long expResult = null;
-        Long result = instance.getAdvanceDirectiveId();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  private Validator validator;
+  private final AdvanceDirective advanceDirective;
+  private final User user = new User();
+  private final byte[] bytes = new byte[] {1, 2};
 
-    /**
-     * Test of setAdvanceDirectiveId method, of class AdvanceDirective.
-     */
-    @Test
-    public void testSetAdvanceDirectiveId() {
-        System.out.println("setAdvanceDirectiveId");
-        Long advanceDirectiveId = null;
-        AdvanceDirective instance = new AdvanceDirective();
-        instance.setAdvanceDirectiveId(advanceDirectiveId);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  public AdvanceDirectiveTest() {
+    // Instantiate the Allergy object
+    this.advanceDirective = new AdvanceDirective();
+    this.advanceDirective.setAdvanceDirectiveContentType("application/pdf");
+    this.advanceDirective.setAdvanceDirectiveFile(bytes);
+    this.advanceDirective.setAdvanceDirectiveFilename("test.pdf");
+    this.advanceDirective.setAdvanceDirectiveId(1L);
+    this.advanceDirective.setAdvanceDirectiveType("MOSLT");
+    this.advanceDirective.setUser(user);
+  }
 
-    /**
-     * Test of getAdvanceDirectiveFile method, of class AdvanceDirective.
-     */
-    @Test
-    public void testGetAdvanceDirectiveFile() {
-        System.out.println("getAdvanceDirectiveFile");
-        AdvanceDirective instance = new AdvanceDirective();
-        byte[] expResult = null;
-        byte[] result = instance.getAdvanceDirectiveFile();
-        assertArrayEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  @BeforeAll
+  public static void setUpClass() {}
 
-    /**
-     * Test of setAdvanceDirectiveFile method, of class AdvanceDirective.
-     */
-    @Test
-    public void testSetAdvanceDirectiveFile() {
-        System.out.println("setAdvanceDirectiveFile");
-        byte[] advanceDirectiveFile = null;
-        AdvanceDirective instance = new AdvanceDirective();
-        instance.setAdvanceDirectiveFile(advanceDirectiveFile);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  @AfterAll
+  public static void tearDownClass() {}
 
-    /**
-     * Test of getAdvanceDirectiveType method, of class AdvanceDirective.
-     */
-    @Test
-    public void testGetAdvanceDirectiveType() {
-        System.out.println("getAdvanceDirectiveType");
-        AdvanceDirective instance = new AdvanceDirective();
-        String expResult = "";
-        String result = instance.getAdvanceDirectiveType();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  @BeforeEach
+  public void setUp() {
+    // Setup validation of each method's validation annotations
+    ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+    validator = factory.getValidator();
+  }
 
-    /**
-     * Test of setAdvanceDirectiveType method, of class AdvanceDirective.
-     */
-    @Test
-    public void testSetAdvanceDirectiveType() {
-        System.out.println("setAdvanceDirectiveType");
-        String advanceDirectiveType = "";
-        AdvanceDirective instance = new AdvanceDirective();
-        instance.setAdvanceDirectiveType(advanceDirectiveType);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  /** Test of getAdvanceDirectiveId method, of class AdvanceDirective. */
+  @Test
+  public void testGetAdvanceDirectiveId() {
+    System.out.println("getAdvanceDirectiveId");
+    Long expResult = 1L;
+    Long result = advanceDirective.getAdvanceDirectiveId();
+    assertEquals(expResult, result);
+  }
 
-    /**
-     * Test of getAdvanceDirectiveContentType method, of class AdvanceDirective.
-     */
-    @Test
-    public void testGetAdvanceDirectiveContentType() {
-        System.out.println("getAdvanceDirectiveContentType");
-        AdvanceDirective instance = new AdvanceDirective();
-        String expResult = "";
-        String result = instance.getAdvanceDirectiveContentType();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  /** Test of setAdvanceDirectiveId method, of class AdvanceDirective. */
+  @Test
+  public void testSetAdvanceDirectiveId() {
+    System.out.println("setAdvanceDirectiveId");
+    Long advanceDirectiveId = 2L;
+    advanceDirective.setAdvanceDirectiveId(advanceDirectiveId);
 
-    /**
-     * Test of setAdvanceDirectiveContentType method, of class AdvanceDirective.
-     */
-    @Test
-    public void testSetAdvanceDirectiveContentType() {
-        System.out.println("setAdvanceDirectiveContentType");
-        String advanceDirectiveContentType = "";
-        AdvanceDirective instance = new AdvanceDirective();
-        instance.setAdvanceDirectiveContentType(advanceDirectiveContentType);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    // Check for and print any violations of validation annotations
+    Set<ConstraintViolation<AdvanceDirective>> violations = validator.validate(advanceDirective);
+    String message =
+        violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+    if (!violations.isEmpty()) {
+      System.out.println("Violation caught: " + message);
     }
+    // Test method
+    assertTrue(violations.isEmpty());
+  }
 
-    /**
-     * Test of getAdvanceDirectiveFilename method, of class AdvanceDirective.
-     */
-    @Test
-    public void testGetAdvanceDirectiveFilename() {
-        System.out.println("getAdvanceDirectiveFilename");
-        AdvanceDirective instance = new AdvanceDirective();
-        String expResult = "";
-        String result = instance.getAdvanceDirectiveFilename();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  /** Test of getAdvanceDirectiveFile method, of class AdvanceDirective. */
+  @Test
+  public void testGetAdvanceDirectiveFile() {
+    System.out.println("getAdvanceDirectiveFile");
+    byte[] expResult = bytes;
+    byte[] result = advanceDirective.getAdvanceDirectiveFile();
+    assertArrayEquals(expResult, result);
+  }
 
-    /**
-     * Test of setAdvanceDirectiveFilename method, of class AdvanceDirective.
-     */
-    @Test
-    public void testSetAdvanceDirectiveFilename() {
-        System.out.println("setAdvanceDirectiveFilename");
-        String advanceDirectiveFilename = "";
-        AdvanceDirective instance = new AdvanceDirective();
-        instance.setAdvanceDirectiveFilename(advanceDirectiveFilename);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+  /** Test of setAdvanceDirectiveFile method, of class AdvanceDirective. */
+  @Test
+  public void testSetAdvanceDirectiveFile() {
+    System.out.println("setAdvanceDirectiveFile");
+    byte[] advanceDirectiveFile = new byte[] {3, 4};
+    advanceDirective.setAdvanceDirectiveFile(advanceDirectiveFile);
+    // Check for and print any violations of validation annotations
+    Set<ConstraintViolation<AdvanceDirective>> violations = validator.validate(advanceDirective);
+    String message =
+        violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+    if (!violations.isEmpty()) {
+      System.out.println("Violation caught: " + message);
     }
+    // Test method
+    assertTrue(violations.isEmpty());
+  }
 
-    /**
-     * Test of getUser method, of class AdvanceDirective.
-     */
-    @Test
-    public void testGetUser() {
-        System.out.println("getUser");
-        AdvanceDirective instance = new AdvanceDirective();
-        User expResult = null;
-        User result = instance.getUser();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  /** Test of getAdvanceDirectiveType method, of class AdvanceDirective. */
+  @Test
+  public void testGetAdvanceDirectiveType() {
+    System.out.println("getAdvanceDirectiveType");
+    String expResult = "MOSLT";
+    String result = advanceDirective.getAdvanceDirectiveType();
+    assertEquals(expResult, result);
+  }
 
-    /**
-     * Test of setUser method, of class AdvanceDirective.
-     */
-    @Test
-    public void testSetUser() {
-        System.out.println("setUser");
-        User user = null;
-        AdvanceDirective instance = new AdvanceDirective();
-        instance.setUser(user);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+  /** Test of setAdvanceDirectiveType method, of class AdvanceDirective. */
+  @Test
+  public void testSetAdvanceDirectiveType() {
+    System.out.println("setAdvanceDirectiveType");
+    String advanceDirectiveType = "TEST";
+    advanceDirective.setAdvanceDirectiveType(advanceDirectiveType);
+    // Check for and print any violations of validation annotations
+    Set<ConstraintViolation<AdvanceDirective>> violations = validator.validate(advanceDirective);
+    String message =
+        violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+    if (!violations.isEmpty()) {
+      System.out.println("Violation caught: " + message);
     }
+    // Test method
+    assertTrue(violations.isEmpty());
+  }
 
-    /**
-     * Test of toString method, of class AdvanceDirective.
-     */
-    @Test
-    public void testToString() {
-        System.out.println("toString");
-        AdvanceDirective instance = new AdvanceDirective();
-        String expResult = "";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  /** Test of getAdvanceDirectiveContentType method, of class AdvanceDirective. */
+  @Test
+  public void testGetAdvanceDirectiveContentType() {
+    System.out.println("getAdvanceDirectiveContentType");
+    String expResult = "application/pdf";
+    String result = advanceDirective.getAdvanceDirectiveContentType();
+    assertEquals(expResult, result);
+  }
 
-    /**
-     * Test of hashCode method, of class AdvanceDirective.
-     */
-    @Test
-    public void testHashCode() {
-        System.out.println("hashCode");
-        AdvanceDirective instance = new AdvanceDirective();
-        int expResult = 0;
-        int result = instance.hashCode();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+  /** Test of setAdvanceDirectiveContentType method, of class AdvanceDirective. */
+  @Test
+  public void testSetAdvanceDirectiveContentType() {
+    System.out.println("setAdvanceDirectiveContentType");
+    String advanceDirectiveContentType = "application/doc";
+    advanceDirective.setAdvanceDirectiveContentType(advanceDirectiveContentType);
+    // Check for and print any violations of validation annotations
+    Set<ConstraintViolation<AdvanceDirective>> violations = validator.validate(advanceDirective);
+    String message =
+        violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+    if (!violations.isEmpty()) {
+      System.out.println("Violation caught: " + message);
     }
+    // Test method
+    assertTrue(violations.isEmpty());
+  }
 
-    /**
-     * Test of equals method, of class AdvanceDirective.
-     */
-    @Test
-    public void testEquals() {
-        System.out.println("equals");
-        Object obj = null;
-        AdvanceDirective instance = new AdvanceDirective();
-        boolean expResult = false;
-        boolean result = instance.equals(obj);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+  /** Test of getAdvanceDirectiveFilename method, of class AdvanceDirective. */
+  @Test
+  public void testGetAdvanceDirectiveFilename() {
+    System.out.println("getAdvanceDirectiveFilename");
+    String expResult = "test.pdf";
+    String result = advanceDirective.getAdvanceDirectiveFilename();
+    assertEquals(expResult, result);
+  }
 
-    /**
-     * Test of getIdAsString method, of class AdvanceDirective.
-     */
-    @Test
-    public void testGetIdAsString() {
-        System.out.println("getIdAsString");
-        AdvanceDirective instance = new AdvanceDirective();
-        String expResult = "";
-        String result = instance.getIdAsString();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+  /** Test of setAdvanceDirectiveFilename method, of class AdvanceDirective. */
+  @Test
+  public void testSetAdvanceDirectiveFilename() {
+    System.out.println("setAdvanceDirectiveFilename");
+    String advanceDirectiveFilename = "test2.pdf";
+    advanceDirective.setAdvanceDirectiveFilename(advanceDirectiveFilename);
+    // Check for and print any violations of validation annotations
+    Set<ConstraintViolation<AdvanceDirective>> violations = validator.validate(advanceDirective);
+    String message =
+        violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+    if (!violations.isEmpty()) {
+      System.out.println("Violation caught: " + message);
     }
-    
+    // Test method
+    assertTrue(violations.isEmpty());
+  }
+
+  /** Test of getUser method, of class AdvanceDirective. */
+  @Test
+  public void testGetUser() {
+    System.out.println("getUser");
+    User expResult = user;
+    User result = advanceDirective.getUser();
+    assertEquals(expResult, result);
+  }
+
+  /** Test of setUser method, of class AdvanceDirective. */
+  @Test
+  public void testSetUser() {
+    System.out.println("setUser");
+    User user = new User();
+    advanceDirective.setUser(user);
+    // Check for and print any violations of validation annotations
+    Set<ConstraintViolation<AdvanceDirective>> violations = validator.validate(advanceDirective);
+    String message =
+        violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
+    if (!violations.isEmpty()) {
+      System.out.println("Violation caught: " + message);
+    }
+    // Test method
+    assertTrue(violations.isEmpty());
+  }
 }

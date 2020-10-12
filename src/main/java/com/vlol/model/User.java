@@ -128,12 +128,12 @@ public class User implements Serializable {
   @Column(name = "is_active")
   @NotNull(message = "Value cannot be null.")
   @JsonIgnore
-  private Boolean isActive;
+  private Boolean isAccountVerified;
 
   @Column(name = "is_verified")
   @NotNull(message = "Value cannot be null.")
   @JsonIgnore
-  private Boolean isVerified;
+  private Boolean isEmailVerified;
 
   @Column(name = "is_locked")
   @NotNull(message = "Value cannot be null.")
@@ -305,20 +305,20 @@ public class User implements Serializable {
     this.adminComments = adminComments;
   }
 
-  public Boolean getIsActive() {
-    return isActive;
+  public Boolean getIsAccountVerified() {
+    return isAccountVerified;
   }
 
-  public void setIsActive(Boolean isActive) {
-    this.isActive = isActive;
+  public void setIsAccountVerified(Boolean isAccountVerified) {
+    this.isAccountVerified = isAccountVerified;
   }
 
-  public Boolean getIsVerified() {
-    return isVerified;
+  public Boolean getIsEmailVerified() {
+    return isEmailVerified;
   }
 
-  public void setIsVerified(Boolean isVerified) {
-    this.isVerified = isVerified;
+  public void setIsEmailVerified(Boolean isEmailVerified) {
+    this.isEmailVerified = isEmailVerified;
   }
 
   public Boolean getIsLocked() {

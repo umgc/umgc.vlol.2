@@ -15,8 +15,6 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import org.junit.jupiter.api.AfterAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -147,15 +145,13 @@ public class VaccineTest {
     // Test method
     assertTrue(violations.isEmpty());
   }
-    /**
-   * Test of toString method, of class Vaccine.
-   */
+  /** Test of toString method, of class Vaccine. */
   @Test
   public void testToString() {
     System.out.println("toString");
     String expResult = "herpes";
     String result = vaccine.toString();
-   // Check for and print any violations of validation annotations
+    // Check for and print any violations of validation annotations
     Set<ConstraintViolation<Vaccine>> violations = validator.validate(vaccine);
     String message =
         violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -166,22 +162,16 @@ public class VaccineTest {
     assertEquals(expResult, result);
   }
 
-  /**
-   * Test of hashCode method, of class Vaccine.
-   */
+  /** Test of hashCode method, of class Vaccine. */
 
-
-
-  /**
-   * Test of equals method, of class Vaccine.
-   */
+  /** Test of equals method, of class Vaccine. */
   @Test
   public void testEquals() {
     System.out.println("equals");
     Object obj = null;
     boolean expResult = false;
     boolean result = vaccine.equals(obj);
-  // Check for and print any violations of validation annotations
+    // Check for and print any violations of validation annotations
     Set<ConstraintViolation<Vaccine>> violations = validator.validate(vaccine);
     String message =
         violations.iterator().hasNext() ? violations.iterator().next().getMessage() : "";
@@ -191,7 +181,4 @@ public class VaccineTest {
     // Test method
     assertEquals(expResult, result);
   }
-
- 
-
 }

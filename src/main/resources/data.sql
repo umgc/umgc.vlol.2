@@ -1,4 +1,4 @@
-INSERT INTO appuser (user_id, role_id, first_name, last_name, email, password, date_created, last_login_date, admin_comments, is_active, is_locked, is_verified, login_attempt, last_login_attempt) VALUES 
+INSERT INTO appuser (user_id, role_id, first_name, last_name, email, password, date_created, last_login_date, admin_comments, is_account_verified, is_locked, is_email_verified, login_attempt, last_login_attempt) VALUES 
 (1, 1, 'Lorraine', 'Baines', 'parti@vlol.gov', '$2a$10$wbBBPoyyiMNr5sUbInHCM.rrXk8PfbfLTkWJ9KEglBynBFaNSmjsS', '2020-05-20 16:30:00', '2020-06-23 15:10:00', 'Lorraine is a program participant.', true, false, true, 0, '2020-05-20 16:30:00'),
 (2, 2, 'Marty', 'McFly', 'provi@vlol.gov', '$2a$10$wbBBPoyyiMNr5sUbInHCM.rrXk8PfbfLTkWJ9KEglBynBFaNSmjsS', '2020-05-20 18:30:00', '2020-06-23 15:10:00', 'Marty is an emergency medical provider.', true, false, true, 0, '2020-05-20 16:30:00'),
 (3, 1, 'Emmett', 'Brown', 'agent@vlol.gov', '$2a$10$wbBBPoyyiMNr5sUbInHCM.rrXk8PfbfLTkWJ9KEglBynBFaNSmjsS', '2020-05-20 19:30:00', '2020-06-23 15:20:00', 'Emmett is a Lorraine''s agent.', true, false, true, 0, '2020-05-20 16:30:00'),
