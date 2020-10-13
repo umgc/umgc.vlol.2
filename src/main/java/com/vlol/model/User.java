@@ -97,9 +97,9 @@ public class User implements Serializable {
   @JsonIgnore
   private String password;
   
-  @Column(name = "qr_code", length = 12)
+  @Column(name = "qr_code", length = 36)
   @JsonIgnore
-  private Long qrCode;
+  private String qrCode;
 
   @Column(name = "date_created")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
@@ -349,11 +349,11 @@ public class User implements Serializable {
     this.lastLoginAttempt = lastLoginAttempt;
   }
 
-  public Long getQrCode() {
+  public String getQrCode() {
 	return qrCode;
   }
 
-  public void setQrCode(Long qrCode) {
+  public void setQrCode(String qrCode) {
 	this.qrCode = qrCode;
   }
   

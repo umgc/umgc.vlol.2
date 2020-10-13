@@ -40,3 +40,5 @@ bin/
 /data
 
 nbactions.xml
+nb-configuration.xml
+.gitignore

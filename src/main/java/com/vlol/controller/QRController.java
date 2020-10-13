@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.util.Base64;
 import java.util.Calendar;
+import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -48,10 +49,10 @@ public class QRController {
 		if (user == null)
 			return new ModelAndView("redirect:/login");
 		ModelAndView mav = new ModelAndView("user/qr-code");
-		Long randomId = user.getQrCode();
+		String randomId = user.getQrCode();
 		Utils.getUserName(userService, mav);
 		if (randomId == null) {
-			randomId = Calendar.getInstance().getTimeInMillis();
+			randomId =generateRandomId();
 			user.setQrCode(randomId);
 		}
 		try {
@@ -75,10 +76,9 @@ public class QRController {
 		if (user == null)
 			return new ModelAndView("redirect:/login");
 		ModelAndView mav = new ModelAndView("user/qr-code");
-		Long randomId = user.getQrCode();
+		String randomId = user.getQrCode();
 		Utils.getUserName(userService, mav);
-		user.setQrCode(null);
-		randomId = Calendar.getInstance().getTimeInMillis();
+		randomId = generateRandomId();
 		user.setQrCode(randomId);
 		try {
 			BufferedImage in = qrCodeService.generateQRCodeImage(id, randomId);
@@ -92,6 +92,10 @@ public class QRController {
 			mav.addObject("error", true);
 		}
 
-		return new ModelAndView( "redirect:/user/qr-code/" + id );
+		return new ModelAndView("redirect:/user/qr-code/" + id);
+	}
+
+	public static String generateRandomId() {
+		return UUID.randomUUID().toString();
 	}
 }

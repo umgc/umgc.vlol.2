@@ -215,6 +215,8 @@ public class UserControlller {
       user = userService.getUser(id);
       if (!Utils.verifyJWT(user, jwt)) { // Check jwt verification
         return new ModelAndView("redirect:/login");
+      }else {
+    	  //parse the jwt checkin and return the proper redirect
       }
     } else { // If just an id check if
       user = Utils.getIfAuthorizedForUser(userService, id, false);
