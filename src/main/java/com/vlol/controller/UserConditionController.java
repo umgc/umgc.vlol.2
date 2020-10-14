@@ -40,10 +40,9 @@ public class UserConditionController {
   public ModelAndView viewConditionList(
       @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
     ModelAndView mav = new ModelAndView("user/conditions");
-    Utils.getUserName(userService, mav);
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     model.addAttribute("conditionList", user.getConditions());
     return mav;
   }
@@ -73,11 +72,10 @@ public class UserConditionController {
     if (user == null) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("user/add-edit-condition");
-    Utils.getUserName(userService, mav);
     UserCondition condition = new UserCondition();
     condition.setUser(user);
     model.addAttribute("condition", condition);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 
@@ -91,7 +89,6 @@ public class UserConditionController {
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/add-edit-condition");
-    Utils.getUserName(userService, mav);
     // Check if the condition belongs to the user
     Boolean found = false;
     for (UserCondition condition : user.getConditions())
@@ -99,7 +96,7 @@ public class UserConditionController {
     if (!found) return new ModelAndView("redirect:/login");
     UserCondition condition = userConditionService.getCondition(conditionId);
     model.addAttribute("condition", condition);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 

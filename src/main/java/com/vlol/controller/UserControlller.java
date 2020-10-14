@@ -56,7 +56,7 @@ public class UserControlller {
   @RequestMapping("/list-users")
   public ModelAndView viewUserList(Principal principal) {
     ModelAndView mav = new ModelAndView("admin/list-users");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     List<User> userList;
     if (Utils.isAdmin()) userList = userService.getAllUsers();
     else if (Utils.isProvider()) userList = userService.getAllParticipants();
@@ -72,7 +72,7 @@ public class UserControlller {
     if (!Utils.isAdmin()) return new ModelAndView("redirect:/login");
     User user = new User();
     ModelAndView mav = new ModelAndView("admin/add-user");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     mav.addObject("user", user);
     List<Role> roles = roleService.getAllRoles();
     mav.addObject("roles", roles);
@@ -91,7 +91,7 @@ public class UserControlller {
     ModelAndView mav = new ModelAndView("user/edit-account");
     User user = Utils.getIfUserOrAdmin(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     mav.addObject("user", user);
     List<Role> roles = roleService.getAllRoles();
     mav.addObject("roles", roles);
@@ -156,9 +156,8 @@ public class UserControlller {
     ModelAndView mav = new ModelAndView("user/edit-profile");
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserName(userService, mav);
     mav.addObject("userInfo", user.getUserInfo());
-    mav.addObject("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 
@@ -198,7 +197,7 @@ public class UserControlller {
     }
     List<User> result = userService.findUserByKeyword(keyword);
     ModelAndView mav = new ModelAndView("admin/search-users");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     mav.addObject("result", result);
     return mav;
   }
@@ -209,14 +208,14 @@ public class UserControlller {
       @PathVariable(name = "jwt", required = false) String jwt) {
 
     ModelAndView mav = new ModelAndView("user/view-user");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     User user;
     if (jwt != null) {
       user = userService.getUser(id);
       if (!Utils.verifyJWT(user, jwt)) { // Check jwt verification
         return new ModelAndView("redirect:/login");
-      }else {
-    	  //parse the jwt checkin and return the proper redirect
+      } else {
+        // parse the jwt checkin and return the proper redirect
       }
     } else { // If just an id check if
       user = Utils.getIfAuthorizedForUser(userService, id, false);

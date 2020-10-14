@@ -25,11 +25,17 @@ public class Utils {
       "al3epUn9wy0TLAIDMODFVWA;R]p&>v=ZgqJX7i_%d>e=sS?0[Ehfm]o8G):V\"P~";
   private static final Algorithm algorithm = Algorithm.HMAC256(secretKey);
 
-  public static void getUserName(UserService userService, ModelAndView mav) {
+  public static void getUserData(UserService userService, ModelAndView mav) {
+    getUserData(userService, mav, null);
+  }
+
+  public static void getUserData(UserService userService, ModelAndView mav, Long currentUserId) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth.getPrincipal() != "anonymousUser") {
       User user = userService.findUserByEmail(auth.getName());
       mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
+      if (currentUserId == null) mav.addObject("userId", user.getUserId());
+      else mav.addObject("userId", currentUserId);
     }
   }
 

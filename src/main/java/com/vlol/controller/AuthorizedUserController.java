@@ -44,10 +44,9 @@ public class AuthorizedUserController {
   public ModelAndView viewAuthorizedUserList(
       @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
     ModelAndView mav = new ModelAndView("user/authorized-user");
-    Utils.getUserName(userService, mav);
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     model.addAttribute("authorizedUserList", user.getAuthorizedEmails());
     return mav;
   }
@@ -79,11 +78,10 @@ public class AuthorizedUserController {
     if (user == null) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
-    Utils.getUserName(userService, mav);
     AuthorizedUser authorizedUser = new AuthorizedUser();
     authorizedUser.setUser(user);
     model.addAttribute("authorizedUser", authorizedUser);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 
@@ -100,7 +98,6 @@ public class AuthorizedUserController {
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
-    Utils.getUserName(userService, mav);
     // Check if the authorizedUser belongs to the user
     Boolean found = false;
     for (AuthorizedUser au : user.getAuthorizedEmails())
@@ -108,7 +105,7 @@ public class AuthorizedUserController {
     if (!found) return new ModelAndView("redirect:/login");
     AuthorizedUser authorizedUser = authorizedUserService.getAuthorizedUser(authorizedUserId);
     model.addAttribute("authorizedUser", authorizedUser);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 

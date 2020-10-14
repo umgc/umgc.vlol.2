@@ -38,7 +38,7 @@ public class APIKeysController {
   @RequestMapping("/admin/api-keys")
   public ModelAndView viewAPIKeysList(Model model, Principal principal) {
     ModelAndView mav = new ModelAndView("admin/api-keys");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     if (!Utils.isAdmin()) return new ModelAndView("redirect:/login");
     model.addAttribute("apiKeysList", apiKeysService.getAllAPIKeys());
     return mav;
@@ -59,7 +59,7 @@ public class APIKeysController {
     if (!Utils.isAdmin()) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("admin/add-edit-api-key");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     APIKeys apiKey = new APIKeys();
     apiKey.setApiKey(UUID.randomUUID().toString());
     model.addAttribute("apiKey", apiKey);
@@ -72,7 +72,7 @@ public class APIKeysController {
     // Check if this user can edit
     if (!Utils.isAdmin()) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("admin/add-edit-api-key");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     APIKeys apiKey = apiKeysService.getAPIKey(apiKeyId);
     model.addAttribute("apiKey", apiKey);
     return mav;

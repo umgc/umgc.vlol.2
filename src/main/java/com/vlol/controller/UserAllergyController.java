@@ -39,10 +39,9 @@ public class UserAllergyController {
   public ModelAndView viewAllergyList(
       @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
     ModelAndView mav = new ModelAndView("user/allergies");
-    Utils.getUserName(userService, mav);
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     model.addAttribute("allergyList", user.getAllergies());
     return mav;
   }
@@ -72,11 +71,10 @@ public class UserAllergyController {
     if (user == null) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("user/add-edit-allergy");
-    Utils.getUserName(userService, mav);
     UserAllergy allergy = new UserAllergy();
     allergy.setUser(user);
     model.addAttribute("allergy", allergy);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 
@@ -89,7 +87,6 @@ public class UserAllergyController {
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/add-edit-allergy");
-    Utils.getUserName(userService, mav);
     // Check if the allergy belongs to the user
     Boolean found = false;
     for (UserAllergy allergy : user.getAllergies())
@@ -97,7 +94,7 @@ public class UserAllergyController {
     if (!found) return new ModelAndView("redirect:/login");
     UserAllergy allergy = userAllergyService.getAllergy(allergyId);
     model.addAttribute("allergy", allergy);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 

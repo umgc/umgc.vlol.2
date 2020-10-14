@@ -96,7 +96,7 @@ public class User implements Serializable {
   @Size(min = 8, max = 72, message = "Input exceeds size limits.")
   @JsonIgnore
   private String password;
-  
+
   @Column(name = "qr_code", length = 36)
   @JsonIgnore
   private String qrCode;
@@ -350,12 +350,10 @@ public class User implements Serializable {
   }
 
   public String getQrCode() {
-	return qrCode;
+    return qrCode;
   }
 
   public void setQrCode(String qrCode) {
-	this.qrCode = qrCode;
+    this.qrCode = qrCode;
   }
-  
-  
 }

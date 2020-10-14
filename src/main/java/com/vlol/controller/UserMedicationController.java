@@ -40,10 +40,9 @@ public class UserMedicationController {
   public ModelAndView viewMedicationList(
       @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
     ModelAndView mav = new ModelAndView("user/medications");
-    Utils.getUserName(userService, mav);
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     model.addAttribute("medicationList", user.getMedications());
     return mav;
   }
@@ -73,11 +72,10 @@ public class UserMedicationController {
     if (user == null) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("user/add-edit-medication");
-    Utils.getUserName(userService, mav);
     UserMedication medication = new UserMedication();
     medication.setUser(user);
     model.addAttribute("medication", medication);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 
@@ -91,7 +89,6 @@ public class UserMedicationController {
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/add-edit-medication");
-    Utils.getUserName(userService, mav);
     // Check if the medication belongs to the user
     Boolean found = false;
     for (UserMedication med : user.getMedications())
@@ -99,7 +96,7 @@ public class UserMedicationController {
     if (!found) return new ModelAndView("redirect:/login");
     UserMedication medication = medicationService.getMedication(medicationId);
     model.addAttribute("medication", medication);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 

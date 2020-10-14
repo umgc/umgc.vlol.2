@@ -49,10 +49,9 @@ public class AdvanceDirectiveController {
   public ModelAndView viewAdvanceDirectiveList(
       @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
     ModelAndView mav = new ModelAndView("user/advance-directives");
-    Utils.getUserName(userService, mav);
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     model.addAttribute("advanceDirectiveList", user.getAdvanceDirectives());
     return mav;
   }
@@ -139,11 +138,10 @@ public class AdvanceDirectiveController {
     if (user == null) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("user/add-edit-advance-directive");
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav, user.getUserId());
     AdvanceDirective advanceDirective = new AdvanceDirective();
     advanceDirective.setUser(user);
     model.addAttribute("advanceDirective", advanceDirective);
-    model.addAttribute("userId", user.getUserId());
     return mav;
   }
 
@@ -160,7 +158,6 @@ public class AdvanceDirectiveController {
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/add-edit-advance-directive");
-    Utils.getUserName(userService, mav);
     // Check if the advanceDirective belongs to the user
     Boolean found = false;
     for (AdvanceDirective advanceDirective : user.getAdvanceDirectives())
@@ -169,7 +166,7 @@ public class AdvanceDirectiveController {
     AdvanceDirective advanceDirective =
         advanceDirectiveService.getAdvanceDirective(advanceDirectiveId);
     model.addAttribute("advanceDirective", advanceDirective);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 

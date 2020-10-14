@@ -39,10 +39,9 @@ public class UserVaccineController {
   public ModelAndView viewVaccineList(
       @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
     ModelAndView mav = new ModelAndView("user/vaccines");
-    Utils.getUserName(userService, mav);
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     model.addAttribute("vaccineList", user.getVaccines());
     return mav;
   }
@@ -72,11 +71,10 @@ public class UserVaccineController {
     if (user == null) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("user/add-edit-vaccine");
-    Utils.getUserName(userService, mav);
     UserVaccine vaccine = new UserVaccine();
     vaccine.setUser(user);
     model.addAttribute("vaccine", vaccine);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 
@@ -89,7 +87,6 @@ public class UserVaccineController {
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/add-edit-vaccine");
-    Utils.getUserName(userService, mav);
     // Check if the vaccine belongs to the user
     Boolean found = false;
     for (UserVaccine vaccine : user.getVaccines())
@@ -97,7 +94,7 @@ public class UserVaccineController {
     if (!found) return new ModelAndView("redirect:/login");
     UserVaccine vaccine = userVaccineService.getVaccine(vaccineId);
     model.addAttribute("vaccine", vaccine);
-    model.addAttribute("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     return mav;
   }
 

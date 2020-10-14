@@ -249,7 +249,6 @@ public class VlolController {
       @PathVariable(name = "id", required = false) Long id, Principal principal) {
     ModelAndView mav = new ModelAndView();
     User user;
-    Utils.getUserName(userService, mav);
     if (id == null) {
       user = Utils.getIfAuthorizedForUser(userService);
       if (!user.getIsEmailVerified()) {
@@ -269,7 +268,7 @@ public class VlolController {
       mav.setViewName("menu/user-menu");
     }
     if (user == null) return new ModelAndView("redirect:/login");
-    mav.addObject("userId", user.getUserId());
+    Utils.getUserData(userService, mav, user.getUserId());
     mav.addObject("user", user);
     // Check if this participant is authorized for other accounts, and if on the current page
     if (Utils.isParticipant() && user.getEmail().equals(principal.getName())) {
@@ -290,7 +289,7 @@ public class VlolController {
       method = RequestMethod.GET)
   public ModelAndView viewHomePage() {
     ModelAndView mav = new ModelAndView();
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     mav.setViewName("index");
     return mav;
   }
@@ -300,7 +299,7 @@ public class VlolController {
       method = RequestMethod.GET)
   public ModelAndView viewAboutPage() {
     ModelAndView mav = new ModelAndView();
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     mav.setViewName("about");
     return mav;
   }
@@ -310,7 +309,7 @@ public class VlolController {
       method = RequestMethod.GET)
   public ModelAndView viewContactPage() {
     ModelAndView mav = new ModelAndView();
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     mav.setViewName("contact");
     mav.addObject("contact", new Contact());
     return mav;
@@ -336,7 +335,7 @@ public class VlolController {
       method = RequestMethod.GET)
   public ModelAndView viewQRCapturePage() {
     ModelAndView mav = new ModelAndView();
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     mav.setViewName("qr-capture");
     return mav;
   }
@@ -346,7 +345,7 @@ public class VlolController {
       method = RequestMethod.GET)
   public ModelAndView viewErrorPage() {
     ModelAndView mav = new ModelAndView();
-    Utils.getUserName(userService, mav);
+    Utils.getUserData(userService, mav);
     mav.setViewName("error");
     mav.addObject("supportEmail", supportEmail);
     return mav;
