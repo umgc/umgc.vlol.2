@@ -174,7 +174,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .requestMatchers(EndpointRequest.toAnyEndpoint())
           .hasAuthority("admin")
           .antMatchers("/admin/**")
-          .hasAnyAuthority("participant", "provider", "admin")
+          .hasAnyAuthority("provider", "admin")
           .anyRequest()
           .authenticated()
           .and()

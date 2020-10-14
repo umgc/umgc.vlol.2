@@ -24,6 +24,7 @@ import com.vlol.service.UserConditionService;
 import com.vlol.service.UserMedicationService;
 import com.vlol.service.UserService;
 import java.security.Principal;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
@@ -53,7 +54,7 @@ public class UserControlller {
 
   @Autowired private RoleService roleService;
 
-  @RequestMapping("/list-users")
+  @RequestMapping("/admin/list-users")
   public ModelAndView viewUserList(Principal principal) {
     ModelAndView mav = new ModelAndView("admin/list-users");
     Utils.getUserData(userService, mav);
@@ -67,23 +68,29 @@ public class UserControlller {
     return mav;
   }
 
-  @RequestMapping("/add-user")
+  @RequestMapping("/admin/add-user")
   public ModelAndView viewAddUserPage() {
     if (!Utils.isAdmin()) return new ModelAndView("redirect:/login");
     User user = new User();
     ModelAndView mav = new ModelAndView("admin/add-user");
     Utils.getUserData(userService, mav);
     mav.addObject("user", user);
+    user.setIsAccountVerified(Boolean.TRUE);
+    user.setIsEmailVerified(Boolean.TRUE);
     List<Role> roles = roleService.getAllRoles();
+    user.setRole(roles.get(0));
     mav.addObject("roles", roles);
     return mav;
   }
 
-  @RequestMapping(value = "/create-user", method = RequestMethod.POST)
+  @RequestMapping(value = "/admin/create-user", method = RequestMethod.POST)
   public String saveUser(@ModelAttribute("user") User user) {
+    Date date = new Date();
+    user.setLastLoginDate(date);
+    user.setDateCreated(date);
     if (!Utils.isAdmin()) return "redirect:/login";
     userService.createUser(user);
-    return "redirect:/list-users";
+    return "redirect:/admin/list-users";
   }
 
   @RequestMapping(value = {"/user/account", "/user/account/{id}"})
@@ -186,11 +193,11 @@ public class UserControlller {
       auth.setAuthenticated(false);
       return "redirect:/login";
     } else { // If its the admin bring them back to the user page
-      return "redirect:/list-users";
+      return "redirect:/admin/list-users";
     }
   }
 
-  @RequestMapping("/search-users")
+  @RequestMapping("/admin/search-users")
   public ModelAndView findUserByKeyword(@RequestParam String keyword) {
     if (!Utils.isAdmin() && !Utils.isProvider()) {
       return new ModelAndView("redirect:/login");

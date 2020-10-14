@@ -19,6 +19,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
@@ -99,7 +100,7 @@ public class User implements Serializable {
 
   @Column(name = "qr_code", length = 36)
   @JsonIgnore
-  private String qrCode;
+  private String qrCode = UUID.randomUUID().toString();
 
   @Column(name = "date_created")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")

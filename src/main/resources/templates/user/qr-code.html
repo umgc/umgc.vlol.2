@@ -21,7 +21,7 @@
 			<form action="#" th:action="|/user/qr-code-delete/${userId}|"
 				th:object="${user}" method="get"
 				onsubmit="return confirm('Regenerating the QR code will make the previous QR code invalid. Only use this if you have lost a code or if you believe someone unauthorized has gained access to it');">
-				<button type="submit" class="btn btn-danger">Regenerate QR
+				<button type="submit" class="btn btn-danger hide-print">Regenerate QR
 					code</button>
 			</form>
 		</div>
