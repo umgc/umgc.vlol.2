@@ -27,10 +27,10 @@ public class QRCodeService {
     String dns = env.getProperty("mail.smtp.urlPath");
     QRCodeWriter barcodeWriter = new QRCodeWriter();
     String jwtToken = Utils.createJWT(userService.getUser(userId));
-    jwtToken += "?code=" + randomID;
+    //jwtToken += "?code=" + randomID;
     BitMatrix bitMatrix =
         barcodeWriter.encode(
-            dns + "user/view/" + userId + "?jwt=" + jwtToken, BarcodeFormat.QR_CODE, 400, 400);
+            dns + "user/view/" + userId + "/" + jwtToken + "/" + randomID, BarcodeFormat.QR_CODE, 400, 400);
     return MatrixToImageWriter.toBufferedImage(bitMatrix);
   }
 }

@@ -350,4 +350,14 @@ public class VlolController {
     mav.addObject("supportEmail", supportEmail);
     return mav;
   }
+  
+  
+  @RequestMapping(
+	      value = {"/expired-qrcode"},
+	      method = RequestMethod.GET)
+	  public ModelAndView viewExpiredQrCodePage() {
+	    ModelAndView mav = new ModelAndView();
+	    Utils.getUserData(userService, mav);
+	    return mav;
+	  }
 }

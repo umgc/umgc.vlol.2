@@ -209,10 +209,11 @@ public class UserControlller {
     return mav;
   }
 
-  @RequestMapping(value = {"/user/view/{id}", "/user/view/{id}/{jwt}"})
+  @RequestMapping(value = {"/user/view/{id}", "/user/view/{id}/{jwt}/{code}"})
   public ModelAndView viewUserPage(
       @PathVariable(name = "id") Long id,
-      @PathVariable(name = "jwt", required = false) String jwt) {
+      @PathVariable(name = "jwt", required = false) String jwt,
+      @PathVariable(name = "code", required = false) String code) {
 
     ModelAndView mav = new ModelAndView("user/view-user");
     Utils.getUserData(userService, mav);
@@ -222,7 +223,10 @@ public class UserControlller {
       if (!Utils.verifyJWT(user, jwt)) { // Check jwt verification
         return new ModelAndView("redirect:/login");
       } else {
-        // parse the jwt checkin and return the proper redirect
+        // parse the jwt to check if  and return the proper redirect
+    	  if (!Utils.verifyQRCode(user, code)) {
+    		  return new ModelAndView("redirect:/expired-qrcode");
+    	  }
       }
     } else { // If just an id check if
       user = Utils.getIfAuthorizedForUser(userService, id, false);

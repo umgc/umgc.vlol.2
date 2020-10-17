@@ -154,7 +154,16 @@ public class Utils {
     }
     return false;
   }
-
+  
+  public static Boolean verifyQRCode(User user, String code){
+	  //String qrCode = jwt.substring(jwt.lastIndexOf("=")+1, jwt.length());
+	  if (user.getQrCode() != null && user.getQrCode().equals(code)) {
+		  return true;
+	  }
+	  
+	  return false;
+  }
+  
   public static User verifyJWT(UserService userService, String jwt) {
     JWTVerifier verifier = JWT.require(algorithm).build();
     try {
