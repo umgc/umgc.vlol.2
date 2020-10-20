@@ -12,15 +12,6 @@
                     <h1 th:text="(${allergy.allergyId}!=null?'Edit':'Add')+ ' a Allergy'"></h1>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-6 offset-md-3 mb-5">
-                    <div class="form-group">
-                        <div><label for="drug">Drug Search</label></div>
-                        <div style="font-size:small"><em>This field will autocomplete as you type.</em></div>
-                        <input class="form-control typeaheaddrug" type="search" id="drug" placeholder="Search"/>
-                    </div>
-                </div>
-            </div>
             <form action="#" th:object="${allergy}" th:action="'/user/save-allergy/'+${userId}" method="post" data-parsley-validate="">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
@@ -54,45 +45,31 @@
                         display: 'value',
                         async: true,
                         limit: Infinity,
-                        source: function (allergy, syncResults, asyncResults) {
+                        source: function (text, syncResults, asyncResults) {
                             // let's do a custom ajax call
-                            fetch("/search-allergies?keyword="+allergy).then(res=>res.json()).then((data)=>{
-                                const ret = data.map((d)=>{
+                            Promise.all(
+                                [
+                                    fetch("/search-allergies?keyword="+text).then(res=>res.json()),
+                                    fetch("/search-medications?keyword="+text).then(res=>res.json())
+                                ]
+                            ).then(([allergyData, drugData])=>{
+                                const ret1 = allergyData.map((d)=>{
                                     return {...d,value:d.allergyName}
                                 });
-                                asyncResults(ret);
-                            }).catch(()=>asyncResults([]));
-                        }
-                    });
-                    $('.typeahead').bind('typeahead:select', function(ev, allergy) {
-                        $('#allergyName').val(allergy.allergyName);
-                        $('#referenceId').val(allergy.referenceId);
-                      });
-                    $('.typeaheaddrug').typeahead({
-                        minLength: 1
-                      },
-                    {
-                        name: 'medication',
-                        display: 'value',
-                        async: true,
-                        limit: Infinity,
-                        source: function (medication, syncResults, asyncResults) {
-                            // let's do a custom ajax call
-                            fetch("/search-medications?keyword="+medication).then(res=>res.json()).then((data)=>{
-                                const ret = data.map((d)=>{
+                                const ret2 = drugData.map((d)=>{
                                     const value = d.brandName && d.brandName !== d.genericName
                                     ? d.brandName+"\n("+d.genericName+")"
                                     : d.genericName;
                                     return {...d,value:value}
                                 });
-                                asyncResults(ret);
+                                asyncResults(ret1.concat(ret2));
                             }).catch(()=>asyncResults([]));
                         }
                     });
-                    $('.typeaheaddrug').bind('typeahead:select', function(ev, medication) {
-                        $('#allergyName').val(medication.value);
-                        $('#referenceId').val(medication.referenceId);
-                      });
+                    $('.typeahead').bind('typeahead:select', function(ev, data) {
+                        $('#allergyName').val(data.allergyName || data.value);
+                        $('#referenceId').val(data.referenceId);
+                    });
                 });
             </script>
         </div>
