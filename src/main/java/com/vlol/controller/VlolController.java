@@ -193,9 +193,7 @@ public class VlolController {
       } catch (Exception e) {
         // Always return success
       }
-      mav.addObject("msg", "User has been registered successfully!");
-      mav.addObject("user", new User());
-      mav.setViewName("login");
+      return new ModelAndView("redirect:/login?verifyEmail");
     }
     return mav;
   }
