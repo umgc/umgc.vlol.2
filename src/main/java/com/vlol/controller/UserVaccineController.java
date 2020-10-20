@@ -41,7 +41,7 @@ public class UserVaccineController {
     ModelAndView mav = new ModelAndView("user/vaccines");
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     model.addAttribute("vaccineList", user.getVaccines());
     return mav;
   }
@@ -74,7 +74,7 @@ public class UserVaccineController {
     UserVaccine vaccine = new UserVaccine();
     vaccine.setUser(user);
     model.addAttribute("vaccine", vaccine);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 
@@ -94,7 +94,7 @@ public class UserVaccineController {
     if (!found) return new ModelAndView("redirect:/login");
     UserVaccine vaccine = userVaccineService.getVaccine(vaccineId);
     model.addAttribute("vaccine", vaccine);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 

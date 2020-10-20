@@ -46,7 +46,7 @@ public class AuthorizedUserController {
     ModelAndView mav = new ModelAndView("user/authorized-user");
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     model.addAttribute("authorizedUserList", user.getAuthorizedEmails());
     return mav;
   }
@@ -81,7 +81,7 @@ public class AuthorizedUserController {
     AuthorizedUser authorizedUser = new AuthorizedUser();
     authorizedUser.setUser(user);
     model.addAttribute("authorizedUser", authorizedUser);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 
@@ -105,7 +105,7 @@ public class AuthorizedUserController {
     if (!found) return new ModelAndView("redirect:/login");
     AuthorizedUser authorizedUser = authorizedUserService.getAuthorizedUser(authorizedUserId);
     model.addAttribute("authorizedUser", authorizedUser);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 

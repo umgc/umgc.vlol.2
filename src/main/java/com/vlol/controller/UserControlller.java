@@ -98,7 +98,7 @@ public class UserControlller {
     ModelAndView mav = new ModelAndView("user/edit-account");
     User user = Utils.getIfUserOrAdmin(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserData(userService, mav);
+    Utils.getUserData(userService, mav, user);
     mav.addObject("user", user);
     List<Role> roles = roleService.getAllRoles();
     mav.addObject("roles", roles);
@@ -164,7 +164,7 @@ public class UserControlller {
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     mav.addObject("userInfo", user.getUserInfo());
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 
@@ -216,7 +216,6 @@ public class UserControlller {
       @PathVariable(name = "code", required = false) String code) {
 
     ModelAndView mav = new ModelAndView("user/view-user");
-    Utils.getUserData(userService, mav);
     User user;
     if (jwt != null) {
       user = userService.getUser(id);
@@ -224,15 +223,16 @@ public class UserControlller {
         return new ModelAndView("redirect:/login");
       } else {
         // parse the jwt to check if  and return the proper redirect
-    	  if (!Utils.verifyQRCode(user, code)) {
-    		  return new ModelAndView("redirect:/expired-qrcode");
-    	  }
+        if (!Utils.verifyQRCode(user, code)) {
+          return new ModelAndView("redirect:/expired-qrcode");
+        }
       }
     } else { // If just an id check if
       user = Utils.getIfAuthorizedForUser(userService, id, false);
       if (user == null) return new ModelAndView("redirect:/login");
     }
 
+    Utils.getUserData(userService, mav, user);
     mav.addObject("user", user);
     List<Role> roles = roleService.getAllRoles();
     mav.addObject("roles", roles);

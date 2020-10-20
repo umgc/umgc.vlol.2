@@ -45,3 +45,35 @@ window.Parsley.addValidator('email', {
     en: 'Invalid email'
   }
 });
+
+window.Parsley.addValidator('npi', {
+  validateString: function (value) {
+        value = value.replace(/[ -]/g, '');
+    let digit;
+    let n;
+    let _j;
+    let _len1;
+    let _ref2;
+    let sum = 24;
+    _ref2 = value.split('');
+    const checkDigit = parseInt(_ref2[_ref2.length-1]);
+    for (n = _j = 0, _len1 = _ref2.length-1; _j < _len1; n = ++_j) {
+      digit = _ref2[n];
+      digit = +digit;
+      if (n % 2 === 0) {
+        digit *= 2;
+        if (digit < 10) {
+          sum += digit;
+        } else {
+          sum += digit - 9;
+        }
+      } else {
+        sum += digit;
+      }
+    }
+    return (10-(sum % 10))%10 === checkDigit;
+  },
+  messages: {
+    en: 'Invalid NPI'
+  }
+});

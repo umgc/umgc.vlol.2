@@ -117,6 +117,12 @@ public class UserInfo implements Serializable {
   @Size(max = 50, message = "Input exceeds size limits.")
   private String insPolicyNo;
 
+  @Column(name = "npi", length = 10)
+  // Check if text is valid per RFC 3986.
+  @Pattern(regexp = "^[0-9]*$", message = "Input contains illegal characters.")
+  @Size(max = 10, message = "Input exceeds size limits.")
+  private String NPI;
+
   //    @Column(name = "adv_directive")
   //    @NotNull(message = "Value cannot be null.")
   //    private Boolean advDirective = false;
@@ -264,6 +270,14 @@ public class UserInfo implements Serializable {
 
   public void setInsPolicyNo(String insPolicyNo) {
     this.insPolicyNo = insPolicyNo;
+  }
+
+  public String getNPI() {
+    return NPI;
+  }
+
+  public void setNPI(String NPI) {
+    this.NPI = NPI;
   }
 
   //    public Boolean getAdvDirective() {

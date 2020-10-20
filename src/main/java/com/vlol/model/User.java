@@ -107,7 +107,7 @@ public class User implements Serializable {
   @NotNull(message = "Date account created is required.")
   @PastOrPresent(message = "Date account created cannot be in the future.")
   @Temporal(TemporalType.TIMESTAMP)
-  private Date dateCreated;
+  private Date dateCreated = new Date();
 
   @Column(name = "last_login_date")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")
@@ -129,22 +129,22 @@ public class User implements Serializable {
   @Column(name = "is_account_verified")
   @NotNull(message = "Value cannot be null.")
   @JsonIgnore
-  private Boolean isAccountVerified;
+  private Boolean isAccountVerified = false;
 
   @Column(name = "is_email_verified")
   @NotNull(message = "Value cannot be null.")
   @JsonIgnore
-  private Boolean isEmailVerified;
+  private Boolean isEmailVerified = false;
 
   @Column(name = "is_locked")
   @NotNull(message = "Value cannot be null.")
   @JsonIgnore
-  private Boolean isLocked;
+  private Boolean isLocked = false;
 
   @Column(name = "login_attempt")
   @NotNull(message = "Value cannot be null.")
   @JsonIgnore
-  private int loginAttempt;
+  private int loginAttempt = 0;
 
   @Column(name = "last_login_attempt")
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'hh:mm:00")

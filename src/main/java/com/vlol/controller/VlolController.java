@@ -260,15 +260,12 @@ public class VlolController {
       }
     } else {
       user = Utils.getIfAuthorizedForUser(userService, id, false);
-      if (Utils.isAdmin() || Utils.isProvider()) { // if admin or provider check if self
-        if (!Utils.isUser(user)) // if not show user menu
-        mav.setViewName("menu/user-menu");
-        else mav.setViewName("menu/admin-menu");
-      } else // Otherwise show user menu
-      mav.setViewName("menu/user-menu");
+      // If the requested user is a user
+      if (user.getRole().getRoleId() == 1) mav.setViewName("menu/user-menu");
+      else mav.setViewName("menu/admin-menu");
     }
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     mav.addObject("user", user);
     // Check if this participant is authorized for other accounts, and if on the current page
     if (Utils.isParticipant() && user.getEmail().equals(principal.getName())) {
@@ -350,14 +347,13 @@ public class VlolController {
     mav.addObject("supportEmail", supportEmail);
     return mav;
   }
-  
-  
+
   @RequestMapping(
-	      value = {"/expired-qrcode"},
-	      method = RequestMethod.GET)
-	  public ModelAndView viewExpiredQrCodePage() {
-	    ModelAndView mav = new ModelAndView();
-	    Utils.getUserData(userService, mav);
-	    return mav;
-	  }
+      value = {"/expired-qrcode"},
+      method = RequestMethod.GET)
+  public ModelAndView viewExpiredQrCodePage() {
+    ModelAndView mav = new ModelAndView();
+    Utils.getUserData(userService, mav);
+    return mav;
+  }
 }

@@ -130,6 +130,7 @@ CREATE TABLE user_info(
     doctor_phone VARCHAR(32) COMMENT 'The primary care physician''s phone number.',
     ins_company VARCHAR(64) COMMENT 'The user''s medical insurance company name.',
     ins_policy_no VARCHAR(32) COMMENT 'The user''s medical insurance policy number.',
+    npi VARCHAR(10) COMMENT 'The user''s NPI.',
     phone VARCHAR(10) COMMENT 'The user''s phone number.',
     poc_name VARCHAR(100) COMMENT 'A point of contact for the user.',
     poc_phone VARCHAR(32) COMMENT 'The phone number for the user''s point of contact.',

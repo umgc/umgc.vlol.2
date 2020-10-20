@@ -29,13 +29,15 @@ public class Utils {
     getUserData(userService, mav, null);
   }
 
-  public static void getUserData(UserService userService, ModelAndView mav, Long currentUserId) {
+  public static void getUserData(UserService userService, ModelAndView mav, User currentUser) {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth.getPrincipal() != "anonymousUser") {
       User user = userService.findUserByEmail(auth.getName());
       mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
-      if (currentUserId == null) mav.addObject("userId", user.getUserId());
-      else mav.addObject("userId", currentUserId);
+      if (currentUser == null) currentUser = user;
+      mav.addObject("userId", currentUser.getUserId());
+      mav.addObject("userType", currentUser.getRole().getTitle());
+      mav.addObject("isSelf", user.getUserId().equals(currentUser.getUserId()));
     }
   }
 
@@ -154,16 +156,16 @@ public class Utils {
     }
     return false;
   }
-  
-  public static Boolean verifyQRCode(User user, String code){
-	  //String qrCode = jwt.substring(jwt.lastIndexOf("=")+1, jwt.length());
-	  if (user.getQrCode() != null && user.getQrCode().equals(code)) {
-		  return true;
-	  }
-	  
-	  return false;
+
+  public static Boolean verifyQRCode(User user, String code) {
+    // String qrCode = jwt.substring(jwt.lastIndexOf("=")+1, jwt.length());
+    if (user.getQrCode() != null && user.getQrCode().equals(code)) {
+      return true;
+    }
+
+    return false;
   }
-  
+
   public static User verifyJWT(UserService userService, String jwt) {
     JWTVerifier verifier = JWT.require(algorithm).build();
     try {

@@ -42,7 +42,7 @@ public class UserConditionController {
     ModelAndView mav = new ModelAndView("user/conditions");
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     model.addAttribute("conditionList", user.getConditions());
     return mav;
   }
@@ -75,7 +75,7 @@ public class UserConditionController {
     UserCondition condition = new UserCondition();
     condition.setUser(user);
     model.addAttribute("condition", condition);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 
@@ -96,7 +96,7 @@ public class UserConditionController {
     if (!found) return new ModelAndView("redirect:/login");
     UserCondition condition = userConditionService.getCondition(conditionId);
     model.addAttribute("condition", condition);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 

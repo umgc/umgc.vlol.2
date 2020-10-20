@@ -43,7 +43,7 @@ public class QRController {
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/qr-code");
     String randomId = user.getQrCode();
-    Utils.getUserData(userService, mav, id);
+    Utils.getUserData(userService, mav, user);
     if (randomId == null) {
       randomId = generateRandomId();
       user.setQrCode(randomId);
@@ -68,7 +68,7 @@ public class QRController {
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/qr-code");
     String randomId = user.getQrCode();
-    Utils.getUserData(userService, mav, id);
+    Utils.getUserData(userService, mav, user);
     randomId = generateRandomId();
     user.setQrCode(randomId);
     try {

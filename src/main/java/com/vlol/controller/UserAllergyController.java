@@ -41,7 +41,7 @@ public class UserAllergyController {
     ModelAndView mav = new ModelAndView("user/allergies");
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     model.addAttribute("allergyList", user.getAllergies());
     return mav;
   }
@@ -74,7 +74,7 @@ public class UserAllergyController {
     UserAllergy allergy = new UserAllergy();
     allergy.setUser(user);
     model.addAttribute("allergy", allergy);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 
@@ -94,7 +94,7 @@ public class UserAllergyController {
     if (!found) return new ModelAndView("redirect:/login");
     UserAllergy allergy = userAllergyService.getAllergy(allergyId);
     model.addAttribute("allergy", allergy);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 

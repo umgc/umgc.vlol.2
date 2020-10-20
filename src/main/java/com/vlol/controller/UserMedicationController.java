@@ -42,7 +42,7 @@ public class UserMedicationController {
     ModelAndView mav = new ModelAndView("user/medications");
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     model.addAttribute("medicationList", user.getMedications());
     return mav;
   }
@@ -75,7 +75,7 @@ public class UserMedicationController {
     UserMedication medication = new UserMedication();
     medication.setUser(user);
     model.addAttribute("medication", medication);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 
@@ -96,7 +96,7 @@ public class UserMedicationController {
     if (!found) return new ModelAndView("redirect:/login");
     UserMedication medication = medicationService.getMedication(medicationId);
     model.addAttribute("medication", medication);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 

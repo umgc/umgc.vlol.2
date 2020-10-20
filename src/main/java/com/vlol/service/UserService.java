@@ -102,6 +102,10 @@ public class UserService {
     return userRepository.findAllParticipants();
   }
 
+  public List<User> getNewProviders() {
+    return userRepository.findNewProviders();
+  }
+
   public User getUser(Long userId) {
     return userRepository.findById(userId).orElse(null);
   }

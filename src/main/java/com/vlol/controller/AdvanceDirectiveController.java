@@ -51,7 +51,7 @@ public class AdvanceDirectiveController {
     ModelAndView mav = new ModelAndView("user/advance-directives");
     User user = Utils.getIfAuthorizedForUser(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     model.addAttribute("advanceDirectiveList", user.getAdvanceDirectives());
     return mav;
   }
@@ -138,7 +138,7 @@ public class AdvanceDirectiveController {
     if (user == null) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("user/add-edit-advance-directive");
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     AdvanceDirective advanceDirective = new AdvanceDirective();
     advanceDirective.setUser(user);
     model.addAttribute("advanceDirective", advanceDirective);
@@ -166,7 +166,7 @@ public class AdvanceDirectiveController {
     AdvanceDirective advanceDirective =
         advanceDirectiveService.getAdvanceDirective(advanceDirectiveId);
     model.addAttribute("advanceDirective", advanceDirective);
-    Utils.getUserData(userService, mav, user.getUserId());
+    Utils.getUserData(userService, mav, user);
     return mav;
   }
 
