@@ -22,17 +22,17 @@
                             <div class="card-body">My Profile</div>
                         </a>
                         <a href="/admin/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                           sec:authorize="isAuthenticated()" th:if="${isSelf} AND ${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
                             <i class="fas fa-users menu-button" style="margin: 1rem"></i>
                             <div class="card-body">User Search Page</div>
                         </a>
                         <a href="/admin/api-keys" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin')}">
+                           sec:authorize="isAuthenticated()" th:if="${isSelf} AND ${#strings.contains(#authentication.principal.authorities,'admin')}">
                             <i class="fas fa-key menu-button" style="margin: 1rem"></i>
                             <div class="card-body">API Keys</div>
                         </a>
                         <a href="/qr-capture" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                           sec:authorize="isAuthenticated()" th:if="${isSelf} AND ${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
                             <i class="fas fa-qrcode menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Capture QR Code</div>
                         </a>
