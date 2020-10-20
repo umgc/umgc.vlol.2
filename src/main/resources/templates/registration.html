@@ -27,6 +27,7 @@
                 <br />
                 <div role="alert" class="text-danger" th:if="${msg}" th:utext="${msg}"></div>
                 <br />
+                <div align="left"><em>All fields are required.</em></div>
                 <form action="#" th:action="@{/registration}" th:object="${user}" method="post" data-parsley-validate="">
                     <table class="table table-bordered dt-responsive display">
                         <tr>
