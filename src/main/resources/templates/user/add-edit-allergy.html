@@ -16,6 +16,7 @@
                 <div class="col-md-6 offset-md-3 mb-5">
                     <div class="form-group">
                         <div><label for="drug">Drug Search</label></div>
+                        <div style="font-size:small"><em>This field will autocomplete as you type.</em></div>
                         <input class="form-control typeaheaddrug" type="search" id="drug" placeholder="Search"/>
                     </div>
                 </div>
@@ -25,6 +26,7 @@
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
                           <label for="allergyName">Allergy Name</label>
+                          <div style="font-size:small"><em>This field will autocomplete as you type.</em></div>
                           <input type="search" class="form-control typeahead" id="allergyName" th:field="*{allergyName}" placeholder="Enter your allergy"  data-parsley-maxlength="256" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <input type="hidden" th:field="*{allergyId}" />

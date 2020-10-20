@@ -17,6 +17,7 @@
                     <div class="form-group">
 
                         <div><label for="drug">Drug Search</label></div>
+                        <div style="font-size:small"><em>This field will autocomplete as you type.</em></div>
                         <input class="form-control typeahead" type="search" id="drug" placeholder="Search"/>
                       <!--<input type="search" class="form-control" id="drug" placeholder="Search"/>-->
                     </div>
@@ -26,6 +27,7 @@
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
+                          <div style="font-size:small"><em>The following fields will fill automatically after entering a drug name.</em></div>
                           <label for="brandName">Brand Name</label>
                           <input type="text" class="form-control" id="brandName" th:field="*{brandName}" data-parsley-maxlength="256" data-parsley-rfc3986=""/>
                         </div>
@@ -45,6 +47,7 @@
                           <label for="bloodThinner">Is Blood Thinner</label>
                           <input type="checkbox" class="form-control" id="bloodThinner" th:field="*{bloodThinner}"/>
                         </div>
+                        <div style="font-size:small"><em>The following fields are required and will not autocomplete.</em></div>
                         <div class="form-group">
                           <label for="dosage">Dosage</label>
                           <input type="text" class="form-control" id="dosage" th:field="*{dosage}" required="" placeholder="Required" data-parsley-rfc3986=""/>
