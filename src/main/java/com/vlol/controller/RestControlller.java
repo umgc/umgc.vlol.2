@@ -15,8 +15,10 @@
 package com.vlol.controller;
 
 import com.vlol.model.AdvanceDirective;
+import com.vlol.model.Document;
 import com.vlol.model.User;
 import com.vlol.service.AdvanceDirectiveService;
+import com.vlol.service.DocumentService;
 import com.vlol.service.UserService;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -38,6 +40,7 @@ public class RestControlller {
 
   @Autowired private UserService userService;
   @Autowired private AdvanceDirectiveService advanceDirective;
+  @Autowired private DocumentService documentService;
 
   @GetMapping("/api/list-users")
   public List<User> viewUserList() {
@@ -71,7 +74,27 @@ public class RestControlller {
       response.sendError(500);
     }
   }
-
+  
+  @GetMapping("/api/document/{documentId}")
+  @ResponseBody
+  public void getDocument(
+      HttpServletResponse response,
+      @PathVariable(name = "documentId") Long documentId)
+      throws IOException {
+    try {
+      Document ad = documentService.getDocument(documentId);
+      InputStream is = new ByteArrayInputStream(ad.getDocumentFile());
+      response.setContentType(ad.getDocumentContentType());
+      response.setHeader(
+          HttpHeaders.CONTENT_DISPOSITION,
+          "attachment; filename=\"" + ad.getDocumentFilename() + "\"");
+      response.setHeader(HttpHeaders.CONTENT_ENCODING, "deflate");
+      IOUtils.copy(is, response.getOutputStream());
+    } catch (Exception e) {
+      response.sendError(500);
+    }
+  }
+  
   @GetMapping("/api/search-users")
   public List<User> findUserByKeyword(@RequestParam String keyword) {
     List<User> result = userService.findUserByKeyword(keyword);
