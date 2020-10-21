@@ -37,7 +37,10 @@
                         <tbody>
                             <tr th:each="user : ${userList}">
                                 <td th:text="${user.userId}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">User ID</td>
-                                <td th:text="${user.lastName}" class="align-middle">Last Name</td>
+                                <td class="align-middle position-relative">
+                                    <span th:text="${user.lastName}">Last Name</span>
+                                    <div th:if="!${user.isAccountVerified}" class="top-right-alert">!</div>
+                                </td>
                                 <td th:text="${user.firstName}" class="align-middle">First Name</td>
                                 <td th:text="${user.role.title}" class="align-middle" sec:authorize="hasAnyAuthority('admin', 'provider')">Role</td>
                                 <td th:text="${user.email}" class="align-middle">Email</td>

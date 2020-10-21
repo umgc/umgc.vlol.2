@@ -165,3 +165,17 @@ textarea.parsley-error {
         column-count: 1;
     }
 }
+.top-right-alert{
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    font-weight: bold;
+    color: white;
+}

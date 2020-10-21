@@ -23,6 +23,7 @@
                         </a>
                         <a href="/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()" th:if="${isSelf} AND ${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                            <div th:if="${userAlert}" class="top-right-alert">!</div>
                             <i class="fas fa-users menu-button" style="margin: 1rem"></i>
                             <div class="card-body">User Search Page</div>
                         </a>

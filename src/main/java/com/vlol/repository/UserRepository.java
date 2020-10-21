@@ -51,6 +51,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query(
       value =
+          "SELECT u FROM User u ORDER BY CASE WHEN u.isAccountVerified = True THEN 1 ELSE 0 END, u.dateCreated DESC ")
+  @Override
+  public List<User> findAll();
+
+  @Query(
+      value =
           "SELECT u.* FROM authorized_user au INNER JOIN appuser u USING(user_id) WHERE au.authorized_email = :email",
       nativeQuery = true) // Assume email is always lower case
   public List<User> findAuthorizingUsers(@Param("email") String email);
