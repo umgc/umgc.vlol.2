@@ -218,6 +218,12 @@ public class UserControlller {
     ModelAndView mav = new ModelAndView("user/view-user");
     User user;
     if (jwt != null) {
+      if (env.getProperty("qrCode.onlyByRegistered") != null
+          && env.getProperty("qrCode.onlyByRegistered").equals("true")) {
+        if (!Utils.isAdmin() && !Utils.isProvider()) {
+          return new ModelAndView("redirect:/login");
+        }
+      }
       user = userService.getUser(id);
       if (!Utils.verifyJWT(user, jwt)) { // Check jwt verification
         return new ModelAndView("redirect:/login");
