@@ -96,7 +96,7 @@
                             <tr th:if="${userType} == 'participant'">
                                 <td class="text-nowrap">Allergies:</td>
                                 <td class="text-wrap">
-                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                    <ul class="view-page-value-columns">
                                         <li th:each="allergy : ${user.allergies}">
                                             <div th:text="${allergy.allergyName}"></div>
                                         </li>
@@ -106,7 +106,7 @@
                             <tr th:if="${userType} == 'participant'">
                                 <td class="text-nowrap">Conditions:</td>
                                 <td class="text-wrap">
-                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                    <ul class="view-page-value-columns">
                                         <li th:each="condition : ${user.conditions}" >
                                             <div th:text="${condition.conditionName}"></div>
                                         </li>
@@ -116,9 +116,9 @@
                             <tr th:if="${userType} == 'participant'">
                                 <td class="text-nowrap">Medications:</td>
                                 <td class="text-wrap">
-                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                    <ul class="view-page-value-columns">
                                         <li th:each="medication : ${user.medications}">
-                                            <div th:text="|medication.brandName medication.dosage medication.frequency|"></div>
+                                            <div th:text="|${medication.brandName} - ${medication.dosage} - ${medication.frequency}|"></div>
                                         </li>
                                     </ul>
                                 </td>
@@ -126,7 +126,7 @@
                             <tr th:if="${userType} == 'participant'">
                                 <td class="text-nowrap">Advanced Directives:</td>
                                 <td class="text-wrap">
-                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                    <ul class="view-page-value-columns">
                                         <li th:each="advanceDirective : ${user.advanceDirectives}">
                                             <a th:href="|/user/get-advance-directive/${user.userId}/${advanceDirective.advanceDirectiveId}|" target="_blank" th:text="${advanceDirective.advanceDirectiveType}"></a>
                                         </li>
@@ -136,7 +136,7 @@
                             <tr th:if="${userType} == 'participant'">
                                 <td class="text-nowrap">Vaccines:</td>
                                 <td class="text-wrap">
-                                    <ul style="column-count: 2; list-style: none; padding-left: 0;">
+                                    <ul class="view-page-value-columns">
                                         <li th:each="vaccine : ${user.vaccines}">
                                             <div th:text="${vaccine.vaccineName}"></div>
                                         </li>
@@ -170,7 +170,11 @@
                             </tr>
                             <tr sec:authorize="hasAnyAuthority('admin')">
                                 <td class="text-nowrap">Is Account Verified?</td>
-                                <td th:text="${user.isAccountVerified}"></td>
+                                <td th:text="${user.isAccountVerified?'Yes':'No'}"></td>
+                            </tr>
+                            <tr sec:authorize="hasAnyAuthority('admin')">
+                                <td class="text-nowrap">Is Email Verified?</td>
+                                <td th:text="${user.isEmailVerified?'Yes':'No'}"></td>
                             </tr>
                         </tbody>
                     </table>
