@@ -138,7 +138,7 @@
                                 <td class="text-wrap">
                                     <ul class="view-page-value-columns">
                                         <li th:each="vaccine : ${user.vaccines}">
-                                            <div th:text="${vaccine.vaccineName}"></div>
+                                            <div th:text="|${vaccine.vaccineName} - ${vaccine.vaccineDate}|"></div>
                                         </li>
                                     </ul>
                                 </td>

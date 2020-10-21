@@ -2,11 +2,15 @@ package com.vlol.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PastOrPresent;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name = "user_vaccine")
@@ -36,6 +40,13 @@ public class UserVaccine implements Serializable {
   @Size(max = 64, message = "Input exceeds size limits.")
   private String referenceId;
 
+  @Column(name = "vaccine_date")
+  @DateTimeFormat(pattern = "yyyy-MM-dd")
+  @NotNull(message = "Vaccine date is required.")
+  @PastOrPresent(message = "Date cannot be in the future.")
+  @Temporal(TemporalType.DATE)
+  private Date vaccineDate = new Date();
+
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   @JsonIgnore
@@ -56,6 +67,14 @@ public class UserVaccine implements Serializable {
 
   public void setVaccineName(String vaccineName) {
     this.vaccineName = vaccineName;
+  }
+
+  public Date getVaccineDate() {
+    return vaccineDate;
+  }
+
+  public void setVaccineDate(Date date) {
+    this.vaccineDate = date;
   }
 
   public String getReferenceId() {

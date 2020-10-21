@@ -185,6 +185,7 @@ CREATE TABLE user_vaccine(
     vaccine_id BIGINT auto_increment COMMENT 'The unique ID for an vaccine.',
     vaccine_name VARCHAR(256) COMMENT 'The vaccine''s name.',
     user_id BIGINT NOT NULL COMMENT 'The unique ID for a patient.', 
+    vaccine_date DATE NOT NULL COMMENT 'The date of the vaccine.',
     ref_id VARCHAR(64) COMMENT 'The reference ID from the dataset.'
 ); -- COMMENT = 'The information table for the patient''s allergies.';
 
