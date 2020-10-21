@@ -56,7 +56,7 @@
                             <i class="fas fa-qrcode menu-button" style="margin: 1rem"></i>
                             <div class="card-body">My QR Code</div>
                         </a>
-                        <a href="/admin/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
+                        <a href="/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()" th:if="${hasAuthorizingUsers}">
                             <i class="fas fa-users menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Manage Other Users</div>

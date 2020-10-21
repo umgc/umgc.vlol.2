@@ -54,7 +54,7 @@ public class UserControlller {
 
   @Autowired private RoleService roleService;
 
-  @RequestMapping("/admin/list-users")
+  @RequestMapping("/list-users")
   public ModelAndView viewUserList(Principal principal) {
     ModelAndView mav = new ModelAndView("admin/list-users");
     Utils.getUserData(userService, mav);
@@ -90,7 +90,7 @@ public class UserControlller {
     user.setDateCreated(date);
     if (!Utils.isAdmin()) return "redirect:/login";
     userService.createUser(user);
-    return "redirect:/admin/list-users";
+    return "redirect:/list-users";
   }
 
   @RequestMapping(value = {"/user/account", "/user/account/{id}"})
@@ -193,7 +193,7 @@ public class UserControlller {
       auth.setAuthenticated(false);
       return "redirect:/login";
     } else { // If its the admin bring them back to the user page
-      return "redirect:/admin/list-users";
+      return "redirect:/list-users";
     }
   }
 

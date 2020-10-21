@@ -129,7 +129,7 @@
                     </form>
                     <br />
                     <div sec:authorize="hasAnyAuthority('admin', 'provider')">
-                        <a href="/admin/list-users" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to User's Menu</a>
+                        <a href="/list-users" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to User's Menu</a>
                     </div>
                     <br />
                     <a th:href="|/menu/${userId}|" class="btn btn-primary"><i class="fas fa-arrow-left"></i> Return to Menu</a>
