@@ -43,8 +43,13 @@
                         </a>
                         <a th:href="|/user/advance-directives/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
-                            <i class="fas fa-paste menu-button" style="margin: 1rem"></i>
+                            <i class="fas fa-file-medical-alt menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Advance Directives</div>
+                        </a>
+                        <a th:href="|/user/documents/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-file-medical menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">Documents</div>
                         </a>
                         <a th:href="|/user/authorized-user/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">

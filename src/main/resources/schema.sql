@@ -159,6 +159,18 @@ CREATE TABLE advance_directive (
 ALTER TABLE advance_directive ADD CONSTRAINT advance_directive_pk PRIMARY KEY(user_id, advance_directive_id);
 ALTER TABLE advance_directive ADD CONSTRAINT advance_directive_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
 
+CREATE TABLE document (
+    document_id BIGINT auto_increment COMMENT 'Id for table',
+    user_id BIGINT NOT NULL COMMENT 'The unique ID for a user.',
+    document_file BLOB COMMENT 'The compressed file.',
+    document_content_type VARCHAR(128) COMMENT 'The docuemtns type.',
+    document_filename VARCHAR(256) COMMENT 'The docuemtns type.',
+    document_type VARCHAR(64) NOT NULL COMMENT 'The docuemtns type.'
+); -- COMMENT='Table for storing advance directive files and their type';
+
+ALTER TABLE document ADD CONSTRAINT document_pk PRIMARY KEY(user_id, document_id);
+ALTER TABLE document ADD CONSTRAINT document_user_fk FOREIGN KEY(user_id) REFERENCES appuser(user_id) ON DELETE CASCADE;
+
 CREATE TABLE authorized_user (
     authorized_user_id BIGINT auto_increment COMMENT 'Id for table',
     user_id BIGINT NOT NULL COMMENT 'The unique ID for a user.',

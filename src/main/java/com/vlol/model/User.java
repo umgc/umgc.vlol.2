@@ -83,6 +83,9 @@ public class User implements Serializable {
   @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
   private Set<AdvanceDirective> advanceDirectives = new HashSet<>();
 
+  @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER, mappedBy = "user")
+  private Set<Document> documents = new HashSet<>();
+
   @Column(name = "email", length = 320, unique = true)
   @NotBlank(message = "Email is required.")
   // Check if text is valid per RFC 3986.
@@ -224,6 +227,14 @@ public class User implements Serializable {
 
   public void setAdvanceDirectivess(Set<AdvanceDirective> advanceDirectives) {
     this.advanceDirectives = advanceDirectives;
+  }
+
+  public Set<Document> getDocuments() {
+    return documents;
+  }
+
+  public void setDocuments(Set<Document> documents) {
+    this.documents = documents;
   }
 
   public Set<UserVaccine> getVaccines() {
