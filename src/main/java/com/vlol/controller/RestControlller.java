@@ -74,12 +74,11 @@ public class RestControlller {
       response.sendError(500);
     }
   }
-  
+
   @GetMapping("/api/document/{documentId}")
   @ResponseBody
   public void getDocument(
-      HttpServletResponse response,
-      @PathVariable(name = "documentId") Long documentId)
+      HttpServletResponse response, @PathVariable(name = "documentId") Long documentId)
       throws IOException {
     try {
       Document ad = documentService.getDocument(documentId);
@@ -94,7 +93,7 @@ public class RestControlller {
       response.sendError(500);
     }
   }
-  
+
   @GetMapping("/api/search-users")
   public List<User> findUserByKeyword(@RequestParam String keyword) {
     List<User> result = userService.findUserByKeyword(keyword);

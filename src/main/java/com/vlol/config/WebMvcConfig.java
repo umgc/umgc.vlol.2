@@ -15,9 +15,7 @@
 package com.vlol.config;
 
 import com.vlol.service.RoleFormatter;
-import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -55,18 +53,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
             "classpath:/static/css/",
             "classpath:/static/js/",
             "classpath:/static/DataTables/");
-  }
-
-  /**
-   * Instantiates a servlet to allow access to the h2 database console (https://[website]/console)
-   *
-   * @return A new ServletRegistrationBean object.
-   */
-  @Bean
-  ServletRegistrationBean h2servletRegistration() {
-    ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-    registrationBean.addUrlMappings("/console/*");
-    return registrationBean;
   }
 
   @Autowired private RoleFormatter roleFormatter;
