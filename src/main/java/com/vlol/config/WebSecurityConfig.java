@@ -164,6 +164,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
           .permitAll()
           .antMatchers("/registration")
           .permitAll()
+          .antMatchers("/provider-registration")
+          .permitAll()
           .antMatchers("/qr-capture")
           .permitAll()
           // .requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("actuator")

@@ -18,6 +18,7 @@ import com.vlol.Mailer;
 import com.vlol.model.Contact;
 import com.vlol.model.Role;
 import com.vlol.model.User;
+import com.vlol.model.UserInfo;
 import com.vlol.repository.RoleRepository;
 import com.vlol.service.AllergyService;
 import com.vlol.service.ConditionService;
@@ -164,6 +165,56 @@ public class VlolController {
     mav.setViewName("registration");
     return mav;
   }
+  
+  
+  @RequestMapping(
+	      value = {"/provider-registration"},
+	      method = RequestMethod.GET)
+	  public ModelAndView providerRegistrationForm() {
+	    ModelAndView mav = new ModelAndView();
+	    User user = new User();
+	    UserInfo userinfo = new UserInfo();
+	    // Role userRole = roleRepository.findRoleByTitle("participant");
+	    // user.setRole(userRole);
+	    mav.addObject("user", user);
+	    mav.addObject("userInfo", userinfo);
+	    mav.setViewName("provider-registration");
+	    return mav;
+	  }
+  
+  @RequestMapping(
+	      value = {"/provider-registration"},
+	      method = RequestMethod.POST)
+	  public ModelAndView createUserProvider(Model model) {
+	  	User user = new User();
+	    ModelAndView mav = new ModelAndView();
+	    user.setIsAccountVerified(Boolean.TRUE);
+	    user.setIsEmailVerified(Boolean.FALSE);
+	    user.setIsLocked(Boolean.FALSE);
+	    Date date = new Date();
+	    user.setLastLoginDate(date);
+	    user.setDateCreated(date);
+	    Role userRole = roleRepository.findRoleByTitle("provider");
+	    user.setRole(userRole);
+
+	    User userExists = userService.findUserByEmail(user.getEmail());
+	    if (userExists != null) {
+//	      bindingResult.rejectValue("email", "error.user", "This user already exists!");
+	    } else if (!userService.isValid(user).isEmpty()) {
+	      mav.addObject("msg", "Cannot add user! Check your data.");
+	      mav.setViewName("provider-registration");
+	    } else {
+	      userService.createUser(user);
+	      // Send a verification email after registration
+	      try {
+	        new Mailer(env).verifyEmail(user);
+	      } catch (Exception e) {
+	        // Always return success
+	      }
+	      return new ModelAndView("redirect:/login?verifyEmail");
+	    }
+	    return mav;
+	  }
 
   @RequestMapping(
       value = {"/registration"},
