@@ -177,7 +177,6 @@ public class VlolController {
 	    // Role userRole = roleRepository.findRoleByTitle("participant");
 	    // user.setRole(userRole);
 	    mav.addObject("user", user);
-	    mav.addObject("userInfo", userinfo);
 	    mav.setViewName("provider-registration");
 	    return mav;
 	  }
@@ -185,10 +184,9 @@ public class VlolController {
   @RequestMapping(
 	      value = {"/provider-registration"},
 	      method = RequestMethod.POST)
-	  public ModelAndView createUserProvider(Model model) {
-	  	User user = new User();
+	  public ModelAndView createUserProvider(@Valid User user, BindingResult bindingResult) {
 	    ModelAndView mav = new ModelAndView();
-	    user.setIsAccountVerified(Boolean.TRUE);
+	    user.setIsAccountVerified(Boolean.FALSE);
 	    user.setIsEmailVerified(Boolean.FALSE);
 	    user.setIsLocked(Boolean.FALSE);
 	    Date date = new Date();
@@ -199,7 +197,7 @@ public class VlolController {
 
 	    User userExists = userService.findUserByEmail(user.getEmail());
 	    if (userExists != null) {
-//	      bindingResult.rejectValue("email", "error.user", "This user already exists!");
+	      bindingResult.rejectValue("email", "error.user", "This user already exists!");
 	    } else if (!userService.isValid(user).isEmpty()) {
 	      mav.addObject("msg", "Cannot add user! Check your data.");
 	      mav.setViewName("provider-registration");
