@@ -17,11 +17,13 @@
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
-                          <label for="advanceDirectiveType">Advance Directive Type</label>
+                          <label for="advanceDirectiveType"></label>
+                          <div style="font-size:small"><em>Enter your advanced directive below. This field will not autocomplete. For example, living will, do not resuscitate(DNR), power of attorney(POA), etc.</em></div>
                           <input class="form-control typeahead" id="advanceDirectiveType" th:field="*{advanceDirectiveType}" placeholder="Enter the type"  data-parsley-maxlength="64" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <div class="form-group">
-                          <label for="advanceDirectiveFile">Advance Directive File</label>
+                          <label for="advanceDirectiveFile"></label>
+                           <div style="font-size:small"><em>Upload supporting legal documents for Advanced Directive Type entered above.</em></div>
                           <div role="alert" class="text-info" th:if="*{advanceDirectiveFilename}" th:text="'Current File: '+*{advanceDirectiveFilename}"></div>
                           <input type="file" class="form-control typeahead" id="advanceDirectiveFile" th:field="*{advanceDirectiveFile}" placeholder="Enter your Advance Directive" data-parsley-max-file-size-mb="5" data-parsley-required/>
                         </div>

@@ -17,7 +17,7 @@
                     <div class="form-group">
 
                         <div><label for="drug">Drug Search</label></div>
-                        <div style="font-size:small"><em>Enter patient's medication below. This field will autocomplete as you type. For example: Lisinopril,Levothyroxine, etc. When medication is populated, click save.</em></div>
+                        <div style="font-size:small"><em>Enter patient's medication below. This field will autocomplete as you type. For example: Lisinopril, Levothyroxine, etc. When medication is populated, click save.</em></div>
                         <input class="form-control typeahead" type="search" id="drug" placeholder="Search"/>
                       <!--<input type="search" class="form-control" id="drug" placeholder="Search"/>-->
                     </div>
@@ -47,7 +47,7 @@
                           <label for="bloodThinner">Is Blood Thinner</label>
                           <input type="checkbox" class="form-control" id="bloodThinner" th:field="*{bloodThinner}"/>
                         </div>
-                        <div style="font-size:small"><em>The following fields are required and will not autocomplete.</em></div>
+                        <div style="font-size:small"><em>The following fields are required and will not autocomplete. Please enter Dosage/Frequency information below. For example: Dosage: 500mg, Frequency: Twice Daily.</em></div>
                         <div class="form-group">
                           <label for="dosage">Dosage</label>
                           <input type="text" class="form-control" id="dosage" th:field="*{dosage}" required="" placeholder="Required" data-parsley-rfc3986=""/>
