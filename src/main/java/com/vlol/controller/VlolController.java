@@ -363,6 +363,8 @@ public class VlolController {
     Utils.getUserData(userService, mav);
     mav.setViewName("contact");
     mav.addObject("contact", new Contact());
+    //TO DO: reading captcha key secret from proper file
+//    mav.addObject("captchakey", env.getProperty("captcha.client.secret.key"));
     return mav;
   }
 

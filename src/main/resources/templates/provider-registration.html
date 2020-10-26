@@ -29,7 +29,7 @@
                 <div role="alert" class="text-danger" th:if="${msg}" th:utext="${msg}"></div>
                 <br />
                 <div align="left"><em>All fields are required.</em></div>
-                <form action="#" th:action="@{/provider-registration}" th:object="${user}" method="post" data-parsley-validate="">
+                <form action="#" th:action="@{/provider-registration}" th:object="${user}" method="post" data-parsley-validate="" onsubmit="return submitUserForm();">
                     <table class="table table-bordered dt-responsive display">
                         <tr>
                             <td><label for="firstName">First Name:</label></td>
@@ -122,9 +122,29 @@
                             </td>
                         </tr>            
                     </table>
+                     <br />
+                    <div class="g-recaptcha"
+						data-sitekey="6LeJIdsZAAAAAMycrBqx8COCPk5-YI41ee0kMeL6"
+						data-callback="verifyCaptcha"></div>
+					<div id="g-recaptcha-error"></div>
                     <br />
                     <button type="submit" class="btn btn-success"><i class="fas fa-file-signature"></i> Register</button>
                 </form>
+                  <script src='https://www.google.com/recaptcha/api.js'></script>
+				<script>
+					function submitUserForm() {
+						var response = grecaptcha.getResponse();
+						if (response.length == 0) {
+							document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
+							return false;
+						}
+						return true;
+					}
+
+					function verifyCaptcha() {
+						document.getElementById('g-recaptcha-error').innerHTML = '';
+					}
+				</script>
                 <br />
                 <a href="/login" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Login Page</a>
             </div>
