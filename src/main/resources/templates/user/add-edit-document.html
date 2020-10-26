@@ -16,13 +16,13 @@
             <form action="#" th:object="${document}" th:action="'/user/save-document/'+${userId}" method="post" enctype="multipart/form-data" data-parsley-validate="">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
+                         <div style="font-size:small"><em>Enter your document type below. This field will not autocomplete.</em></div>
                         <div class="form-group">
-                          <label for="documentType">Document Type</label>
-                          <div style="font-size:small"><em>Enter your document type below. This field will not autocomplete. For example: medical history, doctor's notes, etc.</em></div>
+                          <label for="documentType">Document Type</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The type of document you wish to add to your Virtual Letter of Life.  For example: medical history, doctor's notes, etc."><i class="far fa-question-circle"></i></span>
                           <input class="form-control typeahead" id="documentType" th:field="*{documentType}" placeholder="Enter the type"  data-parsley-maxlength="64" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <div class="form-group">
-                          <label for="documentFile">Document File</label>
+                          <label for="documentFile">Document File</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The file, stored on your device, that contains the document you wish to add."><i class="far fa-question-circle"></i></span>
                           <div role="alert" class="text-info" th:if="*{documentFilename}" th:text="'Current File: '+*{documentFilename}"></div>
                           <input type="file" class="form-control typeahead" id="documentFile" th:field="*{documentFile}" placeholder="Enter your Document" data-parsley-max-file-size-mb="5" data-parsley-required/>
                         </div>

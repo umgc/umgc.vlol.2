@@ -9,15 +9,16 @@
         <div align="center" layout:fragment="content" class="container">
             <div class="row">
                 <div class="col-md-6 offset-md-3 mb-5">
-                    <h1 th:text="(${allergy.allergyId}!=null?'Edit':'Add')+ ' a Allergy'"></h1>
+                    <h1 th:text="(${allergy.allergyId}!=null?'Edit':'Add')+ ' an Allergy'"></h1>
                 </div>
             </div>
             <form action="#" th:object="${allergy}" th:action="'/user/save-allergy/'+${userId}" method="post" data-parsley-validate="">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
+                          <div style="font-size:small"><em> Enter patient's allergy below. This field will autocomplete as you type. For example: Penicillin, aspirin, latex, etc. When allergy is populated, click save.</em></div>
+                          <p/>
                         <div class="form-group">
-                          <label for="allergyName">Allergy Name</label>
-                          <div style="font-size:small"><em> Enter patient's allergy below. This field will autocomplete as you type. For example: Penicillin, Aspirin, etc. When allergy is populated, click save.</em></div>
+                          <label for="allergyName">Allergy Name</label>&nbsp;<span id="text-tooltip" data-toggle="tooltip" data-placement="top" title="The type of allergy you wish to add to your Virtual Letter of Life."><i class="far fa-question-circle"></i></span>
                           <input type="search" class="form-control typeahead" id="allergyName" th:field="*{allergyName}" placeholder="Enter your allergy" data-parsley-maxlength="256" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <input type="hidden" th:field="*{allergyId}" />

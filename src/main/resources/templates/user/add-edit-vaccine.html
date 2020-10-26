@@ -15,13 +15,14 @@
             <form action="#" th:object="${vaccine}" th:action="'/user/save-vaccine/'+${userId}" method="post" data-parsley-validate="">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
+                        <div style="font-size:small"><em> Enter patient's vaccine below. This field will autocomplete as you type. For example: Influenza, Polio, etc. When vaccine is populated, click save.</em></div>
+                        <p/>
                         <div class="form-group">
-                          <label for="vaccineName">Vaccine Name</label>
-                          <div style="font-size:small"><em> Enter patient's vaccine below. This field will autocomplete as you type. For example: Influenza,Polio, etc. When vaccine is populated, click save.</em></div>
+                          <label for="vaccineName">Vaccine Name</label>&nbsp;<span id="text-tooltip" data-toggle="tooltip" data-placement="top" title="The type of vaccine you wish to add to your Virtual Letter of Life."><i class="far fa-question-circle"></i></span>
                           <input type="search" class="form-control typeahead" id="vaccineName" th:field="*{vaccineName}" placeholder="Enter your vaccine" data-parsley-maxlength="256" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <div class="form-group">
-                          <label for="vaccineDate">Vaccine Date</label>
+                          <label for="vaccineDate">Vaccine Date</label>&nbsp;<span id="text-tooltip" data-toggle="tooltip" data-placement="top" title="The date the vaccine was last administered.  Click or tap the calendar icon to access a calender that will let you select the date."><i class="far fa-question-circle"></i></span>
                           <input type="date" class="form-control" id="vaccineDate" th:field="*{vaccineDate}" placeholder="Enter the date of the vaccine" data-parsley-required/>
                         </div>
                         
