@@ -304,7 +304,11 @@ public class VlolController {
         mav.addObject("userAlert", userService.getNewProviders().size() > 0);
         mav.setViewName("menu/admin-menu");
       } else if (Utils.isProvider()) {
-        mav.setViewName("menu/admin-menu");
+    	if(!user.getIsAccountVerified()) {
+    		mav.setViewName("access-denied");
+    	}else {
+    		mav.setViewName("menu/admin-menu");
+    	}
       } else {
         mav.setViewName("menu/user-menu");
       }
