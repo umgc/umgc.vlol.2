@@ -79,6 +79,8 @@ public class DocumentController {
       IOUtils.copy(is, response.getOutputStream());
     } catch (Exception e) {
       response.sendRedirect("/user/document?uploaderror");
+      if (id == null) response.sendRedirect("/user/document?uploaderror");
+      else response.sendRedirect("/user/document" + id + "?uploaderror");
     }
   }
 

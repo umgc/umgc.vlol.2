@@ -61,7 +61,8 @@ public class UserVaccineController {
       return "redirect:/user/add-vaccine";
     }
     userVaccineService.saveVaccine(vaccine);
-    return "redirect:/user/vaccines";
+    if (id == null) return "redirect:/user/vaccines";
+    else return "redirect:/user/vaccines/" + id;
   }
 
   @RequestMapping(value = {"/user/add-vaccine", "/user/add-vaccine/{id}"})

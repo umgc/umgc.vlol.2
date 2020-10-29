@@ -62,7 +62,8 @@ public class UserMedicationController {
       return "redirect:/user/add-medication";
     }
     medicationService.saveMedication(medication);
-    return "redirect:/user/medications";
+    if (id == null) return "redirect:/user/medications";
+    else return "redirect:/user/medications/" + id;
   }
 
   @RequestMapping(value = {"/user/add-medication", "/user/add-medication/{id}"})

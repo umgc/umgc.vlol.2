@@ -62,7 +62,8 @@ public class UserConditionController {
       return "redirect:/user/add-condition";
     }
     userConditionService.saveCondition(condition);
-    return "redirect:/user/conditions";
+    if (id == null) return "redirect:/user/conditions";
+    else return "redirect:/user/conditions/" + id;
   }
 
   @RequestMapping(value = {"/user/add-condition", "/user/add-condition/{id}"})

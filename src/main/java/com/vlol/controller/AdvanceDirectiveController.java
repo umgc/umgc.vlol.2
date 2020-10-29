@@ -82,7 +82,8 @@ public class AdvanceDirectiveController {
       response.setHeader(HttpHeaders.CONTENT_ENCODING, "deflate");
       IOUtils.copy(is, response.getOutputStream());
     } catch (Exception e) {
-      response.sendRedirect("/user/advance-directive?uploaderror");
+      if (id == null) response.sendRedirect("/user/advance-directive?uploaderror");
+      else response.sendRedirect("/user/advance-directive" + id + "?uploaderror");
     }
   }
 

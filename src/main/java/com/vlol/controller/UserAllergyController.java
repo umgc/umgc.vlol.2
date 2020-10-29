@@ -61,7 +61,8 @@ public class UserAllergyController {
       return "redirect:/user/add-allergy";
     }
     userAllergyService.saveAllergy(allergy);
-    return "redirect:/user/allergies";
+    if (id == null) return "redirect:/user/allergies";
+    else return "redirect:/user/allergies/" + id;
   }
 
   @RequestMapping(value = {"/user/add-allergy", "/user/add-allergy/{id}"})
