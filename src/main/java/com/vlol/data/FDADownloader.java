@@ -188,6 +188,10 @@ public class FDADownloader {
                             || pharmaClasses.contains("Vitamin K Antagonist [EPC]")
                             || pharmaClasses.contains("Platelet Aggregation Inhibitor [EPC]")
                             || pharmaClasses.contains("Decreased Platelet Aggregation [PE]")
+                            || pharmaClasses.contains("Factor Xa Inhibitor [EPC]")
+                            || pharmaClasses.contains("Factor Xa Inhibitors [MoA]")
+                            || pharmaClasses.contains("Anti-coagulant [EPC]")
+                            || pharmaClasses.contains("Decreased Coagulation Factor Activity [PE]")
                             || activeIngredients.contains("aspirin"));
 
                     session.save(m);
