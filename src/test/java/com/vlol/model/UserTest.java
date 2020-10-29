@@ -698,13 +698,7 @@ public class UserTest {
   @Test
   public void testSetAdminCommentsOverflow() {
     System.out.println("setAdminComments Test (Overflow value)");
-    String adminComments =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-            + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-            + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-            + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-            + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-            + "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    String adminComments = ".".repeat(65536);
     user.setAdminComments(adminComments);
     // Check for and print any violations of validation annotations
     Set<ConstraintViolation<User>> violations = validator.validate(user);

@@ -1311,7 +1311,7 @@ public class UserInfoTest {
   @Test
   public void testSetUserCommentsOverflow() {
     System.out.println("setUserComments Test (Overflow value)");
-    String userComments = ".".repeat(301);
+    String userComments = ".".repeat(65536);
     userInfo.setUserComments(userComments);
     // Check for and print any violations of validation annotations
     Set<ConstraintViolation<UserInfo>> violations = validator.validate(userInfo);

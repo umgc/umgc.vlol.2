@@ -55,7 +55,7 @@
                             <tr>
                                 <td><label for="password">Password</label></td>
                                 <td>
-                                    <input class="form-control" id="password" type="password" th:field="*{password}" maxlength="320" placeholder="Required" required="required" />
+                                    <input class="form-control" id="password" type="password" th:field="*{password}" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" />
                                     <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
                                 </td>
                             </tr>
@@ -89,7 +89,7 @@
                             <tr sec:authorize="hasAnyAuthority('admin')">
                                 <td><label for="adminComments">Administrator Comments:</label></td>
                                 <td>
-                                    <textarea class="form-control" id="adminComments" th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" />
+                                    <textarea class="form-control" id="adminComments" th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" data-parsley-max="65535" />
                                 </td>
                             </tr>
                         </table>
