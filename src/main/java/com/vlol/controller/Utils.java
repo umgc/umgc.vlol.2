@@ -34,6 +34,7 @@ public class Utils {
     if (auth.getPrincipal() != "anonymousUser") {
       User user = userService.findUserByEmail(auth.getName());
       mav.addObject("userRealName", user.getFirstName() + " " + user.getLastName());
+      mav.addObject("loggedInUserType", user.getRole().getTitle());
       if (currentUser == null) currentUser = user;
       mav.addObject("userId", currentUser.getUserId());
       mav.addObject("userType", currentUser.getRole().getTitle());
@@ -59,7 +60,7 @@ public class Utils {
     Authentication auth = SecurityContextHolder.getContext().getAuthentication();
     if (auth.getPrincipal() != "anonymousUser") {
       // Check if user is admin or provider
-      if (isAdmin() || (isProvider() && !editable)) {
+      if (isAdmin() || isProvider()) {
         return userId != null
             ? userService.getUser(userId)
             : userService.findUserByEmail(auth.getName());

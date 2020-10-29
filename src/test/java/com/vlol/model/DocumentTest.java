@@ -17,16 +17,13 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-/**
- *
- * @author kimbe
- */
+/** @author kimbe */
 public class DocumentTest {
   private Validator validator;
   private final Document document;
   private final User user = new User();
   private final byte[] bytes = new byte[] {1, 2};
-  
+
   public DocumentTest() {
     this.document = new Document();
     this.document.setDocumentContentType("application/pdf");
@@ -35,23 +32,21 @@ public class DocumentTest {
     this.document.setDocumentId(1L);
     this.document.setDocumentType("MOSLT");
     this.document.setUser(user);
-    
   }
-  
+
   @BeforeAll
-  public static void setUpClass() {
-  }
-  
+  public static void setUpClass() {}
+
   @AfterAll
-  public static void tearDownClass() {
-  }
- @BeforeEach
+  public static void tearDownClass() {}
+
+  @BeforeEach
   public void setUp() {
     // Setup validation of each method's validation annotations
     ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
     validator = factory.getValidator();
   }
-   /** Test of getDocumentId method, of class Document. */
+  /** Test of getDocumentId method, of class Document. */
   @Test
   public void testGetDocumentId() {
     System.out.println("getDocumentId");

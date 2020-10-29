@@ -44,7 +44,7 @@ public class AuthorizedUserController {
   public ModelAndView viewAuthorizedUserList(
       @PathVariable(name = "id", required = false) Long id, Model model, Principal principal) {
     ModelAndView mav = new ModelAndView("user/authorized-user");
-    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    User user = Utils.getIfUserOrAdmin(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     Utils.getUserData(userService, mav, user);
     model.addAttribute("authorizedUserList", user.getAuthorizedEmails());
@@ -59,7 +59,7 @@ public class AuthorizedUserController {
       @Valid AuthorizedUser authorizedUser,
       BindingResult bindingResult,
       Model model) {
-    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    User user = Utils.getIfUserOrAdmin(userService, id, true);
     if (user == null) return "redirect:/login";
     authorizedUser.setUser(user);
     // Lower Case the email for better matching
@@ -72,9 +72,9 @@ public class AuthorizedUserController {
   }
 
   @RequestMapping(value = {"/user/add-authorized-user", "/user/add-authorized-user/{id}"})
-  public ModelAndView viewAddConditionPage(
+  public ModelAndView viewAddAuthorizedUser(
       @PathVariable(name = "id", required = false) Long id, Model model) {
-    User user = Utils.getIfAuthorizedForUser(userService, id, false);
+    User user = Utils.getIfUserOrAdmin(userService, id, false);
     if (user == null) return new ModelAndView("redirect:/login");
 
     ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
@@ -95,7 +95,7 @@ public class AuthorizedUserController {
       @PathVariable(name = "authorizedUserId") Long authorizedUserId,
       Model model) {
     // Check if this user can edit the requested user
-    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    User user = Utils.getIfUserOrAdmin(userService, id, true);
     if (user == null) return new ModelAndView("redirect:/login");
     ModelAndView mav = new ModelAndView("user/add-edit-authorized-user");
     // Check if the authorizedUser belongs to the user
@@ -118,7 +118,7 @@ public class AuthorizedUserController {
       @PathVariable(name = "id", required = false) Long id,
       @PathVariable(name = "authorizedUserId") Long authorizedUserId) {
     // Check if this user can edit the requested user
-    User user = Utils.getIfAuthorizedForUser(userService, id, true);
+    User user = Utils.getIfUserOrAdmin(userService, id, true);
     if (user == null) return "redirect:/login";
     // Check if the authorizedUser belongs to the user
     Boolean found = false;

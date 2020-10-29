@@ -12,7 +12,7 @@
                     <h1 class="pt-4" th:text="${user}?${user.firstName+' '+user.lastName}:'Menu'">Menu</h1>
                     <div class="card-deck card-deck justify-content-center justify-content-sm-stretch">
                         <a th:href="|/user/account/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()">
+                           sec:authorize="isAuthenticated()" th:if="${loggedInUserType} != 'provider'">
                             <i class="fas fa-user-circle menu-button" style="margin: 1rem"></i>
                             <div class="card-body">My Account</div>
                         </a>
@@ -52,17 +52,17 @@
                             <div class="card-body">Documents</div>
                         </a>
                         <a th:href="|/user/authorized-user/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()">
+                           sec:authorize="isAuthenticated()" th:if="${loggedInUserType} != 'provider'">
                             <i class="fas fa-user-shield menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Authorized Users</div>
                         </a>
                         <a th:href="|/user/qr-code/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()">
+                           sec:authorize="isAuthenticated()" th:if="${loggedInUserType} != 'provider'">
                             <i class="fas fa-qrcode menu-button" style="margin: 1rem"></i>
                             <div class="card-body">My QR Code</div>
                         </a>
                         <a href="/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()" th:if="${hasAuthorizingUsers}">
+                           sec:authorize="isAuthenticated()" th:if="${hasAuthorizingUsers} AND ${loggedInUserType} != 'provider'">
                             <i class="fas fa-users menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Manage Other Users</div>
                         </a>
