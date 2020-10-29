@@ -134,6 +134,16 @@
                                 </td>
                             </tr>
                             <tr th:if="${userType} == 'participant'">
+                                <td class="text-nowrap">Documents:</td>
+                                <td class="text-wrap">
+                                    <ul class="view-page-value-columns">
+                                        <li th:each="document : ${user.documents}">
+                                            <a th:href="|/user/get-document/${user.userId}/${document.documentId}|" target="_blank" th:text="${document.documentType}"></a>
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr th:if="${userType} == 'participant'">
                                 <td class="text-nowrap">Vaccines:</td>
                                 <td class="text-wrap">
                                     <ul class="view-page-value-columns">
