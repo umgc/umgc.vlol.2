@@ -120,12 +120,12 @@ public class User implements Serializable {
   @JsonIgnore
   private Date lastLoginDate;
 
-  @Column(name = "admin_comments", length = 300)
+  @Column(name = "admin_comments", length = 65535)
   // Check if text is valid per RFC 3986.
   @Pattern(
       regexp = "^[A-Za-z0-9\\s\\-._~:\\/?#\\[\\]@!$&'()*+,;=]*$",
       message = "Input contains illegal characters.")
-  @Size(max = 300, message = "Input exceeds size limits.")
+  @Size(max = 65535, message = "Input exceeds size limits.")
   @JsonIgnore
   private String adminComments;
 

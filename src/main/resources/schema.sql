@@ -101,7 +101,7 @@ ALTER TABLE approle ADD CONSTRAINT approle_uq_title UNIQUE(role_title);
 CREATE TABLE appuser(
     user_id BIGINT auto_increment PRIMARY KEY COMMENT 'The user'' s unique ID.',
     email VARCHAR(320) NOT NULL COMMENT 'The user''s email address.',
-    admin_comments VARCHAR(300) COMMENT 'System administrator comments.',
+    admin_comments TEXT COMMENT 'System administrator comments.',
     date_created TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'The creation date for this database user account',
     is_account_verified BOOLEAN COMMENT 'Is the user''s account active?',
     is_locked BOOLEAN COMMENT 'Is the user''s account locked?',
@@ -137,7 +137,7 @@ CREATE TABLE user_info(
     us_state VARCHAR(2) COMMENT 'The user''s state of residence.',
     street_address VARCHAR(100) COMMENT 'The user''s street address.',
     user_agent_id BIGINT COMMENT 'The User ID of the user''s agent.',
-    user_comments VARCHAR(300) COMMENT 'User additional comments.',
+    user_comments TEXT COMMENT 'User additional comments.',
     zipcode VARCHAR(5) COMMENT 'The user''s zip code number.',
     is_deceased BOOLEAN DEFAULT false
     --COMMENT 'The database user profile table'
