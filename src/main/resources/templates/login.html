@@ -8,7 +8,7 @@
     <body>
         <div layout:fragment="content" class="container">
             <div class="col-md-4 text-center mx-auto">
-                <form class="form-signin" th:action="@{/login}" method="post" onsubmit="return submitUserForm();" >
+                <form class="form-signin" th:action="@{/login}" method="post">
                     <br />
                     <img src="img/vlol_logo.png" alt="" height="128" />
                     <br />
@@ -36,10 +36,6 @@
                     <span class="add-on"><i class="icon-key"></i></span>
                     <input type="password" id="password" class="form-control" name="password" placeholder="Password" required="required" autocomplete="off" />                    
                     <div class="text-right"><a th:href="@{/forgot-password}">Forgot Password</a></div>
-                    <div class="g-recaptcha"
-						data-sitekey="6LeJIdsZAAAAAMycrBqx8COCPk5-YI41ee0kMeL6"
-						data-callback="verifyCaptcha"></div>
-					<div id="g-recaptcha-error"></div>
                     
 <!--                     <div class="checkbox"> -->
 <!--                         <input type="checkbox" value="remember-me" /> Remember me -->
@@ -55,21 +51,6 @@
                     <!--<br />-->
                     <!--<a href="/" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Home Page</a>-->
                 </form>
-                <script src='https://www.google.com/recaptcha/api.js'></script>
-				<script>
-					function submitUserForm() {
-						var response = grecaptcha.getResponse();
-						if (response.length == 0) {
-							document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
-							return false;
-						}
-						return true;
-					}
-
-					function verifyCaptcha() {
-						document.getElementById('g-recaptcha-error').innerHTML = '';
-					}
-				</script>
             </div>
             <div class="jumbotron" style="font-size:12px;margin-top:2rem;padding:2rem;">
                 <p>* * * * * * * * * * W A R N I N G * * * * * * * * * *<br/>
