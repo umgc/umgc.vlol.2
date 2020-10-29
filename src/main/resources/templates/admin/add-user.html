@@ -29,7 +29,7 @@
                         <button type="submit" class="btn btn-info"><i class="fas fa-search"></i> Full Search</button>
                     </form>
                     <hr />
-                    <form action="#" th:action="@{/admin/create-user}" th:object="${user}" method="post">
+                    <form action="#" th:action="@{/admin/create-user}" th:object="${user}" method="post" data-parsley-validate="">
                         <table id="list_table" class="table table-bordered dt-responsive display">
                             <tr>             
                                 <td><label for="firstName">First Name</label></td>
