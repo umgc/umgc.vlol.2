@@ -39,3 +39,6 @@ bin/
 *.uuid
 *.jar
 /data
+nbactions.xml
+nb-configuration.xml
+.gitignore

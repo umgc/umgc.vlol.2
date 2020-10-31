@@ -15,9 +15,6 @@
     <description>Virtual Letter of Life Spring Boot Application</description>
 
     <properties>
-        <sonar.projectKey>umgccapstone_umgc.vlol.2</sonar.projectKey>
-        <sonar.organization>umgc-capstone</sonar.organization>
-        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <java.version>11</java.version>
     </properties>
 
@@ -108,6 +105,28 @@
             <artifactId>mail</artifactId>
             <version>1.5.0-b01</version>
         </dependency>
+        <dependency> 
+            <groupId>com.google.zxing</groupId> 
+            <artifactId>core</artifactId> 
+            <version>3.4.0</version>
+            <type>jar</type>
+        </dependency> 
+        <dependency> 
+            <groupId>com.google.zxing</groupId> 
+            <artifactId>javase</artifactId> 
+            <version>3.3.0</version> 
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>16.0.1</version>
+            <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>com.google.googlejavaformat</groupId>
+            <artifactId>google-java-format</artifactId>
+            <version>1.9</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -133,28 +152,32 @@
                 </configuration>
             </plugin>
             <plugin>
-				<groupId>com.diffplug.spotless</groupId>
-				<artifactId>spotless-maven-plugin</artifactId>
-				<version>2.4.0</version>
-				<configuration>
-					<java>
-					  <!-- These are the defaults, you can override if you want -->
-					  <includes>
-						<include>src/main/java/**/*.java</include>
-						<include>src/test/java/**/*.java</include>
-					  </includes>
-				  
-					  <importOrder />
-				  
-					  <removeUnusedImports /> <!-- self-explanatory -->
-				  
-					  <googleJavaFormat>
-						<version>1.9</version>
-						<style>GOOGLE</style>
-					  </googleJavaFormat>
-					</java>
-				  </configuration>
-			</plugin>
+                <groupId>com.diffplug.spotless</groupId>
+                <artifactId>spotless-maven-plugin</artifactId>
+                <version>2.4.1</version>
+                
+                <configuration>
+                    <java>
+                        <googleJavaFormat>
+                            <version>1.7</version> <!-- optional -->
+                            <style>GOOGLE</style>  <!-- or AOSP (optional) -->
+                        </googleJavaFormat>
+                    </java>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.coveo</groupId>
+                <artifactId>fmt-maven-plugin</artifactId>
+                <version>2.10</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>

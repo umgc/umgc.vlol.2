@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title th:text="'VLOL | ' + (${advanceDirective.advanceDirectiveId}!=null?'Edit':'Add')+ ' an Advance Directive'"></title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <h1 th:text="(${advanceDirective.advanceDirectiveId}!=null?'Edit':'Add')+ ' an Advance Directive'"></h1>
+                </div>
+            </div>
+            <div role="alert" class="text-danger" th:if="${error}">There was an error while uploading your file. Contact support if this continues to happen.</div>
+            <form action="#" th:object="${advanceDirective}" th:action="'/user/save-advance-directive/'+${userId}" method="post" enctype="multipart/form-data" data-parsley-validate="">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="form-group">
+                          <label for="advanceDirectiveType">Advance Directive Type</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The type of advance directive you wish to add to your Virtual Letter of Life, such as Do Not Resuscitate (DNR), Power of Attorney (POA), etc."><i class="far fa-question-circle"></i></span>
+                          <div style="font-size:small"><em>Enter your advance directive below. This field will not autocomplete.</em></div>
+                          <input class="form-control typeahead" id="advanceDirectiveType" th:field="*{advanceDirectiveType}" placeholder="Enter the type"  data-parsley-maxlength="64" data-parsley-rfc3986="" data-parsley-required/>
+                        </div>
+                        <div class="form-group">
+                          <label for="advanceDirectiveFile">Advance Directive File</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="A file or document on your device containing legal documentation of your advance directive.  For example: PDF (.pdf), Word Document (.docx, .doc), etc."><i class="far fa-question-circle"></i></span>
+                           <div style="font-size:small"><em>Upload supporting legal documents for Advance Directive Type entered above.</em></div>
+                          <div role="alert" class="text-info" th:if="*{advanceDirectiveFilename}" th:text="'Current File: '+*{advanceDirectiveFilename}"></div>
+                          <input type="file" class="form-control typeahead" id="advanceDirectiveFile" th:field="*{advanceDirectiveFile}" placeholder="Enter your Advance Directive" data-parsley-max-file-size-mb="5" data-parsley-required/>
+                        </div>
+                        
+                        <input type="hidden" th:field="*{advanceDirectiveId}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    <a th:href="|/user/advance-directives/${userId}|">Return to Advance Directive Manager</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

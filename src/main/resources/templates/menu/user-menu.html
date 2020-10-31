@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title>Menu</title>
+        <title>VLOL | Main Menu</title>
     </head>
     <body>
         <div layout:fragment="content" class="container">
@@ -12,43 +12,58 @@
                     <h1 class="pt-4" th:text="${user}?${user.firstName+' '+user.lastName}:'Menu'">Menu</h1>
                     <div class="card-deck card-deck justify-content-center justify-content-sm-stretch">
                         <a th:href="|/user/account/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()">
-                            <i class="fas fa-user-circle fa-9x" style="margin: 1rem"></i>
+                           sec:authorize="isAuthenticated()" th:if="${loggedInUserType} != 'provider'">
+                            <i class="fas fa-user-circle menu-button" style="margin: 1rem"></i>
                             <div class="card-body">My Account</div>
                         </a>
                         <a th:href="|/user/profile/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
-                            <i class="fas fa-id-badge fa-9x" style="margin: 1rem"></i>
+                            <i class="fas fa-id-badge menu-button" style="margin: 1rem"></i>
                             <div class="card-body">My Profile</div>
                         </a>
                         <a th:href="|/user/allergies/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
-                            <i class="fas fa-allergies fa-9x" style="margin: 1rem"></i>
+                            <i class="fas fa-allergies menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Allergies</div>
+                        </a>
+                        <a th:href="|/user/vaccines/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-syringe menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">Vaccines</div>
                         </a>
                         <a th:href="|/user/medications/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
-                            <i class="fas fa-tablets fa-9x" style="margin: 1rem"></i>
+                            <i class="fas fa-tablets menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Medication</div>
                         </a>
                         <a th:href="|/user/conditions/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
-                            <i class="fas fa-disease fa-9x" style="margin: 1rem"></i>
+                            <i class="fas fa-disease menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Conditions</div>
                         </a>
-                        <a th:href="|/user/authorized-user/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                        <a th:href="|/user/advance-directives/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()">
-                            <i class="fas fa-user-shield fa-9x" style="margin: 1rem"></i>
+                            <i class="fas fa-file-medical-alt menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">Advance Directives</div>
+                        </a>
+                        <a th:href="|/user/documents/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-file-medical menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">Documents</div>
+                        </a>
+                        <a th:href="|/user/authorized-user/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${loggedInUserType} != 'provider'">
+                            <i class="fas fa-user-shield menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Authorized Users</div>
                         </a>
                         <a th:href="|/user/qr-code/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()">
-                            <i class="fas fa-qrcode fa-9x" style="margin: 1rem"></i>
-                            <div class="card-body">Get QR Code</div>
+                           sec:authorize="isAuthenticated()" th:if="${loggedInUserType} != 'provider'">
+                            <i class="fas fa-qrcode menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">My QR Code</div>
                         </a>
                         <a href="/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()" th:if="${hasAuthorizingUsers}">
-                            <i class="fas fa-users fa-9x" style="margin: 1rem"></i>
+                           sec:authorize="isAuthenticated()" th:if="${hasAuthorizingUsers} AND ${loggedInUserType} != 'provider'">
+                            <i class="fas fa-users menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Manage Other Users</div>
                         </a>
                     </div>

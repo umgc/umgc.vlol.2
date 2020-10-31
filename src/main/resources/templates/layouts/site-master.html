@@ -14,7 +14,7 @@
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 hide-print">
                 <div class="container">
                     <a class="navbar-brand" href="/">
                         <img src="/img/vlol_icon.png" width="30" height="30" alt="" />
@@ -22,27 +22,7 @@
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                        <ul class="navbar-nav">
-                            <li class="nav-item">
-                                <div sec:authorize="isAnonymous()">
-                                    <a class="nav-link text-dark" id="register" th:href="@{/registration}">Register</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <div sec:authorize="isAuthenticated()" th:if="${userRealName!=null}">
-                                    <span class="nav-link text-dark" th:text="|${userRealName} is logged in.|"></span>
-                                </div>
-                            </li>
-                            <li class="nav-item">
-                                <div sec:authorize="isAuthenticated()">
-                                    <a class="nav-link text-light btn btn-info" id="login" th:href="@{/logout}">Logout</a>
-                                </div>
-                                <div sec:authorize="isAnonymous()">
-                                    <a class="nav-link text-dark" id="login" th:href="@{/login}">Login</a>
-                                </div>
-                            </li>
-                        </ul>
+                    <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
                                 <a class="nav-link text-dark" href="/">Home</a>
@@ -58,6 +38,26 @@
                                 <a class="nav-link text-dark" href="/menu">Menu</a>
                             </li>
                         </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <div sec:authorize="isAnonymous()">
+                                    <a class="nav-link text-dark" id="register" th:href="@{/registration}">Register</a>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <div sec:authorize="isAuthenticated()" th:if="${userRealName!=null}">
+                                    <span class="nav-link text-dark" th:text="|${userRealName} is logged in.|"></span>
+                                </div>
+                            </li>
+                            <li class="nav-item">
+                                <div sec:authorize="isAuthenticated()">
+                                    <a class="nav-link text-light btn btn-info" id="logout" th:href="@{/logout}">Logout</a>
+                                </div>
+                                <div sec:authorize="isAnonymous()">
+                                    <a class="nav-link text-dark" id="login" th:href="@{/login}">Login</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </nav>
@@ -65,7 +65,7 @@
         <main>
             <div layout:fragment="content"></div>
         </main>
-        <footer class="border-top footer text-muted">
+        <footer class="border-top footer text-muted hide-print">
             <div class="container">
                 Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.
             </div>
@@ -86,5 +86,16 @@
                 document.getElementById("currentYear").innerHTML = " - " + fullYear;
             }
         </script>
+        <script>
+            $(document).ready(function(){
+                $('[data-toggle="tooltip"]').tooltip();
+            });
+        </script>
+        <!-- putting this in styles.css doesn't seem to work, for some reason; probably being overridden by Bootstrap? -->
+        <style>
+            .tooltip-inner {
+                max-width:300px;
+            }
+        </style>
     </body>
 </html>

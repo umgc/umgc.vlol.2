@@ -1,20 +1,16 @@
 /**
  * Medication service class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package service
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
  */
 package com.vlol.service;
 
@@ -31,35 +27,35 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class MedicationService {
 
-    @Autowired
-    private final MedicationRepository medicationRepository;
+  @Autowired private final MedicationRepository medicationRepository;
 
-    @Autowired
-    public MedicationService(MedicationRepository medicationRepository, EntityManager em) {
-        this.medicationRepository = medicationRepository;
-        new FDADownloader(this, em);
-    }
+  @Autowired
+  public MedicationService(MedicationRepository medicationRepository, EntityManager em) {
+    this.medicationRepository = medicationRepository;
+    new FDADownloader(this, em);
+  }
 
-    public List<Medication> getAllMedications() {
-        return medicationRepository.findAll();
-    }
+  public List<Medication> getAllMedications() {
+    return medicationRepository.findAll();
+  }
 
-    public void saveMedication(Medication medication) {
-        medicationRepository.save(medication);
-    }
+  public void saveMedication(Medication medication) {
+    medicationRepository.save(medication);
+  }
 
-    public Medication getMedication(Long medicationId) {
-        return medicationRepository.findById(medicationId).orElse(null);
-    }
+  public Medication getMedication(Long medicationId) {
+    return medicationRepository.findById(medicationId).orElse(null);
+  }
 
-    public void deleteMedication(Long medicationId) {
-        medicationRepository.deleteById(medicationId);
-    }
-    public void truncateMedication() {
-        medicationRepository.deleteAllInBatch();
-    }
+  public void deleteMedication(Long medicationId) {
+    medicationRepository.deleteById(medicationId);
+  }
 
-    public List<Medication> findMedicationByKeyword(String keyword) {
-        return medicationRepository.findMedicationByKeyword(keyword);
-    }
+  public void truncateMedication() {
+    medicationRepository.deleteAllInBatch();
+  }
+
+  public List<Medication> findMedicationByKeyword(String keyword) {
+    return medicationRepository.findMedicationByKeyword(keyword);
+  }
 }

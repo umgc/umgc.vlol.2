@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title>VLOL | Provider Registration</title>
+        <style>
+            td {
+                text-align: left;
+                vertical-align: top;
+                white-space: nowrap;
+            }
+            input:not([type="checkbox"]) {
+                width: 100%;
+            }
+            textarea {
+                resize: none;
+                width: 100%;
+            }
+        </style>
+    </head>
+    <body>
+        <div layout:fragment="content" class="container">
+            <div align="center">
+                <h1 class="pt-4">Provider Registration</h1>
+                <a href="/">Return to Home Page</a>
+                <br />
+                <br>
+                <div role="alert" class="text-danger" th:if="${msg}" th:utext="${msg}"></div>
+                <br />
+                <div align="left"><em>All fields are required.</em></div>
+                <form action="#" th:action="@{/provider-registration}" th:object="${user}" method="post" data-parsley-validate="" onsubmit="return submitUserForm();">
+                    <table class="table table-bordered dt-responsive display">
+                        <tr>
+                            <td><label for="firstName">First Name:</label></td>
+                            <td>
+                                <input type="text" class="form-control" th:field="*{firstName}" id="firstName" maxlength="50" placeholder="Required" required="required" autofocus="true" data-parsley-rfc3986="" />
+                                <div th:if="${#fields.hasErrors('firstName')}" class="text-danger" th:errors="*{firstName}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="lastName">Last Name:</label></td>
+                            <td class="w-100">
+                                <input type="text" class="form-control" th:field="*{lastName}" id="lastName" maxlength="100" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                <div th:if="${#fields.hasErrors('lastName')}" class="text-danger" th:errors="*{lastName}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                                <td><label for="DOB">Date of Birth</label></td>
+                                <td>
+                                    <input type="date" class="form-control" th:field="*{userInfo.DOB}" required="required" id="DOB" />
+                                    <div th:if="${#fields.hasErrors('userInfo.DOB')}" class="text-danger" th:errors="*{userInfo.DOB}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="SSN">Social Security Number (SSN)</label></td>
+                                <td>
+                                    <input type="number" class="form-control" th:field="*{userInfo.SSN}" required="required" id="SSN" maxlength="9" data-parsley-social=""/>
+                                    <div th:if="${#fields.hasErrors('userInfo.SSN')}" class="text-danger" th:errors="*{userInfo.SSN}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="NPI">National Prescriber ID (NPI)</label></td>
+                                <td>
+                                    <input type="number" class="form-control" th:field="*{userInfo.NPI}" required="required" id="NPI" maxlength="10" data-parsley-npi=""/>
+                                    <div th:if="${#fields.hasErrors('userInfo.NPI')}" class="text-danger" th:errors="*{userInfo.NPI}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="streetAddress">Street Address</label></td>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{userInfo.streetAddress}" required="required" id="streetAddress" maxlength="100" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.streetAddress')}" class="text-danger" th:errors="*{userInfo.streetAddress}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="city">City</label></td>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{userInfo.city}" required="required" id="city" maxlength="50" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.city')}" class="text-danger" th:errors="*{userInfo.city}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="state">State</label></td>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{userInfo.state}" required="required" id="state" maxlength="2" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.state')}" class="text-danger" th:errors="*{userInfo.state}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="zipCode">ZIP Code</label></td>
+                                <td>
+                                    <input type="text" class="form-control" th:field="*{userInfo.zipCode}" required="required" id="zipCode" maxlength="5" data-parsley-rfc3986="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.zipCode')}" class="text-danger" th:errors="*{userInfo.zipCode}"></div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><label for="phone">Phone Number</label></td>
+                                <td>
+                                    <input type="tel" class="form-control" th:field="*{userInfo.phone}" required="required" id="phone" maxlength="10" data-parsley-phone="" />
+                                    <div th:if="${#fields.hasErrors('userInfo.phone')}" class="text-danger" th:errors="*{userInfo.phone}"></div>
+                                </td>
+                            </tr>
+                        <tr>
+                            <td><label for="email">Email:</label></td>
+                            <td>
+                                <input type="email" class="form-control" th:field="*{email}" id="email" maxlength="320" placeholder="Required" required="required" data-parsley-rfc3986="" />
+                                <div th:if="${#fields.hasErrors('email')}" class="text-danger" th:errors="*{email}"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><label for="password">Password:</label></td>
+                            <td>
+                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" />
+                                <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td><label for="password2">Confirm Password:</label></td>
+                            <td>
+                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" data-parsley-equalto="#password" />
+                            </td>
+                        </tr>            
+                    </table>
+                     <br />
+                    <div class="g-recaptcha"
+						data-sitekey="6LeJIdsZAAAAAMycrBqx8COCPk5-YI41ee0kMeL6"
+						data-callback="verifyCaptcha"></div>
+					<div id="g-recaptcha-error"></div>
+                    <br />
+                    <button type="submit" class="btn btn-success"><i class="fas fa-file-signature"></i> Register</button>
+                </form>
+                  <script src='https://www.google.com/recaptcha/api.js'></script>
+				<script>
+					function submitUserForm() {
+						var response = grecaptcha.getResponse();
+						if (response.length == 0) {
+							document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
+							return false;
+						}
+						return true;
+					}
+
+					function verifyCaptcha() {
+						document.getElementById('g-recaptcha-error').innerHTML = '';
+					}
+				</script>
+                <br />
+                <a href="/login" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Login Page</a>
+            </div>
+        </div>
+    </body>
+</html>

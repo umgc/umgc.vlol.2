@@ -3,14 +3,14 @@
       layout:decorate="~{layouts/datatable-master}"
       lang="en">
     <head>
-        <title>Allergy Manager</title>
+        <title>VLOL | Allergy Manager</title>
     </head>
     <body>
         <div align="center" layout:fragment="content" class="container">
             <h1>Allergy Manager</h1>
-            <a th:href="|/user/add-allergy/${userId}|">Add a Allergy</a>
+            <a th:href="|/user/add-allergy/${userId}|">Add an Allergy</a>
             <br/><br/>
-            <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap">
+            <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap no-search">
                 <thead>
                     <tr>
                         <th data-priority="1">Allergy Name</th>
@@ -25,7 +25,7 @@
                         <td>
                             <a th:href="|/user/edit-allergy/${userId}/${allergy.allergyId}|" class="btn btn-info">Edit</a>
                             &nbsp;&nbsp;&nbsp;
-                            <a th:href="|/user/delete-allergy/${userId}/${allergy.allergyId}|" class="btn btn-danger">Delete</a>
+                            <a th:href="|/user/delete-allergy/${userId}/${allergy.allergyId}|" class="btn btn-danger" th:itemName="${allergy.allergyName}" onclick="return confirm('Are you sure you want to delete &quot;'+this.getAttribute('itemName')+'&quot;?')">Delete</a>
                         </td>
                     </tr>
                 </tbody>

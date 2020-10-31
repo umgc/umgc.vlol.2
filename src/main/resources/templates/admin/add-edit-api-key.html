@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title th:text="(${apiKey.createDate}!=null?'Edit':'Add')+ ' an API Key'"></title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <h1 th:text="(${apiKey.createDate}!=null?'Edit':'Add')+ ' an API Key'"></h1>
+                </div>
+            </div>
+            <div role="alert" class="text-danger" th:if="${error}">There was an error while uploading your file. Contact support if this continues to happen.</div>
+            <form th:object="${apiKey}" action="/admin/save-api-key" method="post" enctype="multipart/form-data" data-parsley-validate="">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <div class="form-group">
+                          <label for="userRef">User Reference</label>
+                          <input class="form-control typeahead" id="userRef" th:field="*{userRef}" placeholder="Enter user information"  data-parsley-maxlength="64" data-parsley-rfc3986=""/>
+                        </div>
+                        <input type="hidden" th:field="*{apiKey}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    <a th:href="|/admin/api-keys/|">Return to API Key Manager</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

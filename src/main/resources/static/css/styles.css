@@ -1,10 +1,7 @@
 /**
  * Site CSS file.
  *
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
  */
 @charset "UTF-8";
 
@@ -65,6 +62,17 @@ footer {
     align-items: center;
     margin: 1rem;
     min-width: 12rem !important;
+}
+.menu-button{
+    font-size: 9em;
+}
+@media only screen and (max-width: 600px) {
+    .menu-card {
+        flex-direction: row;
+    }
+    .menu-button{
+        font-size: 3em;
+    }
 }
 .tt-menu{
     width: 422px;
@@ -132,4 +140,42 @@ textarea.parsley-error {
 }
 #list_table{
     width: 100% !important;
+}
+.dt-button{
+    margin-bottom: 5px;
+}
+.show-print{
+    display: none;
+}
+@media print {
+    .hide-print{
+        display: none;
+    }
+    .show-print{
+        display: block;
+    }
+}
+.view-page-value-columns{
+    column-count: 2;
+    list-style: none;
+    padding-left: 0;
+}
+@media only screen and (max-width: 1200px) {
+    .view-page-value-columns{
+        column-count: 1;
+    }
+}
+.top-right-alert{
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    background-color: red;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    font-weight: bold;
+    color: white;
 }

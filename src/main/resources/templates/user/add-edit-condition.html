@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title th:text="(${condition.conditionId}!=null?'Edit':'Add')+ ' a Condition'"></title>
+        <title th:text="'VLOL | ' + (${condition.conditionId}!=null?'Edit':'Add')+ ' a Condition'"></title>
     </head>
     <body>
         <div align="center" layout:fragment="content" class="container">
@@ -15,9 +15,10 @@
             <form action="#" th:object="${condition}" th:action="'/user/save-condition/'+${userId}" method="post" data-parsley-validate="">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
+                        <div style="font-size:small"><em>Enter patient's condition below. This field will autocomplete as you type. For example: Diabetes, Hypertension, etc. When condition is populated, click save.</em></div>
                         <div class="form-group">
-                          <label for="conditionName">Condition Name</label>
-                          <input type="search" class="form-control typeahead" id="conditionName" th:field="*{conditionName}" placeholder="Search" data-parsley-maxlength="256" data-parsley-rfc3986=""/>
+                          <label for="conditionName">Condition Name</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The name of the medical condition you wish to add to your Virtual Letter of Life."><i class="far fa-question-circle"></i></span>
+                          <input type="search" class="form-control typeahead" id="conditionName" th:field="*{conditionName}" placeholder="Search" data-parsley-maxlength="256" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <input type="hidden" th:field="*{conditionId}" />
                         <input type="hidden" th:field="*{referenceId}" id="referenceId"/>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/datatable-master}"
+      lang="en">
+    <head>
+        <title>VLOL | Documents Manager</title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <h1>Documents Manager</h1>
+            <a th:href="|/user/add-document/${userId}|">Add a Document</a>
+            <br/><br/>
+            <table id="list_table" class="table table-striped table-bordered dt-responsive display nowrap no-search">
+                <thead>
+                    <tr>
+                        <th data-priority="1">Document Type</th>
+                        <th data-priority="99">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="document : ${documentList}">
+                        <td th:text="${document.documentType}"></td>
+                        <td>
+                            <a th:href="|/user/get-document/${userId}/${document.documentId}|" class="btn btn-info">View</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/user/edit-document/${userId}/${document.documentId}|" class="btn btn-info">Edit</a>
+                            &nbsp;&nbsp;&nbsp;
+                            <a th:href="|/user/delete-document/${userId}/${document.documentId}|" class="btn btn-danger" th:itemName="${document.documentType}" onclick="return confirm('Are you sure you want to delete &quot;'+this.getAttribute('itemName')+'&quot;?')">Delete</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <a th:href="|/menu/${userId}|">Return to Menu</a>
+        </div>
+        <div th:replace="./fragments/footer :: 'footer'" />
+    </body>
+</html>

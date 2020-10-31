@@ -1,27 +1,21 @@
 /**
  * Extension and customization of Spring Boot's built-in WebMvcConfigurer class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package config
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
  */
 package com.vlol.config;
 
 import com.vlol.service.RoleFormatter;
-import org.h2.server.web.WebServlet;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.format.FormatterRegistry;
@@ -39,50 +33,32 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @EnableWebMvc
 public class WebMvcConfig implements WebMvcConfigurer {
 
-    /**
-     * Instantiates the BCryptPasswordEncoder.
-     *
-     * @return The bCryptPasswordEncoder object.
-     */
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+  /**
+   * Instantiates the BCryptPasswordEncoder.
+   *
+   * @return The bCryptPasswordEncoder object.
+   */
+  @Bean
+  public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    return new BCryptPasswordEncoder();
+  }
 
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(
-                "/webjars/**",
-                "/img/**",
-                "/css/**",
-                "/js/**",
-                "/DataTables/**")
-                .addResourceLocations(
-                        "classpath:/META-INF/resources/webjars/",
-                        "classpath:/static/img/",
-                        "classpath:/static/css/",
-                        "classpath:/static/js/",
-                        "classpath:/static/DataTables/");
-    }
+  @Override
+  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    registry
+        .addResourceHandler("/webjars/**", "/img/**", "/css/**", "/js/**", "/DataTables/**")
+        .addResourceLocations(
+            "classpath:/META-INF/resources/webjars/",
+            "classpath:/static/img/",
+            "classpath:/static/css/",
+            "classpath:/static/js/",
+            "classpath:/static/DataTables/");
+  }
 
-    /**
-     * Instantiates a servlet to allow access to the h2 database console
-     * (https://[website]/console)
-     *
-     * @return A new ServletRegistrationBean object.
-     */
-    @Bean
-    ServletRegistrationBean h2servletRegistration() {
-        ServletRegistrationBean registrationBean = new ServletRegistrationBean(new WebServlet());
-        registrationBean.addUrlMappings("/console/*");
-        return registrationBean;
-    }
+  @Autowired private RoleFormatter roleFormatter;
 
-    @Autowired
-    private RoleFormatter roleFormatter;
-
-    @Override
-    public void addFormatters(FormatterRegistry registry) {
-        registry.addFormatter(roleFormatter);
-    }
+  @Override
+  public void addFormatters(FormatterRegistry registry) {
+    registry.addFormatter(roleFormatter);
+  }
 }

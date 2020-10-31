@@ -3,12 +3,12 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title>VLOL Registration</title>
+        <title>VLOL | Registration</title>
     </head>
     <body>
         <div layout:fragment="content" class="container">
             <div class="col-md-4 text-center mx-auto">
-                <form class="form-signin" th:action="@{/login}" method="post" >
+                <form class="form-signin" th:action="@{/login}" method="post" data-parsley-validate="">
                     <br />
                     <img src="img/vlol_logo.png" alt="" height="128" />
                     <br />
@@ -17,6 +17,12 @@
                     </div>
                     <div class="alert alert-success" role="alert" th:if="${param.passwordchanged}">
                         Password Successfully Changed!
+                    </div>
+                    <div class="alert alert-danger" role="alert" th:if="${param.locked}">
+                        Your account has been locked due to too many failed login attempts.  An email with instructions for unlocking your account will be sent shortly.
+                    </div>
+                    <div class="alert alert-success" role="alert" th:if="${param.verifyEmail}">
+                        Please check your email for to verify your account prior to logging in.
                     </div>
                     <h1>Please log in</h1>
                     <br />
@@ -28,14 +34,15 @@
                     
                     <label for="password" class="sr-only">Password</label>
                     <span class="add-on"><i class="icon-key"></i></span>
-                    <input type="password" id="password" class="form-control" name="password" placeholder="Password" pattern="[A-Za-z0-9\s\-._~:\/?#\[\]@!$&'()*+,;=]*" required="required" autocomplete="off" />                    
+                    <input type="password" id="password" class="form-control" name="password"  maxlength="320" data-parsley-minlength="8" placeholder="Password" required="required" autocomplete="off" />                    
                     <div class="text-right"><a th:href="@{/forgot-password}">Forgot Password</a></div>
-                    <br />
                     
-                    <div class="checkbox">
-                        <input type="checkbox" value="remember-me" /> Remember me
-                    </div>
+<!--                     <div class="checkbox"> -->
+<!--                         <input type="checkbox" value="remember-me" /> Remember me -->
+<!--                     </div> -->
+                    
                     <br />
+
                     
                     <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> Log in</button>
                     <br />
