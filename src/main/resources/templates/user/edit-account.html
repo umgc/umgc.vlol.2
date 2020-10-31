@@ -77,7 +77,7 @@
                         <tr sec:authorize="hasAnyAuthority('admin')">
                             <td><label for="adminComments">Administrator Comments:</label></td>
                             <td>
-                                <textarea class="form-control" id="adminComments" th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" data-parsley-max="65535" />
+                                <textarea class="form-control" id="adminComments" th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" data-parsley-maxlength="65535" />
                             </td>
                         </tr>
                     </table>
