@@ -51,7 +51,7 @@ public class RestControlller {
 
   @GetMapping("/api/user/{id}")
   public User viewProfilePage(@PathVariable(name = "id") Long id) {
-    User user = userService.getUser(id);
+    User user = userService.getparticipant(id);
     return user;
   }
 
