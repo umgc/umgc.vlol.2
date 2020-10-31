@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/datatable-master}"
       lang="en">
     <head>
-        <title>Role Manager</title>
+        <title>VLOL Admin | Role Manager</title>
     </head>
     <body>
         <div layout:fragment="content" class="container">
@@ -22,7 +22,6 @@
                             <tr>
                                 <th data-priority="1">Role ID</th>
                                 <th data-priority="1">Role Title</th>
-                                <th data-priority="99">Role Access Level</th>
                                 <th data-priority="99">Role Description</th>
                                 <th data-priority="99" class="disabled-sorting">Actions</th>
                             </tr>
@@ -31,19 +30,7 @@
                             <tr th:each="role : ${roleList}">
                                 <td th:text="${role.roleId}" class="align-middle">Role ID</td>
                                 <td th:text="${role.title}" class="align-middle">Role Title</td>
-                                <td th:text="${role.accessLevel}" class="align-middle">Role Access Level</td>
                                 <td th:text="${role.description}" class="align-middle">Role Description</td>
-                                <td class="text-nowrap">
-                                    <a th:href="@{/view-role/{id}(id=${role.roleId})}" class="btn btn-info">
-                                        <i class="far fa-eye"></i> View
-                                    </a>
-                                    <a th:href="@{/edit-role/{id}(id=${role.roleId})}" class="btn btn-warning">
-                                        <i class="far fa-edit"></i> Edit
-                                    </a>
-                                    <a th:href="@{/delete-role/{id}(id=${role.roleId})}" class="btn btn-danger"  onclick="return confirm('Are you sure you want to delete this item?')">
-                                        <i class="far fa-trash-alt"></i> Delete
-                                    </a>
-                                </td>
                             </tr>
                         </tbody>
                     </table>

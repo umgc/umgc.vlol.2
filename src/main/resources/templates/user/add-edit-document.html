@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layouts/site-master}"
+      lang="en">
+    <head>
+        <title th:text="'VLOL | ' + (${document.documentId}!=null?'Edit':'Add')+ ' a Document'"></title>
+    </head>
+    <body>
+        <div align="center" layout:fragment="content" class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-3 mb-5">
+                    <h1 th:text="(${document.documentId}!=null?'Edit':'Add')+ ' a Document'"></h1>
+                </div>
+            </div>
+            <div role="alert" class="text-danger" th:if="${error}">There was an error while uploading your file. Contact support if this continues to happen.</div>
+            <form action="#" th:object="${document}" th:action="'/user/save-document/'+${userId}" method="post" enctype="multipart/form-data" data-parsley-validate="">
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                         <div style="font-size:small"><em>Enter your document type below. This field will not autocomplete.</em></div>
+                        <div class="form-group">
+                          <label for="documentType">Document Type</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The type of document you wish to add to your Virtual Letter of Life.  For example: medical history, doctor's notes, etc."><i class="far fa-question-circle"></i></span>
+                          <input class="form-control typeahead" id="documentType" th:field="*{documentType}" placeholder="Enter the type"  data-parsley-maxlength="64" data-parsley-rfc3986="" data-parsley-required/>
+                        </div>
+                        <div class="form-group">
+                          <label for="documentFile">Document File</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The file, stored on your device, that contains the document you wish to add."><i class="far fa-question-circle"></i></span>
+                          <div role="alert" class="text-info" th:if="*{documentFilename}" th:text="'Current File: '+*{documentFilename}"></div>
+                          <input type="file" class="form-control typeahead" id="documentFile" th:field="*{documentFile}" placeholder="Enter your Document" data-parsley-max-file-size-mb="5" data-parsley-required/>
+                        </div>
+                        
+                        <input type="hidden" th:field="*{documentId}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </form>
+            <div class="row mt-5">
+                <div class="col-md-6 offset-md-3">
+                    <a th:href="|/user/documents/${userId}|">Return to Document Manager</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

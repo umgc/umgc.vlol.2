@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title>VLOL Registration</title>
+        <title>VLOL | Registration</title>
         <style>
             td {
                 text-align: left;
@@ -25,9 +25,12 @@
                 <h1 class="pt-4">Registration</h1>
                 <a href="/">Return to Home Page</a>
                 <br />
+                <br>
+                <a th:href="@{/provider-registration}" class="btn btn-primary">Provider Registration</a>
                 <div role="alert" class="text-danger" th:if="${msg}" th:utext="${msg}"></div>
                 <br />
-                <form action="#" th:action="@{/registration}" th:object="${user}" method="post" data-parsley-validate="">
+                <div align="left"><em>All fields are required.</em></div>
+                <form action="#" th:action="@{/registration}" th:object="${user}" method="post" data-parsley-validate="" onsubmit="return submitUserForm();">
                     <table class="table table-bordered dt-responsive display">
                         <tr>
                             <td><label for="firstName">First Name:</label></td>
@@ -53,20 +56,40 @@
                         <tr>
                             <td><label for="password">Password:</label></td>
                             <td>
-                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="6" placeholder="Required" required="required" />
+                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" />
                                 <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
                             </td>
                         </tr>   
                         <tr>
                             <td><label for="password2">Confirm Password:</label></td>
                             <td>
-                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-minlength="6" placeholder="Required" required="required" data-parsley-equalto="#password" />
+                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" data-parsley-equalto="#password" />
                             </td>
                         </tr>            
                     </table>
                     <br />
+                    <div class="g-recaptcha"
+						data-sitekey="6LeJIdsZAAAAAMycrBqx8COCPk5-YI41ee0kMeL6"
+						data-callback="verifyCaptcha"></div>
+					<div id="g-recaptcha-error"></div>
+                    <br />
                     <button type="submit" class="btn btn-success"><i class="fas fa-file-signature"></i> Register</button>
                 </form>
+                <script src='https://www.google.com/recaptcha/api.js'></script>
+				<script>
+					function submitUserForm() {
+						var response = grecaptcha.getResponse();
+						if (response.length == 0) {
+							document.getElementById('g-recaptcha-error').innerHTML = '<span style="color:red;">This field is required.</span>';
+							return false;
+						}
+						return true;
+					}
+
+					function verifyCaptcha() {
+						document.getElementById('g-recaptcha-error').innerHTML = '';
+					}
+				</script>
                 <br />
                 <a href="/login" class="btn btn-primary btn-block"><i class="fas fa-home"></i> Return to Login Page</a>
             </div>

@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title>Account</title>
+        <title>VLOL | Account Management</title>
     </head>
     <body>
         <div layout:fragment="content" class="container">
@@ -37,14 +37,14 @@
                         <tr>
                             <td><label for="password">Password:</label></td>
                             <td>
-                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="6" />
+                                <input type="password" class="form-control" th:field="*{password}" id="password" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" />
                                 <div th:if="${#fields.hasErrors('password')}" class="text-danger" th:errors="*{password}"></div>
                             </td>
                         </tr>   
                         <tr>
                             <td><label for="password2">Confirm Password:</label></td>
                             <td>
-                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-equalto="#password" data-parsley-minlength="6" />
+                                <input type="password" class="form-control" id="password2" maxlength="320" data-parsley-minlength="8" placeholder="Required" required="required" data-parsley-equalto="#password" />   
                             </td>
                         </tr>
 <!--                        Admin Section-->
@@ -57,27 +57,27 @@
                             </td>
                         </tr>
                         <tr sec:authorize="hasAnyAuthority('admin')">
-                            <td><label for="isActive">Active</label></td>
-                            <td>
-                                <input type="checkbox" id="isActive" th:field="*{isActive}" th:value="${user}" />
-                            </td>
-                        </tr>
-                        <tr sec:authorize="hasAnyAuthority('admin')">
                             <td><label for="isLocked">Locked Out</label></td>
                             <td>
                                 <input type="checkbox" id="isLocked" th:field="*{isLocked}" th:value="${user}" />
                             </td>
                         </tr>
                         <tr sec:authorize="hasAnyAuthority('admin')">
-                            <td><label for="isVerified">Verified</label></td>
+                            <td><label for="isAccountVerified">Account Verified</label></td>
                             <td>
-                                <input type="checkbox" id="isVerified" th:field="*{isVerified}" th:value="${user}" />
+                                <input type="checkbox" id="isAccountVerified" th:field="*{isAccountVerified}" th:value="${user}" />
+                            </td>
+                        </tr>
+                        <tr sec:authorize="hasAnyAuthority('admin')">
+                            <td><label for="isEmailVerified">Email Verified</label></td>
+                            <td>
+                                <input type="checkbox" id="isEmailVerified" th:field="*{isEmailVerified}" th:value="${user}" />
                             </td>
                         </tr>
                         <tr sec:authorize="hasAnyAuthority('admin')">
                             <td><label for="adminComments">Administrator Comments:</label></td>
                             <td>
-                                <textarea class="form-control" id="adminComments" th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" />
+                                <textarea class="form-control" id="adminComments" th:field="*{adminComments}" rows="4" data-parsley-rfc3986="" data-parsley-maxlength="65535" />
                             </td>
                         </tr>
                     </table>

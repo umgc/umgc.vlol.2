@@ -1,9 +1,10 @@
 ![Test/Code Coverage VLOL](https://github.com/umgc/fire.department/workflows/Test/Code%20Coverage%20VLOL/badge.svg?branch=master)
 ![Deploy Vlol](https://github.com/umgc/fire.department/workflows/Deploy%20Vlol/badge.svg?branch=master)
-![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=umgccapstone_umgc.vlol.2&metric=coverage)
-![Sonarcloud Quality](https://sonarcloud.io/api/project_badges/quality_gate?project=umgccapstone_umgc.vlol.2)
+![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=umgc-city-vlol&metric=coverage)
 
-For Code Coverage Report view [Sonar Dashboard](https://sonarcloud.io/dashboard?id=umgccapstone_umgc.vlol.2)
+![Sonarcloud Quality](https://sonarcloud.io/api/project_badges/quality_gate?project=umgc-city-vlol)
+
+For Code Coverage Report view [Sonar Dashboard](https://sonarcloud.io/dashboard?id=umgc-city-vlol)
 
 # Team 3 Capstone Project
 
@@ -32,7 +33,7 @@ The Salisbury Fire Department's **Business Problem** and **Desired Outcomes** ar
 
 >*"We are searching for a system that will allow emergency medical services (EMS) to retrieve the medical information contained in a patient's ["Letter of Life"](https://salisbury.md/departments/fire/letter-of-life) at any location.*
 >
->*"In an emergency, the Letter of Life provides responders with a list of pertinent medical conditions and illnesses when the patient cannot provide this information on their own. We recommend all residents, especially the elderly and those suffering from chronic medical conditions, to complete a "Letter of Life" and place it in a location easily accessible by EMS personnel, such as on a refrigerator or by the entry door to the residence. However, when an emergency occurs outside the home, EMS personnel cannot access this list, which is why we are searching for an easily accessible, cloud-based version of the letter.*
+>*"In an emergency, the Letter of Life provides responders with a list of pertinent medical conditions and medications when the patient cannot provide this information on their own. We recommend all residents, especially the elderly and those suffering from chronic medical conditions, to complete a "Letter of Life" and place it in a location easily accessible by EMS personnel, such as on a refrigerator or by the entry door to the residence. However, when an emergency occurs outside the home, EMS personnel cannot access this list, which is why we are searching for an easily accessible, cloud-based version of the letter.*
 >
 >*"Our desired outcomes are:*
 >
@@ -63,11 +64,21 @@ This repo leverages Docker as a developer environment to bootstrap system requir
 
 At any time user may run `$ make help` to display usefully make commands.
 ##### Development Build:
-1) To build the application.
+1) First build the Docker build environment image.
+    ```bash
+    $ make build-env
+    ```
+    This will produce the Docker image `vlol-build-env:latest`
+    ```bash
+    $ docker images
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    vlol-build-env      latest              febd35d3c354        16 seconds ago      1.46GB
+    ```
+2) Next build the application.
     ```bash
     $ make all | make all SKIP_TESTS=y
     ```
-    This will build the application Java jar by starting a Docker build image with the local repo volume mapping into the container context then running the make command to build the application. Optionally users may include the `SKIP_TESTS=y` CLI to skip unit tests.
+    This will build the application Java jar by starting the Docker build-env image with the local repo volume mapping into the container context then running the make command to build the application. Optionally users may include the `SKIP_TESTS=y` CLI to skip unit tests.
     ```bash
     [INFO] ------------------------------------------------------------------------
     [INFO] BUILD SUCCESS
@@ -76,7 +87,7 @@ At any time user may run `$ make help` to display usefully make commands.
     [INFO] Finished at: 2020-09-10T19:33:56Z
     [INFO] ------------------------------------------------------------------------
     ```
-2) Next build the application Docker image.
+3) Next build the application Docker image.
     ``` bash
     $ make build-vlol
     ``` 
@@ -91,7 +102,7 @@ At any time user may run `$ make help` to display usefully make commands.
 After building the application Docker image user can run a local instance of the application via `make` commands.
 1) Start the application
     ```bash
-    $ make start
+    $ make start-vlol
     ```
     This start the Docker container application
     ```bash

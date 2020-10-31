@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title th:text="(${medication.medicationId}!=null?'Edit':'Add')+ ' a Medication'"></title>
+        <title th:text="'VLOL | ' + (${medication.medicationId}!=null?'Edit':'Add')+ ' a Medication'"></title>
     </head>
     <body>
         <div align="center" layout:fragment="content" class="container">
@@ -14,9 +14,10 @@
             </div>
             <div class="row">
                 <div class="col-md-6 offset-md-3 mb-5">
+                    <div style="font-size:small"><em>Enter patient's medication below. The Drug Search field will autocomplete as you type. For example: Lisinopril, Levothyroxine, etc. When medication is populated, click save.</em></div>
+                    <p/>
                     <div class="form-group">
-
-                        <div><label for="drug">Drug Search</label></div>
+                        <div><label for="drug">Drug Search</label>&nbsp;<span data-toggle="tooltip" data-placement="top" data-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"</div><div><img src="/img/rxlabel_drugname.png" alt="Prescription label mockup with drug name highlighted" width="300px" /></div><div class="tooltip-inner"></div></div>' title="Search for the name of the medication you wish to add to your Virtual Letter of Life."><i class="far fa-question-circle"></i></span></div>
                         <input class="form-control typeahead" type="search" id="drug" placeholder="Search"/>
                       <!--<input type="search" class="form-control" id="drug" placeholder="Search"/>-->
                     </div>
@@ -26,31 +27,33 @@
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
                         <div class="form-group">
-                          <label for="brandName">Brand Name</label>
+                          <div style="font-size:small"><em>The following fields will fill automatically after entering a drug name.</em></div>
+                          <label for="brandName">Brand Name</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The brand name of the medication, if it is not a generic drug."><i class="far fa-question-circle"></i></span>
                           <input type="text" class="form-control" id="brandName" th:field="*{brandName}" data-parsley-maxlength="256" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
-                          <label for="genericName">Generic Name</label>
+                          <label for="genericName">Generic Name</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The name of the generic version of the medication."><i class="far fa-question-circle"></i></span>
                           <input type="text" class="form-control" id="genericName" th:field="*{genericName}" data-parsley-maxlength="256" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
-                          <label for="drugAction">Drug Action</label>
+                          <label for="drugAction">Drug Action</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="The actions the drug has on the body."><i class="far fa-question-circle"></i></span>
                           <input type="text" class="form-control" id="drugAction" th:field="*{drugAction}" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
-                          <label for="controlled">Is Prescribed</label>
+                          <label for="controlled">Is Prescribed</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="Check this box if the medicine was prescribed to you by a medical professional, or leave it unchecked if you take it over the counter."><i class="far fa-question-circle"></i></span>
                           <input type="checkbox" class="form-control" id="controlled" th:field="*{controlled}"/>
                         </div>
                         <div class="form-group">
-                          <label for="bloodThinner">Is Blood Thinner</label>
+                          <label for="bloodThinner">Is Blood Thinner</label>&nbsp;<span data-toggle="tooltip" data-placement="top" title="Whether the drug acts as a blood thinner."><i class="far fa-question-circle"></i></span>
                           <input type="checkbox" class="form-control" id="bloodThinner" th:field="*{bloodThinner}"/>
                         </div>
+                        <div style="font-size:small"><em>The following fields are required and will not autocomplete. Please enter Dosage/Frequency information below. For example: Dosage: 500mg, Frequency: Twice Daily.</em></div>
                         <div class="form-group">
-                          <label for="dosage">Dosage</label>
+                          <label for="dosage">Dosage</label>&nbsp;<span data-toggle="tooltip" data-placement="top" data-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"</div><div><img src="/img/rxlabel_dosage.png" alt="Prescription label mockup with dosage highlighted" width="300px" /></div><div class="tooltip-inner"></div></div>' title="The medicine dosage, as listed on the prescription label or in the drug directions."><i class="far fa-question-circle"></i></span>
                           <input type="text" class="form-control" id="dosage" th:field="*{dosage}" required="" placeholder="Required" data-parsley-rfc3986=""/>
                         </div>
                         <div class="form-group">
-                          <label for="frequency">Frequency</label>
+                          <label for="frequency">Frequency</label>&nbsp;<span data-toggle="tooltip" data-placement="top" data-template='<div class="tooltip" role="tooltip"><div class="tooltip-arrow"</div><div><img src="/img/rxlabel_frequency.png" alt="Prescription label mockup with frequency highlighted" width="300px" /></div><div class="tooltip-inner"></div></div>' title="When and how often you should take each dose of the medicine, as listed on the prescription label or in the drug directions."><i class="far fa-question-circle"></i></span>
                           <input type="text" class="form-control" id="frequency" th:field="*{frequency}" required="" placeholder="Required" data-parsley-rfc3986=""/>
                         </div>
                         <input type="hidden" th:field="*{medicationId}" />

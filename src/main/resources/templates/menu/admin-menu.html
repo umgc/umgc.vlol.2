@@ -3,7 +3,7 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title>Menu</title>
+        <title>VLOL | Administration Menu</title>
     </head>
     <body>
         <div layout:fragment="content" class="container">
@@ -13,17 +13,28 @@
                     <div class="card-deck card-deck justify-content-center justify-content-sm-stretch">
                         <a th:href="|/user/account/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
                            sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
-                            <i class="fas fa-user-circle fa-9x" style="margin: 1rem"></i>
+                            <i class="fas fa-user-circle menu-button" style="margin: 1rem"></i>
                             <div class="card-body">My Account</div>
                         </a>
+                        <a th:href="|/user/profile/${user.userId}|" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()">
+                            <i class="fas fa-id-badge menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">My Profile</div>
+                        </a>
                         <a href="/list-users" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
-                            <i class="fas fa-users fa-9x" style="margin: 1rem"></i>
+                           sec:authorize="isAuthenticated()" th:if="${isSelf} AND ${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                            <div th:if="${userAlert}" class="top-right-alert">!</div>
+                            <i class="fas fa-users menu-button" style="margin: 1rem"></i>
                             <div class="card-body">User Search Page</div>
                         </a>
+                        <a href="/admin/api-keys" class="card text-center text-white bg-secondary mb-3 menu-card"
+                           sec:authorize="isAuthenticated()" th:if="${isSelf} AND ${#strings.contains(#authentication.principal.authorities,'admin')}">
+                            <i class="fas fa-key menu-button" style="margin: 1rem"></i>
+                            <div class="card-body">API Keys</div>
+                        </a>
                         <a href="/qr-capture" class="card text-center text-white bg-secondary mb-3 menu-card"
-                           sec:authorize="isAuthenticated()" th:if="${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
-                            <i class="fas fa-qrcode fa-9x" style="margin: 1rem"></i>
+                           sec:authorize="isAuthenticated()" th:if="${isSelf} AND ${#strings.contains(#authentication.principal.authorities,'admin') || #strings.contains(#authentication.principal.authorities,'provider')}">
+                            <i class="fas fa-qrcode menu-button" style="margin: 1rem"></i>
                             <div class="card-body">Capture QR Code</div>
                         </a>
                     </div>

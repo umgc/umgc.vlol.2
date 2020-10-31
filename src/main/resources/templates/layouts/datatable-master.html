@@ -15,7 +15,7 @@
     </head>
     <body>
         <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 hide-print">
                 <div class="container">
                     <a class="navbar-brand" href="/">
                         <img src="/img/vlol_icon.png" width="30" height="30" alt="" />
@@ -66,7 +66,7 @@
         <main>
             <div layout:fragment="content"></div>
         </main>
-        <footer class="border-top footer text-muted">
+        <footer class="border-top footer text-muted hide-print">
             <div class="container">
                 Copyright &copy; 2020<span id="currentYear"></span> Team EMS Plus. All Rights Reserved.
             </div>
@@ -90,8 +90,9 @@
             $(document).ready(function () {
                 $('#list_table').DataTable({
                     responsive: true,
-                    dom: 'Bfrp'+($('#list_table.no-paging').length?'':'ti'),
+                    dom: 'B'+($('#list_table.no-search').length?'':'f')+'rt<"bottom"p'+($('#list_table.no-paging').length?'':'i')+'>',
                     ordering: $('#list_table.no-ordering').length?false:true,
+                    order: [],
                     paging: $('#list_table.no-paging').length?false:true,
                     buttons: [
                         {extend: 'copy', className: 'btn btn-secondary' },

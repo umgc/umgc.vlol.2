@@ -1,57 +1,37 @@
 /**
  * Allergy controller class.
  *
- * Java Runtime Environment (JRE) version used: 11.0.7
- * Java Development Kit (JDK) version used: 11.0.7
+ * <p>Java Runtime Environment (JRE) version used: 11.0.7 Java Development Kit (JDK) version used:
+ * 11.0.7
  *
- * Styling guide: Google Java Style Guide
- *     (https://google.github.io/styleguide/javaguide.html) and
- *     Code Conventions for the Java Programming Language (Oracle: Deprecated)
- *     (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
+ * <p>Styling guide: Google Java Style Guide (https://google.github.io/styleguide/javaguide.html)
+ * and Code Conventions for the Java Programming Language (Oracle: Deprecated)
+ * (https://www.oracle.com/technetwork/java/javase/documentation/codeconvtoc-136057.html)
  *
- * @category  vlol
+ * @category vlol
  * @package controller
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
  * @license https://opensource.org/licenses/MIT The MIT License
- * @link      https://github.com/garciart/SWEN670
- * @copyright 2020 EMS Plus
  */
 package com.vlol.controller;
 
 import com.vlol.model.Allergy;
-import com.vlol.model.User;
 import com.vlol.service.AllergyService;
-import com.vlol.service.UserService;
 import java.util.List;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
-/**
- * Allergy controller class.
- *
- * @author Rob Garcia <rgarcia92@student.umgc.edu>
- */
+/** Allergy controller class. */
 @Controller
 public class AllergyController {
 
-    @Autowired
-    private AllergyService allergyService;
-    
-    @GetMapping("/search-allergies")
-    public @ResponseBody List<Allergy> findAllergyByKeyword(@RequestParam String keyword) {
-        List<Allergy> meds =  allergyService.findAllergyByKeyword(keyword);
-        return meds.subList(0, Math.min(20, meds.size()));
-    }
+  @Autowired private AllergyService allergyService;
+
+  @GetMapping("/search-allergies")
+  public @ResponseBody List<Allergy> findAllergyByKeyword(@RequestParam String keyword) {
+    List<Allergy> meds = allergyService.findAllergyByKeyword(keyword);
+    return meds.subList(0, Math.min(20, meds.size()));
+  }
 }

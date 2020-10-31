@@ -3,29 +3,23 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title th:text="(${allergy.allergyId}!=null?'Edit':'Add')+ ' a Allergy'"></title>
+        <title th:text="'VLOL | ' + (${allergy.allergyId}!=null?'Edit':'Add')+ ' an Allergy'"></title>
     </head>
     <body>
         <div align="center" layout:fragment="content" class="container">
             <div class="row">
                 <div class="col-md-6 offset-md-3 mb-5">
-                    <h1 th:text="(${allergy.allergyId}!=null?'Edit':'Add')+ ' a Allergy'"></h1>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6 offset-md-3 mb-5">
-                    <div class="form-group">
-                        <div><label for="drug">Drug Search</label></div>
-                        <input class="form-control typeaheaddrug" type="search" id="drug" placeholder="Search"/>
-                    </div>
+                    <h1 th:text="(${allergy.allergyId}!=null?'Edit':'Add')+ ' an Allergy'"></h1>
                 </div>
             </div>
             <form action="#" th:object="${allergy}" th:action="'/user/save-allergy/'+${userId}" method="post" data-parsley-validate="">
                 <div class="row">
                     <div class="col-md-6 offset-md-3">
+                          <div style="font-size:small"><em> Enter patient's allergy below. This field will autocomplete as you type. For example: Penicillin, aspirin, latex, etc. When allergy is populated, click save.</em></div>
+                          <p/>
                         <div class="form-group">
-                          <label for="allergyName">Allergy Name</label>
-                          <input type="search" class="form-control typeahead" id="allergyName" th:field="*{allergyName}" placeholder="Enter your allergy"  data-parsley-maxlength="256" data-parsley-rfc3986=""/>
+                          <label for="allergyName">Allergy Name</label>&nbsp;<span id="text-tooltip" data-toggle="tooltip" data-placement="top" title="The type of allergy you wish to add to your Virtual Letter of Life."><i class="far fa-question-circle"></i></span>
+                          <input type="search" class="form-control typeahead" id="allergyName" th:field="*{allergyName}" placeholder="Enter your allergy" data-parsley-maxlength="256" data-parsley-rfc3986="" data-parsley-required/>
                         </div>
                         <input type="hidden" th:field="*{allergyId}" />
                         <input type="hidden" th:field="*{referenceId}" id="referenceId"/>
@@ -52,45 +46,31 @@
                         display: 'value',
                         async: true,
                         limit: Infinity,
-                        source: function (allergy, syncResults, asyncResults) {
+                        source: function (text, syncResults, asyncResults) {
                             // let's do a custom ajax call
-                            fetch("/search-allergies?keyword="+allergy).then(res=>res.json()).then((data)=>{
-                                const ret = data.map((d)=>{
+                            Promise.all(
+                                [
+                                    fetch("/search-allergies?keyword="+text).then(res=>res.json()),
+                                    fetch("/search-medications?keyword="+text).then(res=>res.json())
+                                ]
+                            ).then(([allergyData, drugData])=>{
+                                const ret1 = allergyData.map((d)=>{
                                     return {...d,value:d.allergyName}
                                 });
-                                asyncResults(ret);
-                            }).catch(()=>asyncResults([]));
-                        }
-                    });
-                    $('.typeahead').bind('typeahead:select', function(ev, allergy) {
-                        $('#allergyName').val(allergy.allergyName);
-                        $('#referenceId').val(allergy.referenceId);
-                      });
-                    $('.typeaheaddrug').typeahead({
-                        minLength: 1
-                      },
-                    {
-                        name: 'medication',
-                        display: 'value',
-                        async: true,
-                        limit: Infinity,
-                        source: function (medication, syncResults, asyncResults) {
-                            // let's do a custom ajax call
-                            fetch("/search-medications?keyword="+medication).then(res=>res.json()).then((data)=>{
-                                const ret = data.map((d)=>{
+                                const ret2 = drugData.map((d)=>{
                                     const value = d.brandName && d.brandName !== d.genericName
                                     ? d.brandName+"\n("+d.genericName+")"
                                     : d.genericName;
                                     return {...d,value:value}
                                 });
-                                asyncResults(ret);
+                                asyncResults(ret1.concat(ret2));
                             }).catch(()=>asyncResults([]));
                         }
                     });
-                    $('.typeaheaddrug').bind('typeahead:select', function(ev, medication) {
-                        $('#allergyName').val(medication.value);
-                        $('#referenceId').val(medication.referenceId);
-                      });
+                    $('.typeahead').bind('typeahead:select', function(ev, data) {
+                        $('#allergyName').val(data.allergyName || data.value);
+                        $('#referenceId').val(data.referenceId);
+                    });
                 });
             </script>
         </div>

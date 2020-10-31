@@ -3,10 +3,10 @@
       layout:decorate="~{layouts/site-master}"
       lang="en">
     <head>
-        <title>Edit Profile</title>
+        <title>VLOL | Edit Profile</title>
     </head>
     <body>
-        <div layout:fragment="content" class="container">
+      <div layout:fragment="content" class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <h1>Edit Profile</h1>
@@ -22,8 +22,15 @@
                             <tr>
                                 <td><label for="SSN">Social Security Number (SSN)</label></td>
                                 <td>
-                                    <input type="number" class="form-control" th:field="*{SSN}" id="SSN" maxlength="9" />
+                                    <input type="number" class="form-control" th:field="*{SSN}" id="SSN" maxlength="9" data-parsley-social=""/>
                                     <div th:if="${#fields.hasErrors('SSN')}" class="text-danger" th:errors="*{SSN}"></div>
+                                </td>
+                            </tr>
+                            <tr th:if="${userType} == 'provider'">
+                                <td><label for="NPI">National Prescriber ID (NPI)</label></td>
+                                <td>
+                                    <input type="number" class="form-control" th:field="*{NPI}" id="NPI" maxlength="10" data-parsley-npi=""/>
+                                    <div th:if="${#fields.hasErrors('NPI')}" class="text-danger" th:errors="*{NPI}"></div>
                                 </td>
                             </tr>
                             <tr>
@@ -57,68 +64,53 @@
                             <tr>
                                 <td><label for="phone">Phone Number</label></td>
                                 <td>
-                                    <input type="tel" class="form-control" th:field="*{phone}" id="phone" maxlength="10" />
+                                    <input type="tel" class="form-control" th:field="*{phone}" id="phone" maxlength="10" data-parsley-phone="" />
                                     <div th:if="${#fields.hasErrors('phone')}" class="text-danger" th:errors="*{phone}"></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:if="${userType} == 'participant'">
                                 <td><label for="pocName">Point of Contact Name</label></td>
                                 <td>
                                     <input type="text" class="form-control" th:field="*{pocName}" id="pocName" maxlength="100" data-parsley-rfc3986="" />
                                     <div th:if="${#fields.hasErrors('pocName')}" class="text-danger" th:errors="*{pocName}"></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:if="${userType} == 'participant'">
                                 <td><label for="pocPhone">Point of Contact Phone Number</label></td>
                                 <td>
-                                    <input type="tel" class="form-control" th:field="*{pocPhone}" id="pocPhone" maxlength="10" />
+                                    <input type="tel" class="form-control" th:field="*{pocPhone}" id="pocPhone" maxlength="10" data-parsley-phone="" />
                                     <div th:if="${#fields.hasErrors('pocPhone')}" class="text-danger" th:errors="*{pocPhone}"></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:if="${userType} == 'participant'">
                                 <td><label for="doctorName">Doctor Name</label></td>
                                 <td>
                                     <input type="text" class="form-control" th:field="*{doctorName}" id="doctorName" maxlength="100" data-parsley-rfc3986="" />
                                     <div th:if="${#fields.hasErrors('doctorName')}" class="text-danger" th:errors="*{doctorName}"></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:if="${userType} == 'participant'">
                                 <td><label for="doctorPhone">Doctor Phone Number</label></td>
                                 <td>
-                                    <input type="tel" class="form-control" th:field="*{doctorPhone}" id="doctorPhone" maxlength="10" data-parsley-rfc3986="" />
+                                    <input type="tel" class="form-control" th:field="*{doctorPhone}" id="doctorPhone" maxlength="10" data-parsley-rfc3986="" data-parsley-minlength="7"/>
                                     <div th:if="${#fields.hasErrors('doctorPhone')}" class="text-danger" th:errors="*{doctorPhone}"></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:if="${userType} == 'participant'">
                                 <td><label for="insCompany">Insurance Company</label></td>
                                 <td>
                                     <input type="text" class="form-control" th:field="*{insCompany}" id="insCompany" maxlength="50" data-parsley-rfc3986="" />
                                     <div th:if="${#fields.hasErrors('insCompany')}" class="text-danger" th:errors="*{insCompany}"></div>
                                 </td>
                             </tr>
-                            <tr>
+                            <tr th:if="${userType} == 'participant'">
                                 <td><label for="insPolicyNo">Insurance Policy Number</label></td>
                                 <td>
                                     <input type="text" class="form-control" th:field="*{insPolicyNo}" id="insPolicyNo" maxlength="50" data-parsley-rfc3986="" />
                                     <div th:if="${#fields.hasErrors('insPolicyNo')}" class="text-danger" th:errors="*{insPolicyNo}"></div>
                                 </td>
                             </tr>
-                            <tr>
-                                <td><label for="advDirective">Advance Directive</label></td>
-                                <td class="text-wrap">
-                                    <div>Check this box if the user has an advance directive (e.g., DNR, MOLST, etc.):</div>
-                                    <input type="checkbox" class="form-control" th:field="*{advDirective}" id="advDirective" th:value="${user}" />
-                                    <div th:if="${#fields.hasErrors('advDirective')}" class="text-danger" th:errors="*{advDirective}"></div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><label for="advDirType">Advance Directive Type</label></td>
-                                <td>
-                                    <input type="text" class="form-control" th:field="*{advDirType}" id="advDirType" maxlength="50" />
-                                    <div th:if="${#fields.hasErrors('advDirType')}" class="text-danger" th:errors="*{advDirType}"></div>
-                                </td>
-                            </tr>
-                            <tr>
+                            <tr th:if="!${isSelf} AND ${userType} == 'participant'">
                                 <td><label for="isDeceased">Is Deceased</label></td>
                                 <td class="text-wrap">
                                     <input type="checkbox" class="form-control" th:field="*{isDeceased}" id="isDeceased" th:value="${user}" />
@@ -128,7 +120,7 @@
                             <tr>
                                 <td><label for="userComments">User Comments</label></td>
                                 <td>
-                                    <textarea th:field="*{userComments}" id="userComments" class="form-control" rows="4" data-parsley-rfc3986="" />
+                                    <textarea th:field="*{userComments}" id="userComments" class="form-control" data-parsley-max="65535" rows="4" data-parsley-rfc3986="" />
                                     <div th:if="${#fields.hasErrors('userComments')}" class="text-danger" th:errors="*{userComments}"></div>
                                 </td>
                             </tr>
@@ -145,5 +137,5 @@
                 </div>
             </div>
         </div>
-    </body>
+    </body>   
 </html>
