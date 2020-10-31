@@ -15,6 +15,9 @@
     <description>Virtual Letter of Life Spring Boot Application</description>
 
     <properties>
+        <sonar.projectKey>umgccapstone_umgc.vlol.2</sonar.projectKey>
+        <sonar.organization>umgc-capstone</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <java.version>11</java.version>
     </properties>
 
