@@ -120,7 +120,7 @@
                             <tr>
                                 <td><label for="userComments">User Comments</label></td>
                                 <td>
-                                    <textarea th:field="*{userComments}" id="userComments" class="form-control" data-parsley-max="65535" rows="4" data-parsley-rfc3986="" />
+                                    <textarea th:field="*{userComments}" id="userComments" class="form-control" data-parsley-maxlength="65535" rows="4" data-parsley-rfc3986="" />
                                     <div th:if="${#fields.hasErrors('userComments')}" class="text-danger" th:errors="*{userComments}"></div>
                                 </td>
                             </tr>
