@@ -46,6 +46,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query(value = "SELECT u FROM User u WHERE u.role.roleId = 1")
   public List<User> findAllParticipants();
 
+  @Query(value = "SELECT u FROM User u WHERE u.role.roleId = 1 AND u.userId = :id")
+  public User findParticipantById(@Param("id") Long id);
+
   @Query(value = "SELECT u FROM User u WHERE u.role.roleId = 2 AND u.isAccountVerified = False")
   public List<User> findNewProviders();
 

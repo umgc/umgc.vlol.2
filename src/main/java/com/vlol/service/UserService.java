@@ -110,6 +110,10 @@ public class UserService {
     return userRepository.findById(userId).orElse(null);
   }
 
+  public User getparticipant(Long userId) {
+    return userRepository.findParticipantById(userId);
+  }
+
   public void deleteUser(Long userId) {
     userRepository.deleteById(userId);
   }
