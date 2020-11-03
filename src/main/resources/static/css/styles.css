@@ -22,7 +22,14 @@ header {
     width: 100%; /* Full width */
     z-index:1;
 }
-
+.promo-video{
+    width: 60%;
+}
+@media only screen and (max-width: 600px) {
+    .promo-video {
+        width: 100%;
+    }
+}
 .border-bottom {
     border-bottom: 1px solid #e5e5e5;
 }
